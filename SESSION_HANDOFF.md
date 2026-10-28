@@ -5,6 +5,24 @@ Run Request format); it is identical to the one in the old `pfb-nav` folder. Thi
 `CLAUDE.md` does not: where the work stands and how the researcher likes to work. The old session's
 memory does not carry over to a new folder, so the preferences below are repeated here.
 
+## Project context: read in this order
+The project's context is in the repo, not in any session's memory (the old folder's memory is empty).
+1. `CLAUDE.md`: what the project is, the 20 hard rules, the workflow, the Run Request format, and
+   "Current work package" (the plan of record and the history of every ruling to date).
+2. `docs/decision_log.md`: every design decision with its date and reason, newest last. Read the
+   2026-10-26 and 2026-10-27 entries first (the path to primary results; A28, A28a, A28b; the L2 toy
+   control), then search it for whatever module you are about to touch.
+3. `preregistration/` (frozen: `gates.yaml`, `endpoints.yaml`, `AMENDMENTS.md`, `LOCK.json`). Never
+   edit it; changes go through a drafted amendment in `docs/pending/`.
+4. `docs/requirements.md` (carried requirements, the training-host compute target) and
+   `docs/reproducibility.md` (determinism is per scene load).
+5. `configs/methods.yaml` (what each method ID is; retired IDs stay retired) and
+   `configs/base.yaml` (every measured and ruled parameter).
+- The full conversation that produced the 2026-10-27 work (the L2 toy FAIL, the PID ruling, the
+  candidate selection, the requirements file) is at
+  `C:\Users\PC\.claude\projects\C--Users-PC-Desktop-pfb-nav\e0bf1903-093d-40dc-8853-2d967c48dd5d.jsonl`.
+  It is large; search it for a specific detail rather than reading it through.
+
 ## How the researcher works (carry these over)
 - Concise messages; whole solutions rather than fragments.
 - The researcher works in **PowerShell**. Commands handed over must run there: one command per

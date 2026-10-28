@@ -1,5 +1,8 @@
 # CLAUDE.md — pfb-nav (v2)
 
+@SESSION_HANDOFF.md
+<!-- Imported so a new session knows the state, next steps and working preferences. It is a dated handoff: when it is stale, update or remove it and this line. -->
+
 ## Project in one paragraph
 PhD research code. A KUKA youBot (mecanum, holonomic) in CoppeliaSim navigates warehouse
 layouts with A* global planning and a learned (SAC) local planner. The contribution is the
