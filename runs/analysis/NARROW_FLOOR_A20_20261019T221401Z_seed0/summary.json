@@ -1,0 +1,120 @@
+{
+  "a_max": 0.5,
+  "alpha_max": 1.4,
+  "bands": [
+    0.1,
+    0.3,
+    0.51
+  ],
+  "variant": "full",
+  "reach_time_s": 0.15000000000000002,
+  "speed_cap": 0.5073675418274212,
+  "zero_gap_clearance_m": 0.168731689453125,
+  "buffer_m": 0.03,
+  "F_m": 0.198731689453125,
+  "gaps_at_zero_gap_clearance": {
+    "A1_rest_centred": {
+      "geometric": 0.0978410232998338,
+      "binned": 0.09749461231990042
+    },
+    "A2_rest_offset": {
+      "geometric": 0.04784102329983381,
+      "binned": 0.047161453646908325
+    },
+    "A3_moving_offset": {
+      "0.10": {
+        "geometric": 0.030844875320281906,
+        "binned": 0.029649255039127242
+      },
+      "0.30": {
+        "geometric": 0.021139966482119965,
+        "binned": 0.01856450297363238
+      },
+      "0.51": {
+        "geometric": 0.00959379326658033,
+        "binned": 8.564164818647413e-06
+      }
+    },
+    "admissible": true,
+    "worst_gap_m": 8.564164818647413e-06,
+    "bands": {
+      "bands": {
+        "0.10": [
+          0.0,
+          0.025
+        ],
+        "0.30": [
+          0.025,
+          0.225
+        ],
+        "0.51": [
+          0.225,
+          0.435
+        ]
+      },
+      "max_covered_speed": 0.435,
+      "speed_cap": 0.5074,
+      "uncovered_above": null
+    }
+  },
+  "gaps_at_F": {
+    "A1_rest_centred": {
+      "geometric": 0.12784102329983382,
+      "binned": 0.12753578269983806
+    },
+    "A2_rest_offset": {
+      "geometric": 0.07784102329983383,
+      "binned": 0.07739759220148784
+    },
+    "A3_moving_offset": {
+      "0.10": {
+        "geometric": 0.06084487532028193,
+        "binned": 0.060249810523137104
+      },
+      "0.30": {
+        "geometric": 0.05113996648211999,
+        "binned": 0.05037962450778721
+      },
+      "0.51": {
+        "geometric": 0.03959379326658036,
+        "binned": 0.03854821191817248
+      }
+    },
+    "admissible": true,
+    "worst_gap_m": 0.03854821191817248,
+    "bands": {
+      "bands": {
+        "0.10": [
+          0.0,
+          0.025
+        ],
+        "0.30": [
+          0.025,
+          0.225
+        ],
+        "0.51": [
+          0.225,
+          0.435
+        ]
+      },
+      "max_covered_speed": 0.435,
+      "speed_cap": 0.5074,
+      "uncovered_above": null
+    }
+  },
+  "strata": {
+    "narrow": [
+      0.1987,
+      0.2687
+    ],
+    "medium": [
+      0.2687,
+      0.4
+    ],
+    "wide": [
+      0.4,
+      0.8
+    ]
+  },
+  "stop": false
+}

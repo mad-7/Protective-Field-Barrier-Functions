@@ -1,0 +1,22 @@
+{
+  "seed": 0,
+  "experiment": "PFB_SIM_ACCEPTANCE_SMOKE_20261024T194103Z",
+  "created_utc": "2026-10-24T19:41:03.029231+00:00",
+  "commit": "e1be4c7e0b643c3dbd0c6768949c86917e5522f8",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "537f1bbbb7d674a395107398b46b7b6a765428b2942acefd529bf0c24dc35eb4",
+  "display_enabled": false,
+  "host": {
+    "hostname": "DESKTOP-5MIDQ97",
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.10",
+    "cpu_model": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "logical_cores": 8,
+    "physical_cores": 4,
+    "ram_total_gb": 7.7,
+    "gpu": "none available to torch",
+    "shared": false,
+    "torch": "2.11.0+cpu"
+  }
+}

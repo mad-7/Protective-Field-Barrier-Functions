@@ -1,0 +1,236 @@
+host:
+  shared: false
+sim:
+  endpoint: tcp://127.0.0.1
+  port: 23000
+  port_stride: 2
+  dt: 0.05
+  display_enabled: false
+  scene: scenes/warehouse_v2.ttt
+  scene_sha256: 537f1bbbb7d674a395107398b46b7b6a765428b2942acefd529bf0c24dc35eb4
+  floor_half_extent_m: 17.5
+  robot_spawn_radius_m: 0.01
+  physics:
+    engine: 1
+    dynamic_step: 0.005
+    solver_sensitivity_drift_deg: 0.64
+  objects:
+    base_ref: /youBot/youBot_ref
+    chassis: /youBot
+    robot_tree: /youBot
+    floor: /floor
+    wheels:
+    - /youBot/Joint/Rectangle0/rollingJoint_fl
+    - /youBot/Joint/Rectangle0/rollingJoint_fr
+    - /youBot/rollingJoint_rl
+    - /youBot/rollingJoint_rr
+robot:
+  half_length: 0.2854
+  half_width: 0.2086
+  wheel_radius: 0.05
+  half_wheelbase: 0.228
+  half_track: 0.1585
+  wheel_sign:
+  - -1
+  - -1
+  - -1
+  - -1
+  footprint_table: configs/footprint/youbot_envelope_1deg.csv
+  yaw_offset: 1.5707963
+actuation:
+  mode: holonomic
+  v_max: 0.4
+  vy_max: 0.5
+  w_max: 1.5
+  a_max: 1.0
+  alpha_max: 3.0
+  a_decel_max: 1.0
+  wheel_budget:
+    v_rim: 0.617
+    nominal_fraction: 0.8
+    filter_fraction: 0.95
+estimation:
+  velocity:
+    filter_tau: 0.1
+    latency_steps: 0
+    noise_std:
+    - 0.0
+    - 0.0
+    - 0.0
+scanners:
+  policy_bins: 36
+  filter_bins: 120
+  range_max: 5.0
+  range_min: 0.05
+  pixel_mirror: true
+  rays_per_degree: 4.2666667
+  coverage_depth: 1.0
+  self_filter_margin: 0.005
+  depth_is_euclidean: false
+filter:
+  enabled: false
+  t_react: 0.1
+  a_brake: 1.0
+  margin: 0.05
+  alpha: 2.0
+  qp_solver: osqp
+certified:
+  enabled: true
+  response_time: 0.1
+  a_brake: 1.0
+  restart_delay: 2.0
+  n_field_sets: 3
+  band_top_speeds:
+  - 0.1
+  - 0.3
+  - 0.4
+  margin: 0.1
+  lateral_margin: 0.05
+  warning_scale: 1.5
+  warning_extra: 0.05
+  warning_extra_abeam: 0.02
+  standstill_enter: 0.01
+  standstill_exit: 0.02
+reward:
+  k_progress: 5.0
+  time_cost: 0.01
+  k_stop: 5.0
+  k_intervention: 0.1
+  k_proximity: 0.0
+  goal_bonus: 200.0
+  contact_penalty: 200.0
+  goal_tolerance: 0.25
+  max_steps: 1500
+tracking:
+  k_cross_track: 1.0
+  k_heading: 2.0
+world:
+  narrow_floor_slack: 0.03
+  layout:
+    bounds:
+    - 0.0
+    - 0.0
+    - 14.0
+    - 10.0
+    wall_thickness: 0.2
+    shelf_depth: 0.8
+    shelf_height: 1.6
+    wall_height: 1.6
+    shelf_length_fraction:
+    - 0.7
+    - 0.92
+    rows:
+    - 2
+    - 4
+    end_clearance: 1.2
+    min_aisle_travel: 1.5
+    validity:
+      sample_spacing_m: 0.02
+      yaw_step_deg: 15
+      heading_round_deg: 1.0
+      coarse_stride: 16
+      goal_resamples: 8
+      yaw_rate_step: 0.05
+    unmapped:
+      size:
+      - 0.25
+      - 0.6
+      height: 0.8
+      count:
+      - 1
+      - 2
+      margin: 0.15
+      min_arc_from_start: 2.0
+      min_distance_to_goal: 1.0
+      route_relative:
+        offset_max: 0.6
+        first_offset_max: 0.3
+        arc_to_goal: 1.0
+        attempts_per_obstacle: 200
+        bypass:
+          corridor_half_width: 1.0
+          resolution: 0.01
+  aisle_strata:
+  - name: narrow
+    min_clearance: 0.13
+    max_clearance: 0.2
+  - name: medium
+    min_clearance: 0.2
+    max_clearance: 0.4
+  - name: wide
+    min_clearance: 0.4
+    max_clearance: 0.8
+baselines:
+  pure_pursuit:
+    cruise_speed: 0.25
+    k_omega: 1.5
+    goal_slowdown: 0.5
+  recovery:
+    wait: 1.0
+    speed: 0.08
+    max_distance: 0.3
+    max_attempts: 5
+    directions: 72
+    tie_tolerance: 0.001
+  mppi:
+    model: holonomic
+    horizon_steps: 30
+    samples: 1024
+    temperature: 1.0
+    noise_std:
+    - 0.1
+    - 0.1
+    - 0.5
+    iterations: 1
+    scan: filter
+    weights:
+      route_tracking: 1.0
+      goal_progress: 1.0
+      field_breach: 10.0
+      smoothness: 0.1
+    hard_rejection: footprint
+planner:
+  resolution: 0.05
+  lethal_margin: 0.1
+  soft_margin: 0.03
+  lookahead: 0.8
+  track_window: 1.0
+  soft_weight: 1.0
+env:
+  frozen_code_sha256: 636610213a97fd4c15484cf3809ef0dfbae0c380525f0c470841fbb500bc66ea
+  start_pose_tolerance_m: 0.01
+  start_pose_tolerance_rad: 0.01
+  observation:
+    goal_scale: 18.0
+    proximity_threshold: 0.5
+    dropout:
+      arc_probability: 0.1
+      arc_bins:
+      - 1
+      - 6
+      per_step_rate: 0.01
+  step_budget:
+    aggregate_steps_per_s: 25
+    instances: 4
+    over_budget_is_fatal: false
+training:
+  algo: sac
+  total_timesteps: 300000
+  learning_rate: 0.0003
+  buffer_size: 200000
+  learning_starts: 2000
+  batch_size: 256
+  tau: 0.005
+  gamma: 0.99
+  train_freq: 1
+  gradient_steps: 1
+  ent_coef: auto
+  net_arch:
+  - 256
+  - 256
+  device: auto
+  checkpoint_every: 25000
+  scenarios:
+  - scenarios/train/train_narrow.json
+  - scenarios/train/train_medium.json
+  - scenarios/train/train_wide.json

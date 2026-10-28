@@ -1,0 +1,256 @@
+{
+  "dry_run": false,
+  "scenario_module_matches_lock": true,
+  "bypass_corridor_half_width_m": 1.0,
+  "sets": {
+    "tune_narrow": {
+      "split": "tune",
+      "stratum": "narrow",
+      "episode_rate": 0.25,
+      "seeds": [
+        2000000,
+        2000019
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 0.25,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 5,
+        "engaged": 5,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 161,
+        "rejected": 152,
+        "by_cause": {
+          "no_bypass_within_corridor": 13,
+          "overlaps_other_unmapped": 3,
+          "too_close_to_mapped": 136
+        },
+        "rejection_rate": 0.9440993788819876,
+        "scenarios_lost_to_placement": 0
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 5,
+          "mean_arc_fraction": 0.4888361053859091
+        },
+        "others": {
+          "n": 4,
+          "mean_arc_fraction": 0.4145965694594508
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 9,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 0,
+          "open_floor": 9
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.0,
+          "open_floor": 1.0
+        }
+      },
+      "locked": false,
+      "path": "scenarios/tune/tune_narrow.json"
+    },
+    "tune_medium": {
+      "split": "tune",
+      "stratum": "medium",
+      "episode_rate": 0.25,
+      "seeds": [
+        2000020,
+        2000039
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 0.35,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 7,
+        "engaged": 7,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 78,
+        "rejected": 69,
+        "by_cause": {
+          "no_bypass_within_corridor": 5,
+          "overlaps_other_unmapped": 2,
+          "too_close_to_mapped": 62
+        },
+        "rejection_rate": 0.8846153846153846,
+        "scenarios_lost_to_placement": 0
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 7,
+          "mean_arc_fraction": 0.5252046746328574
+        },
+        "others": {
+          "n": 2,
+          "mean_arc_fraction": 0.813211922705644
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 9,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 0,
+          "open_floor": 9
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.0,
+          "open_floor": 1.0
+        }
+      },
+      "locked": false,
+      "path": "scenarios/tune/tune_medium.json"
+    },
+    "tune_wide": {
+      "split": "tune",
+      "stratum": "wide",
+      "episode_rate": 0.25,
+      "seeds": [
+        2000040,
+        2000059
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 0.25,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 5,
+        "engaged": 5,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 17,
+        "rejected": 11,
+        "by_cause": {
+          "no_bypass_within_corridor": 2,
+          "too_close_to_mapped": 9
+        },
+        "rejection_rate": 0.6470588235294118,
+        "scenarios_lost_to_placement": 0
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 5,
+          "mean_arc_fraction": 0.5009959825324682
+        },
+        "others": {
+          "n": 1,
+          "mean_arc_fraction": 0.6974777864761207
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 6,
+        "counts": {
+          "aisle": 2,
+          "aisle_mouth": 1,
+          "open_floor": 3
+        },
+        "shares": {
+          "aisle": 0.3333333333333333,
+          "aisle_mouth": 0.16666666666666666,
+          "open_floor": 0.5
+        }
+      },
+      "locked": false,
+      "path": "scenarios/tune/tune_wide.json"
+    },
+    "pilot_narrow": {
+      "split": "pilot",
+      "stratum": "narrow",
+      "episode_rate": 1.0,
+      "seeds": [
+        9000000,
+        9000149
+      ],
+      "requested": 150,
+      "built": 150,
+      "failures": 0,
+      "episode_rate_achieved": 1.0,
+      "engagement": {
+        "scenarios": 150,
+        "with_unmapped": 150,
+        "engaged": 150,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": true,
+      "placement": {
+        "attempts": 11263,
+        "rejected": 11027,
+        "by_cause": {
+          "near_goal": 1,
+          "no_bypass_within_corridor": 405,
+          "outside_hall": 9,
+          "overlaps_other_unmapped": 199,
+          "too_close_to_mapped": 10413
+        },
+        "rejection_rate": 0.9790464352304005,
+        "scenarios_lost_to_placement": 0
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 150,
+          "mean_arc_fraction": 0.654140183829682
+        },
+        "others": {
+          "n": 75,
+          "mean_arc_fraction": 0.6383852929393616
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 225,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 6,
+          "open_floor": 219
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.02666666666666667,
+          "open_floor": 0.9733333333333334
+        }
+      },
+      "locked": false,
+      "path": "scenarios/pilot/pilot_narrow.json"
+    }
+  }
+}

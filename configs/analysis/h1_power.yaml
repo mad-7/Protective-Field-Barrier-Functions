@@ -1,0 +1,27 @@
+# H1 power analysis (Monte Carlo of the frozen analysis). Ruled by the supervisor on 2026-10-02.
+# Every assumption below is the supervisor's; nothing measured is restated (the route lengths are
+# read from the pilot set, alpha and the comparators from preregistration/endpoints.yaml).
+defaults: ../base.yaml
+
+h1_power:
+  sizes_per_cell: [50, 75, 100]       # A14 candidates; H1 pools the strata, so pairs = size x the
+                                      #   number of strata in world.aisle_strata
+  comparator_rates_per_100m: [2, 5, 10]   # protective stops per 100 m, swept
+  l5_ratio: 0.7                       # L5 at 0.7 x the comparator rate: the 30 % margin
+  difficulty_cv: [0.5, 1.0, 1.5]      # shared scenario difficulty, gamma, mean 1, all arms
+  seed_cv: 0.3                        # learned arms: one gamma multiplier per training seed,
+                                      #   mean 1, constant across scenarios
+  n_seeds: 5                          # learned arms averaged over 5 seeds; classical run once
+  classical: [B1, B2, B3, B6]          # A16: B4 retired (= B1), B6 MPPI
+  learned: [L1, L2, L3]               # L5 is learned too; checked against endpoints.yaml
+  secondary_other_ratio_to_l5: 2.0    # secondary: one comparator at the margin, six at 2 x L5
+  route_lengths_from: scenarios/pilot/pilot_narrow.json   # planned route lengths, resampled
+  reps: 4000                          # Monte Carlo SE at power 0.80: 0.006
+  decision:                           # declared before running (supervisor, 2026-10-02)
+    comparator_rate_per_100m: 5
+    difficulty_cv: 1.0
+    scenario: all_at_margin
+    min_power: 0.80
+    # Holm: H1's level depends on H2 and on whether H1N joins the family. Reported at both
+    # worst cases -- alpha/2 (H1, H2) and alpha/3 (with H1N) -- and at alpha for reference. If the
+    # two worst cases choose different sizes, that is reported, not resolved here.

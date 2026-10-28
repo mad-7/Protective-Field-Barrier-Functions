@@ -1,0 +1,745 @@
+{
+  "mode": "gui",
+  "instance": 0,
+  "warmup_steps": 5,
+  "timed_steps": 200,
+  "stepping_level": {
+    "after_connect": 1,
+    "after_reload_initial": 1,
+    "after_reload_p0_as_loaded": 1,
+    "after_reload_p0_realtime_off": 0,
+    "after_reload_p0_realtime_on": 0,
+    "after_reload_p0_idle_fps_0": 0,
+    "after_reload_p0_display_off": 0,
+    "after_reload_p0_dynamics_off": 0,
+    "after_reload_p0_no_lidar": 0,
+    "after_reload_p0_youbot_alone": 0,
+    "after_reload_p0_empty_scene": 0,
+    "after_reload_p0_no_lidar_display_off": 0,
+    "after_reload_p0_no_lidar_display_off_no_furniture": 0,
+    "after_reload_p1_as_loaded": 0,
+    "after_reload_p1_realtime_off": 0,
+    "after_reload_p1_realtime_on": 0,
+    "after_reload_p1_idle_fps_0": 0,
+    "after_reload_p1_display_off": 0,
+    "after_reload_p1_dynamics_off": 0,
+    "after_reload_p1_no_lidar": 0,
+    "after_reload_p1_youbot_alone": 0,
+    "after_reload_p1_empty_scene": 0,
+    "after_reload_p1_no_lidar_display_off": 0,
+    "after_reload_p1_no_lidar_display_off_no_furniture": 0,
+    "after_reload_p2_as_loaded": 0,
+    "after_reload_p2_realtime_off": 0,
+    "after_reload_p2_realtime_on": 0,
+    "after_reload_p2_idle_fps_0": 0,
+    "after_reload_p2_display_off": 0,
+    "after_reload_p2_dynamics_off": 0,
+    "after_reload_p2_no_lidar": 0,
+    "after_reload_p2_youbot_alone": 0,
+    "after_reload_p2_empty_scene": 0,
+    "after_reload_p2_no_lidar_display_off": 0,
+    "after_reload_p2_no_lidar_display_off_no_furniture": 0,
+    "after_reload_final": 0
+  },
+  "configurations": {
+    "as_loaded": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 27.477414500000002,
+        "p50_ms": 27.16385,
+        "p95_ms": 33.539809999999996,
+        "max_ms": 43.7991,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        25.760906,
+        28.09687,
+        28.5744675
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.6339121666666667,
+        "p50_ms": 0.63515,
+        "p95_ms": 0.9412199999999995,
+        "max_ms": 1.3546,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 0,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 8,
+        "display_enabled": true,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/Wall/Script": 0.0,
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/LiDAR/Script": 0.0,
+        "/youBot/LiDAR/sensor1/Script": 0.0,
+        "/youBot/LiDAR/sensor2/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    },
+    "realtime_off": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 26.762831333333335,
+        "p50_ms": 26.68635,
+        "p95_ms": 32.681095,
+        "max_ms": 42.536,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        24.115357999999997,
+        28.198254000000002,
+        27.974881999999997
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.7177593333333333,
+        "p50_ms": 0.67195,
+        "p95_ms": 1.0714199999999998,
+        "max_ms": 2.7472,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 0,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 8,
+        "display_enabled": true,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/Wall/Script": 0.0,
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/LiDAR/Script": 0.0,
+        "/youBot/LiDAR/sensor1/Script": 0.0,
+        "/youBot/LiDAR/sensor2/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    },
+    "realtime_on": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 49.85894483333333,
+        "p50_ms": 50.259699999999995,
+        "p95_ms": 55.23359,
+        "max_ms": 59.174,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        49.86128049999999,
+        49.8556775,
+        49.8598765
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.7663016666666667,
+        "p50_ms": 0.685,
+        "p95_ms": 1.1077349999999995,
+        "max_ms": 3.9502,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 0,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": true,
+        "idle_fps": 8,
+        "display_enabled": true,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/Wall/Script": 0.0,
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/LiDAR/Script": 0.0,
+        "/youBot/LiDAR/sensor1/Script": 0.0,
+        "/youBot/LiDAR/sensor2/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    },
+    "idle_fps_0": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 28.330549333333334,
+        "p50_ms": 27.80475,
+        "p95_ms": 33.404999999999994,
+        "max_ms": 38.9323,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        27.45654,
+        29.173957499999997,
+        28.361150500000004
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.7933606666666666,
+        "p50_ms": 0.73465,
+        "p95_ms": 1.1830649999999998,
+        "max_ms": 2.0444,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 0,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 0,
+        "display_enabled": true,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/Wall/Script": 0.0,
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/LiDAR/Script": 0.0,
+        "/youBot/LiDAR/sensor1/Script": 0.0,
+        "/youBot/LiDAR/sensor2/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    },
+    "display_off": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 20.157938,
+        "p50_ms": 19.642200000000003,
+        "p95_ms": 23.821534999999997,
+        "max_ms": 30.5822,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        20.168903,
+        20.325775000000004,
+        19.979135999999997
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.6946323333333333,
+        "p50_ms": 0.63525,
+        "p95_ms": 1.0272749999999997,
+        "max_ms": 4.6748,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 0,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 8,
+        "display_enabled": false,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/Wall/Script": 0.0,
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/LiDAR/Script": 0.0,
+        "/youBot/LiDAR/sensor1/Script": 0.0,
+        "/youBot/LiDAR/sensor2/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    },
+    "dynamics_off": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 21.266448999999998,
+        "p50_ms": 20.8548,
+        "p95_ms": 25.594314999999998,
+        "max_ms": 33.3693,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        21.5327545,
+        20.905069000000005,
+        21.361523500000004
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.7346185000000001,
+        "p50_ms": 0.69345,
+        "p95_ms": 1.08245,
+        "max_ms": 3.4665,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 0,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 8,
+        "display_enabled": true,
+        "dynamics_handling_enabled": false,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/Wall/Script": 0.0,
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/LiDAR/Script": 0.0,
+        "/youBot/LiDAR/sensor1/Script": 0.0,
+        "/youBot/LiDAR/sensor2/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    },
+    "no_lidar": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 17.857318666666668,
+        "p50_ms": 17.4838,
+        "p95_ms": 21.2035,
+        "max_ms": 26.2585,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        18.7515625,
+        17.420706,
+        17.3996875
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.7471348333333333,
+        "p50_ms": 0.6989,
+        "p95_ms": 1.04191,
+        "max_ms": 1.7364,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 14,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 8,
+        "display_enabled": true,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/Wall/Script": 0.0,
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    },
+    "youbot_alone": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 25.449841666666664,
+        "p50_ms": 24.978450000000002,
+        "p95_ms": 30.13445,
+        "max_ms": 38.0387,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        25.208954000000002,
+        25.419159,
+        25.721412
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.7407675,
+        "p50_ms": 0.70075,
+        "p95_ms": 1.0614799999999995,
+        "max_ms": 4.5477,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 17,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 8,
+        "display_enabled": true,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/LiDAR/Script": 0.0,
+        "/youBot/LiDAR/sensor1/Script": 0.0,
+        "/youBot/LiDAR/sensor2/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    },
+    "empty_scene": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 7.9612495,
+        "p50_ms": 7.6659500000000005,
+        "p95_ms": 10.470304999999998,
+        "max_ms": 19.1914,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        7.9217284999999995,
+        7.876213500000001,
+        8.0858065
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.7901113333333334,
+        "p50_ms": 0.7604,
+        "p95_ms": 1.09893,
+        "max_ms": 2.0568,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 107,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 8,
+        "display_enabled": true,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {}
+    },
+    "no_lidar_display_off": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 10.8247025,
+        "p50_ms": 10.799050000000001,
+        "p95_ms": 12.575755,
+        "max_ms": 16.1925,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        10.516449999999999,
+        11.177723999999998,
+        10.779933500000002
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.7412834999999999,
+        "p50_ms": 0.6963,
+        "p95_ms": 1.15461,
+        "max_ms": 4.7395,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 14,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 8,
+        "display_enabled": false,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/Wall/Script": 0.0,
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    },
+    "no_lidar_display_off_no_furniture": {
+      "passes": 3,
+      "step": {
+        "n": 600,
+        "mean_ms": 10.188025166666666,
+        "p50_ms": 10.06905,
+        "p95_ms": 11.984734999999999,
+        "max_ms": 19.3435,
+        "flagged": true,
+        "p95_over": true
+      },
+      "step_mean_ms_by_pass": [
+        10.0464255,
+        10.2131575,
+        10.304492500000002
+      ],
+      "roundtrip_call": {
+        "n": 600,
+        "mean_ms": 0.6856818333333333,
+        "p50_ms": 0.6476999999999999,
+        "p95_ms": 0.96535,
+        "max_ms": 2.2014,
+        "flagged": false,
+        "p95_over": false
+      },
+      "objects_removed": 31,
+      "settings_in_force": {
+        "headless": false,
+        "realtime_simulation": false,
+        "idle_fps": 8,
+        "display_enabled": false,
+        "dynamics_handling_enabled": true,
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "stepping_level": [
+        1,
+        1,
+        1
+      ],
+      "script_execs_per_step": {
+        "/youBot/rollingJoint_rr/Script": 0.0,
+        "/youBot/rollingJoint_rl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fl/Script": 0.0,
+        "/youBot/Joint/Rectangle0/rollingJoint_fr/Script": 0.0,
+        "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script": 0.0
+      }
+    }
+  },
+  "settings_as_loaded": {
+    "headless": false,
+    "realtime_simulation": false,
+    "idle_fps": 8,
+    "display_enabled": true,
+    "dynamics_handling_enabled": true,
+    "simulation_time_step": 0.05,
+    "dynamic_step_size": 0.005
+  },
+  "inventory": {
+    "objects": 107,
+    "by_type": {
+      "camera": 7,
+      "dummy": 9,
+      "shape": 55,
+      "light": 4,
+      "joint": 16,
+      "script": 12,
+      "visionsensor": 4
+    },
+    "scripts": [
+      {
+        "handle": 105,
+        "path": "/Wall/Script",
+        "type": "customization",
+        "enabled": false
+      },
+      {
+        "handle": 35,
+        "path": "/youBot/rollingJoint_rr/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 41,
+        "path": "/youBot/rollingJoint_rl/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 91,
+        "path": "/youBot/LiDAR/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 98,
+        "path": "/youBot/LiDAR/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 94,
+        "path": "/youBot/LiDAR/sensor1/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 96,
+        "path": "/youBot/LiDAR/sensor2/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 101,
+        "path": "/youBot/LiDAR/sensor1/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 103,
+        "path": "/youBot/LiDAR/sensor2/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 49,
+        "path": "/youBot/Joint/Rectangle0/rollingJoint_fl/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 55,
+        "path": "/youBot/Joint/Rectangle0/rollingJoint_fr/Script",
+        "type": "simulation",
+        "enabled": false
+      },
+      {
+        "handle": 81,
+        "path": "/youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script",
+        "type": "simulation",
+        "enabled": false
+      }
+    ],
+    "vision_sensors": [
+      {
+        "handle": 93,
+        "path": "/youBot/LiDAR/sensor1",
+        "resolution": [
+          256,
+          1
+        ]
+      },
+      {
+        "handle": 95,
+        "path": "/youBot/LiDAR/sensor2",
+        "resolution": [
+          256,
+          1
+        ]
+      },
+      {
+        "handle": 100,
+        "path": "/youBot/LiDAR/sensor1",
+        "resolution": [
+          256,
+          1
+        ]
+      },
+      {
+        "handle": 102,
+        "path": "/youBot/LiDAR/sensor2",
+        "resolution": [
+          256,
+          1
+        ]
+      }
+    ],
+    "proximity_sensors": []
+  },
+  "scene_sha256_before_after": [
+    "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd",
+    "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd"
+  ],
+  "decision": {
+    "floor_ms": 20.157938,
+    "floor_config": "display_off",
+    "threshold_ms": 15.0,
+    "decision": "replan_matrix",
+    "measured_in_mode": "gui"
+  },
+  "lidar_option": {
+    "floor_ms": 10.188025166666666,
+    "floor_config": "no_lidar_display_off_no_furniture",
+    "saving_ms": 9.969912833333336,
+    "would_decide": "batched_step",
+    "requires": "a deliberate scene edit and a supervisor decision"
+  }
+}

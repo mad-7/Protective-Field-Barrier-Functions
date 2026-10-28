@@ -1,0 +1,22 @@
+{
+  "seed": 0,
+  "experiment": "SCANRES_20260921T214435Z",
+  "created_utc": "2026-09-21T21:44:35.081651+00:00",
+  "commit": "7c9253b35c921bd39b99e86474dae9e2ec33003f",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd",
+  "display_enabled": false,
+  "host": {
+    "hostname": "DESKTOP-5MIDQ97",
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.10",
+    "cpu_model": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "logical_cores": 8,
+    "physical_cores": 4,
+    "ram_total_gb": 7.7,
+    "gpu": "none available to torch",
+    "shared": false,
+    "torch": "2.11.0+cpu"
+  }
+}

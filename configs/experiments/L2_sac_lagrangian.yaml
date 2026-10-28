@@ -1,0 +1,33 @@
+# L2: SAC-Lagrangian, no filter (certified layer still beneath). Ruled 2026-10-03:
+#   maximise the unshaped task reward subject to E[protective stops triggered per episode] <= d,
+#   with a Lagrange multiplier (PID-Lagrangian, A28b) and a separate cost critic, on the same SB3 SAC with
+#   every `training:` hyperparameter shared with the other learned arms (ruled 2026-10-26).
+# RULED 2026-10-27: d = 0.1 stops per episode, fixed A PRIORI (superseding the 2026-10-03 selection
+# of d on the tune set, which would have given L2 a per-arm tuning budget no other learned arm has);
+# the multiplier's settings are DECLARED, not tuned. This file is L2. The exploratory sensitivity
+# L2-d005 and L2-d020 (configs/methods.yaml; first in the cut order) are its two children.
+# Implementation: pfbnav/control/sac_lagrangian.py; toy positive control tests/test_sac_lagrangian.py
+# and scripts/validate_l2_toy.py.
+defaults: ../base.yaml
+experiment: L2_sac_lagrangian
+filter:
+  enabled: false
+reward:
+  k_stop: 0.0              # no stop penalty: the stops are the constraint (ruled 2026-10-03)
+  k_proximity: 0.0         # no proximity shaping (ruled 2026-10-03)
+lagrangian:
+  cost: stop_triggered     # per step, 0/1: info["certified"]["stop_triggered"] (NavEnv.step)
+  cost_limit: 0.1          # d, protective stops triggered per episode; a priori (ruled 2026-10-27)
+  multiplier_init: 0.0     # lambda_0, reward units per stop (ruled 2026-10-27)
+  pid_candidate: 1         # PID-Lagrangian (A28b, ruled 2026-10-27; Stooke et al. 2020): lambda is
+                           #   set once per completed episode from the mean stops per episode of
+                           #   the last cost_window episodes against d (no (1 - gamma^T)
+                           #   conversion), with the gains of one of the three DECLARED candidates
+                           #   (pfbnav/control/sac_lagrangian.py PID_CANDIDATES). SELECTED 2026-10-27:
+                           #   candidate 1 = (0.1, 2e-3, 0), the first in declared order to pass the
+                           #   toy control on seeds 0-3 (runs/validation/L2_TOY_PID1_20261027T18*,
+                           #   commit b9c1b42); candidates 2 and 3 were not run.
+                           #   Retired: multiplier_lr 3e-4 per gradient step (A28a dual ascent).
+  cost_window: 20          # completed episodes in that mean; lambda is held at 0 until 20 complete
+  multiplier_max: 100.0    # lambda_max, reward units per stop; lambda is projected onto
+                           #   [0, lambda_max] (ruled 2026-10-27)

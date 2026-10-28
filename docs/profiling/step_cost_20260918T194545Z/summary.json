@@ -1,0 +1,744 @@
+{
+  "note": "profiling pass, not a gate: no PASS/FAIL",
+  "flag_ms": 2.0,
+  "machine": {
+    "logical_cores": 8,
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "physical_cores": 4
+  },
+  "runs": {
+    "1": {
+      "physics": {
+        "engine": 1,
+        "engine_name": "ODE",
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "components": {
+        "budget": {
+          "n": 1200,
+          "mean_ms": 0.03604466666666666,
+          "p50_ms": 0.0333,
+          "p95_ms": 0.064105,
+          "max_ms": 0.3484,
+          "flagged": false,
+          "p95_over": false
+        },
+        "command": {
+          "n": 1200,
+          "mean_ms": 6.643026833333334,
+          "p50_ms": 6.225949999999999,
+          "p95_ms": 10.151854999999998,
+          "max_ms": 18.0275,
+          "flagged": true,
+          "p95_over": true
+        },
+        "step": {
+          "n": 1200,
+          "mean_ms": 56.16505158333334,
+          "p50_ms": 53.53085,
+          "p95_ms": 76.11970999999998,
+          "max_ms": 150.3051,
+          "flagged": true,
+          "p95_over": true
+        },
+        "contact": {
+          "n": 1200,
+          "mean_ms": 6.640798833333333,
+          "p50_ms": 3.56165,
+          "p95_ms": 5.701939999999999,
+          "max_ms": 1223.583,
+          "flagged": true,
+          "p95_over": true
+        },
+        "pose": {
+          "n": 1200,
+          "mean_ms": 3.3169243333333336,
+          "p50_ms": 3.01975,
+          "p95_ms": 5.173954999999999,
+          "max_ms": 10.3801,
+          "flagged": true,
+          "p95_over": true
+        },
+        "velocity": {
+          "n": 1200,
+          "mean_ms": 0.08990883333333333,
+          "p50_ms": 0.0854,
+          "p95_ms": 0.1436,
+          "max_ms": 0.5131,
+          "flagged": false,
+          "p95_over": false
+        },
+        "torque_cap": {
+          "n": 1200,
+          "mean_ms": 6.3560091666666665,
+          "p50_ms": 5.928100000000001,
+          "p95_ms": 9.60536,
+          "max_ms": 17.217,
+          "flagged": true,
+          "p95_over": true
+        }
+      },
+      "whole_step": {
+        "n": 1200,
+        "mean_ms": 79.24776425,
+        "p50_ms": 72.97945000000001,
+        "p95_ms": 105.32806999999993,
+        "max_ms": 1295.1994,
+        "flagged": true,
+        "p95_over": true
+      },
+      "aggregate_steps_per_s_by_pass": [
+        12.77664070289309,
+        12.486354794421079,
+        12.596356855217985
+      ],
+      "spikes": [
+        {
+          "pass": 0,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        }
+      ],
+      "torque_cap_counts": [
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        }
+      ]
+    },
+    "2": {
+      "physics": {
+        "engine": 1,
+        "engine_name": "ODE",
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "components": {
+        "budget": {
+          "n": 2400,
+          "mean_ms": 0.039091208333333335,
+          "p50_ms": 0.03585,
+          "p95_ms": 0.06530499999999997,
+          "max_ms": 0.257,
+          "flagged": false,
+          "p95_over": false
+        },
+        "command": {
+          "n": 2400,
+          "mean_ms": 7.750950541666666,
+          "p50_ms": 7.268,
+          "p95_ms": 12.21126,
+          "max_ms": 39.3589,
+          "flagged": true,
+          "p95_over": true
+        },
+        "step": {
+          "n": 2400,
+          "mean_ms": 68.13949658333334,
+          "p50_ms": 64.4128,
+          "p95_ms": 100.94461999999999,
+          "max_ms": 133.7366,
+          "flagged": true,
+          "p95_over": true
+        },
+        "contact": {
+          "n": 2400,
+          "mean_ms": 7.761816916666667,
+          "p50_ms": 4.22755,
+          "p95_ms": 6.979239999999993,
+          "max_ms": 1493.8985,
+          "flagged": true,
+          "p95_over": true
+        },
+        "pose": {
+          "n": 2400,
+          "mean_ms": 3.9141849583333337,
+          "p50_ms": 3.6536,
+          "p95_ms": 6.1872549999999995,
+          "max_ms": 16.7797,
+          "flagged": true,
+          "p95_over": true
+        },
+        "velocity": {
+          "n": 2400,
+          "mean_ms": 0.09868183333333332,
+          "p50_ms": 0.0896,
+          "p95_ms": 0.16690499999999997,
+          "max_ms": 1.0468,
+          "flagged": false,
+          "p95_over": false
+        },
+        "torque_cap": {
+          "n": 2400,
+          "mean_ms": 7.52833225,
+          "p50_ms": 6.93705,
+          "p95_ms": 12.068994999999994,
+          "max_ms": 24.3975,
+          "flagged": true,
+          "p95_over": true
+        }
+      },
+      "whole_step": {
+        "n": 2400,
+        "mean_ms": 95.23255429166667,
+        "p50_ms": 86.62675,
+        "p95_ms": 137.17704999999998,
+        "max_ms": 1579.401,
+        "flagged": true,
+        "p95_over": true
+      },
+      "aggregate_steps_per_s_by_pass": [
+        20.864423116813747,
+        20.80550220855022,
+        21.341917052371794
+      ],
+      "spikes": [
+        {
+          "pass": 0,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 0,
+          "instance": 1,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 1,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 1,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        }
+      ],
+      "torque_cap_counts": [
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        }
+      ]
+    },
+    "3": {
+      "physics": {
+        "engine": 1,
+        "engine_name": "ODE",
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "components": {
+        "budget": {
+          "n": 3600,
+          "mean_ms": 0.03330244444444444,
+          "p50_ms": 0.0294,
+          "p95_ms": 0.05700999999999995,
+          "max_ms": 0.8946,
+          "flagged": false,
+          "p95_over": false
+        },
+        "command": {
+          "n": 3600,
+          "mean_ms": 6.3262006388888885,
+          "p50_ms": 6.308199999999999,
+          "p95_ms": 9.48578999999999,
+          "max_ms": 18.4508,
+          "flagged": true,
+          "p95_over": true
+        },
+        "step": {
+          "n": 3600,
+          "mean_ms": 57.00443336111112,
+          "p50_ms": 59.0291,
+          "p95_ms": 73.921305,
+          "max_ms": 119.0964,
+          "flagged": true,
+          "p95_over": true
+        },
+        "contact": {
+          "n": 3600,
+          "mean_ms": 6.429530194444445,
+          "p50_ms": 3.7225,
+          "p95_ms": 5.509104999999994,
+          "max_ms": 1290.7145,
+          "flagged": true,
+          "p95_over": true
+        },
+        "pose": {
+          "n": 3600,
+          "mean_ms": 3.211944833333333,
+          "p50_ms": 3.17985,
+          "p95_ms": 4.867925,
+          "max_ms": 11.0696,
+          "flagged": true,
+          "p95_over": true
+        },
+        "velocity": {
+          "n": 3600,
+          "mean_ms": 0.08452891666666669,
+          "p50_ms": 0.0778,
+          "p95_ms": 0.13541499999999992,
+          "max_ms": 1.1493,
+          "flagged": false,
+          "p95_over": false
+        },
+        "torque_cap": {
+          "n": 3600,
+          "mean_ms": 6.001299138888889,
+          "p50_ms": 6.00275,
+          "p95_ms": 8.694145,
+          "max_ms": 16.5422,
+          "flagged": true,
+          "p95_over": true
+        }
+      },
+      "whole_step": {
+        "n": 3600,
+        "mean_ms": 79.09123952777779,
+        "p50_ms": 79.5554,
+        "p95_ms": 98.37405500000001,
+        "max_ms": 1357.0240999999999,
+        "flagged": true,
+        "p95_over": true
+      },
+      "aggregate_steps_per_s_by_pass": [
+        34.0206136757367,
+        46.915790347470235,
+        35.23296492972035
+      ],
+      "spikes": [
+        {
+          "pass": 0,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 0,
+          "instance": 1,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 0,
+          "instance": 2,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 1,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 2,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 1,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 2,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        }
+      ],
+      "torque_cap_counts": [
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        }
+      ]
+    },
+    "4": {
+      "physics": {
+        "engine": 1,
+        "engine_name": "ODE",
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "components": {
+        "budget": {
+          "n": 4800,
+          "mean_ms": 0.035996437500000006,
+          "p50_ms": 0.0328,
+          "p95_ms": 0.06330500000000001,
+          "max_ms": 1.3575,
+          "flagged": false,
+          "p95_over": false
+        },
+        "command": {
+          "n": 4800,
+          "mean_ms": 6.757412125000001,
+          "p50_ms": 6.55865,
+          "p95_ms": 9.835700000000003,
+          "max_ms": 41.2719,
+          "flagged": true,
+          "p95_over": true
+        },
+        "step": {
+          "n": 4800,
+          "mean_ms": 63.14533145833334,
+          "p50_ms": 61.492850000000004,
+          "p95_ms": 76.561545,
+          "max_ms": 3045.7886,
+          "flagged": true,
+          "p95_over": true
+        },
+        "contact": {
+          "n": 4800,
+          "mean_ms": 6.757652875000002,
+          "p50_ms": 3.83725,
+          "p95_ms": 5.505295000000002,
+          "max_ms": 1445.0856,
+          "flagged": true,
+          "p95_over": true
+        },
+        "pose": {
+          "n": 4800,
+          "mean_ms": 3.425351729166667,
+          "p50_ms": 3.2694,
+          "p95_ms": 5.073705000000001,
+          "max_ms": 63.7134,
+          "flagged": true,
+          "p95_over": true
+        },
+        "velocity": {
+          "n": 4800,
+          "mean_ms": 0.09329014583333334,
+          "p50_ms": 0.0829,
+          "p95_ms": 0.158205,
+          "max_ms": 4.0119,
+          "flagged": false,
+          "p95_over": false
+        },
+        "torque_cap": {
+          "n": 4800,
+          "mean_ms": 6.500092812499999,
+          "p50_ms": 6.300700000000001,
+          "p95_ms": 9.373675,
+          "max_ms": 23.7421,
+          "flagged": true,
+          "p95_over": true
+        }
+      },
+      "whole_step": {
+        "n": 4800,
+        "mean_ms": 86.71512758333333,
+        "p50_ms": 82.3639,
+        "p95_ms": 102.186365,
+        "max_ms": 3079.5910000000003,
+        "flagged": true,
+        "p95_over": true
+      },
+      "aggregate_steps_per_s_by_pass": [
+        40.93736026427855,
+        49.23539959286063,
+        49.26547228420443
+      ],
+      "spikes": [
+        {
+          "pass": 0,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 0,
+          "instance": 1,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 0,
+          "instance": 2,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 0,
+          "instance": 3,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 1,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 2,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 1,
+          "instance": 3,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 0,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 1,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 1,
+          "component": "pose",
+          "steps": [
+            22
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 2,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        },
+        {
+          "pass": 2,
+          "instance": 3,
+          "component": "contact",
+          "steps": [
+            0
+          ]
+        }
+      ],
+      "torque_cap_counts": [
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        }
+      ]
+    }
+  }
+}

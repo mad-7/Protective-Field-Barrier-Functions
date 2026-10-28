@@ -1,0 +1,18 @@
+Metadata-Version: 2.4
+Name: pfbnav
+Version: 2.0.0.dev0
+Summary: Protective-Field Barrier functions for learned local planning on industrial mobile robots
+Requires-Python: >=3.10
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: pyyaml
+Requires-Dist: pandas
+Requires-Dist: matplotlib
+Requires-Dist: gymnasium
+Requires-Dist: stable-baselines3
+Requires-Dist: torch
+Requires-Dist: qpsolvers[osqp]
+Requires-Dist: coppeliasim-zmqremoteapi-client
+Provides-Extra: dev
+Requires-Dist: pytest; extra == "dev"
+Requires-Dist: ruff; extra == "dev"

@@ -1,0 +1,343 @@
+{
+  "bare": {
+    "label": "bare",
+    "steps": 500,
+    "final_s_m": 0.9827167866838499,
+    "stops": [
+      {
+        "step": 86,
+        "final": false,
+        "s_m": 0.9457569362987899,
+        "layout_pose": [
+          4.5513411376068476,
+          7.345317208629412,
+          -1.7643130344199591
+        ],
+        "yaw_rel_route_deg": -0.3033927446194109,
+        "speed": 0.23633829559380687,
+        "certified": {
+          "stop_active": false,
+          "stop_triggered": true,
+          "field_id": 2,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 1,
+          "breached": true,
+          "at_rest": false,
+          "speed": 0.23631514022538033,
+          "field_speed": 0.25,
+          "field_yaw_rate": 0.0017549271141167405,
+          "reach_speed": 0.325,
+          "triggered_at_rest": false,
+          "triggered_stationary": false,
+          "at_rest_triggers": 0,
+          "stationary_triggers": 0,
+          "yaw_interval": [
+            -0.03202757805179784,
+            0.03202757805179784
+          ],
+          "restart_blocked": false,
+          "enabled": true
+        },
+        "recovery": null,
+        "n_inside_at_rest": 0
+      },
+      {
+        "step": 500,
+        "final": true,
+        "s_m": 0.9827167866838499,
+        "layout_pose": [
+          4.5444392856465825,
+          7.309007496748376,
+          -1.7641789096870595
+        ],
+        "yaw_rel_route_deg": -0.2957079634984355,
+        "speed": 2.4144066713047516e-05,
+        "certified": {
+          "stop_active": true,
+          "stop_triggered": false,
+          "field_id": 0,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 1,
+          "breached": false,
+          "at_rest": true,
+          "speed": 1.5506941759888827e-05,
+          "field_speed": 1.5506941759888827e-05,
+          "field_yaw_rate": -1.729901612198426e-06,
+          "reach_speed": 0.0750155069417599,
+          "triggered_at_rest": false,
+          "triggered_stationary": false,
+          "at_rest_triggers": 0,
+          "stationary_triggers": 0,
+          "yaw_interval": [
+            -0.03150051897155244,
+            0.03150051897155244
+          ],
+          "restart_blocked": true,
+          "enabled": true
+        },
+        "recovery": null,
+        "n_inside_at_rest": 0
+      }
+    ]
+  },
+  "recovery": {
+    "label": "recovery",
+    "steps": 500,
+    "final_s_m": 1.1735389559158127,
+    "stops": [
+      {
+        "step": 86,
+        "final": false,
+        "s_m": 0.9457569362987899,
+        "layout_pose": [
+          4.5513411376068476,
+          7.345317208629412,
+          -1.7643130344199591
+        ],
+        "yaw_rel_route_deg": -0.3033927446194109,
+        "speed": 0.23633829559380687,
+        "certified": {
+          "stop_active": false,
+          "stop_triggered": true,
+          "field_id": 2,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 1,
+          "breached": true,
+          "at_rest": false,
+          "speed": 0.23631514022538033,
+          "field_speed": 0.25,
+          "field_yaw_rate": 0.0017549271141167405,
+          "reach_speed": 0.325,
+          "triggered_at_rest": false,
+          "triggered_stationary": false,
+          "at_rest_triggers": 0,
+          "stationary_triggers": 0,
+          "yaw_interval": [
+            -0.03202757805179784,
+            0.03202757805179784
+          ],
+          "restart_blocked": false,
+          "enabled": true
+        },
+        "recovery": {
+          "mode": "pass",
+          "attempts": 0,
+          "gave_up": null
+        },
+        "n_inside_at_rest": 0
+      },
+      {
+        "step": 212,
+        "final": false,
+        "s_m": 1.0070806855837575,
+        "layout_pose": [
+          4.519740401244642,
+          7.288910109501504,
+          -1.7494212210339708
+        ],
+        "yaw_rel_route_deg": 0.5498453116941443,
+        "speed": 0.1915074760802353,
+        "certified": {
+          "stop_active": false,
+          "stop_triggered": true,
+          "field_id": 2,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 2,
+          "breached": true,
+          "at_rest": false,
+          "speed": 0.1713779461884888,
+          "field_speed": 0.23347044059479227,
+          "field_yaw_rate": 0.02234146731550894,
+          "reach_speed": 0.3084704405947923,
+          "triggered_at_rest": false,
+          "triggered_stationary": false,
+          "at_rest_triggers": 0,
+          "stationary_triggers": 0,
+          "yaw_interval": [
+            -0.0383807048952991,
+            0.0383807048952991
+          ],
+          "restart_blocked": false,
+          "enabled": true
+        },
+        "recovery": {
+          "mode": "pass",
+          "attempts": 1,
+          "gave_up": null
+        },
+        "n_inside_at_rest": 0
+      },
+      {
+        "step": 361,
+        "final": false,
+        "s_m": 1.056783310935122,
+        "layout_pose": [
+          4.4744011418024,
+          7.246949931660713,
+          -1.7172159476371303
+        ],
+        "yaw_rel_route_deg": 2.3950715553980557,
+        "speed": 0.19231928932451675,
+        "certified": {
+          "stop_active": false,
+          "stop_triggered": true,
+          "field_id": 2,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 3,
+          "breached": true,
+          "at_rest": false,
+          "speed": 0.17244300703823856,
+          "field_speed": 0.2347195236940228,
+          "field_yaw_rate": 0.04771828395225771,
+          "reach_speed": 0.3097195236940228,
+          "triggered_at_rest": false,
+          "triggered_stationary": false,
+          "at_rest_triggers": 0,
+          "stationary_triggers": 0,
+          "yaw_interval": [
+            -0.046628711836873143,
+            0.046628711836873143
+          ],
+          "restart_blocked": false,
+          "enabled": true
+        },
+        "recovery": {
+          "mode": "pass",
+          "attempts": 2,
+          "gave_up": null
+        },
+        "n_inside_at_rest": 0
+      },
+      {
+        "step": 482,
+        "final": false,
+        "s_m": 1.1369979955678795,
+        "layout_pose": [
+          4.432191031702006,
+          7.173333090757306,
+          -1.6816476596507945
+        ],
+        "yaw_rel_route_deg": 4.432984341518939,
+        "speed": 0.19429365398841622,
+        "certified": {
+          "stop_active": false,
+          "stop_triggered": true,
+          "field_id": 2,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 4,
+          "breached": true,
+          "at_rest": false,
+          "speed": 0.17499367394428514,
+          "field_speed": 0.23758381978180942,
+          "field_yaw_rate": 0.051306756394689686,
+          "reach_speed": 0.31258381978180944,
+          "triggered_at_rest": false,
+          "triggered_stationary": false,
+          "at_rest_triggers": 0,
+          "stationary_triggers": 0,
+          "yaw_interval": [
+            -0.04783216379402978,
+            0.04783216379402978
+          ],
+          "restart_blocked": false,
+          "enabled": true
+        },
+        "recovery": {
+          "mode": "pass",
+          "attempts": 3,
+          "gave_up": null
+        },
+        "n_inside_at_rest": 0
+      },
+      {
+        "step": 500,
+        "final": true,
+        "s_m": 1.1735389559158127,
+        "layout_pose": [
+          4.429042752511908,
+          7.136734833882002,
+          -1.6797962845534997
+        ],
+        "yaw_rel_route_deg": 4.539060320892061,
+        "speed": 0.0006373223939601478,
+        "certified": {
+          "stop_active": true,
+          "stop_triggered": false,
+          "field_id": 0,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 4,
+          "breached": false,
+          "at_rest": true,
+          "speed": 0.0009508806094998742,
+          "field_speed": 0.0009508806094998742,
+          "field_yaw_rate": 7.042427248335394e-05,
+          "reach_speed": 0.07595088060949988,
+          "triggered_at_rest": false,
+          "triggered_stationary": false,
+          "at_rest_triggers": 0,
+          "stationary_triggers": 0,
+          "yaw_interval": [
+            -0.03152112905302293,
+            0.03152112905302293
+          ],
+          "restart_blocked": true,
+          "enabled": true
+        },
+        "recovery": {
+          "mode": "pass",
+          "attempts": 3,
+          "gave_up": null
+        },
+        "n_inside_at_rest": 0
+      }
+    ],
+    "recovery": {
+      "recovery_attempts": 3,
+      "recovery_endings": {
+        "cleared": 3,
+        "distance": 0,
+        "new_stop": 0,
+        "not_released": 0,
+        "no_permitted_direction": 0
+      },
+      "recovery_attempt_log": [
+        {
+          "start_step": 148,
+          "heading_deg": -155.00000000000003,
+          "ending": "cleared",
+          "distance_m": 0.0464952020770731,
+          "steps": 54,
+          "time_s": 2.7
+        },
+        {
+          "start_step": 274,
+          "heading_deg": -145.0,
+          "ending": "cleared",
+          "distance_m": 0.06705768961376685,
+          "steps": 77,
+          "time_s": 3.85
+        },
+        {
+          "start_step": 423,
+          "heading_deg": -130.0,
+          "ending": "cleared",
+          "distance_m": 0.04201160386198899,
+          "steps": 49,
+          "time_s": 2.45
+        }
+      ],
+      "recovery_deadlock": null,
+      "recovery_gave_up": null,
+      "recovery_distance_m": 0.15556449555282895,
+      "recovery_steps": 180,
+      "recovery_time_s": 9.0
+    }
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "by_soft": {
+    "0.03": {
+      "all": {
+        "routes": 2271,
+        "plannable": 2271,
+        "start_invalid": 20,
+        "goal_invalid": 0,
+        "residual": 0,
+        "residual_share": 0.0,
+        "clear": 2251,
+        "bend_stop_routes": 0,
+        "unavoidable_stops_per_100m": 0.08330788402319106,
+        "a1_tangent_stops_per_100m": 1.0121907908817713
+      },
+      "per_stratum": {
+        "medium": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.0527786837856182
+        },
+        "narrow": {
+          "routes": 857,
+          "plannable": 857,
+          "start_invalid": 20,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 837,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.22171491378093797,
+          "a1_tangent_stops_per_100m": 2.649493219682209
+        },
+        "wide": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.0
+        }
+      },
+      "plannable_everywhere": true,
+      "residual_rule": "re-sample",
+      "quantisation_failures": 0
+    },
+    "0.05": {
+      "all": {
+        "routes": 2271,
+        "plannable": 2271,
+        "start_invalid": 20,
+        "goal_invalid": 0,
+        "residual": 0,
+        "residual_share": 0.0,
+        "clear": 2251,
+        "bend_stop_routes": 0,
+        "unavoidable_stops_per_100m": 0.08277796762599632,
+        "a1_tangent_stops_per_100m": 0.9353910341737585
+      },
+      "per_stratum": {
+        "medium": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.10523440559443224
+        },
+        "narrow": {
+          "routes": 857,
+          "plannable": 857,
+          "start_invalid": 20,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 837,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.21905724734349702,
+          "a1_tangent_stops_per_100m": 2.3877239960441172
+        },
+        "wide": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.0
+        }
+      },
+      "plannable_everywhere": true,
+      "residual_rule": "re-sample",
+      "quantisation_failures": 0
+    },
+    "0.08": {
+      "all": {
+        "routes": 2271,
+        "plannable": 2271,
+        "start_invalid": 20,
+        "goal_invalid": 0,
+        "residual": 0,
+        "residual_share": 0.0,
+        "clear": 2251,
+        "bend_stop_routes": 0,
+        "unavoidable_stops_per_100m": 0.0818654015718336,
+        "a1_tangent_stops_per_100m": 0.7736280448538275
+      },
+      "per_stratum": {
+        "medium": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.06540646070803993
+        },
+        "narrow": {
+          "routes": 857,
+          "plannable": 857,
+          "start_invalid": 20,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 837,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.21468701141160176,
+          "a1_tangent_stops_per_100m": 1.9751205049867362
+        },
+        "wide": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.0
+        }
+      },
+      "plannable_everywhere": true,
+      "residual_rule": "re-sample",
+      "quantisation_failures": 0
+    },
+    "0.1": {
+      "all": {
+        "routes": 2271,
+        "plannable": 2271,
+        "start_invalid": 20,
+        "goal_invalid": 0,
+        "residual": 0,
+        "residual_share": 0.0,
+        "clear": 2251,
+        "bend_stop_routes": 0,
+        "unavoidable_stops_per_100m": 0.0813809961927745,
+        "a1_tangent_stops_per_100m": 0.769050414021719
+      },
+      "per_stratum": {
+        "medium": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.06515379653771199
+        },
+        "narrow": {
+          "routes": 857,
+          "plannable": 857,
+          "start_invalid": 20,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 837,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.21267625290563905,
+          "a1_tangent_stops_per_100m": 1.9566215267318792
+        },
+        "wide": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.0
+        }
+      },
+      "plannable_everywhere": true,
+      "residual_rule": "re-sample",
+      "quantisation_failures": 0
+    },
+    "0.13": {
+      "all": {
+        "routes": 2271,
+        "plannable": 2271,
+        "start_invalid": 20,
+        "goal_invalid": 0,
+        "residual": 0,
+        "residual_share": 0.0,
+        "clear": 2251,
+        "bend_stop_routes": 0,
+        "unavoidable_stops_per_100m": 0.0805965329678125,
+        "a1_tangent_stops_per_100m": 0.8180548096232968
+      },
+      "per_stratum": {
+        "medium": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.03878739064189248
+        },
+        "narrow": {
+          "routes": 857,
+          "plannable": 857,
+          "start_invalid": 20,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 837,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.20961426053543702,
+          "a1_tangent_stops_per_100m": 2.09614260535437
+        },
+        "wide": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.0
+        }
+      },
+      "plannable_everywhere": true,
+      "residual_rule": "re-sample",
+      "quantisation_failures": 0
+    },
+    "0.2": {
+      "all": {
+        "routes": 2271,
+        "plannable": 2271,
+        "start_invalid": 20,
+        "goal_invalid": 0,
+        "residual": 1,
+        "residual_share": 0.00044033465433729633,
+        "clear": 2250,
+        "bend_stop_routes": 0,
+        "unavoidable_stops_per_100m": 0.08307371778953276,
+        "a1_tangent_stops_per_100m": 0.7911782646622167
+      },
+      "per_stratum": {
+        "medium": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.025371744038208417
+        },
+        "narrow": {
+          "routes": 857,
+          "plannable": 857,
+          "start_invalid": 20,
+          "goal_invalid": 0,
+          "residual": 1,
+          "residual_share": 0.0011668611435239206,
+          "clear": 836,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.2151599119837094,
+          "a1_tangent_stops_per_100m": 2.0286505987035457
+        },
+        "wide": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.0
+        }
+      },
+      "plannable_everywhere": true,
+      "residual_rule": "re-sample",
+      "quantisation_failures": 0
+    },
+    "0.3": {
+      "all": {
+        "routes": 2271,
+        "plannable": 2271,
+        "start_invalid": 20,
+        "goal_invalid": 0,
+        "residual": 1,
+        "residual_share": 0.00044033465433729633,
+        "clear": 2250,
+        "bend_stop_routes": 0,
+        "unavoidable_stops_per_100m": 0.08167847771484527,
+        "a1_tangent_stops_per_100m": 0.8051164231891891
+      },
+      "per_stratum": {
+        "medium": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.024763567993605514
+        },
+        "narrow": {
+          "routes": 857,
+          "plannable": 857,
+          "start_invalid": 20,
+          "goal_invalid": 0,
+          "residual": 1,
+          "residual_share": 0.0011668611435239206,
+          "clear": 836,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.21256754498857738,
+          "a1_tangent_stops_per_100m": 2.075064129650398
+        },
+        "wide": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.0
+        }
+      },
+      "plannable_everywhere": true,
+      "residual_rule": "re-sample",
+      "quantisation_failures": 0
+    }
+  },
+  "chosen_soft": 0.03,
+  "residual_rule": "re-sample",
+  "floor_note": "The unavoidable-stop floor is platform-specific: a holonomic base with full knowledge of its route (the oracle). A1's floor is the tangent-locked oracle's."
+}

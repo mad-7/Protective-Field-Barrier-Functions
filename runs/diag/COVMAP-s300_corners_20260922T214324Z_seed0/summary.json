@@ -1,0 +1,107 @@
+{
+  "label": "s300_corners",
+  "spacing_m": 0.025,
+  "depth_m": 1.0,
+  "post_diameter_m": 0.02,
+  "seen_tolerance_m": 0.02,
+  "cells": 7680,
+  "legacy_scripts": {
+    "legacy_scripts_found": 6,
+    "found_live_and_disabled": 6,
+    "already_disabled": 0
+  },
+  "coverage_geometry": {
+    "unobserved_area_m2": 0.0,
+    "unobserved_reach_m": 0.0,
+    "policy_valid": 36,
+    "filter_valid": 120,
+    "sensors": [
+      {
+        "x": 0.22638871121998072,
+        "y": -0.1468270426865375,
+        "heading_deg": -112.55763344856022,
+        "fov_deg": 135.0,
+        "rays": 576
+      },
+      {
+        "x": 0.22638871121998072,
+        "y": -0.1468270426865375,
+        "heading_deg": 22.44236689306302,
+        "fov_deg": 135.0,
+        "rays": 576
+      },
+      {
+        "x": -0.22630673834433965,
+        "y": 0.14461637024764587,
+        "heading_deg": 67.44236655145178,
+        "fov_deg": 135.0,
+        "rays": 576
+      },
+      {
+        "x": -0.22630673834433965,
+        "y": 0.14461637024764587,
+        "heading_deg": -157.55763310692498,
+        "fov_deg": 135.0,
+        "rays": 576
+      }
+    ]
+  },
+  "scanner_status": {
+    "format_version": 2,
+    "robot_rendered": true,
+    "sensor_axes_deg": [
+      -112.55763344856022,
+      22.442366893063017,
+      67.44236655145178,
+      -157.55763310692498
+    ],
+    "own_models": [
+      90,
+      90,
+      99,
+      99
+    ],
+    "resolution_y": 1,
+    "frame": "body",
+    "yaw_offset": 1.5707963,
+    "sensors": 4,
+    "render": "everything except own scanner model",
+    "rays_per_sensor": [
+      576,
+      576,
+      576,
+      576
+    ],
+    "self_filter": "footprint",
+    "depth_is_euclidean": false,
+    "resolution_x": 576,
+    "pixel_mirror": true,
+    "fov_deg": 135.0
+  },
+  "scan_plane": {
+    "sensor_world_z_m": [
+      0.2206299501936675,
+      0.2206299501936675,
+      0.22061747534008191,
+      0.22061747534008191
+    ],
+    "base_ref_world_z_m": -0.0004667966894150444
+  },
+  "scene_sha256": "0ae35a50290d097857bb3cd828858f70a736ae0fa2102f0fac1e69b452164790",
+  "wall_seconds": 195.99319624900818,
+  "filter_counts": {
+    "observed": 7680,
+    "invalid": 0,
+    "violation": 0,
+    "confounded": 0
+  },
+  "filter_violations": [],
+  "policy_counts": {
+    "observed": 7680,
+    "invalid": 0,
+    "violation": 0,
+    "confounded": 0
+  },
+  "policy_violations": [],
+  "passed": true
+}

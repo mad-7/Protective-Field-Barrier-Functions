@@ -1,0 +1,120 @@
+# Method identifiers: every one ever used, with its status. Standing rule (supervisor, 2026-10-15;
+# CLAUDE.md hard rule 20): IDs are NEVER reused. A retired ID stays here, retired, so a frozen
+# document that names it still means one thing. A new method takes a new ID.
+# tests/test_methods_registry.py: IDs unique; the confirmatory lists in preregistration/endpoints.yaml
+# and the power-analysis configs name only active methods.
+#
+# THE CLASSICAL SET (B1, B2, B3, B6, B7) shares, without exception: the same planned route; the
+# certified layer beneath; the 120-bin filter scan stream; the non-square actuation box with the
+# wheel-budget projection; the classical recovery behaviour (ruled 2026-10-13); and an equal tuning
+# budget on the tune set only.
+#
+# TUNING (ruled 2026-10-26): the equal-tuning-budget rule governs the classical baselines -- B1, B2, B3
+# and B6 each get N = 24 candidates (candidate 0 their initial values) by seeded random search, one
+# selection rule (configs/tuning/budget.yaml, scripts/tune_classical.py); B7 reuses B2's tuned
+# parameters and is tuned in alpha only. The LEARNED arms (L1-L5) share one set of SAC
+# hyperparameters (configs/base.yaml, training) and get no per-arm tuning budget.
+#
+# RULED 2026-10-27 (A28): candidate 0 of B3 = the standard DWA defaults (Nav2 DWB, cited in
+# configs/base.yaml); of B6 = values from a disclosed manual check on two synthetic routes, not
+# counted in N. B6's samples and horizon are fixed by the real-time measurement, not tuned. One
+# invalid-bin convention for every consumer of the scan (pfbnav/safety/unobserved.py). Every
+# controller meets, or is reported against, p95 compute per step <= 50 ms on the training host.
+
+methods:
+  B1:
+    status: active
+    role: [H1, H1N, G4_positive_control]
+    what: "Holonomic Pure Pursuit tracking the planned route; the industrial status quo -- a path
+      tracker relying on the safety scanners (the certified layer) to stop it (label moved here
+      from B4, A16)"
+    source: "research plan, experimental matrix; label per A16 (2026-10-15)"
+  B2:
+    status: active
+    role: [H1, H1N]
+    what: "Regulated Pure Pursuit, Nav2-style: slows on curvature and near obstacles"
+    source: "research plan, experimental matrix; confirmed by the researcher 2026-10-15"
+  B3:
+    status: active
+    role: [H1, H1N]
+    what: "Holonomic DWA: a three-dimensional dynamic window over (vx, vy, omega); candidate 0 the
+      standard DWA defaults (Nav2 DWB, ROS 2 Humble), converted and cited (ruled 2026-10-27)"
+    source: "research plan, experimental matrix; confirmed by the researcher 2026-10-15"
+  B4:
+    status: retired
+    retired: "2026-10-15, A16"
+    what: "PP + field switching only. Identical to B1 once the certified layer runs beneath every
+      controller; a design error, retired. Replaced in H1 by B6"
+  B5:
+    status: retired
+    retired: "2026-10-15, A16"
+    what: "PP + PFB, no learning. Superseded by B7 (RPP + PFB), the stronger nominal controller"
+  B6:
+    status: active
+    role: [H1, H1N]
+    added: "2026-10-15, A16"
+    what: "Holonomic MPPI with a field-aware cost built on the certified layer's discrete band
+      fields (not the PFB field); declared design in configs/base.yaml baselines.mppi. Rollouts
+      through the box, budget and acceleration limiter; standard MPPI update on the sampled commands
+      (A28a); fields by the certified composition, from a conservative table (ruled 2026-10-27). Candidate 0 from a disclosed manual check, not counted
+      in N. Its sampling noise is seeded from the scenario alone, not the run's seed: a repeated
+      evaluation draws the same noise"
+  B7:
+    status: active
+    role: [H5, H3]
+    added: "2026-10-15, A16"
+    what: "Regulated Pure Pursuit + the PFB filter, no learning: the attribution analysis (H5,
+      exploratory: mission time AND protective stops) and H3's granularity study"
+  L1:
+    status: active
+    role: [H1, H1N]
+    what: "SAC with proximity shaping, no filter (certified layer still beneath)"
+  L2:
+    status: active
+    role: [H1, H1N]
+    what: "SAC-Lagrangian (ruled 2026-10-03; toy validation first). Cost limit d = 0.1 protective
+      stops per episode, set A PRIORI (ruled 2026-10-27, superseding the tune-set selection of d,
+      which would have given L2 a per-arm tuning budget no other learned arm has); multiplier
+      a PID-Lagrangian (A28b, Stooke et al. 2020), lambda_0 0, set once per completed episode from
+      the measured mean stops per episode over the last 20 completed episodes against d, capped at
+      100; gains one of three declared candidates, the first to pass the toy control on seeds
+      0-3 (superseding A28a's dual ascent, eta 3e-4 per gradient step, whose limit cycle made the
+      last iterate depend on its phase); declared, not tuned"
+  L3:
+    status: active
+    role: [H1, H1N]
+    what: "Post-hoc filtering: a policy trained without the filter, wrapped by it -- a separate,
+      labelled baseline (hard rule 8)"
+  L4:
+    status: active
+    role: [H2]
+    what: "SAC trained with the PFB in the loop, WITH proximity shaping"
+  L5:
+    status: active
+    role: [H1, H2, H1N, H5]
+    what: "The proposed method: SAC trained with the PFB in the loop, no proximity shaping"
+  A1:
+    status: active
+    role: [H4]
+    what: "Unicycle ablation of L5 (exploratory)"
+  L5-nowp:
+    status: active
+    role: [exploratory]
+    what: "Planner-contribution analysis (declared 2026-10-20, A23): L5 without the planner --
+      the lookahead channels removed, a straight-line progress reward. 5 seeds, the same seed
+      permutations as L5, outside the Holm family, reported whatever it shows. Trained LAST, after
+      every confirmatory arm; the first arm cut if throughput falls short. v1 (tag
+      v1-chapter-results) is the pilot study motivating it"
+  L2-d005:
+    status: active
+    role: [exploratory]
+    added: "2026-10-27, A28"
+    what: "L2 at d = 0.05 protective stops per episode: the exploratory sensitivity of L2's a priori
+      limit. Outside the Holm family; FIRST in the cut order (configs/experiments/
+      L2_sac_lagrangian_d005.yaml)"
+  L2-d020:
+    status: active
+    role: [exploratory]
+    added: "2026-10-27, A28"
+    what: "L2 at d = 0.2 protective stops per episode: the exploratory sensitivity, as L2-d005
+      (configs/experiments/L2_sac_lagrangian_d020.yaml)"

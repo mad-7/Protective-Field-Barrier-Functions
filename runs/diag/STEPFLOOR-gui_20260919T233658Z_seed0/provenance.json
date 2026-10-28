@@ -1,0 +1,9 @@
+{
+  "seed": 0,
+  "experiment": "STEPFLOOR-gui_20260919T233658Z",
+  "created_utc": "2026-09-19T23:36:58.982459+00:00",
+  "commit": "fec1d704b1c6d5189495ab7f75737331af72eb78",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd"
+}

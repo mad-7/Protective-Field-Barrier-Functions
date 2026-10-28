@@ -1,0 +1,9 @@
+{
+  "seed": 0,
+  "experiment": "SCANNER-gui_20260920T000714Z",
+  "created_utc": "2026-09-20T00:07:14.324528+00:00",
+  "commit": "55884fd3b2d1bda25f9e2c170b70bb34f0f693ed",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd"
+}

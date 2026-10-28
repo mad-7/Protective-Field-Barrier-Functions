@@ -1,0 +1,26 @@
+# The tuning space of B3, holonomic DWA (scripts/tune_classical.py). Ranges APPROVED by the supervisor
+# on 2026-10-27, committed before the first candidate runs; a winner on a range boundary is reported,
+# never extended. Candidate 0 = the standard DWA defaults (Nav2 DWB, ROS 2 Humble), cited in
+# configs/base.yaml (baselines.dwa). The floors of window_time and w_clearance were EXTENDED down to
+# include DWB's values (ruled 2026-10-27, A28a: a correction of the declaration before any run; the
+# never-extend rule applies only after tuning).
+# Every range brackets the initial value in configs/base.yaml (baselines.dwa), which is candidate 0.
+# NOT tuned, and why:
+#   * w_progress (1.0): the costs are a weighted sum whose argmin does not change when every weight
+#     is scaled, so one weight is the unit; tuning it too would spend budget on a redundant axis;
+#   * sim_granularity, angular_sim_granularity, vx/vy/wz_samples: resolution, not behaviour (DWB's
+#     defaults; the counts must be whole and the sampler draws reals).
+# sim_time's floor 0.8 s stays above the 0.536 s the controller requires (Fox's admissibility at the
+# box ceilings), so no candidate is refused for it. A winner on a range boundary is reported, never
+# extended.
+controller: dwa
+config_block: baselines.dwa
+space:
+  max_speed:     {low: 0.20, high: 0.50}                     # m/s, up to the box ceiling
+  window_time:   {low: 0.05, high: 0.40, scale: log}         # s, the window's reach (A28a)
+  sim_time:      {low: 0.8,  high: 3.0,  scale: log}         # s, rollout horizon (DWB 1.7)
+  safety_margin: {low: 0.0,  high: 0.10}                     # m, the collision threshold
+  clearance_cap: {low: 0.10, high: 0.60}                     # m, clearance cost zero beyond it
+  w_path:        {low: 0.2,  high: 5.0,  scale: log}         # 1/m, per unit of w_progress
+  w_heading:     {low: 0.05, high: 2.0,  scale: log}         # 1/rad, per unit of w_progress
+  w_clearance:   {low: 0.02, high: 5.0,  scale: log}         # 1/m, per unit of w_progress (A28a)

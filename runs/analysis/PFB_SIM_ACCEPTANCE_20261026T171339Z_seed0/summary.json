@@ -1,0 +1,72 @@
+{
+  "routes": 60,
+  "reached_goal": 48,
+  "stalled": 12,
+  "stops": 5,
+  "by_category": {
+    "infeasible": 4,
+    "prediction": 1
+  },
+  "prediction_subtypes": {
+    "heading": 1,
+    "motion": 1
+  },
+  "fallback_steps": 209,
+  "fallback_rollout_contacts": 0,
+  "contact_steps": 0,
+  "verdict": "PASS",
+  "yaw_by_field": {
+    "0|bend": {
+      "steps": 547,
+      "median": 0.001169302765243854,
+      "p90": 0.20096768620811806,
+      "max": 0.6023834540697495
+    },
+    "0|straight": {
+      "steps": 362,
+      "median": 0.014574844148964936,
+      "p90": 0.589374563647266,
+      "max": 0.9762242249311136
+    },
+    "1|bend": {
+      "steps": 1787,
+      "median": 0.13885784733967466,
+      "p90": 0.38890224365377957,
+      "max": 0.7162745523717969
+    },
+    "1|straight": {
+      "steps": 1714,
+      "median": 0.059797020526168226,
+      "p90": 0.425477813474387,
+      "max": 0.7325432856315213
+    },
+    "2|bend": {
+      "steps": 6678,
+      "median": 0.1474341490894176,
+      "p90": 0.3766666982168894,
+      "max": 0.6399999359936223
+    },
+    "2|straight": {
+      "steps": 21476,
+      "median": 0.0019054689855706288,
+      "p90": 0.25504057578824546,
+      "max": 0.672144410688348
+    },
+    "rest|bend": {
+      "steps": 5476,
+      "median": 7.079740444661954e-06,
+      "p90": 0.05322671999782803,
+      "max": 0.05327999999997531
+    },
+    "rest|straight": {
+      "steps": 2036,
+      "median": 4.352900553644273e-06,
+      "p90": 4.330379030216425e-05,
+      "max": 0.12327999999900172
+    }
+  },
+  "smoke": false,
+  "steps": 40076,
+  "scan_fault_stops": 0,
+  "over_budget_steps": 3286
+}

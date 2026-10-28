@@ -1,0 +1,11 @@
+{
+  "controller": "oracle_tracker_privileged",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "environment": "42816b7c11eb8dffd7d886ce03545ae0ca98dd1e967c3c2dc1bcb46d116b764b",
+  "sets": {
+    "scenarios/tune/tune_narrow.json": "9fdcf668aece4e0e19ceffbf562face3ca100a29904e2e8d92eb68725692e6b8",
+    "scenarios/tune/tune_medium.json": "fb3df0e4a8a7d12bd65a850690eb1c35ad1f6e08bf34c3a3f3b0f7da48ef783b",
+    "scenarios/tune/tune_wide.json": "325fb71c107caec3f22b9fb1c8b9990af5782c553415693e4c0c869468482201"
+  }
+}

@@ -1,0 +1,291 @@
+[
+  {
+    "index": 1,
+    "scenario_seed": 2000041,
+    "world_pose": [
+      -0.00010304491952574865,
+      -3.313332735392031e-05,
+      1.5718070219256308
+    ],
+    "layout_pose": [
+      5.364154392287684,
+      4.999997971581362,
+      -0.06815729164084439
+    ],
+    "scenario_start": [
+      5.364154136757719,
+      5.000000000000001,
+      -0.06815943391109792
+    ],
+    "start_position_error_m": 2.0444504736666267e-06,
+    "start_yaw_error_deg": 0.00012274304410417195,
+    "yaw_error_class": "0",
+    "first_segment_bearing_body_deg": -0.30905336867138195,
+    "lookahead_bearing_body_deg": 1.5127551568418576,
+    "in_contact_at_reset": false,
+    "transform": {
+      "x": 5.35867115823617,
+      "y": -5.005796921173323,
+      "yaw": 1.6399643135664752
+    },
+    "struck": null,
+    "first_stop": {
+      "step": 359,
+      "pose": [
+        0.02160404620813405,
+        4.213154450289411,
+        1.4489192320007434
+      ],
+      "layout_pose": [
+        9.565767366562103,
+        4.687157394039741,
+        -0.19104508156573186
+      ]
+    },
+    "first_action": [
+      0.6247821704240186,
+      0.013199745943071963,
+      0.02640255929517783
+    ],
+    "first_requested": [
+      0.24991286816960745,
+      0.0065998729715359816,
+      0.03960383894276674
+    ],
+    "first_applied": [
+      0.049982573633921494,
+      0.0013199745943071964,
+      0.03960383894276674
+    ],
+    "events": [
+      {
+        "step": 359,
+        "kind": "trigger",
+        "nearest": {
+          "distance_m": 0.08362594852124981,
+          "bearing_deg": -47.99714973174321,
+          "valid": true
+        },
+        "n_inside_at_rest": 0,
+        "n_inside_in_force": 3
+      },
+      {
+        "step": 431,
+        "kind": "release",
+        "nearest": {
+          "distance_m": 0.0712700268192717,
+          "bearing_deg": -47.99890850545449,
+          "valid": true
+        },
+        "n_inside_at_rest": 0,
+        "n_inside_in_force": 0
+      },
+      {
+        "step": 437,
+        "kind": "trigger",
+        "nearest": {
+          "distance_m": 0.06432424851701524,
+          "bearing_deg": -44.9216214164186,
+          "valid": true
+        },
+        "n_inside_at_rest": 0,
+        "n_inside_in_force": 6
+      },
+      {
+        "step": 1500,
+        "kind": "final",
+        "nearest": {
+          "distance_m": 0.046910066506344134,
+          "bearing_deg": -44.93008743589483,
+          "valid": true
+        },
+        "n_inside_at_rest": 3,
+        "n_inside_in_force": 3
+      }
+    ],
+    "outcome": "unrecoverable_stop",
+    "steps": 1500,
+    "distance_m": 4.32536343926983,
+    "recovery_attempts": 1,
+    "recovery_endings": {
+      "cleared": 1,
+      "distance": 0,
+      "new_stop": 0,
+      "not_released": 0,
+      "no_permitted_direction": 0
+    },
+    "recovery_attempt_log": [
+      {
+        "start_step": 431,
+        "heading_deg": 100.0,
+        "ending": "cleared",
+        "distance_m": 0.0025327386517073687,
+        "steps": 2
+      }
+    ],
+    "recovery_deadlock": "inside_min_margin",
+    "recovery_gave_up": "inside_min_margin",
+    "recovery_distance_m": 0.0025327386517073687,
+    "recovery_steps": 2,
+    "recovery_time_s": 0.1
+  },
+  {
+    "index": 4,
+    "scenario_seed": 2000044,
+    "world_pose": [
+      -0.00010304491952574865,
+      -3.313332735392031e-05,
+      1.5718070219256308
+    ],
+    "layout_pose": [
+      5.841825426393325,
+      6.1524162044145605,
+      -2.845825986057313
+    ],
+    "scenario_start": [
+      5.841826387191253,
+      6.152414399796848,
+      -2.8458281283275664
+    ],
+    "start_position_error_m": 2.044450474917844e-06,
+    "start_yaw_error_deg": 0.00012274304408429348,
+    "yaw_error_class": "0",
+    "first_segment_bearing_body_deg": 0.9325148255812451,
+    "lookahead_bearing_body_deg": -0.9546609832561816,
+    "in_contact_at_reset": false,
+    "transform": {
+      "x": -4.190096966311849,
+      "y": 7.377168260391933,
+      "yaw": -1.865552299196643
+    },
+    "struck": null,
+    "first_stop": {
+      "step": 96,
+      "pose": [
+        -0.03518097309741584,
+        1.1040079278124297,
+        1.7158770149854177
+      ],
+      "layout_pose": [
+        4.795588636296057,
+        5.798120135039132,
+        -2.701755992997526
+      ]
+    },
+    "first_action": [
+      0.6249132452901478,
+      -0.008330603279400068,
+      -0.016661977501947152
+    ],
+    "first_requested": [
+      0.24996529811605914,
+      -0.004165301639700034,
+      -0.024992966252920728
+    ],
+    "first_applied": [
+      0.04999305962321183,
+      -0.0008330603279400068,
+      -0.024992966252920728
+    ],
+    "events": [
+      {
+        "step": 96,
+        "kind": "trigger",
+        "nearest": {
+          "distance_m": 0.10426982974150294,
+          "bearing_deg": 41.95979184511261,
+          "valid": true
+        },
+        "n_inside_at_rest": 0,
+        "n_inside_in_force": 2
+      },
+      {
+        "step": 168,
+        "kind": "release",
+        "nearest": {
+          "distance_m": 0.08430257147657653,
+          "bearing_deg": 41.980600016419054,
+          "valid": true
+        },
+        "n_inside_at_rest": 0,
+        "n_inside_in_force": 0
+      },
+      {
+        "step": 175,
+        "kind": "trigger",
+        "nearest": {
+          "distance_m": 0.07792865191795716,
+          "bearing_deg": 41.96195359998492,
+          "valid": true
+        },
+        "n_inside_at_rest": 0,
+        "n_inside_in_force": 3
+      },
+      {
+        "step": 246,
+        "kind": "release",
+        "nearest": {
+          "distance_m": 0.05520151074191462,
+          "bearing_deg": 38.91637566417082,
+          "valid": true
+        },
+        "n_inside_at_rest": 0,
+        "n_inside_in_force": 0
+      },
+      {
+        "step": 260,
+        "kind": "trigger",
+        "nearest": {
+          "distance_m": 0.07460102815521126,
+          "bearing_deg": 38.963077082620785,
+          "valid": true
+        },
+        "n_inside_at_rest": 0,
+        "n_inside_in_force": 3
+      },
+      {
+        "step": 1500,
+        "kind": "final",
+        "nearest": {
+          "distance_m": 0.04918156178957859,
+          "bearing_deg": 38.92360200431269,
+          "valid": true
+        },
+        "n_inside_at_rest": 1,
+        "n_inside_in_force": 1
+      }
+    ],
+    "outcome": "unrecoverable_stop",
+    "steps": 1500,
+    "distance_m": 1.3124764371400155,
+    "recovery_attempts": 2,
+    "recovery_endings": {
+      "cleared": 2,
+      "distance": 0,
+      "new_stop": 0,
+      "not_released": 0,
+      "no_permitted_direction": 0
+    },
+    "recovery_attempt_log": [
+      {
+        "start_step": 168,
+        "heading_deg": -115.00000000000003,
+        "ending": "cleared",
+        "distance_m": 0.004946379580181995,
+        "steps": 3
+      },
+      {
+        "start_step": 246,
+        "heading_deg": -120.00000000000001,
+        "ending": "cleared",
+        "distance_m": 0.029608302666137676,
+        "steps": 10
+      }
+    ],
+    "recovery_deadlock": "inside_min_margin",
+    "recovery_gave_up": "inside_min_margin",
+    "recovery_distance_m": 0.03455468224631967,
+    "recovery_steps": 13,
+    "recovery_time_s": 0.65
+  }
+]

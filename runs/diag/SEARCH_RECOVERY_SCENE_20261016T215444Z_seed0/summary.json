@@ -1,0 +1,2630 @@
+{
+  "chosen": null,
+  "candidates": [
+    {
+      "cy": 0.4,
+      "gx": 0.6,
+      "gy": 0.4,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 0.6,
+      "gy": 0.6,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 0.6,
+      "gy": 0.8,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 0.6,
+      "gy": 1.2,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 0.8,
+      "gy": 0.4,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 0.8,
+      "gy": 0.6,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 0.8,
+      "gy": 0.8,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 0.8,
+      "gy": 1.2,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 1.0,
+      "gy": 0.4,
+      "route_clearance": 0.33147440495740926,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 115,
+          "at_rest_margin": 0.019331892577782617,
+          "restart_permitted": false,
+          "block_depth": 0.0010234864828033152
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.011086801619664466,
+          "restart_permitted": false,
+          "block_depth": 0.006340707888363273
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 99,
+          "at_rest_margin": 0.014556374690122387,
+          "restart_permitted": false,
+          "block_depth": 0.003111380068114844
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 1.0,
+      "gy": 0.6,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 1.0,
+      "gy": 0.8,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 1.0,
+      "gy": 1.2,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 1.2,
+      "gy": 0.4,
+      "route_clearance": 0.33147440495740926,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 119,
+          "at_rest_margin": 0.011931807022586394,
+          "restart_permitted": false,
+          "block_depth": 0.0033335338981025364
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.01276527434698943,
+          "restart_permitted": true,
+          "block_depth": -0.002455106255972561
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 103,
+          "at_rest_margin": 0.004243491924788734,
+          "restart_permitted": false,
+          "block_depth": 0.0065866363742006495
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 1.2,
+      "gy": 0.6,
+      "route_clearance": 0.33147440495740926,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 115,
+          "at_rest_margin": 0.018719242892720145,
+          "restart_permitted": false,
+          "block_depth": 0.001829898166975763
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.021326764313023827,
+          "restart_permitted": true,
+          "block_depth": -0.0009981815817771689
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.019849223462818033,
+          "restart_permitted": false,
+          "block_depth": 0.0009856598810187855
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 1.2,
+      "gy": 0.8,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.020175368037196273,
+          "restart_permitted": false,
+          "block_depth": 0.0019398984499449101
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02014132911370925,
+          "restart_permitted": false,
+          "block_depth": 0.002234884700813511
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 92,
+          "at_rest_margin": 0.021501057615233243,
+          "restart_permitted": false,
+          "block_depth": 0.0008944877519365124
+        }
+      }
+    },
+    {
+      "cy": 0.4,
+      "gx": 1.2,
+      "gy": 1.2,
+      "route_clearance": 0.33015148038438363,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.02168732058986378,
+          "restart_permitted": true,
+          "block_depth": -7.811513113881174e-05
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.021677571460523792,
+          "restart_permitted": false,
+          "block_depth": 0.00018407616952659245
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 93,
+          "at_rest_margin": 0.016547793438381087,
+          "restart_permitted": false,
+          "block_depth": 0.006505838613506343
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 0.6,
+      "gy": 0.4,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 0.6,
+      "gy": 0.6,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 0.6,
+      "gy": 0.8,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 0.6,
+      "gy": 1.2,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 0.8,
+      "gy": 0.4,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 0.8,
+      "gy": 0.6,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 0.8,
+      "gy": 0.8,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 0.8,
+      "gy": 1.2,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 1.0,
+      "gy": 0.4,
+      "route_clearance": 0.33765167039277494,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 119,
+          "at_rest_margin": 0.012908020606304638,
+          "restart_permitted": false,
+          "block_depth": 0.004646975865118197
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.01370454256871595,
+          "restart_permitted": false,
+          "block_depth": 0.004266111600693956
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.009995668944241087,
+          "restart_permitted": false,
+          "block_depth": 0.008731251462284928
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 1.0,
+      "gy": 0.6,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 111,
+          "at_rest_margin": 0.02526696044407617,
+          "restart_permitted": true,
+          "block_depth": -0.002509674537962414
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 103,
+          "at_rest_margin": 0.023852947102497524,
+          "restart_permitted": true,
+          "block_depth": -0.0006335963036534498
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 95,
+          "at_rest_margin": 0.02357667723828022,
+          "restart_permitted": true,
+          "block_depth": -6.202181467607204e-05
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 1.0,
+      "gy": 0.8,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 1.0,
+      "gy": 1.2,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 1.2,
+      "gy": 0.4,
+      "route_clearance": 0.33765167039277494,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 123,
+          "at_rest_margin": 0.006673335694968752,
+          "restart_permitted": false,
+          "block_depth": 0.0026564094396564486
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.009339234601878021,
+          "restart_permitted": true,
+          "block_depth": -0.0017921743823933745
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 105,
+          "at_rest_margin": 0.00955251527204598,
+          "restart_permitted": true,
+          "block_depth": -0.001479603832393317
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 1.2,
+      "gy": 0.6,
+      "route_clearance": 0.3401598963752794,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 126,
+          "at_rest_margin": 0.003612567382556997,
+          "restart_permitted": false,
+          "block_depth": 0.004913686231647008
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.006609663329022908,
+          "restart_permitted": false,
+          "block_depth": 0.001968464180829965
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 109,
+          "at_rest_margin": -0.00016387839071391186,
+          "restart_permitted": false,
+          "block_depth": 0.00929996186467863
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 1.2,
+      "gy": 0.8,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.02543291021909444,
+          "restart_permitted": true,
+          "block_depth": -0.0018676642868166726
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.024379476132462885,
+          "restart_permitted": true,
+          "block_depth": -0.0003952008531854512
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.024535971619244756,
+          "restart_permitted": true,
+          "block_depth": -0.0003202357261937183
+        }
+      }
+    },
+    {
+      "cy": 0.45,
+      "gx": 1.2,
+      "gy": 1.2,
+      "route_clearance": 0.3349915024346104,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.023815800913505325,
+          "restart_permitted": false,
+          "block_depth": 0.00027179712188513117
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 102,
+          "at_rest_margin": 0.02269782943380222,
+          "restart_permitted": false,
+          "block_depth": 0.0018201058517111068
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 94,
+          "at_rest_margin": 0.022852663892430736,
+          "restart_permitted": false,
+          "block_depth": 0.0019041250799380904
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 0.6,
+      "gy": 0.4,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.002517670655130144
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 0.6,
+      "gy": 0.6,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.0025666575986375006
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 0.6,
+      "gy": 0.8,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.002581721481750343
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 0.6,
+      "gy": 1.2,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.0026046398404243054
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 0.8,
+      "gy": 0.4,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.0024410127905752366
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 0.8,
+      "gy": 0.6,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.0025137700175025812
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 0.8,
+      "gy": 0.8,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.00253870901770753
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 0.8,
+      "gy": 1.2,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.0025785212923058465
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 1.0,
+      "gy": 0.4,
+      "route_clearance": 0.34351851895851315,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 122,
+          "at_rest_margin": 0.015542368245024307,
+          "restart_permitted": false,
+          "block_depth": 0.0018969682032869417
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 115,
+          "at_rest_margin": 0.00371876691729095,
+          "restart_permitted": false,
+          "block_depth": 0.006692544633962738
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.0034450701205063217,
+          "restart_permitted": false,
+          "block_depth": 0.00756023157311253
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 1.0,
+      "gy": 0.6,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.002432851040135464
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 1.0,
+      "gy": 0.8,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.002468014493423598
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 1.0,
+      "gy": 1.2,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.0025314084771093093
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 1.2,
+      "gy": 0.4,
+      "route_clearance": 0.34351851895851315,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 131,
+          "at_rest_margin": 0.004474396028333272,
+          "restart_permitted": false,
+          "block_depth": 0.0008544376640511331
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 121,
+          "at_rest_margin": 0.004930940322937227,
+          "restart_permitted": false,
+          "block_depth": 0.0008164816877023751
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 113,
+          "at_rest_margin": 0.0021464825066321858,
+          "restart_permitted": false,
+          "block_depth": 0.0037067538855248827
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 1.2,
+      "gy": 0.6,
+      "route_clearance": 0.34351851895851315,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 121,
+          "at_rest_margin": 0.015904049118984465,
+          "restart_permitted": false,
+          "block_depth": 0.0021718271521981025
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.015684350600774,
+          "restart_permitted": false,
+          "block_depth": 0.0028651546849536857
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.01069465816211207,
+          "restart_permitted": false,
+          "block_depth": 0.0009576344366155065
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 1.2,
+      "gy": 0.8,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.02447065994311204,
+          "restart_permitted": false,
+          "block_depth": 0.00047805092612596134
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02149509015909634,
+          "restart_permitted": false,
+          "block_depth": 0.0041029360457628394
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.019474804096948184,
+          "restart_permitted": false,
+          "block_depth": 0.006654598106947851
+        }
+      }
+    },
+    {
+      "cy": 0.5,
+      "gx": 1.2,
+      "gy": 1.2,
+      "route_clearance": 0.3395091809772384,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 112,
+          "at_rest_margin": 0.02762901796216849,
+          "restart_permitted": true,
+          "block_depth": -0.0018399097761312988
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 104,
+          "at_rest_margin": 0.025432145691801633,
+          "restart_permitted": false,
+          "block_depth": 0.0009280269588354262
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 96,
+          "at_rest_margin": 0.02432129451060211,
+          "restart_permitted": false,
+          "block_depth": 0.00249380326531351
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 0.6,
+      "gy": 0.4,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.004283604019534426
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": true,
+          "block_depth": -9.400038937140698e-05
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.0029222798435094566
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 0.6,
+      "gy": 0.6,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.004232874755895455
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": false,
+          "block_depth": 1.319721298492782e-05
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.003087316978294452
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 0.6,
+      "gy": 0.8,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.0041871726937594556
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": false,
+          "block_depth": 0.00011005596673890894
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.003241300987654294
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 0.6,
+      "gy": 1.2,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.004152821587230349
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": false,
+          "block_depth": 0.0001831061560724767
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.003357466182363933
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 0.8,
+      "gy": 0.4,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.004409427295538004
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": true,
+          "block_depth": -0.0003589713291426988
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.0025436165711321124
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 0.8,
+      "gy": 0.6,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.004333775460949707
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": true,
+          "block_depth": -0.00019978232180450917
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.0027709673036961924
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 0.8,
+      "gy": 0.8,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.00425913508211978
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": true,
+          "block_depth": -4.2329200045210236e-05
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.0029989834662597636
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 0.8,
+      "gy": 1.2,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.004199733095200664
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": false,
+          "block_depth": 8.340337899864769e-05
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.003198883547986031
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 1.0,
+      "gy": 0.4,
+      "route_clearance": 0.3490633551111714,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 126,
+          "at_rest_margin": 0.004513724363212068,
+          "restart_permitted": false,
+          "block_depth": 0.005370997635007535
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 116,
+          "at_rest_margin": 0.00770263324569781,
+          "restart_permitted": false,
+          "block_depth": 0.002762535891765394
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 107,
+          "at_rest_margin": 0.006767464592900396,
+          "restart_permitted": false,
+          "block_depth": 0.004297138141189982
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 1.0,
+      "gy": 0.6,
+      "route_clearance": 0.3436969056635427,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 116,
+          "at_rest_margin": 0.02825259857981377,
+          "restart_permitted": true,
+          "block_depth": -0.0015922383466653867
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 107,
+          "at_rest_margin": 0.030220694667571768,
+          "restart_permitted": true,
+          "block_depth": -0.003827273153391708
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 99,
+          "at_rest_margin": 0.027494375393101234,
+          "restart_permitted": true,
+          "block_depth": -0.0005068522189612401
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 1.0,
+      "gy": 0.8,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.004378443661818998
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": true,
+          "block_depth": -0.00029381266517103377
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.002636632101654046
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 1.0,
+      "gy": 1.2,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.004283604019534426
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": true,
+          "block_depth": -9.400038937140698e-05
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.0029222798435094566
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 1.2,
+      "gy": 0.4,
+      "route_clearance": 0.3379989293395637,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": false
+        },
+        "0.92": {
+          "stopped": false
+        },
+        "1.0": {
+          "stopped": false
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 1.2,
+      "gy": 0.6,
+      "route_clearance": 0.3541252438150611,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 135,
+          "at_rest_margin": 0.005712086296080943,
+          "restart_permitted": false,
+          "block_depth": 0.0006825049478511591
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 125,
+          "at_rest_margin": 0.004504746622874423,
+          "restart_permitted": false,
+          "block_depth": 0.002372774196044425
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 115,
+          "at_rest_margin": 0.004678687176551677,
+          "restart_permitted": false,
+          "block_depth": 0.0027483388778055118
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 1.2,
+      "gy": 0.8,
+      "route_clearance": 0.3425075043448602,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 115,
+          "at_rest_margin": 0.02773610162811846,
+          "restart_permitted": false,
+          "block_depth": 0.00011598534871548605
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.030291521638212637,
+          "restart_permitted": true,
+          "block_depth": -0.0029026469871998306
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.027978538586970136,
+          "restart_permitted": true,
+          "block_depth": -3.0068535571692312e-05
+        }
+      }
+    },
+    {
+      "cy": 0.55,
+      "gx": 1.2,
+      "gy": 1.2,
+      "route_clearance": 0.3396784799285386,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 114,
+          "at_rest_margin": 0.03174632035867653,
+          "restart_permitted": true,
+          "block_depth": -0.0043501040149697134
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 106,
+          "at_rest_margin": 0.02841441927893429,
+          "restart_permitted": true,
+          "block_depth": -0.00023416952794474977
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 98,
+          "at_rest_margin": 0.026023742578070996,
+          "restart_permitted": false,
+          "block_depth": 0.0027218244527990043
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 0.6,
+      "gy": 0.4,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.029507302387113077,
+          "restart_permitted": false,
+          "block_depth": 0.0011090721600565123
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.0006794313248457695
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.027445509945187352,
+          "restart_permitted": false,
+          "block_depth": 0.0039226066674832305
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 0.6,
+      "gy": 0.6,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.029503565884908656,
+          "restart_permitted": false,
+          "block_depth": 0.0013856587836598155
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.00041000137623575794
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.027412726726450287,
+          "restart_permitted": false,
+          "block_depth": 0.004299975114637533
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 0.6,
+      "gy": 0.8,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.029501958451026655,
+          "restart_permitted": false,
+          "block_depth": 0.0015055314525669328
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.0002929835004809589
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02739860988597348,
+          "restart_permitted": false,
+          "block_depth": 0.004463970976090248
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 0.6,
+      "gy": 1.2,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.029499674204053916,
+          "restart_permitted": false,
+          "block_depth": 0.0016774979748097052
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.00012509969939100696
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.027378529633371784,
+          "restart_permitted": false,
+          "block_depth": 0.00469960492671978
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 0.8,
+      "gy": 0.4,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.029514785218171025,
+          "restart_permitted": false,
+          "block_depth": 0.0005607179640053084
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.0012127775992481493
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.027511077516819527,
+          "restart_permitted": false,
+          "block_depth": 0.0031752791456122753
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 0.8,
+      "gy": 0.6,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.0295091618249248,
+          "restart_permitted": false,
+          "block_depth": 0.0009720860293566114
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.0008124859075517854
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02746181168884332,
+          "restart_permitted": false,
+          "block_depth": 0.0037357706258457357
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 0.8,
+      "gy": 0.8,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.029506530934549524,
+          "restart_permitted": false,
+          "block_depth": 0.001166088528526621
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.0006240502650071145
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.027438744413309568,
+          "restart_permitted": false,
+          "block_depth": 0.004000374717916033
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 0.8,
+      "gy": 1.2,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.029502612908144488,
+          "restart_permitted": false,
+          "block_depth": 0.0014566275614457669
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.00034072350835295806
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02740435865823071,
+          "restart_permitted": false,
+          "block_depth": 0.00439704432969662
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 1.0,
+      "gy": 0.4,
+      "route_clearance": 0.3246882009665246,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 131,
+          "at_rest_margin": 0.008157013520680045,
+          "restart_permitted": true,
+          "block_depth": -0.0009527702955787754
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 121,
+          "at_rest_margin": 0.008690299788390976,
+          "restart_permitted": true,
+          "block_depth": -0.0010116656803274005
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 113,
+          "at_rest_margin": 0.005484774467250486,
+          "restart_permitted": false,
+          "block_depth": 0.0022686481898644972
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 1.0,
+      "gy": 0.6,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.029517628447116306,
+          "restart_permitted": false,
+          "block_depth": 0.0003539153041837162
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.0014146279400862882
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02753597272563768,
+          "restart_permitted": false,
+          "block_depth": 0.002893725156966509
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 1.0,
+      "gy": 0.8,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.02951396065126849,
+          "restart_permitted": false,
+          "block_depth": 0.000620818411068369
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.0011541152741464944
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.027503856179102115,
+          "restart_permitted": false,
+          "block_depth": 0.0032571251892781206
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 1.0,
+      "gy": 1.2,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.029507825592510084,
+          "restart_permitted": false,
+          "block_depth": 0.001070467019835375
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.000716928836052233
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.027450097620853986,
+          "restart_permitted": false,
+          "block_depth": 0.0038699404724393816
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 1.2,
+      "gy": 0.4,
+      "route_clearance": 0.35427786716598836,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 141,
+          "at_rest_margin": 0.006763992793218376,
+          "restart_permitted": true,
+          "block_depth": -0.0026623600429103167
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 130,
+          "at_rest_margin": 0.007751595038568149,
+          "restart_permitted": true,
+          "block_depth": -0.0032851932580753584
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 120,
+          "at_rest_margin": 0.005491079751023642,
+          "restart_permitted": true,
+          "block_depth": -0.000651396820300465
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 1.2,
+      "gy": 0.6,
+      "route_clearance": 0.35427786716598836,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 128,
+          "at_rest_margin": 0.007624024418487363,
+          "restart_permitted": false,
+          "block_depth": 0.0019293211034852042
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 119,
+          "at_rest_margin": 0.010071727147245413,
+          "restart_permitted": true,
+          "block_depth": -0.002295363848908216
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.007353135981909287,
+          "restart_permitted": false,
+          "block_depth": 0.0009747036182217172
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 1.2,
+      "gy": 0.8,
+      "route_clearance": 0.3475497765118828,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 118,
+          "at_rest_margin": 0.033158687102747775,
+          "restart_permitted": true,
+          "block_depth": -0.004941193850309722
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 110,
+          "at_rest_margin": 0.027751273586521574,
+          "restart_permitted": false,
+          "block_depth": 0.0012875277204106306
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 101,
+          "at_rest_margin": 0.030186893264403103,
+          "restart_permitted": true,
+          "block_depth": -0.0012915260970119968
+        }
+      }
+    },
+    {
+      "cy": 0.6,
+      "gx": 1.2,
+      "gy": 1.2,
+      "route_clearance": 0.33967847992853856,
+      "holds": false,
+      "by_slip": {
+        "0.85": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 117,
+          "at_rest_margin": 0.02951191109512924,
+          "restart_permitted": false,
+          "block_depth": 0.000770501306569471
+        },
+        "0.92": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 108,
+          "at_rest_margin": 0.03124048417102876,
+          "restart_permitted": true,
+          "block_depth": -0.0010082797118159958
+        },
+        "1.0": {
+          "stopped": true,
+          "rested": true,
+          "first_stop_step": 100,
+          "at_rest_margin": 0.02748590322594885,
+          "restart_permitted": false,
+          "block_depth": 0.003461020783598112
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "seed": 0,
+  "experiment": "COVMAP-s300_corners_20260922T212716Z",
+  "created_utc": "2026-09-22T21:27:16.924643+00:00",
+  "commit": "75142e9b780c96eeb70d792f1c007b10e85eab73",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "0ae35a50290d097857bb3cd828858f70a736ae0fa2102f0fac1e69b452164790",
+  "display_enabled": false,
+  "host": {
+    "hostname": "DESKTOP-5MIDQ97",
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.10",
+    "cpu_model": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "logical_cores": 8,
+    "physical_cores": 4,
+    "ram_total_gb": 7.7,
+    "gpu": "none available to torch",
+    "shared": false,
+    "torch": "2.11.0+cpu"
+  },
+  "display": {
+    "in_force": false,
+    "refusals": 0,
+    "consistent": true,
+    "starts": 1
+  }
+}

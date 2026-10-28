@@ -1,0 +1,160 @@
+{
+  "overall": {
+    "episodes": 60,
+    "counts": {
+      "success": 0,
+      "collision": 0,
+      "timeout": 60,
+      "unrecoverable_stop": 0
+    },
+    "shares": {
+      "success": 0.0,
+      "collision": 0.0,
+      "timeout": 1.0,
+      "unrecoverable_stop": 0.0
+    },
+    "success_rate": 0.0,
+    "contact_rate": 0.0,
+    "largest_outcome_share": 1.0,
+    "protective_stops": 0,
+    "distance_m": 0.11599518886033884,
+    "stops_per_100m": 0.0,
+    "mean_return": -14.997953373954283
+  },
+  "per_set": {
+    "tune_narrow": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.03866506295344625,
+      "stops_per_100m": 0.0,
+      "mean_return": -14.997835571836927
+    },
+    "tune_medium": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.03866506295344625,
+      "stops_per_100m": 0.0,
+      "mean_return": -14.99790330852204
+    },
+    "tune_wide": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.03866506295344625,
+      "stops_per_100m": 0.0,
+      "mean_return": -14.998121241503863
+    }
+  },
+  "per_stratum": {
+    "medium": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.03866506295344625,
+      "stops_per_100m": 0.0,
+      "mean_return": -14.99790330852204
+    },
+    "narrow": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.03866506295344625,
+      "stops_per_100m": 0.0,
+      "mean_return": -14.997835571836927
+    },
+    "wide": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.03866506295344625,
+      "stops_per_100m": 0.0,
+      "mean_return": -14.998121241503863
+    }
+  }
+}

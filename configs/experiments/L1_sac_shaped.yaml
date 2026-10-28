@@ -1,0 +1,7 @@
+# L1: SAC with proximity shaping, no filter (certified layer still active).
+defaults: ../base.yaml
+experiment: L1_sac_shaped
+filter:
+  enabled: false
+reward:
+  k_proximity: 2.0

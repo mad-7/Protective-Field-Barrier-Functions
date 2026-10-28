@@ -1,0 +1,691 @@
+{
+  "criterion": "A1, A2, A3 near-side gaps > 0, geometric and binned (declared in the script's docstring before computing)",
+  "narrow_clearance_m": 0.13,
+  "tracking_offset_m": 0.05,
+  "half_width_m": 0.2086,
+  "present_field_gaps_m": {
+    "A1": 0.0790881463390341,
+    "A2": 0.029088146339034116,
+    "A3": 0.029088146339034116
+  },
+  "results": [
+    {
+      "alpha_max": 3.0,
+      "a_max": 1.0,
+      "variant": "ruled",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.04176973511843779,
+          "binned": 0.04089977107743198
+        },
+        "A2_rest_offset": {
+          "geometric": -0.0082302648815622,
+          "binned": -0.016962405380995582
+        },
+        "A3_moving_offset": {
+          "0.30": {
+            "geometric": -0.0082302648815622,
+            "binned": -0.016962405380995582
+          },
+          "0.40": {
+            "geometric": -0.0082302648815622,
+            "binned": -0.016962405380995582
+          }
+        },
+        "admissible": false,
+        "worst_gap_m": -0.016962405380995582,
+        "bands": {
+          "bands": {
+            "0.10": null,
+            "0.30": [
+              0.0,
+              0.15
+            ],
+            "0.40": [
+              0.15,
+              0.25
+            ]
+          },
+          "max_covered_speed": 0.25,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.25
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.06118366751525539
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.26161846949815293
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 3.0,
+      "a_max": 1.0,
+      "variant": "full",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.04176973511843779,
+          "binned": 0.04089977107743198
+        },
+        "A2_rest_offset": {
+          "geometric": -0.0082302648815622,
+          "binned": -0.016962405380995582
+        },
+        "A3_moving_offset": {
+          "0.30": {
+            "geometric": -0.019480264881562237,
+            "binned": -0.03848748696815457
+          },
+          "0.40": {
+            "geometric": -0.026980264881562244,
+            "binned": -0.05338549050752517
+          }
+        },
+        "admissible": false,
+        "worst_gap_m": -0.05338549050752517,
+        "bands": {
+          "bands": {
+            "0.10": null,
+            "0.30": [
+              0.0,
+              0.15
+            ],
+            "0.40": [
+              0.15,
+              0.25
+            ]
+          },
+          "max_covered_speed": 0.25,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.25
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.04206379809350991
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.24281049077659994
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 3.0,
+      "a_max": 0.5,
+      "variant": "ruled",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.05583223511843777,
+          "binned": 0.05523731651146507
+        },
+        "A2_rest_offset": {
+          "geometric": 0.0058322351184377785,
+          "binned": 0.000308251101889645
+        },
+        "A3_moving_offset": {
+          "0.10": {
+            "geometric": 0.0058322351184377785,
+            "binned": 0.000308251101889645
+          },
+          "0.30": {
+            "geometric": 0.0058322351184377785,
+            "binned": 0.000308251101889645
+          },
+          "0.40": {
+            "geometric": 0.0058322351184377785,
+            "binned": 0.000308251101889645
+          }
+        },
+        "admissible": true,
+        "worst_gap_m": 0.000308251101889645,
+        "bands": {
+          "bands": {
+            "0.10": [
+              0.0,
+              0.025
+            ],
+            "0.30": [
+              0.025,
+              0.225
+            ],
+            "0.40": [
+              0.225,
+              0.325
+            ]
+          },
+          "max_covered_speed": 0.325,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.325
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.07536751227341382
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.2757244535393176
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 3.0,
+      "a_max": 0.5,
+      "variant": "full",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.05583223511843777,
+          "binned": 0.05523731651146507
+        },
+        "A2_rest_offset": {
+          "geometric": 0.0058322351184377785,
+          "binned": 0.000308251101889645
+        },
+        "A3_moving_offset": {
+          "0.10": {
+            "geometric": 0.0048947351184377985,
+            "binned": -0.0026984404602767853
+          },
+          "0.30": {
+            "geometric": -0.002605264881562208,
+            "binned": -0.01670667703369938
+          },
+          "0.40": {
+            "geometric": -0.006355264881562239,
+            "binned": -0.025745417889764588
+          }
+        },
+        "admissible": false,
+        "worst_gap_m": -0.025745417889764588,
+        "bands": {
+          "bands": {
+            "0.10": [
+              0.0,
+              0.025
+            ],
+            "0.30": [
+              0.025,
+              0.225
+            ],
+            "0.40": [
+              0.225,
+              0.325
+            ]
+          },
+          "max_covered_speed": 0.325,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.325
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.06307484681634318
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.2634992673703082
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 2.0,
+      "a_max": 1.0,
+      "variant": "ruled",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.04673012325004927,
+          "binned": 0.045980193258514046
+        },
+        "A2_rest_offset": {
+          "geometric": -0.0032698767499507175,
+          "binned": -0.011150625125489366
+        },
+        "A3_moving_offset": {
+          "0.30": {
+            "geometric": -0.0032698767499507175,
+            "binned": -0.011150625125489366
+          },
+          "0.40": {
+            "geometric": -0.0032698767499507175,
+            "binned": -0.011150625125489366
+          }
+        },
+        "admissible": false,
+        "worst_gap_m": -0.011150625125489366,
+        "bands": {
+          "bands": {
+            "0.10": null,
+            "0.30": [
+              0.0,
+              0.15
+            ],
+            "0.40": [
+              0.15,
+              0.25
+            ]
+          },
+          "max_covered_speed": 0.25,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.25
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.06618685864051682
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.2665941961344192
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 2.0,
+      "a_max": 1.0,
+      "variant": "full",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.04673012325004927,
+          "binned": 0.045980193258514046
+        },
+        "A2_rest_offset": {
+          "geometric": -0.0032698767499507175,
+          "binned": -0.011150625125489366
+        },
+        "A3_moving_offset": {
+          "0.30": {
+            "geometric": -0.0145198767499507,
+            "binned": -0.032122097219892176
+          },
+          "0.40": {
+            "geometric": -0.022019876749950706,
+            "binned": -0.04680574233727425
+          }
+        },
+        "admissible": false,
+        "worst_gap_m": -0.04680574233727425,
+        "bands": {
+          "bands": {
+            "0.10": null,
+            "0.30": [
+              0.0,
+              0.15
+            ],
+            "0.40": [
+              0.15,
+              0.25
+            ]
+          },
+          "max_covered_speed": 0.25,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.25
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.04716017829031294
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.24778621741286627
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 2.0,
+      "a_max": 0.5,
+      "variant": "ruled",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.06079262325004925,
+          "binned": 0.06026053780740487
+        },
+        "A2_rest_offset": {
+          "geometric": 0.01079262325004926,
+          "binned": 0.006560683504569842
+        },
+        "A3_moving_offset": {
+          "0.10": {
+            "geometric": 0.01079262325004926,
+            "binned": 0.006560683504569842
+          },
+          "0.30": {
+            "geometric": 0.01079262325004926,
+            "binned": 0.006560683504569842
+          },
+          "0.40": {
+            "geometric": 0.01079262325004926,
+            "binned": 0.006560683504569842
+          }
+        },
+        "admissible": true,
+        "worst_gap_m": 0.006560683504569842,
+        "bands": {
+          "bands": {
+            "0.10": [
+              0.0,
+              0.025
+            ],
+            "0.30": [
+              0.025,
+              0.225
+            ],
+            "0.40": [
+              0.225,
+              0.325
+            ]
+          },
+          "max_covered_speed": 0.325,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.325
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.08037070339867519
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.28069739296739166
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 2.0,
+      "a_max": 0.5,
+      "variant": "full",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.06079262325004925,
+          "binned": 0.06026053780740487
+        },
+        "A2_rest_offset": {
+          "geometric": 0.01079262325004926,
+          "binned": 0.006560683504569842
+        },
+        "A3_moving_offset": {
+          "0.10": {
+            "geometric": 0.00985512325004928,
+            "binned": 0.0040968266992517655
+          },
+          "0.30": {
+            "geometric": 0.0023551232500492736,
+            "binned": -0.0094177232193694
+          },
+          "0.40": {
+            "geometric": -0.001394876749950702,
+            "binned": -0.017749565865950223
+          }
+        },
+        "admissible": false,
+        "worst_gap_m": -0.017749565865950223,
+        "bands": {
+          "bands": {
+            "0.10": [
+              0.0,
+              0.025
+            ],
+            "0.30": [
+              0.025,
+              0.225
+            ],
+            "0.40": [
+              0.225,
+              0.325
+            ]
+          },
+          "max_covered_speed": 0.325,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.325
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.06807803794160466
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.26847499400657454
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 1.5,
+      "a_max": 1.0,
+      "variant": "ruled",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.0492431560748946,
+          "binned": 0.04853602370035892
+        },
+        "A2_rest_offset": {
+          "geometric": -0.0007568439251053882,
+          "binned": -0.007997101266229656
+        },
+        "A3_moving_offset": {
+          "0.30": {
+            "geometric": -0.0007568439251053882,
+            "binned": -0.007997101266229656
+          },
+          "0.40": {
+            "geometric": -0.0007568439251053882,
+            "binned": -0.007997101266229656
+          }
+        },
+        "admissible": false,
+        "worst_gap_m": -0.007997101266229656,
+        "bands": {
+          "bands": {
+            "0.10": null,
+            "0.30": [
+              0.0,
+              0.15
+            ],
+            "0.40": [
+              0.15,
+              0.25
+            ]
+          },
+          "max_covered_speed": 0.25,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.25
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.06872157632654441
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.2691149997555528
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 1.5,
+      "a_max": 1.0,
+      "variant": "full",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.0492431560748946,
+          "binned": 0.04853602370035892
+        },
+        "A2_rest_offset": {
+          "geometric": -0.0007568439251053882,
+          "binned": -0.007997101266229656
+        },
+        "A3_moving_offset": {
+          "0.30": {
+            "geometric": -0.01200684392510537,
+            "binned": -0.028559856306930642
+          },
+          "0.40": {
+            "geometric": -0.019506843925105377,
+            "binned": -0.04310575509270048
+          }
+        },
+        "admissible": false,
+        "worst_gap_m": -0.04310575509270048,
+        "bands": {
+          "bands": {
+            "0.10": null,
+            "0.30": [
+              0.0,
+              0.15
+            ],
+            "0.40": [
+              0.15,
+              0.25
+            ]
+          },
+          "max_covered_speed": 0.25,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.25
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.04971600873215781
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.2503070210339999
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 1.5,
+      "a_max": 0.5,
+      "variant": "ruled",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.06330565607489458,
+          "binned": 0.06279525549343246
+        },
+        "A2_rest_offset": {
+          "geometric": 0.01330565607489459,
+          "binned": 0.009728292055789678
+        },
+        "A3_moving_offset": {
+          "0.10": {
+            "geometric": 0.01330565607489459,
+            "binned": 0.009728292055789678
+          },
+          "0.30": {
+            "geometric": 0.01330565607489459,
+            "binned": 0.009728292055789678
+          },
+          "0.40": {
+            "geometric": 0.01330565607489459,
+            "binned": 0.009728292055789678
+          }
+        },
+        "admissible": true,
+        "worst_gap_m": 0.009728292055789678,
+        "bands": {
+          "bands": {
+            "0.10": [
+              0.0,
+              0.025
+            ],
+            "0.30": [
+              0.025,
+              0.225
+            ],
+            "0.40": [
+              0.225,
+              0.325
+            ]
+          },
+          "max_covered_speed": 0.325,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.325
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.08290542108470278
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.2832112872410186
+      },
+      "warning_inside_A3_gap": false
+    },
+    {
+      "alpha_max": 1.5,
+      "a_max": 0.5,
+      "variant": "full",
+      "reach_time_s": 0.15000000000000002,
+      "narrow": {
+        "A1_rest_centred": {
+          "geometric": 0.06330565607489458,
+          "binned": 0.06279525549343246
+        },
+        "A2_rest_offset": {
+          "geometric": 0.01330565607489459,
+          "binned": 0.009728292055789678
+        },
+        "A3_moving_offset": {
+          "0.10": {
+            "geometric": 0.01236815607489461,
+            "binned": 0.007538323321604645
+          },
+          "0.30": {
+            "geometric": 0.004868156074894603,
+            "binned": -0.00557388466415526
+          },
+          "0.40": {
+            "geometric": 0.0011181560748946273,
+            "binned": -0.013648824050153774
+          }
+        },
+        "admissible": false,
+        "worst_gap_m": -0.013648824050153774,
+        "bands": {
+          "bands": {
+            "0.10": [
+              0.0,
+              0.025
+            ],
+            "0.30": [
+              0.025,
+              0.225
+            ],
+            "0.40": [
+              0.225,
+              0.325
+            ]
+          },
+          "max_covered_speed": 0.325,
+          "speed_cap": 0.5074,
+          "uncovered_above": 0.325
+        }
+      },
+      "medium": {
+        "admissible": true,
+        "worst_gap_m": 0.0706127556276322
+      },
+      "wide": {
+        "admissible": true,
+        "worst_gap_m": 0.27099579762770815
+      },
+      "warning_inside_A3_gap": false
+    }
+  ]
+}

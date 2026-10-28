@@ -1,0 +1,55 @@
+{
+  "physics": {
+    "engine": 1,
+    "engine_name": "ODE",
+    "simulation_time_step": 0.05,
+    "dynamic_step_size": 0.005
+  },
+  "command_body": [
+    0.5,
+    0.3,
+    0.0
+  ],
+  "target_wheel_rad_s": [
+    -4.0,
+    -16.0,
+    -16.0,
+    -4.0
+  ],
+  "max_torque_setting_nm": [
+    2.5,
+    2.5,
+    2.5,
+    2.5
+  ],
+  "wheels": {
+    "fl": {
+      "target_rad_s": -4.0,
+      "plateau_velocity_mean": 3.999842330932914,
+      "plateau_velocity_spread": 0.0039027971072793655,
+      "plateau_abs_torque_mean": 0.7737307397428607,
+      "plateau_abs_torque_max": 0.7832956448991883
+    },
+    "fr": {
+      "target_rad_s": -16.0,
+      "plateau_velocity_mean": 12.321275030998073,
+      "plateau_velocity_spread": 0.037364836383151356,
+      "plateau_abs_torque_mean": 2.499960521333084,
+      "plateau_abs_torque_max": 2.4999950674033458
+    },
+    "rl": {
+      "target_rad_s": -16.0,
+      "plateau_velocity_mean": 12.3253665118301,
+      "plateau_velocity_spread": 0.03533827090737951,
+      "plateau_abs_torque_mean": 2.499958823511018,
+      "plateau_abs_torque_max": 2.4999997986763356
+    },
+    "rr": {
+      "target_rad_s": -4.0,
+      "plateau_velocity_mean": 3.9998392495676542,
+      "plateau_velocity_spread": 0.001750412030806725,
+      "plateau_abs_torque_mean": 0.8855865714328417,
+      "plateau_abs_torque_max": 0.9095410166073759
+    }
+  }
+}

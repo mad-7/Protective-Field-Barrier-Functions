@@ -1,0 +1,56 @@
+{
+  "against": "31a519f",
+  "identical": true,
+  "sets": {
+    "scenarios/tune/tune_medium.json": {
+      "identical": true,
+      "scenarios": 20,
+      "differences": []
+    },
+    "scenarios/tune/tune_narrow.json": {
+      "identical": true,
+      "scenarios": 20,
+      "differences": []
+    },
+    "scenarios/tune/tune_unmapped_medium.json": {
+      "identical": true,
+      "scenarios": 20,
+      "differences": []
+    },
+    "scenarios/tune/tune_unmapped_narrow.json": {
+      "identical": true,
+      "scenarios": 20,
+      "differences": []
+    },
+    "scenarios/tune/tune_unmapped_wide.json": {
+      "identical": true,
+      "scenarios": 20,
+      "differences": []
+    },
+    "scenarios/tune/tune_wide.json": {
+      "identical": true,
+      "scenarios": 20,
+      "differences": []
+    },
+    "scenarios/pilot/pilot_narrow.json": {
+      "identical": true,
+      "scenarios": 150,
+      "differences": []
+    },
+    "scenarios/train/train_medium.json": {
+      "identical": true,
+      "scenarios": 667,
+      "differences": []
+    },
+    "scenarios/train/train_narrow.json": {
+      "identical": true,
+      "scenarios": 667,
+      "differences": []
+    },
+    "scenarios/train/train_wide.json": {
+      "identical": true,
+      "scenarios": 667,
+      "differences": []
+    }
+  }
+}

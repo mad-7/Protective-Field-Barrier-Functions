@@ -1,0 +1,6 @@
+# The PFB acceptance step in the simulator (WP2 step 4, 2026-10-24): base, with the PFB in the
+# step loop's slot. Nothing measured is restated here (rule 16); alpha is base's provisional value.
+defaults: ../base.yaml
+
+filter:
+  enabled: true

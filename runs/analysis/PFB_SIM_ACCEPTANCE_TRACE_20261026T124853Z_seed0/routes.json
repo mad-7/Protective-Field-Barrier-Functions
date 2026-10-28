@@ -1,0 +1,73 @@
+[
+ {
+  "seed": 2000007,
+  "stratum": "narrow",
+  "outcome": "success",
+  "traces": [
+   "2000007_509_unattributed.json"
+  ],
+  "steps": 900,
+  "reached_goal": true,
+  "stalled": false,
+  "final_s_m": 13.42739617637867,
+  "stops": [
+   {
+    "step": 509,
+    "s": 7.461093772988568,
+    "category": "unattributed",
+    "subtypes": []
+   }
+  ],
+  "scan_fault_stops": 0,
+  "fallback_steps": 6,
+  "fallback_reasons": {
+   "infeasible": 6
+  },
+  "fallback_rollout_contacts": 0,
+  "contact_steps": 0,
+  "modes": {
+   "nominal": 11,
+   "filtered": 842,
+   "brake": 2,
+   "fallback": 6,
+   "latched": 39
+  },
+  "pfb_ms": {
+   "mean": 45.989689221735006,
+   "p95": 115.12075504288067,
+   "max": 179.2167000239715
+  },
+  "over_budget_steps": 266
+ },
+ {
+  "seed": 2000043,
+  "stratum": "wide",
+  "outcome": "stalled",
+  "traces": [],
+  "steps": 1187,
+  "reached_goal": false,
+  "stalled": true,
+  "final_s_m": 8.965339653476692,
+  "stops": [],
+  "scan_fault_stops": 0,
+  "fallback_steps": 10,
+  "fallback_reasons": {
+   "infeasible": 10
+  },
+  "fallback_rollout_contacts": 0,
+  "contact_steps": 0,
+  "modes": {
+   "nominal": 6,
+   "filtered": 1170,
+   "brake": 1,
+   "fallback": 10,
+   "latched": 0
+  },
+  "pfb_ms": {
+   "mean": 115.20209940997358,
+   "p95": 272.0777299953625,
+   "max": 368.13000007532537
+  },
+  "over_budget_steps": 804
+ }
+]

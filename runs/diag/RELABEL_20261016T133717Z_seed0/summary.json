@@ -1,0 +1,152 @@
+{
+  "episodes": 16,
+  "reproduced_by_old_rule": 16,
+  "changed": [
+    {
+      "name": "TRACE_20261013T215044Z_seed0/trace_2.jsonl",
+      "recorded": "timeout",
+      "old_rule": "timeout",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": true
+    },
+    {
+      "name": "TRACE_20261013T221601Z_seed0/trace_13.jsonl",
+      "recorded": "timeout",
+      "old_rule": "timeout",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": true
+    }
+  ],
+  "rows": [
+    {
+      "name": "TRACE_20261013T215044Z_seed0/trace_14.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T215044Z_seed0/trace_15.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T215044Z_seed0/trace_2.jsonl",
+      "recorded": "timeout",
+      "old_rule": "timeout",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": true
+    },
+    {
+      "name": "TRACE_20261013T215044Z_seed0/trace_3.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T215044Z_seed0/trace_6.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T220231Z_seed0/trace_1.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T220231Z_seed0/trace_11.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T220231Z_seed0/trace_14.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T220231Z_seed0/trace_15.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T220231Z_seed0/trace_2.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T220231Z_seed0/trace_6.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T220231Z_seed0/trace_7.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T221601Z_seed0/trace_13.jsonl",
+      "recorded": "timeout",
+      "old_rule": "timeout",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": true
+    },
+    {
+      "name": "TRACE_20261013T221601Z_seed0/trace_17.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T221601Z_seed0/trace_5.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    },
+    {
+      "name": "TRACE_20261013T221601Z_seed0/trace_6.jsonl",
+      "recorded": "unrecoverable_stop",
+      "old_rule": "unrecoverable_stop",
+      "new_rule": "unrecoverable_stop",
+      "reproduced": true,
+      "changed": false
+    }
+  ]
+}

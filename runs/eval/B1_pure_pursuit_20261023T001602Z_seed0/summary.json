@@ -1,0 +1,1921 @@
+{
+  "overall": {
+    "episodes": 60,
+    "counts": {
+      "success": 0,
+      "collision": 0,
+      "timeout": 0,
+      "unrecoverable_stop": 60
+    },
+    "shares": {
+      "success": 0.0,
+      "collision": 0.0,
+      "timeout": 0.0,
+      "unrecoverable_stop": 1.0
+    },
+    "success_rate": 0.0,
+    "contact_rate": 0.0,
+    "largest_outcome_share": 1.0,
+    "protective_stops": 401,
+    "at_rest_triggers": 0,
+    "stationary_triggers": 0,
+    "creep_stops_ending_unrecoverable": 0,
+    "distance_m": 205.66962748692134,
+    "stops_per_100m": 194.97288194655764,
+    "recovery_distance_m": 11.173918646065477,
+    "stops_per_100m_excluding_recovery": 206.1742145314446,
+    "planned_length_m": 632.9843789974927,
+    "stops_per_100m_planned": 63.350694472918164,
+    "mean_return": -151.15346042086745
+  },
+  "per_set": {
+    "tune_narrow": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 0,
+        "unrecoverable_stop": 20
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 0.0,
+        "unrecoverable_stop": 1.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 137,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 62.38039174103231,
+      "stops_per_100m": 219.6202944167866,
+      "recovery_distance_m": 5.32183886608865,
+      "stops_per_100m_excluding_recovery": 240.10423170083817,
+      "planned_length_m": 219.51285803363766,
+      "stops_per_100m_planned": 62.41092263443011,
+      "mean_return": -137.05112914291615
+    },
+    "tune_medium": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 0,
+        "unrecoverable_stop": 20
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 0.0,
+        "unrecoverable_stop": 1.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 130,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 71.8424022363346,
+      "stops_per_100m": 180.95163295396034,
+      "recovery_distance_m": 3.157960559546362,
+      "stops_per_100m_excluding_recovery": 189.2713936756557,
+      "planned_length_m": 216.36810326474145,
+      "stops_per_100m_planned": 60.08279318367733,
+      "mean_return": -146.1230848945941
+    },
+    "tune_wide": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 0,
+        "unrecoverable_stop": 20
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 0.0,
+        "unrecoverable_stop": 1.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 134,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 71.44683350955447,
+      "stops_per_100m": 187.55204873016578,
+      "recovery_distance_m": 2.6941192204304643,
+      "stops_per_100m_excluding_recovery": 194.90139609105947,
+      "planned_length_m": 197.1034176991137,
+      "stops_per_100m_planned": 67.98461516509896,
+      "mean_return": -170.28616722509216
+    }
+  },
+  "per_stratum": {
+    "medium": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 0,
+        "unrecoverable_stop": 20
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 0.0,
+        "unrecoverable_stop": 1.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 130,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 71.8424022363346,
+      "stops_per_100m": 180.95163295396034,
+      "recovery_distance_m": 3.157960559546362,
+      "stops_per_100m_excluding_recovery": 189.2713936756557,
+      "planned_length_m": 216.36810326474145,
+      "stops_per_100m_planned": 60.08279318367733,
+      "mean_return": -146.1230848945941
+    },
+    "narrow": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 0,
+        "unrecoverable_stop": 20
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 0.0,
+        "unrecoverable_stop": 1.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 137,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 62.38039174103231,
+      "stops_per_100m": 219.6202944167866,
+      "recovery_distance_m": 5.32183886608865,
+      "stops_per_100m_excluding_recovery": 240.10423170083817,
+      "planned_length_m": 219.51285803363766,
+      "stops_per_100m_planned": 62.41092263443011,
+      "mean_return": -137.05112914291615
+    },
+    "wide": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 0,
+        "unrecoverable_stop": 20
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 0.0,
+        "unrecoverable_stop": 1.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 134,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 71.44683350955447,
+      "stops_per_100m": 187.55204873016578,
+      "recovery_distance_m": 2.6941192204304643,
+      "stops_per_100m_excluding_recovery": 194.90139609105947,
+      "planned_length_m": 197.1034176991137,
+      "stops_per_100m_planned": 67.98461516509896,
+      "mean_return": -170.28616722509216
+    }
+  },
+  "recovery": {
+    "episodes": 60,
+    "episodes_with_recovery": 60,
+    "attempts": 300,
+    "endings": {
+      "cleared": 300
+    },
+    "deadlocks": {},
+    "distance_m": 11.173918646065477,
+    "time_s": 653.0999999999998,
+    "attempt_times_s": [
+      5.75,
+      15.600000000000001,
+      0.45,
+      0.8,
+      0.5,
+      3.0,
+      0.8500000000000001,
+      1.25,
+      2.8000000000000003,
+      1.7000000000000002,
+      6.1000000000000005,
+      0.55,
+      0.8,
+      1.1,
+      0.2,
+      5.7,
+      15.8,
+      0.6000000000000001,
+      0.8,
+      0.8500000000000001,
+      8.700000000000001,
+      1.1500000000000001,
+      0.15000000000000002,
+      1.3,
+      0.15000000000000002,
+      2.95,
+      1.4500000000000002,
+      1.1,
+      2.9000000000000004,
+      1.55,
+      2.3000000000000003,
+      11.8,
+      0.4,
+      0.30000000000000004,
+      0.6000000000000001,
+      1.75,
+      1.25,
+      1.25,
+      2.75,
+      2.3000000000000003,
+      7.1000000000000005,
+      16.150000000000002,
+      0.4,
+      0.6000000000000001,
+      0.45,
+      4.9,
+      0.35000000000000003,
+      0.6000000000000001,
+      0.6000000000000001,
+      0.1,
+      11.8,
+      0.30000000000000004,
+      0.30000000000000004,
+      0.30000000000000004,
+      0.30000000000000004,
+      5.25,
+      16.6,
+      0.55,
+      0.6000000000000001,
+      0.6000000000000001,
+      3.35,
+      7.550000000000001,
+      6.550000000000001,
+      6.9,
+      6.8500000000000005,
+      2.25,
+      0.4,
+      0.8,
+      0.75,
+      2.6500000000000004,
+      3.0500000000000003,
+      5.550000000000001,
+      5.45,
+      5.3500000000000005,
+      5.95,
+      11.4,
+      2.1,
+      0.25,
+      0.25,
+      0.4,
+      4.7,
+      0.6000000000000001,
+      0.45,
+      0.55,
+      0.65,
+      13.450000000000001,
+      4.3,
+      3.5500000000000003,
+      0.05,
+      0.05,
+      2.5500000000000003,
+      6.95,
+      1.85,
+      1.1,
+      1.2000000000000002,
+      0.6000000000000001,
+      0.6000000000000001,
+      3.1,
+      3.4000000000000004,
+      0.25,
+      1.9000000000000001,
+      5.300000000000001,
+      0.35000000000000003,
+      0.4,
+      0.4,
+      2.25,
+      3.0500000000000003,
+      0.45,
+      1.9500000000000002,
+      1.4000000000000001,
+      2.5,
+      9.850000000000001,
+      2.35,
+      0.35000000000000003,
+      0.5,
+      1.8,
+      0.5,
+      0.6000000000000001,
+      1.6,
+      0.9500000000000001,
+      2.8000000000000003,
+      5.9,
+      5.8500000000000005,
+      6.5,
+      6.45,
+      4.75,
+      0.25,
+      0.7000000000000001,
+      0.6000000000000001,
+      0.7000000000000001,
+      0.65,
+      6.15,
+      2.6,
+      0.25,
+      0.15000000000000002,
+      2.7,
+      1.1500000000000001,
+      0.15000000000000002,
+      1.3,
+      0.1,
+      2.1,
+      0.05,
+      1.6,
+      2.8000000000000003,
+      1.8,
+      2.95,
+      1.05,
+      0.45,
+      0.45,
+      0.45,
+      2.1,
+      2.25,
+      0.1,
+      2.1,
+      0.8500000000000001,
+      5.550000000000001,
+      0.4,
+      0.35000000000000003,
+      0.6000000000000001,
+      0.6000000000000001,
+      1.75,
+      0.30000000000000004,
+      0.25,
+      0.25,
+      0.30000000000000004,
+      1.55,
+      1.6500000000000001,
+      0.5,
+      1.25,
+      0.5,
+      2.35,
+      0.6000000000000001,
+      2.4000000000000004,
+      6.15,
+      3.6500000000000004,
+      4.95,
+      7.300000000000001,
+      4.8500000000000005,
+      0.8,
+      0.25,
+      1.9500000000000002,
+      0.35000000000000003,
+      1.1,
+      1.4000000000000001,
+      4.45,
+      3.5500000000000003,
+      1.2000000000000002,
+      0.4,
+      0.5,
+      0.5,
+      2.7,
+      0.05,
+      1.25,
+      1.1,
+      1.25,
+      0.75,
+      1.4500000000000002,
+      2.5,
+      0.7000000000000001,
+      0.55,
+      3.0,
+      0.2,
+      0.2,
+      0.2,
+      0.25,
+      2.1,
+      0.4,
+      0.2,
+      0.30000000000000004,
+      0.35000000000000003,
+      0.9,
+      1.5,
+      1.5,
+      0.30000000000000004,
+      0.30000000000000004,
+      1.35,
+      3.75,
+      0.30000000000000004,
+      0.35000000000000003,
+      0.35000000000000003,
+      2.5500000000000003,
+      3.4000000000000004,
+      3.6,
+      2.3000000000000003,
+      2.7,
+      2.15,
+      0.30000000000000004,
+      0.30000000000000004,
+      0.30000000000000004,
+      0.30000000000000004,
+      3.6,
+      0.2,
+      0.25,
+      0.25,
+      0.25,
+      3.0,
+      0.7000000000000001,
+      0.9500000000000001,
+      1.85,
+      1.25,
+      1.85,
+      0.30000000000000004,
+      1.2000000000000002,
+      2.7,
+      1.5,
+      1.9000000000000001,
+      0.5,
+      1.25,
+      3.95,
+      2.7,
+      2.8000000000000003,
+      5.4,
+      5.25,
+      5.550000000000001,
+      4.75,
+      2.2,
+      4.0,
+      0.9,
+      3.9000000000000004,
+      2.3000000000000003,
+      1.4500000000000002,
+      3.7,
+      0.25,
+      0.30000000000000004,
+      0.30000000000000004,
+      1.2000000000000002,
+      0.4,
+      1.35,
+      0.6000000000000001,
+      0.45,
+      1.85,
+      3.2,
+      2.4000000000000004,
+      2.5,
+      2.4000000000000004,
+      2.45,
+      2.95,
+      0.6000000000000001,
+      2.0500000000000003,
+      0.9500000000000001,
+      1.2000000000000002,
+      1.05,
+      0.5,
+      0.25,
+      0.1,
+      0.55,
+      0.6000000000000001,
+      0.25,
+      0.8500000000000001,
+      2.35,
+      1.75,
+      0.15000000000000002,
+      1.75,
+      4.3,
+      2.7,
+      2.2,
+      4.55,
+      0.25,
+      0.25,
+      0.30000000000000004
+    ],
+    "attempts_cut_short": 0,
+    "suspected_defects": [],
+    "per_episode": [
+      {
+        "scenario_seed": 2000000,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          5.75,
+          15.600000000000001,
+          0.45,
+          0.8,
+          0.5
+        ],
+        "deadlock": null,
+        "distance_m": 0.4049150235035696,
+        "time_s": 23.1
+      },
+      {
+        "scenario_seed": 2000001,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          3.0,
+          0.8500000000000001,
+          1.25,
+          2.8000000000000003,
+          1.7000000000000002
+        ],
+        "deadlock": null,
+        "distance_m": 0.16275306048312044,
+        "time_s": 9.600000000000001
+      },
+      {
+        "scenario_seed": 2000002,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          6.1000000000000005,
+          0.55,
+          0.8,
+          1.1,
+          0.2
+        ],
+        "deadlock": null,
+        "distance_m": 0.14802480049571193,
+        "time_s": 8.75
+      },
+      {
+        "scenario_seed": 2000003,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          5.7,
+          15.8,
+          0.6000000000000001,
+          0.8,
+          0.8500000000000001
+        ],
+        "deadlock": null,
+        "distance_m": 0.4165163034856154,
+        "time_s": 23.75
+      },
+      {
+        "scenario_seed": 2000004,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          8.700000000000001,
+          1.1500000000000001,
+          0.15000000000000002,
+          1.3,
+          0.15000000000000002
+        ],
+        "deadlock": null,
+        "distance_m": 0.197159986337364,
+        "time_s": 11.450000000000001
+      },
+      {
+        "scenario_seed": 2000005,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.95,
+          1.4500000000000002,
+          1.1,
+          2.9000000000000004,
+          1.55
+        ],
+        "deadlock": null,
+        "distance_m": 0.1690165992462318,
+        "time_s": 9.950000000000001
+      },
+      {
+        "scenario_seed": 2000006,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.3000000000000003,
+          11.8,
+          0.4,
+          0.30000000000000004,
+          0.6000000000000001
+        ],
+        "deadlock": null,
+        "distance_m": 0.2669876575111792,
+        "time_s": 15.4
+      },
+      {
+        "scenario_seed": 2000007,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.75,
+          1.25,
+          1.25,
+          2.75,
+          2.3000000000000003
+        ],
+        "deadlock": null,
+        "distance_m": 0.1575576160439631,
+        "time_s": 9.3
+      },
+      {
+        "scenario_seed": 2000008,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          7.1000000000000005,
+          16.150000000000002,
+          0.4,
+          0.6000000000000001,
+          0.45
+        ],
+        "deadlock": null,
+        "distance_m": 0.43363612722235195,
+        "time_s": 24.700000000000003
+      },
+      {
+        "scenario_seed": 2000009,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          4.9,
+          0.35000000000000003,
+          0.6000000000000001,
+          0.6000000000000001,
+          0.1
+        ],
+        "deadlock": null,
+        "distance_m": 0.10924178252607544,
+        "time_s": 6.550000000000001
+      },
+      {
+        "scenario_seed": 2000010,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          11.8,
+          0.30000000000000004,
+          0.30000000000000004,
+          0.30000000000000004,
+          0.30000000000000004
+        ],
+        "deadlock": null,
+        "distance_m": 0.2244863274456959,
+        "time_s": 13.0
+      },
+      {
+        "scenario_seed": 2000011,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          5.25,
+          16.6,
+          0.55,
+          0.6000000000000001,
+          0.6000000000000001
+        ],
+        "deadlock": null,
+        "distance_m": 0.4138450493568949,
+        "time_s": 23.6
+      },
+      {
+        "scenario_seed": 2000012,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          3.35,
+          7.550000000000001,
+          6.550000000000001,
+          6.9,
+          6.8500000000000005
+        ],
+        "deadlock": null,
+        "distance_m": 0.5491558155223868,
+        "time_s": 31.200000000000003
+      },
+      {
+        "scenario_seed": 2000013,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.25,
+          0.4,
+          0.8,
+          0.75,
+          2.6500000000000004
+        ],
+        "deadlock": null,
+        "distance_m": 0.11364281192951006,
+        "time_s": 6.8500000000000005
+      },
+      {
+        "scenario_seed": 2000014,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          3.0500000000000003,
+          5.550000000000001,
+          5.45,
+          5.3500000000000005,
+          5.95
+        ],
+        "deadlock": null,
+        "distance_m": 0.44459115240984487,
+        "time_s": 25.35
+      },
+      {
+        "scenario_seed": 2000015,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          11.4,
+          2.1,
+          0.25,
+          0.25,
+          0.4
+        ],
+        "deadlock": null,
+        "distance_m": 0.2494848478900977,
+        "time_s": 14.4
+      },
+      {
+        "scenario_seed": 2000016,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          4.7,
+          0.6000000000000001,
+          0.45,
+          0.55,
+          0.65
+        ],
+        "deadlock": null,
+        "distance_m": 0.11558810786011811,
+        "time_s": 6.95
+      },
+      {
+        "scenario_seed": 2000017,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          13.450000000000001,
+          4.3,
+          3.5500000000000003,
+          0.05,
+          0.05
+        ],
+        "deadlock": null,
+        "distance_m": 0.37657985656541676,
+        "time_s": 21.400000000000002
+      },
+      {
+        "scenario_seed": 2000018,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.5500000000000003,
+          6.95,
+          1.85,
+          1.1,
+          1.2000000000000002
+        ],
+        "deadlock": null,
+        "distance_m": 0.2351527944999375,
+        "time_s": 13.65
+      },
+      {
+        "scenario_seed": 2000019,
+        "stratum": "narrow",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          0.6000000000000001,
+          0.6000000000000001,
+          3.1,
+          3.4000000000000004,
+          0.25
+        ],
+        "deadlock": null,
+        "distance_m": 0.13350314575356567,
+        "time_s": 7.95
+      },
+      {
+        "scenario_seed": 2000020,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.9000000000000001,
+          5.300000000000001,
+          0.35000000000000003,
+          0.4,
+          0.4
+        ],
+        "deadlock": null,
+        "distance_m": 0.14065187593319595,
+        "time_s": 8.35
+      },
+      {
+        "scenario_seed": 2000021,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.25,
+          3.0500000000000003,
+          0.45,
+          1.9500000000000002,
+          1.4000000000000001
+        ],
+        "deadlock": null,
+        "distance_m": 0.153834060165337,
+        "time_s": 9.1
+      },
+      {
+        "scenario_seed": 2000022,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.5,
+          9.850000000000001,
+          2.35,
+          0.35000000000000003,
+          0.5
+        ],
+        "deadlock": null,
+        "distance_m": 0.2697017686776878,
+        "time_s": 15.55
+      },
+      {
+        "scenario_seed": 2000023,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.8,
+          0.5,
+          0.6000000000000001,
+          1.6,
+          0.9500000000000001
+        ],
+        "deadlock": null,
+        "distance_m": 0.0885647724857478,
+        "time_s": 5.45
+      },
+      {
+        "scenario_seed": 2000024,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.8000000000000003,
+          5.9,
+          5.8500000000000005,
+          6.5,
+          6.45
+        ],
+        "deadlock": null,
+        "distance_m": 0.4830528594538265,
+        "time_s": 27.5
+      },
+      {
+        "scenario_seed": 2000025,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          4.75,
+          0.25,
+          0.7000000000000001,
+          0.6000000000000001,
+          0.7000000000000001
+        ],
+        "deadlock": null,
+        "distance_m": 0.11664631434460561,
+        "time_s": 7.0
+      },
+      {
+        "scenario_seed": 2000026,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          0.65,
+          6.15,
+          2.6,
+          0.25,
+          0.15000000000000002
+        ],
+        "deadlock": null,
+        "distance_m": 0.16718593242609384,
+        "time_s": 9.8
+      },
+      {
+        "scenario_seed": 2000027,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.7,
+          1.1500000000000001,
+          0.15000000000000002,
+          1.3,
+          0.1
+        ],
+        "deadlock": null,
+        "distance_m": 0.08899126192436306,
+        "time_s": 5.4
+      },
+      {
+        "scenario_seed": 2000028,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.1,
+          0.05,
+          1.6,
+          2.8000000000000003,
+          1.8
+        ],
+        "deadlock": null,
+        "distance_m": 0.14155986716888097,
+        "time_s": 8.35
+      },
+      {
+        "scenario_seed": 2000029,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.95,
+          1.05,
+          0.45,
+          0.45,
+          0.45
+        ],
+        "deadlock": null,
+        "distance_m": 0.08695053065205946,
+        "time_s": 5.3500000000000005
+      },
+      {
+        "scenario_seed": 2000030,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.1,
+          2.25,
+          0.1,
+          2.1,
+          0.8500000000000001
+        ],
+        "deadlock": null,
+        "distance_m": 0.12419218276944055,
+        "time_s": 7.4
+      },
+      {
+        "scenario_seed": 2000031,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          5.550000000000001,
+          0.4,
+          0.35000000000000003,
+          0.6000000000000001,
+          0.6000000000000001
+        ],
+        "deadlock": null,
+        "distance_m": 0.12541696474887867,
+        "time_s": 7.5
+      },
+      {
+        "scenario_seed": 2000032,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.75,
+          0.30000000000000004,
+          0.25,
+          0.25,
+          0.30000000000000004
+        ],
+        "deadlock": null,
+        "distance_m": 0.042809712918293795,
+        "time_s": 2.85
+      },
+      {
+        "scenario_seed": 2000033,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.55,
+          1.6500000000000001,
+          0.5,
+          1.25,
+          0.5
+        ],
+        "deadlock": null,
+        "distance_m": 0.08857364715598168,
+        "time_s": 5.45
+      },
+      {
+        "scenario_seed": 2000034,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.35,
+          0.6000000000000001,
+          2.4000000000000004,
+          6.15,
+          3.6500000000000004
+        ],
+        "deadlock": null,
+        "distance_m": 0.2621349003046622,
+        "time_s": 15.15
+      },
+      {
+        "scenario_seed": 2000035,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          4.95,
+          7.300000000000001,
+          4.8500000000000005,
+          0.8,
+          0.25
+        ],
+        "deadlock": null,
+        "distance_m": 0.3163698082467206,
+        "time_s": 18.150000000000002
+      },
+      {
+        "scenario_seed": 2000036,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.9500000000000002,
+          0.35000000000000003,
+          1.1,
+          1.4000000000000001,
+          4.45
+        ],
+        "deadlock": null,
+        "distance_m": 0.15657921609964381,
+        "time_s": 9.25
+      },
+      {
+        "scenario_seed": 2000037,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          3.5500000000000003,
+          1.2000000000000002,
+          0.4,
+          0.5,
+          0.5
+        ],
+        "deadlock": null,
+        "distance_m": 0.10129398641169918,
+        "time_s": 6.15
+      },
+      {
+        "scenario_seed": 2000038,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.7,
+          0.05,
+          1.25,
+          1.1,
+          1.25
+        ],
+        "deadlock": null,
+        "distance_m": 0.10591259067652285,
+        "time_s": 6.3500000000000005
+      },
+      {
+        "scenario_seed": 2000039,
+        "stratum": "medium",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          0.75,
+          1.4500000000000002,
+          2.5,
+          0.7000000000000001,
+          0.55
+        ],
+        "deadlock": null,
+        "distance_m": 0.09753830698272115,
+        "time_s": 5.95
+      },
+      {
+        "scenario_seed": 2000040,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          3.0,
+          0.2,
+          0.2,
+          0.2,
+          0.25
+        ],
+        "deadlock": null,
+        "distance_m": 0.06114713146114843,
+        "time_s": 3.85
+      },
+      {
+        "scenario_seed": 2000041,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.1,
+          0.4,
+          0.2,
+          0.30000000000000004,
+          0.35000000000000003
+        ],
+        "deadlock": null,
+        "distance_m": 0.051714778988210225,
+        "time_s": 3.35
+      },
+      {
+        "scenario_seed": 2000042,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          0.9,
+          1.5,
+          1.5,
+          0.30000000000000004,
+          0.30000000000000004
+        ],
+        "deadlock": null,
+        "distance_m": 0.0718519663238465,
+        "time_s": 4.5
+      },
+      {
+        "scenario_seed": 2000043,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.35,
+          3.75,
+          0.30000000000000004,
+          0.35000000000000003,
+          0.35000000000000003
+        ],
+        "deadlock": null,
+        "distance_m": 0.1006693813392815,
+        "time_s": 6.1000000000000005
+      },
+      {
+        "scenario_seed": 2000044,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.5500000000000003,
+          3.4000000000000004,
+          3.6,
+          2.3000000000000003,
+          2.7
+        ],
+        "deadlock": null,
+        "distance_m": 0.251328887830731,
+        "time_s": 14.55
+      },
+      {
+        "scenario_seed": 2000045,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.15,
+          0.30000000000000004,
+          0.30000000000000004,
+          0.30000000000000004,
+          0.30000000000000004
+        ],
+        "deadlock": null,
+        "distance_m": 0.05158425672165693,
+        "time_s": 3.35
+      },
+      {
+        "scenario_seed": 2000046,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          3.6,
+          0.2,
+          0.25,
+          0.25,
+          0.25
+        ],
+        "deadlock": null,
+        "distance_m": 0.07348538403867971,
+        "time_s": 4.55
+      },
+      {
+        "scenario_seed": 2000047,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          3.0,
+          0.7000000000000001,
+          0.9500000000000001,
+          1.85,
+          1.25
+        ],
+        "deadlock": null,
+        "distance_m": 0.12965677464217962,
+        "time_s": 7.75
+      },
+      {
+        "scenario_seed": 2000048,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.85,
+          0.30000000000000004,
+          1.2000000000000002,
+          2.7,
+          1.5
+        ],
+        "deadlock": null,
+        "distance_m": 0.12623174003965498,
+        "time_s": 7.550000000000001
+      },
+      {
+        "scenario_seed": 2000049,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.9000000000000001,
+          0.5,
+          1.25,
+          3.95,
+          2.7
+        ],
+        "deadlock": null,
+        "distance_m": 0.17534153664485838,
+        "time_s": 10.3
+      },
+      {
+        "scenario_seed": 2000050,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.8000000000000003,
+          5.4,
+          5.25,
+          5.550000000000001,
+          4.75
+        ],
+        "deadlock": null,
+        "distance_m": 0.4159534704849192,
+        "time_s": 23.75
+      },
+      {
+        "scenario_seed": 2000051,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.2,
+          4.0,
+          0.9,
+          3.9000000000000004,
+          2.3000000000000003
+        ],
+        "deadlock": null,
+        "distance_m": 0.22923323744621396,
+        "time_s": 13.3
+      },
+      {
+        "scenario_seed": 2000052,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.4500000000000002,
+          3.7,
+          0.25,
+          0.30000000000000004,
+          0.30000000000000004
+        ],
+        "deadlock": null,
+        "distance_m": 0.09902494946856497,
+        "time_s": 6.0
+      },
+      {
+        "scenario_seed": 2000053,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.2000000000000002,
+          0.4,
+          1.35,
+          0.6000000000000001,
+          0.45
+        ],
+        "deadlock": null,
+        "distance_m": 0.06271456642098772,
+        "time_s": 4.0
+      },
+      {
+        "scenario_seed": 2000054,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.85,
+          3.2,
+          2.4000000000000004,
+          2.5,
+          2.4000000000000004
+        ],
+        "deadlock": null,
+        "distance_m": 0.21198275556884497,
+        "time_s": 12.350000000000001
+      },
+      {
+        "scenario_seed": 2000055,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.45,
+          2.95,
+          0.6000000000000001,
+          2.0500000000000003,
+          0.9500000000000001
+        ],
+        "deadlock": null,
+        "distance_m": 0.15201032475036566,
+        "time_s": 9.0
+      },
+      {
+        "scenario_seed": 2000056,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.2000000000000002,
+          1.05,
+          0.5,
+          0.25,
+          0.1
+        ],
+        "deadlock": null,
+        "distance_m": 0.047545346743879474,
+        "time_s": 3.1
+      },
+      {
+        "scenario_seed": 2000057,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          0.55,
+          0.6000000000000001,
+          0.25,
+          0.8500000000000001,
+          2.35
+        ],
+        "deadlock": null,
+        "distance_m": 0.07359730474083263,
+        "time_s": 4.6000000000000005
+      },
+      {
+        "scenario_seed": 2000058,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          1.75,
+          0.15000000000000002,
+          1.75,
+          4.3,
+          2.7
+        ],
+        "deadlock": null,
+        "distance_m": 0.18233471643485666,
+        "time_s": 10.65
+      },
+      {
+        "scenario_seed": 2000059,
+        "stratum": "wide",
+        "outcome": "unrecoverable_stop",
+        "attempts": 5,
+        "endings": [
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared",
+          "cleared"
+        ],
+        "attempt_times_s": [
+          2.2,
+          4.55,
+          0.25,
+          0.25,
+          0.30000000000000004
+        ],
+        "deadlock": null,
+        "distance_m": 0.12671071034075213,
+        "time_s": 7.550000000000001
+      }
+    ]
+  },
+  "memory": {
+    "episodes": 60,
+    "status": {},
+    "reference": "A20 check: CoppeliaSim +1.7 MB/100 episodes, Python flat (runs/diag/MEMORY_20261018T203246Z_seed0)",
+    "python": {
+      "private_start_mb": 696.328125,
+      "private_end_mb": 717.37890625,
+      "growth_mb_per_100_episodes": 35.084635416666664
+    },
+    "sim": {
+      "private_start_mb": 239.62109375,
+      "private_end_mb": 217.6484375,
+      "growth_mb_per_100_episodes": -36.62109375
+    }
+  }
+}

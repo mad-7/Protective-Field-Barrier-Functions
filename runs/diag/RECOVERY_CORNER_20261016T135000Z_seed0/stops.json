@@ -1,0 +1,240 @@
+{
+  "bare": [
+    {
+      "step": 126,
+      "final": false,
+      "s_m": 1.4465387566809007,
+      "layout_pose": [
+        4.45953891205217,
+        6.853017986161953,
+        -1.7431685447005105
+      ],
+      "yaw_rel_route_deg": 0.9080972762607292,
+      "speed": 0.23587386045218534,
+      "inside_at_rest_field": [],
+      "inside_field_in_force": [
+        {
+          "bearing_deg": 83.35241161173654,
+          "range_m": 0.2641894519329071,
+          "field_m": 0.26640423371054284,
+          "by_m": 0.0022147817776357326,
+          "valid": true
+        }
+      ],
+      "certified": {
+        "stop_active": false,
+        "stop_triggered": true,
+        "field_id": 1,
+        "warning": false,
+        "warning_entered": false,
+        "warning_entries": 1,
+        "breached": true,
+        "at_rest": false,
+        "speed": 0.23593633796744776,
+        "restart_blocked": false,
+        "enabled": true
+      },
+      "recovery": null
+    },
+    {
+      "step": 500,
+      "final": true,
+      "s_m": 1.4832541920686593,
+      "layout_pose": [
+        4.455694864933936,
+        6.816374644590086,
+        -1.738741055905914
+      ],
+      "yaw_rel_route_deg": 1.1617736980325748,
+      "speed": 2.0747092924821205e-05,
+      "inside_at_rest_field": [],
+      "inside_field_in_force": [],
+      "certified": {
+        "stop_active": true,
+        "stop_triggered": false,
+        "field_id": 0,
+        "warning": true,
+        "warning_entered": false,
+        "warning_entries": 1,
+        "breached": false,
+        "at_rest": true,
+        "speed": 1.935558112974003e-05,
+        "restart_blocked": true,
+        "enabled": true
+      },
+      "recovery": null
+    }
+  ],
+  "recovery": [
+    {
+      "step": 126,
+      "final": false,
+      "s_m": 1.4465387566809007,
+      "layout_pose": [
+        4.45953891205217,
+        6.853017986161953,
+        -1.7431685447005105
+      ],
+      "yaw_rel_route_deg": 0.9080972762607292,
+      "speed": 0.23587386045218534,
+      "inside_at_rest_field": [],
+      "inside_field_in_force": [
+        {
+          "bearing_deg": 83.35241161173654,
+          "range_m": 0.2641894519329071,
+          "field_m": 0.26640423371054284,
+          "by_m": 0.0022147817776357326,
+          "valid": true
+        }
+      ],
+      "certified": {
+        "stop_active": false,
+        "stop_triggered": true,
+        "field_id": 1,
+        "warning": false,
+        "warning_entered": false,
+        "warning_entries": 1,
+        "breached": true,
+        "at_rest": false,
+        "speed": 0.23593633796744776,
+        "restart_blocked": false,
+        "enabled": true
+      },
+      "recovery": {
+        "mode": "pass",
+        "attempts": 0,
+        "gave_up": null
+      }
+    },
+    {
+      "step": 218,
+      "final": false,
+      "s_m": 1.5697746826352996,
+      "layout_pose": [
+        4.442427503082216,
+        6.730825721441849,
+        -1.7247309750051845
+      ],
+      "yaw_rel_route_deg": 1.9644922042807489,
+      "speed": 0.11249494250553257,
+      "inside_at_rest_field": [],
+      "inside_field_in_force": [
+        {
+          "bearing_deg": 98.61771365198578,
+          "range_m": 0.270324170589447,
+          "field_m": 0.2708698045833477,
+          "by_m": 0.0005456339939006738,
+          "valid": true
+        },
+        {
+          "bearing_deg": 99.26632207594854,
+          "range_m": 0.27032724022865295,
+          "field_m": 0.27133899462790534,
+          "by_m": 0.0010117543992523848,
+          "valid": true
+        },
+        {
+          "bearing_deg": 102.34387554236206,
+          "range_m": 0.27081459760665894,
+          "field_m": 0.2740690461924138,
+          "by_m": 0.0032544485857548544,
+          "valid": true
+        },
+        {
+          "bearing_deg": 105.15929317861965,
+          "range_m": 0.27195021510124207,
+          "field_m": 0.2773224977066541,
+          "by_m": 0.00537228260541206,
+          "valid": true
+        },
+        {
+          "bearing_deg": 108.22020147402584,
+          "range_m": 0.27394941449165344,
+          "field_m": 0.28172985739642614,
+          "by_m": 0.0077804429047727,
+          "valid": true
+        }
+      ],
+      "certified": {
+        "stop_active": false,
+        "stop_triggered": true,
+        "field_id": 0,
+        "warning": false,
+        "warning_entered": false,
+        "warning_entries": 1,
+        "breached": true,
+        "at_rest": false,
+        "speed": 0.0897724278229551,
+        "restart_blocked": false,
+        "enabled": true
+      },
+      "recovery": {
+        "mode": "pass",
+        "attempts": 1,
+        "gave_up": null
+      }
+    },
+    {
+      "step": 500,
+      "final": true,
+      "s_m": 1.600176300340831,
+      "layout_pose": [
+        4.44188914419931,
+        6.699980058575837,
+        -1.7126487737166045
+      ],
+      "yaw_rel_route_deg": 2.656751345346882,
+      "speed": 2.0303719766524348e-05,
+      "inside_at_rest_field": [
+        {
+          "bearing_deg": 111.37465604030453,
+          "range_m": 0.2781871259212494,
+          "field_m": 0.27868028553516566,
+          "by_m": 0.0004931596139162719,
+          "valid": true
+        },
+        {
+          "bearing_deg": 114.11544019950139,
+          "range_m": 0.2816644012928009,
+          "field_m": 0.28432672248268637,
+          "by_m": 0.0026623211898854637,
+          "valid": true
+        }
+      ],
+      "inside_field_in_force": [
+        {
+          "bearing_deg": 111.37465604030453,
+          "range_m": 0.2781871259212494,
+          "field_m": 0.27868028553516566,
+          "by_m": 0.0004931596139162719,
+          "valid": true
+        },
+        {
+          "bearing_deg": 114.11544019950139,
+          "range_m": 0.2816644012928009,
+          "field_m": 0.28432672248268637,
+          "by_m": 0.0026623211898854637,
+          "valid": true
+        }
+      ],
+      "certified": {
+        "stop_active": true,
+        "stop_triggered": false,
+        "field_id": 0,
+        "warning": false,
+        "warning_entered": false,
+        "warning_entries": 1,
+        "breached": true,
+        "at_rest": true,
+        "speed": 1.9016936327910658e-05,
+        "restart_blocked": false,
+        "enabled": true
+      },
+      "recovery": {
+        "mode": "off",
+        "attempts": 1,
+        "gave_up": "inside_min_margin"
+      }
+    }
+  ]
+}

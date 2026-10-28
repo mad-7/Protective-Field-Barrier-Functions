@@ -1,0 +1,382 @@
+{
+  "note": "profiling pass, not a gate: no PASS/FAIL",
+  "flag_ms": 2.0,
+  "runs": {
+    "1": {
+      "physics": {
+        "engine": 1,
+        "engine_name": "ODE",
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "components": {
+        "budget": {
+          "n": 400,
+          "mean_ms": 0.03117025,
+          "p50_ms": 0.0258,
+          "p95_ms": 0.056934999999999965,
+          "max_ms": 0.1535,
+          "flagged": false,
+          "p95_over": false
+        },
+        "command": {
+          "n": 400,
+          "mean_ms": 6.290386999999999,
+          "p50_ms": 5.616199999999999,
+          "p95_ms": 11.024104999999995,
+          "max_ms": 16.4306,
+          "flagged": true,
+          "p95_over": true
+        },
+        "step": {
+          "n": 400,
+          "mean_ms": 49.050911500000005,
+          "p50_ms": 45.26225,
+          "p95_ms": 84.4515399999999,
+          "max_ms": 108.9452,
+          "flagged": true,
+          "p95_over": true
+        },
+        "contact": {
+          "n": 400,
+          "mean_ms": 5.1569785,
+          "p50_ms": 3.26145,
+          "p95_ms": 6.698105,
+          "max_ms": 603.9818,
+          "flagged": true,
+          "p95_over": true
+        },
+        "pose": {
+          "n": 400,
+          "mean_ms": 3.1411417500000005,
+          "p50_ms": 2.7206,
+          "p95_ms": 5.943274999999999,
+          "max_ms": 8.0354,
+          "flagged": true,
+          "p95_over": true
+        },
+        "velocity": {
+          "n": 400,
+          "mean_ms": 0.08486075,
+          "p50_ms": 0.0698,
+          "p95_ms": 0.1586149999999999,
+          "max_ms": 0.344,
+          "flagged": false,
+          "p95_over": false
+        },
+        "torque_cap": {
+          "n": 400,
+          "mean_ms": 6.092710500000001,
+          "p50_ms": 5.414149999999999,
+          "p95_ms": 10.899724999999995,
+          "max_ms": 17.3419,
+          "flagged": true,
+          "p95_over": true
+        }
+      },
+      "whole_step": {
+        "n": 400,
+        "mean_ms": 69.84816025,
+        "p50_ms": 63.3621,
+        "p95_ms": 119.30273,
+        "max_ms": 673.9549000000001,
+        "flagged": true,
+        "p95_over": true
+      },
+      "torque_cap_counts": [
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        }
+      ]
+    },
+    "2": {
+      "physics": {
+        "engine": 1,
+        "engine_name": "ODE",
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "components": {
+        "budget": {
+          "n": 800,
+          "mean_ms": 0.036913125,
+          "p50_ms": 0.03395,
+          "p95_ms": 0.06422999999999997,
+          "max_ms": 0.4236,
+          "flagged": false,
+          "p95_over": false
+        },
+        "command": {
+          "n": 800,
+          "mean_ms": 6.93011225,
+          "p50_ms": 6.54205,
+          "p95_ms": 10.461604999999995,
+          "max_ms": 20.6697,
+          "flagged": true,
+          "p95_over": true
+        },
+        "step": {
+          "n": 800,
+          "mean_ms": 59.14688525,
+          "p50_ms": 54.9946,
+          "p95_ms": 89.83752999999996,
+          "max_ms": 196.3947,
+          "flagged": true,
+          "p95_over": true
+        },
+        "contact": {
+          "n": 800,
+          "mean_ms": 5.880886875,
+          "p50_ms": 3.6938,
+          "p95_ms": 6.461334999999998,
+          "max_ms": 748.5246,
+          "flagged": true,
+          "p95_over": true
+        },
+        "pose": {
+          "n": 800,
+          "mean_ms": 3.497483875,
+          "p50_ms": 3.24085,
+          "p95_ms": 5.306679999999996,
+          "max_ms": 16.7314,
+          "flagged": true,
+          "p95_over": true
+        },
+        "velocity": {
+          "n": 800,
+          "mean_ms": 0.095295375,
+          "p50_ms": 0.0858,
+          "p95_ms": 0.140305,
+          "max_ms": 3.8389,
+          "flagged": false,
+          "p95_over": false
+        },
+        "torque_cap": {
+          "n": 800,
+          "mean_ms": 6.7977785,
+          "p50_ms": 6.28195,
+          "p95_ms": 10.550954999999998,
+          "max_ms": 21.6667,
+          "flagged": true,
+          "p95_over": true
+        }
+      },
+      "whole_step": {
+        "n": 800,
+        "mean_ms": 82.38535524999999,
+        "p50_ms": 75.17635000000001,
+        "p95_ms": 120.20866,
+        "max_ms": 824.3514,
+        "flagged": true,
+        "p95_over": true
+      },
+      "torque_cap_counts": [
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        }
+      ]
+    },
+    "3": {
+      "physics": {
+        "engine": 1,
+        "engine_name": "ODE",
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "components": {
+        "budget": {
+          "n": 1200,
+          "mean_ms": 0.028455499999999998,
+          "p50_ms": 0.0253,
+          "p95_ms": 0.05710999999999999,
+          "max_ms": 0.1573,
+          "flagged": false,
+          "p95_over": false
+        },
+        "command": {
+          "n": 1200,
+          "mean_ms": 5.395936,
+          "p50_ms": 4.7280999999999995,
+          "p95_ms": 10.298064999999996,
+          "max_ms": 20.6868,
+          "flagged": true,
+          "p95_over": true
+        },
+        "step": {
+          "n": 1200,
+          "mean_ms": 46.940914,
+          "p50_ms": 43.01415,
+          "p95_ms": 88.108995,
+          "max_ms": 127.7129,
+          "flagged": true,
+          "p95_over": true
+        },
+        "contact": {
+          "n": 1200,
+          "mean_ms": 5.312203916666666,
+          "p50_ms": 2.75375,
+          "p95_ms": 5.982905,
+          "max_ms": 961.4582,
+          "flagged": true,
+          "p95_over": true
+        },
+        "pose": {
+          "n": 1200,
+          "mean_ms": 2.7457185833333333,
+          "p50_ms": 2.3723,
+          "p95_ms": 5.188774999999999,
+          "max_ms": 8.4839,
+          "flagged": true,
+          "p95_over": true
+        },
+        "velocity": {
+          "n": 1200,
+          "mean_ms": 0.07530025,
+          "p50_ms": 0.06605,
+          "p95_ms": 0.14274999999999996,
+          "max_ms": 0.3029,
+          "flagged": false,
+          "p95_over": false
+        },
+        "torque_cap": {
+          "n": 1200,
+          "mean_ms": 5.227527916666667,
+          "p50_ms": 4.6078,
+          "p95_ms": 9.943814999999997,
+          "max_ms": 20.7318,
+          "flagged": true,
+          "p95_over": true
+        }
+      },
+      "whole_step": {
+        "n": 1200,
+        "mean_ms": 65.72605616666667,
+        "p50_ms": 57.861050000000006,
+        "p95_ms": 124.68830999999999,
+        "max_ms": 1033.3126,
+        "flagged": true,
+        "p95_over": true
+      },
+      "torque_cap_counts": [
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        }
+      ]
+    },
+    "4": {
+      "physics": {
+        "engine": 1,
+        "engine_name": "ODE",
+        "simulation_time_step": 0.05,
+        "dynamic_step_size": 0.005
+      },
+      "components": {
+        "budget": {
+          "n": 1600,
+          "mean_ms": 0.0323155625,
+          "p50_ms": 0.0297,
+          "p95_ms": 0.0511,
+          "max_ms": 0.2187,
+          "flagged": false,
+          "p95_over": false
+        },
+        "command": {
+          "n": 1600,
+          "mean_ms": 6.3385255,
+          "p50_ms": 6.2184,
+          "p95_ms": 9.054419999999999,
+          "max_ms": 26.6181,
+          "flagged": true,
+          "p95_over": true
+        },
+        "step": {
+          "n": 1600,
+          "mean_ms": 59.01217850000001,
+          "p50_ms": 59.338049999999996,
+          "p95_ms": 74.62428499999999,
+          "max_ms": 245.4232,
+          "flagged": true,
+          "p95_over": true
+        },
+        "contact": {
+          "n": 1600,
+          "mean_ms": 5.709101375,
+          "p50_ms": 3.629,
+          "p95_ms": 5.281625,
+          "max_ms": 880.8839,
+          "flagged": true,
+          "p95_over": true
+        },
+        "pose": {
+          "n": 1600,
+          "mean_ms": 3.1969495625000004,
+          "p50_ms": 3.09905,
+          "p95_ms": 4.688034999999998,
+          "max_ms": 15.5391,
+          "flagged": true,
+          "p95_over": true
+        },
+        "velocity": {
+          "n": 1600,
+          "mean_ms": 0.0871736875,
+          "p50_ms": 0.0766,
+          "p95_ms": 0.13390999999999997,
+          "max_ms": 3.9728,
+          "flagged": false,
+          "p95_over": false
+        },
+        "torque_cap": {
+          "n": 1600,
+          "mean_ms": 6.0505525,
+          "p50_ms": 5.8773,
+          "p95_ms": 8.52001,
+          "max_ms": 24.0142,
+          "flagged": true,
+          "p95_over": true
+        }
+      },
+      "whole_step": {
+        "n": 1600,
+        "mean_ms": 80.4267966875,
+        "p50_ms": 79.40125,
+        "p95_ms": 97.53661999999998,
+        "max_ms": 951.3554,
+        "flagged": true,
+        "p95_over": true
+      },
+      "torque_cap_counts": [
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        },
+        {
+          "steps": 0,
+          "wheel_steps": 0
+        }
+      ]
+    }
+  }
+}

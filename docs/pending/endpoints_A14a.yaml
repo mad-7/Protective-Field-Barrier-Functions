@@ -1,0 +1,86 @@
+# preregistration/endpoints.yaml
+source: "Research plan §1 and §4 (2026-09-17), as amended by A3 and supervisor rulings 2026-09-20 to 2026-09-28; analysis and tuning by A14a (rulings 2026-10-02, 2026-10-03, 2026-10-24, 2026-10-26)"
+alpha: 0.05
+test: two-level bootstrap interval on the log rate ratio (H1) / success-rate difference (H2); see analysis (A14a)
+unit: scenario, paired across arms; learned methods by seed within scenario (seed count in A14b)
+pairing: all controllers for a scenario run in one process
+reporting: the effect with its interval at the comparison's Holm level; the policy-scoped interval as secondary; IQM alongside means; the detectability floor (95th percentile of the effect under within-scenario arm-label swaps) reported with every effect, not part of any criterion; physics engine stated
+
+confirmatory_family:
+  correction: holm
+  members: [H1, H2]
+  conditional_members: [H1N]      # added only if narrow_rule triggers
+
+H1:
+  statement: L5 triggers fewer protective stops than every comparator
+  comparators: [B1, B2, B3, B6, L1, L2, L3]   # A16: B6 (field-aware MPPI) replaces retired B4
+  logic: intersection_union       # all comparisons must reject at alpha; no within-H1 correction
+  endpoint: protective_stops_per_100m
+  scan_faults: >-   # A25 (ruled 2026-10-23)
+    stops decided on a scan-faulted packet are excluded from this count and reported
+    alongside it per method; scan_faults reported prominently if they differ materially
+    between methods
+  population: test, condition unmapped_static, all clearance strata pooled
+  reporting: raw, and above the per-stratum unavoidable-stop floor; success rate and mission time beside it for every comparison in the same table, the discussion leading with the stop-throughput trade-off; B6 the decisive comparator (A26)
+  success: every comparison significant in the predicted direction (A14a; the detectability floor is reported, not a criterion)
+
+H2:
+  statement: removing proximity shaping under PFB improves narrow-stratum success
+  comparison: L5 vs L4
+  endpoint: success_rate
+  population: test, clearance stratum narrow (0.1987-0.2687 m per side; A21), conditions mapped_only and unmapped_static pooled
+  secondary_reporting: per condition
+  success: difference >= +15 percentage points AND significant after Holm
+
+H1N:                               # conditional co-primary
+  statement: L5 achieves higher narrow-stratum completion than every comparator
+  comparators: [B1, B2, B3, B6, L1, L2, L3]   # A16: B6 (field-aware MPPI) replaces retired B4
+  logic: intersection_union
+  endpoint: completion_rate
+  population: test, clearance stratum narrow
+  secondary: distance_to_first_stop
+
+narrow_rule:
+  pilot: 150 narrow episodes per method, pilot seed range, 30 per seed
+  methods: [B1, B2, B3, B6, L1, L2, L3, L4, L5]   # A16
+  statistic: exact one-sided 95% upper bound (Clopper-Pearson) on unrecoverable_stop proportion
+  trigger: upper bound >= 0.02 for ANY listed method
+  note: at n = 150 the rule passes only with zero events
+  timing: after methods exist, before any test episode is evaluated
+
+exploratory:                       # reported, labelled, outside the Holm family
+  H3: PFB-(b) banded versus PFB-(a) continuous -- protective stops, success and mission time (A26, restated 2026-10-23 before training; exploratory ablation)
+  H4: holonomic (L5) versus unicycle (A1) — deadlocks and protective stops; expected (A17), A1 materially higher narrow-stratum stop rate than L5; A1's floor from the tangent-locked oracle, reported beside L5's
+  H5: L5 versus B7 (RPP + PFB, no learning) — mission time and protective stops (A16, B7 replaces retired B5)
+  H6: robust versus nominal PFB — ground-truth contacts under measured mismatch (A3)
+  secondary:
+    - Newton external-validity evaluation of final policies (A8)
+    - stop_active ablation, one L5 seed
+    - velocity-estimate noise and latency sensitivity (WP2)
+    - warning-field entries as a near-miss metric
+
+analysis:                          # A14a (rulings 2026-10-02, 2026-10-03, 2026-10-26)
+  H1_estimand: rate ratio of protective stops, total stops / total distance per arm, L5 over the comparator; scan-fault stops excluded (A25)
+  continuity: 0.5 added to each arm's total stops
+  interval: >-
+    two-level bootstrap of the log rate ratio -- scenarios resampled jointly across arms, a learned
+    arm's seeds within the arm, a classical arm's scenarios only -- with its variance in closed form
+    for the linearised statistic (pfbnav/eval/rate_ratio.py); each learned arm's seed part scaled by
+    K/(K-1); t quantile
+  df:
+    learned_vs_classical: K - 1 of the learned arm (flat)
+    learned_vs_learned: Welch-Satterthwaite over the scenario part (n - 1) and each seed part (K - 1)
+    fallback_declared: seeds as units -- per-seed log rate ratios against the classical arm, one-sample t, K - 1 df; if it fails calibration, stop and report
+  rejection: the two-sided interval at the comparison's Holm level lies wholly below 0 (log scale) in L5's favour
+  claim: method-level (two-level); the policy-scoped interval (seeds fixed) is secondary, never substituted
+  H2: the narrow-stratum success-rate difference, L5 minus L4, the same corrected two-level interval on the mean (Welch-Satterthwaite)
+  family: Holm step-down at familywise alpha 0.05 over H1, H2 (and H1N if added); power planned at alpha/3
+  decision_tree: docs/decision_log.md, 2026-10-03 (Step 0, branches 1-5, H2 method-level, one seed count for L5 and L4 capped at 20 subject to G2), as preregistered in A14a; branch 3's classical comparators are B1, B2, B3, B6 (A16)
+
+tuning:                            # A14a (ruled 2026-10-24)
+  pfb_alpha:
+    grid_per_s: [1, 2, 5, 10, 20]
+    with: B7                       # B2's tuned parameters plus the PFB, nothing else
+    set: tune set at the training unmapped rate
+    selection: among settings within 5 percentage points of the best success, the fewest protective stops per 100 m; ties by mission time
+    frozen_for: [L3, L4, L5, B7]

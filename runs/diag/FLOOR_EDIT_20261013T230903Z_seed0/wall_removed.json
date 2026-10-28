@@ -1,0 +1,576 @@
+{
+  "/Wall": {
+    "customData.__config__": {
+      "sha256": "a2e19626f8f13af996182dde2d3112a95eae6a0ce0930e9687e703bfc0dd4aaf",
+      "bytes": 136
+    },
+    "model.notCollidable": false,
+    "dummyType": 0,
+    "model.notVisible": false,
+    "mujoco.springStiffness": 0.0,
+    "modelBase": true,
+    "mov.prefTranslY": true,
+    "model.notMeasurable": false,
+    "customData.__info__": {
+      "sha256": "ed68fb765e478b1a571d44764ef2bbc8cfdc4dcb8a137db5a9481e61c16dd655",
+      "bytes": 55
+    },
+    "parentHandle": -1,
+    "model.notRespondable": false,
+    "model.notInParentBB": false,
+    "calcRotationVelocity": 0.0,
+    "mov.altTransl": true,
+    "childOrder": -1,
+    "mov.preferredAxesFlags": 35,
+    "mujoco.limitsSolimp": [
+      0.8999999761581421,
+      0.949999988079071,
+      0.0010000000474974513,
+      0.05000000074505806,
+      2.0
+    ],
+    "model.notDynamic": false,
+    "dynamicIcon": 0,
+    "depthInvisible": false,
+    "bbPose": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "assemblyTag": "*",
+    "mov.translNoSim": true,
+    "pose": [
+      0.9750000000000001,
+      -0.675,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "mujoco.limitsRange": [
+      0.0,
+      0.0
+    ],
+    "dummySize": 0.009999999776482582,
+    "cannotDelete": false,
+    "color.diffuse": [
+      1.0,
+      0.800000011920929,
+      0.550000011920929
+    ],
+    "mov.stepSize": [
+      0.0,
+      0.0
+    ],
+    "collidable": false,
+    "visible": false,
+    "mov.prefRotX": false,
+    "hierarchyColor": -1,
+    "engineProperties": "{\n    \"ode\": {\n    },\n    \"bullet\": {\n    },\n    \"vortex\": {\n    },\n    \"newton\": {\n    },\n    \"mujoco\": {\n        \"limits\": {\n            \"enabled\": false,\n            \"range\": [\n                0,\n                0\n            ],\n            \"solref\": [\n                0.02,\n                1\n            ],\n            \"solimp\": [\n                0.9,\n                0.95,\n                0.001,\n                0.05,\n                2\n            ]\n        },\n        \"overlapConstraint\": {\n            \"solref\": [\n                0.02,\n                1\n            ],\n            \"solimp\": [\n                0.9,\n                0.95,\n                0.001,\n                0.5,\n                2\n            ],\n            \"torquescale\": 1\n        },\n        \"spring\": {\n            \"stiffness\": 0,\n            \"damping\": 0,\n            \"length\": -1\n        },\n        \"margin\": 0,\n        \"jointProxy\": {\n            \"name\": \"\"    \n        }\n    }\n}\n",
+    "customData.__schema__": {
+      "sha256": "c2146aa72d57d51eacebc042932f79f7cb13b207a1d64fcd3cdb04295aaa2bbc",
+      "bytes": 988
+    },
+    "collapsed": true,
+    "calcLinearVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "layer": 1024,
+    "detectable": false,
+    "mujoco.overlapConstrSolimp": [
+      0.9,
+      0.95,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "mujoco.limitsEnabled": false,
+    "modelHash": "ef5bc9e81d96cccc",
+    "mov.relativity": [
+      0,
+      2
+    ],
+    "model.propertyFlags": 0,
+    "objectType": "dummy",
+    "color.specular": [
+      0.25,
+      0.25,
+      0.25
+    ],
+    "parentUid": -1,
+    "measurable": false,
+    "selected": false,
+    "objectUid": 10004001,
+    "mujoco.springLength": -1.0,
+    "selectable": true,
+    "color.emission": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mov.prefRotZ": true,
+    "mov.prefTranslX": true,
+    "modelAcknowledgment": "",
+    "persistentUid": "452A5F03104919D7",
+    "model.scriptsNotActive": false,
+    "model.notDetectable": false,
+    "mujoco.overlapConstrTorquescale": 1.0,
+    "mujoco.margin": 0.0,
+    "mov.optionsFlags": 0,
+    "mov.rotInSim": true,
+    "mov.rotNoSim": true,
+    "ignoreViewFitting": false,
+    "mov.prefTranslZ": false,
+    "dna": {
+      "sha256": "05192d6e83b1ff4924889852d6d551ad1d68db46f6f972b734271d4ad5700c24",
+      "bytes": 16
+    },
+    "mujoco.limitsSolref": [
+      0.019999999552965164,
+      1.0
+    ],
+    "hideFromModelBB": false,
+    "calcRotationAxis": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "selectInvisible": false,
+    "mov.prefRotY": false,
+    "cannotDeleteInSim": false,
+    "mov.altRot": true,
+    "dynamicFlag": 0,
+    "modelInvisible": false,
+    "bbHSize": [
+      0.005,
+      0.005,
+      0.005
+    ],
+    "objectPropertyFlags": 48,
+    "alias": "Wall",
+    "linkedDummyHandle": -1,
+    "selectModel": false,
+    "mujoco.springDamping": 0.0,
+    "mov.translInSim": true,
+    "collectionSelfCollisionIndicator": 0,
+    "mujoco.overlapConstrSolref": [
+      0.02,
+      1.0
+    ],
+    "mujoco.jointProxyHandle": -1
+  },
+  "/Wall/Script": {
+    "addOnPath": "",
+    "scriptState": 2,
+    "calcRotationAxis": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "model.notVisible": false,
+    "mov.translInSim": true,
+    "modelBase": false,
+    "mov.prefTranslY": true,
+    "model.notMeasurable": false,
+    "parentHandle": 108,
+    "model.notRespondable": false,
+    "model.notInParentBB": false,
+    "calcRotationVelocity": 0.0,
+    "mov.altTransl": true,
+    "childOrder": -1,
+    "mov.preferredAxesFlags": 35,
+    "model.notDynamic": false,
+    "dynamicIcon": 0,
+    "addOnMenuPath": "",
+    "depthInvisible": false,
+    "bbPose": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "mov.translNoSim": true,
+    "pose": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "cannotDelete": false,
+    "color.diffuse": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "mov.stepSize": [
+      0.0,
+      0.0
+    ],
+    "collidable": false,
+    "visible": false,
+    "mov.prefRotX": false,
+    "hierarchyColor": -1,
+    "execPriority": 1,
+    "collapsed": false,
+    "calcLinearVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "layer": 0,
+    "detectable": false,
+    "mov.rotInSim": true,
+    "modelHash": "a6ef923cbcef4e2d",
+    "mov.relativity": [
+      0,
+      2
+    ],
+    "model.propertyFlags": 61440,
+    "executionDepth": 0,
+    "color.specular": [
+      0.25,
+      0.25,
+      0.25
+    ],
+    "parentUid": 10004001,
+    "restartOnError": false,
+    "measurable": false,
+    "selected": false,
+    "modelInvisible": false,
+    "selectable": true,
+    "color.emission": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mov.prefRotZ": true,
+    "mov.prefTranslX": true,
+    "scriptSize": 0.01,
+    "modelAcknowledgment": "",
+    "objectPropertyFlags": 288,
+    "persistentUid": "7407B9AF314F2362",
+    "language": "lua",
+    "scriptDisabled": false,
+    "model.scriptsNotActive": false,
+    "mov.optionsFlags": 0,
+    "mov.prefTranslZ": false,
+    "dna": {
+      "sha256": "8c6f6d99c592ae6a0c8b69798617a587e4b1d27ec49912f04bc915dcb9b1bf0e",
+      "bytes": 16
+    },
+    "model.notDetectable": false,
+    "hideFromModelBB": true,
+    "mov.rotNoSim": true,
+    "selectModel": false,
+    "mov.prefRotY": false,
+    "cannotDeleteInSim": false,
+    "scriptName": "Script",
+    "dynamicFlag": 0,
+    "ignoreViewFitting": false,
+    "bbHSize": [
+      0.00525,
+      0.00525,
+      0.00525
+    ],
+    "selectInvisible": false,
+    "alias": "Script",
+    "model.notCollidable": false,
+    "objectUid": 10004002,
+    "mov.altRot": true,
+    "objectType": "script",
+    "collectionSelfCollisionIndicator": 0,
+    "resetAfterSimError": false,
+    "scriptType": 6
+  },
+  "/Wall/Cuboid": {
+    "respondableMask": 65535,
+    "model.notCollidable": false,
+    "mujoco.solimp": [
+      0.9,
+      0.95,
+      0.001,
+      0.05,
+      2.0
+    ],
+    "vortex.linearSecondaryAxisFollowPrimaryAxis": true,
+    "mujoco.friction": [
+      1.0,
+      0.005,
+      0.0001
+    ],
+    "vortex.autoSleepThresholdSteps": 10,
+    "vortex.linearPrimaryAxisFrictionModel": 4,
+    "model.notRespondable": false,
+    "vortex.linearPrimaryAxisFrictionValue": 1.0,
+    "vortex.linearSecondaryAxisFrictionModel": 4,
+    "principalMomentOfInertia": [
+      76.25666666666666,
+      38.133541666666666,
+      38.133541666666666
+    ],
+    "vortex.angularSecondaryAxisFollowPrimaryAxis": true,
+    "childOrder": -1,
+    "vortex.angularPrimaryAxisSlip": 0.0,
+    "vortex.adhesiveForce": 0.0,
+    "mov.preferredAxesFlags": 35,
+    "startInDynSleepMode": false,
+    "dynamicIcon": 0,
+    "vortex.compliance": 1e-08,
+    "vortex.linearSecondaryAxisSlip": 0.0,
+    "bbPose": [
+      -7.55,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "respondable": true,
+    "vortex.autoSleepThresholdLinearAccel": 0.045,
+    "initLinearVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "dynAngularVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "collidable": true,
+    "vortex.angularSecondaryAxisStaticFrictionScale": 1.0,
+    "visible": true,
+    "bullet.customCollisionMarginConvexValue": 0.002,
+    "ode.maxContacts": 64,
+    "vortex.angularPrimaryAxisSlide": 0.0,
+    "vortex.angularVelDamping": 0.0,
+    "calcLinearVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mass": 760.0,
+    "convex": true,
+    "ode.softErp": 0.2,
+    "modelHash": "fb1cdb91615a0474",
+    "bullet.autoShrinkConvexMeshes": false,
+    "model.propertyFlags": 61440,
+    "mujoco.gap": 0.0,
+    "vortex.angularPrimaryAxisFrictionValue": 0.0,
+    "vortex.damping": 10000000.0,
+    "parentUid": 10004001,
+    "selected": false,
+    "modelInvisible": false,
+    "selectable": false,
+    "vortex.linearPrimaryAxisStaticFrictionScale": 1.1,
+    "mov.prefRotZ": true,
+    "vortex.linearSecondaryAxisStaticFrictionScale": 1.1,
+    "newton.angularDrag": 0.0,
+    "mov.prefTranslZ": false,
+    "dna": {
+      "sha256": "e8b1bf16c0f4a68cc286b15bea88a672ea7b345474ebf6c48744feac8c497287",
+      "bytes": 16
+    },
+    "vortex.angularNormalAxisFrictionModel": 6,
+    "hideFromModelBB": false,
+    "mov.prefRotY": false,
+    "cannotDeleteInSim": false,
+    "vortex.linearPrimaryAxisSlip": 0.0,
+    "vortex.autoSlip": false,
+    "vortex.autoAngularDampingEnabled": true,
+    "mujoco.adhesiongain": 1.0,
+    "vortex.angularNormalAxisStaticFrictionScale": 1.0,
+    "ode.friction": 1.0,
+    "vortex.materialUniqueId": 2441,
+    "selectModel": false,
+    "calcRotationAxis": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "bullet.friction": 0.5,
+    "modelBase": false,
+    "mov.prefTranslY": true,
+    "model.notMeasurable": false,
+    "vortex.autoSleepThresholdAngularAccel": 0.045,
+    "vortex.angularSecondaryAxisSlide": 0.0,
+    "vortex.angularNormalAxisFollowPrimaryAxis": true,
+    "model.notInParentBB": false,
+    "calcRotationVelocity": 0.0,
+    "mov.altTransl": true,
+    "vortex.angularSecondaryAxisFrictionModel": 6,
+    "mujoco.adhesionforcelimited": -1,
+    "model.notDynamic": false,
+    "kinematic": false,
+    "mujoco.adhesionforcerange": [
+      0.0,
+      1000.0
+    ],
+    "vortex.linearPrimaryAxisSlide": 0.0,
+    "bullet.customCollisionMarginConvexEnabled": true,
+    "vortex.linearVelDamping": 0.0,
+    "vortex.convexAsRandom": false,
+    "mujoco.gravcomp": 0.0,
+    "cannotDelete": false,
+    "bullet.angularDamping": 0.0,
+    "setToDynamicWithParent": false,
+    "collectionSelfCollisionIndicator": 0,
+    "vortex.linearSecondaryAxisFrictionValue": 1.0,
+    "mov.stepSize": [
+      0.0,
+      0.0
+    ],
+    "vortex.angularPrimaryAxisStaticFrictionScale": 1.0,
+    "newton.fastMoving": false,
+    "model.notDetectable": false,
+    "vortex.restitutionThreshold": 0.5,
+    "bullet.linearDamping": 0.0,
+    "bullet.frictionOld": 1.0,
+    "mov.prefRotX": false,
+    "hierarchyColor": -1,
+    "ode.softCfm": 0.0,
+    "vortex.linearSecondaryAxisSlide": 0.0,
+    "bbHSize": [
+      7.6000000000000005,
+      7.6,
+      0.125
+    ],
+    "mov.rotInSim": true,
+    "collapsed": false,
+    "vortex.autoSleepThresholdLinearSpeed": 0.14,
+    "ode.angularDamping": 0.0,
+    "pose": [
+      6.574999999999999,
+      0.675,
+      0.125,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "layer": 1,
+    "mov.optionsFlags": 0,
+    "vortex.restitution": 0.0,
+    "vortex.primitiveAsConvex": false,
+    "mov.rotNoSim": true,
+    "detectable": true,
+    "bullet.stickyContact": false,
+    "mov.relativity": [
+      0,
+      2
+    ],
+    "engineProperties": "{\n    \"ode\": {\n        \"friction\": 1,\n        \"softErp\": 0.2,\n        \"softCfm\": 0,\n        \"linearDamping\": 0,\n        \"angularDamping\": 0,\n        \"maxContacts\": 64\n    },\n    \"bullet\": {\n        \"stickyContact\": false,    \n        \"frictionOld\": 1,    \n        \"friction\": 0.5,    \n        \"restitution\": 0,\n        \"linearDamping\": 0,\n        \"angularDamping\": 0,\n        \"customCollisionMargin\": {\n            \"enabled\": false,\n            \"value\": 0.1\n        },\n        \"customCollisionMarginConvex\": {\n            \"enabled\": true,\n            \"value\": 0.002\n        },\n        \"autoShrinkConvexMeshes\": false\n    },\n    \"vortex\": {\n        \"restitution\": 0,\n        \"restitutionThreshold\": 0.5,\n        \"compliance\": 1e-08,\n        \"damping\": 10000000,\n        \"adhesiveForce\": 0,\n        \"linearVelDamping\": 0,\n        \"angularVelDamping\": 0,\n        \"autoAngularDamping\": {\n            \"enabled\": true,\n            \"tensionRatio\": 0.01\n        },\n        \"skinThickness\": 0.002,\n        \"autoSlip\": false,\n        \"fastMoving\": true,\n        \"primitiveAsConvex\": false,\n        \"convexAsRandom\": false,\n        \"randomAsTerrain\": false,\n        \"autoSleepThreshold\": {\n            \"linearSpeed\": 0.14,\n            \"linearAccel\": 0.045,\n            \"angularSpeed\": 0.03,\n            \"angularAccel\": 0.045,\n            \"steps\": 10\n        },\n        \"linearPrimaryAxis\": {\n            \"value\": [\n                0,\n                0,\n                1\n            ],\n            \"frictionModel\": 4,    \n            \"frictionCoeff\": 1,\n            \"staticFrictionScale\": 1.1,\n            \"slip\": 0,\n            \"slide\": 0\n        },\n        \"linearSecondaryAxis\": {\n            \"followPrimaryAxis\": true,\n            \"frictionModel\": 4,    \n            \"frictionCoeff\": 1,\n            \"staticFrictionScale\": 1.1,\n            \"slip\": 0,\n            \"slide\": 0\n        },\n        \"angularPrimaryAxis\": {\n            \"frictionModel\": 6,    \n            \"frictionCoeff\": 0,\n            \"staticFrictionScale\": 1,\n            \"slip\": 0,\n            \"slide\": 0\n        },\n        \"angularSecondaryAxis\": {\n            \"followPrimaryAxis\": true,\n            \"frictionModel\": 6,    \n            \"frictionCoeff\": 0,\n            \"staticFrictionScale\": 1,\n            \"slip\": 0,\n            \"slide\": 0\n        },\n        \"angularNormalAxis\": {\n            \"followPrimaryAxis\": true,\n            \"frictionModel\": 6,    \n            \"frictionCoeff\": 0,\n            \"staticFrictionScale\": 1,\n            \"slip\": 0,\n            \"slide\": 0\n        }\n    },\n    \"newton\": {\n        \"staticFriction\": 1,\n        \"kineticFriction\": 1,\n        \"restitution\": 0,\n        \"linearDrag\": 0,\n        \"angularDrag\": 0,\n        \"fastMoving\": false\n    },\n    \"mujoco\": {\n        \"friction\": [\n            1,\n            0.005,\n            0.0001\n        ],\n        \"solref\": [\n            0.02,\n            1\n        ],\n        \"solimp\": [\n            0.9,\n            0.95,\n            0.001,\n            0.05,\n            2\n        ],\n        \"condim\": 3,\n        \"solmix\": 1,\n        \"margin\": 0,\n        \"gap\": 0,\n        \"gravcomp\": 0,\n        \"priority\": 0,\n        \"adhesion\": false,\n        \"adhesiongain\": 1,\n        \"adhesionctrl\": 0,\n        \"adhesionctrlrange\": [\n            0,\n            1000\n        ],\n        \"adhesionforcerange\": [\n            0,\n            1000\n        ],\n        \"adhesionforcelimited\": -1\n    }\n}\n",
+    "vortex.angularNormalAxisSlip": 0.0,
+    "vortex.autoSleepThresholdAngularSpeed": 0.03,
+    "vortex.skinThickness": 0.002,
+    "objectType": "shape",
+    "mov.translInSim": true,
+    "vortex.autoAngularDampingTensionRatio": 0.01,
+    "vortex.angularNormalAxisSlide": 0.0,
+    "mov.translNoSim": true,
+    "depthInvisible": false,
+    "newton.staticFriction": 1.0,
+    "vortex.linearPrimaryValue": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "measurable": true,
+    "mov.altRot": true,
+    "objectUid": 10004019,
+    "ode.linearDamping": 0.0,
+    "pmiQuaternion": [
+      -0.5,
+      -0.5,
+      -0.5,
+      0.5
+    ],
+    "newton.kineticFriction": 1.0,
+    "vortex.angularPrimaryAxisFrictionModel": 6,
+    "vortex.angularNormalAxisFrictionValue": 0.0,
+    "bullet.restitution": 0.0,
+    "mov.prefTranslX": true,
+    "persistentUid": "75541531E0F1511A",
+    "ignoreViewFitting": true,
+    "centerOfMass": [
+      -7.55,
+      0.0,
+      0.0
+    ],
+    "initAngularVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "parentHandle": 108,
+    "mujoco.adhesionctrlrange": [
+      0.0,
+      1000.0
+    ],
+    "vortex.randomAsTerrain": false,
+    "model.notVisible": false,
+    "vortex.angularSecondaryAxisSlip": 0.0,
+    "objectPropertyFlags": 1,
+    "vortex.angularSecondaryAxisFrictionValue": 0.0,
+    "vortex.fastMoving": true,
+    "newton.restitution": 0.0,
+    "bullet.customCollisionMarginEnabled": false,
+    "mujoco.margin": 0.0,
+    "modelAcknowledgment": "",
+    "bullet.customCollisionMarginValue": 0.1,
+    "selectInvisible": false,
+    "mujoco.solmix": 1.0,
+    "meshes": [
+      10004014,
+      10004015,
+      10004016,
+      10004017
+    ],
+    "newton.linearDrag": 0.0,
+    "mujoco.condim": 3,
+    "dynamicFlag": 0,
+    "dynamic": false,
+    "compound": true,
+    "mujoco.adhesion": false,
+    "alias": "Cuboid",
+    "mujoco.adhesionctrl": 0.0,
+    "inertia": [
+      38.133541666666666,
+      0.0,
+      0.0,
+      0.0,
+      38.133541666666666,
+      0.0,
+      0.0,
+      0.0,
+      76.25666666666666
+    ],
+    "primitive": true,
+    "model.scriptsNotActive": false,
+    "mujoco.priority": 0,
+    "mujoco.solref": [
+      0.02,
+      1.0
+    ],
+    "dynLinearVelocity": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "mesh_sha256": "cbe978ec50ac7dac43fa47a0536339912778eb813549641fc14f82598e6db2ea"
+  }
+}

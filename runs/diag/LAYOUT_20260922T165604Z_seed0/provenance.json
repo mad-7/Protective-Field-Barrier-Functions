@@ -1,0 +1,28 @@
+{
+  "seed": 0,
+  "experiment": "LAYOUT_20260922T165604Z",
+  "created_utc": "2026-09-22T16:56:04.752840+00:00",
+  "commit": "96a5e5877553857e163bbd4d4b2387d64ad08447",
+  "dirty": false,
+  "scene": "scenes/pending/warehouse_v2_s300.ttt",
+  "scene_sha256": "8c772a64d5ba14f00925cd43948659856ab52fb34d09ee2ec1c161c49bea395d",
+  "display_enabled": false,
+  "host": {
+    "hostname": "DESKTOP-5MIDQ97",
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.10",
+    "cpu_model": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "logical_cores": 8,
+    "physical_cores": 4,
+    "ram_total_gb": 7.7,
+    "gpu": "none available to torch",
+    "shared": false,
+    "torch": "2.11.0+cpu"
+  },
+  "display": {
+    "in_force": null,
+    "refusals": 0,
+    "consistent": true,
+    "starts": 0
+  }
+}

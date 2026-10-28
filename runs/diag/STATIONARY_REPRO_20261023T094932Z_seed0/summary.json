@@ -1,0 +1,423 @@
+{
+  "scenario_seed": 2000018,
+  "runs_per_condition": 20,
+  "load_procs": 8,
+  "min_loaded_over_budget": 100,
+  "runs": {
+    "normal": [
+      {
+        "run": 0,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 81,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 1,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 18,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 2,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 38,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 3,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 26,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 4,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 19,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 5,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 20,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 6,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 31,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 7,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 8,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 9,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 10,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 11,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 12,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 13,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 123,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 14,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 15,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 16,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 17,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 18,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 19,
+        "condition": "normal",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      }
+    ],
+    "loaded": [
+      {
+        "run": 0,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 1,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 1,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 2,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 3,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 4,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 1,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 5,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 6,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 11,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 7,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 8,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 0,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 9,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 2448,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 10,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 552,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 11,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 5,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 12,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 268,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 13,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 4000,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 14,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 4000,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 15,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 4000,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 16,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 4000,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 17,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 4000,
+        "outcome": "timeout",
+        "dumps": []
+      },
+      {
+        "run": 18,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 1,
+        "first_stationary_step": 1337,
+        "over_budget_steps": 1755,
+        "outcome": "timeout",
+        "dumps": [
+          "ring_38_stationary_step1337.jsonl"
+        ]
+      },
+      {
+        "run": 19,
+        "condition": "loaded",
+        "steps": 4000,
+        "stationary_triggers": 0,
+        "first_stationary_step": null,
+        "over_budget_steps": 349,
+        "outcome": "timeout",
+        "dumps": []
+      }
+    ]
+  },
+  "runs_with_stationary": {
+    "normal": 0,
+    "loaded": 1
+  },
+  "median_over_budget": {
+    "normal": 0.0,
+    "loaded": 139.5
+  },
+  "verdict": "REPRODUCES ONLY UNDER LOAD: blocking defect, fix and re-freeze before L1's pilot"
+}

@@ -1,0 +1,801 @@
+{
+  "partial": false,
+  "sets": [
+    "scenarios/train/train_wide.json"
+  ],
+  "bands": {
+    "narrow": 0.4,
+    "medium": 0.4,
+    "wide": 0.4
+  },
+  "pairs": [
+    {
+      "lethal_margin": 0.03,
+      "soft_margin": 0.03,
+      "lethal_radius_m": 0.2386,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 325,
+      "breached_sample_share": 0.045629705244353704,
+      "worst_clearance_m": -0.032388733514872925,
+      "offset_breaching_routes": 667,
+      "breaching_routes_by_location": {
+        "start": 6,
+        "goal": 12,
+        "bend": 316,
+        "straight": 323
+      },
+      "breaching_routes_outside_goal_approach": 325,
+      "offset_breached_sample_share": 0.24745863638296967,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 325,
+          "offset_breaching_routes": 667
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.03,
+      "soft_margin": 0.08,
+      "lethal_radius_m": 0.2386,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 302,
+      "breached_sample_share": 0.03966768407502965,
+      "worst_clearance_m": -0.03260534805926252,
+      "offset_breaching_routes": 667,
+      "breaching_routes_by_location": {
+        "start": 5,
+        "goal": 13,
+        "bend": 279,
+        "straight": 301
+      },
+      "breaching_routes_outside_goal_approach": 302,
+      "offset_breached_sample_share": 0.23357110335407497,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 302,
+          "offset_breaching_routes": 667
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.03,
+      "soft_margin": 0.13,
+      "lethal_radius_m": 0.2386,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 261,
+      "breached_sample_share": 0.030440327934591307,
+      "worst_clearance_m": -0.03174875755882045,
+      "offset_breaching_routes": 667,
+      "breaching_routes_by_location": {
+        "start": 7,
+        "goal": 5,
+        "bend": 237,
+        "straight": 261
+      },
+      "breaching_routes_outside_goal_approach": 261,
+      "offset_breached_sample_share": 0.21666072582262125,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 261,
+          "offset_breaching_routes": 667
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.03,
+      "soft_margin": 0.2,
+      "lethal_radius_m": 0.2386,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 259,
+      "breached_sample_share": 0.031753682424616334,
+      "worst_clearance_m": -0.037443287820794424,
+      "offset_breaching_routes": 667,
+      "breaching_routes_by_location": {
+        "start": 7,
+        "goal": 7,
+        "bend": 200,
+        "straight": 259
+      },
+      "breaching_routes_outside_goal_approach": 259,
+      "offset_breached_sample_share": 0.20490200398814573,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 259,
+          "offset_breaching_routes": 667
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.03,
+      "soft_margin": 0.3,
+      "lethal_radius_m": 0.2386,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 226,
+      "breached_sample_share": 0.025734854983549237,
+      "worst_clearance_m": -0.03598866304073134,
+      "offset_breaching_routes": 667,
+      "breaching_routes_by_location": {
+        "start": 7,
+        "goal": 4,
+        "bend": 46,
+        "straight": 226
+      },
+      "breaching_routes_outside_goal_approach": 226,
+      "offset_breached_sample_share": 0.19184954339634935,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 226,
+          "offset_breaching_routes": 667
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.05,
+      "soft_margin": 0.03,
+      "lethal_radius_m": 0.2586,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 23,
+      "breached_sample_share": 0.002389118062015285,
+      "worst_clearance_m": -0.006371713400234569,
+      "offset_breaching_routes": 666,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 1,
+        "bend": 23,
+        "straight": 23
+      },
+      "breaching_routes_outside_goal_approach": 23,
+      "offset_breached_sample_share": 0.21723727476554128,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 23,
+          "offset_breaching_routes": 666
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.05,
+      "soft_margin": 0.08,
+      "lethal_radius_m": 0.2586,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 16,
+      "breached_sample_share": 0.0017515248651971448,
+      "worst_clearance_m": -0.008750505758010618,
+      "offset_breaching_routes": 665,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 11,
+        "straight": 16
+      },
+      "breaching_routes_outside_goal_approach": 16,
+      "offset_breached_sample_share": 0.19435470062678767,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 16,
+          "offset_breaching_routes": 665
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.05,
+      "soft_margin": 0.13,
+      "lethal_radius_m": 0.2586,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 30,
+      "breached_sample_share": 0.0029171139203897642,
+      "worst_clearance_m": -0.01191430654739234,
+      "offset_breaching_routes": 665,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 1,
+        "bend": 29,
+        "straight": 30
+      },
+      "breaching_routes_outside_goal_approach": 30,
+      "offset_breached_sample_share": 0.18373646420209008,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 30,
+          "offset_breaching_routes": 665
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.05,
+      "soft_margin": 0.2,
+      "lethal_radius_m": 0.2586,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 17,
+      "breached_sample_share": 0.0017041019382785273,
+      "worst_clearance_m": -0.01104862036202725,
+      "offset_breaching_routes": 664,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 17,
+        "straight": 17
+      },
+      "breaching_routes_outside_goal_approach": 17,
+      "offset_breached_sample_share": 0.1754647800609079,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 17,
+          "offset_breaching_routes": 664
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.05,
+      "soft_margin": 0.3,
+      "lethal_radius_m": 0.2586,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 17,
+      "breached_sample_share": 0.001738386387513945,
+      "worst_clearance_m": -0.013368559256713208,
+      "offset_breaching_routes": 661,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 1,
+        "straight": 17
+      },
+      "breaching_routes_outside_goal_approach": 17,
+      "offset_breached_sample_share": 0.16296966217899422,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 17,
+          "offset_breaching_routes": 661
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.07,
+      "soft_margin": 0.03,
+      "lethal_radius_m": 0.2786,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 4,
+      "breached_sample_share": 2.815125104159629e-05,
+      "worst_clearance_m": -0.018495692747282355,
+      "offset_breaching_routes": 620,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 4,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 4,
+      "offset_breached_sample_share": 0.11520617976262865,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 4,
+          "offset_breaching_routes": 620
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.07,
+      "soft_margin": 0.08,
+      "lethal_radius_m": 0.2786,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 1,
+      "breached_sample_share": 2.8018110906890213e-06,
+      "worst_clearance_m": -0.00828040406185071,
+      "offset_breaching_routes": 573,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 1,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 1,
+      "offset_breached_sample_share": 0.09849486708208186,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 1,
+          "offset_breaching_routes": 573
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.07,
+      "soft_margin": 0.13,
+      "lethal_radius_m": 0.2786,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 2,
+      "breached_sample_share": 8.330787814834356e-06,
+      "worst_clearance_m": -0.017396546098127352,
+      "offset_breaching_routes": 513,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 2,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 2,
+      "offset_breached_sample_share": 0.08723167920913054,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 2,
+          "offset_breaching_routes": 513
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.07,
+      "soft_margin": 0.2,
+      "lethal_radius_m": 0.2786,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 0,
+      "breached_sample_share": 0.0,
+      "worst_clearance_m": 0.007290352743487993,
+      "offset_breaching_routes": 501,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 0,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 0,
+      "offset_breached_sample_share": 0.08058390077087407,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 0,
+          "offset_breaching_routes": 501
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": true
+    },
+    {
+      "lethal_margin": 0.07,
+      "soft_margin": 0.3,
+      "lethal_radius_m": 0.2786,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 0,
+      "breached_sample_share": 0.0,
+      "worst_clearance_m": 0.0044380203131781926,
+      "offset_breaching_routes": 489,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 0,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 0,
+      "offset_breached_sample_share": 0.07429045257619464,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 0,
+          "offset_breaching_routes": 489
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": true
+    },
+    {
+      "lethal_margin": 0.09,
+      "soft_margin": 0.03,
+      "lethal_radius_m": 0.2986,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 5,
+      "breached_sample_share": 7.288078105772438e-05,
+      "worst_clearance_m": -0.06008963406736978,
+      "offset_breaching_routes": 71,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 5,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 5,
+      "offset_breached_sample_share": 0.006620938648397884,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 5,
+          "offset_breaching_routes": 71
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.09,
+      "soft_margin": 0.08,
+      "lethal_radius_m": 0.2986,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 0,
+      "breached_sample_share": 0.0,
+      "worst_clearance_m": 0.033569724066341955,
+      "offset_breaching_routes": 180,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 0,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 0,
+      "offset_breached_sample_share": 0.020869307672104032,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 0,
+          "offset_breaching_routes": 180
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": true
+    },
+    {
+      "lethal_margin": 0.09,
+      "soft_margin": 0.13,
+      "lethal_radius_m": 0.2986,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 1,
+      "breached_sample_share": 2.773625044724704e-06,
+      "worst_clearance_m": -0.00686056160155557,
+      "offset_breaching_routes": 103,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 1,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 1,
+      "offset_breached_sample_share": 0.013515874842943481,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 1,
+          "offset_breaching_routes": 103
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.09,
+      "soft_margin": 0.2,
+      "lethal_radius_m": 0.2986,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 0,
+      "breached_sample_share": 0.0,
+      "worst_clearance_m": 0.02466223214670915,
+      "offset_breaching_routes": 100,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 0,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 0,
+      "offset_breached_sample_share": 0.010679595702975284,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 0,
+          "offset_breaching_routes": 100
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": true
+    },
+    {
+      "lethal_margin": 0.09,
+      "soft_margin": 0.3,
+      "lethal_radius_m": 0.2986,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 0,
+      "breached_sample_share": 0.0,
+      "worst_clearance_m": 0.024760779580360825,
+      "offset_breaching_routes": 77,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 0,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 0,
+      "offset_breached_sample_share": 0.007933919933165348,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 0,
+          "offset_breaching_routes": 77
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": true
+    },
+    {
+      "lethal_margin": 0.1,
+      "soft_margin": 0.03,
+      "lethal_radius_m": 0.3086,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 3,
+      "breached_sample_share": 5.5932791158144375e-05,
+      "worst_clearance_m": -0.0772133518354341,
+      "offset_breaching_routes": 13,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 3,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 3,
+      "offset_breached_sample_share": 0.0005313615160023715,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 3,
+          "offset_breaching_routes": 13
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.1,
+      "soft_margin": 0.08,
+      "lethal_radius_m": 0.3086,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 1,
+      "breached_sample_share": 2.788793512150773e-06,
+      "worst_clearance_m": -0.009910836225157649,
+      "offset_breaching_routes": 19,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 1,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 1,
+      "offset_breached_sample_share": 0.0018629140661167165,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 1,
+          "offset_breaching_routes": 19
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": false
+    },
+    {
+      "lethal_margin": 0.1,
+      "soft_margin": 0.13,
+      "lethal_radius_m": 0.3086,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 0,
+      "breached_sample_share": 0.0,
+      "worst_clearance_m": 0.039686134639421056,
+      "offset_breaching_routes": 10,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 0,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 0,
+      "offset_breached_sample_share": 0.0011861278468453989,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 0,
+          "offset_breaching_routes": 10
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": true
+    },
+    {
+      "lethal_margin": 0.1,
+      "soft_margin": 0.2,
+      "lethal_radius_m": 0.3086,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 0,
+      "breached_sample_share": 0.0,
+      "worst_clearance_m": 0.04103761989184296,
+      "offset_breaching_routes": 28,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 0,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 0,
+      "offset_breached_sample_share": 0.0027219556499045263,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 0,
+          "offset_breaching_routes": 28
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": true
+    },
+    {
+      "lethal_margin": 0.1,
+      "soft_margin": 0.3,
+      "lethal_radius_m": 0.3086,
+      "scenarios": 667,
+      "plannable": 667,
+      "quantisation_failures": 0,
+      "breaching_routes": 0,
+      "breached_sample_share": 0.0,
+      "worst_clearance_m": 0.0376304819966542,
+      "offset_breaching_routes": 21,
+      "breaching_routes_by_location": {
+        "start": 0,
+        "goal": 0,
+        "bend": 0,
+        "straight": 0
+      },
+      "breaching_routes_outside_goal_approach": 0,
+      "offset_breached_sample_share": 0.0020754539214234763,
+      "per_stratum": {
+        "wide": {
+          "scenarios": 667,
+          "plannable": 667,
+          "breaching_routes": 0,
+          "offset_breaching_routes": 21
+        }
+      },
+      "plannability_holds": true,
+      "criterion_holds": true
+    }
+  ],
+  "meeting_criterion": [
+    [
+      0.07,
+      0.2
+    ],
+    [
+      0.07,
+      0.3
+    ],
+    [
+      0.09,
+      0.08
+    ],
+    [
+      0.09,
+      0.2
+    ],
+    [
+      0.09,
+      0.3
+    ],
+    [
+      0.1,
+      0.13
+    ],
+    [
+      0.1,
+      0.2
+    ],
+    [
+      0.1,
+      0.3
+    ]
+  ],
+  "smallest_meeting": [
+    0.07,
+    0.2
+  ]
+}

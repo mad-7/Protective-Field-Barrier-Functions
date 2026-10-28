@@ -1,0 +1,26 @@
+{
+  "what": "Scene hashes proven to hold the same measurable content, with the evidence.",
+  "why": "A scene file changes when anything in it is saved, including the camera view. A measurement taken on one hash stays valid on another ONLY if the geometry is identical, and that has to be shown rather than assumed (hard rule 12). Each entry names the inventory diff that showed it: every object's type, world pose and bounding box, compared one by one.",
+  "equivalences": [
+    {
+      "from": "0ae35a50290d097857bb3cd828858f70a736ae0fa2102f0fac1e69b452164790",
+      "to": "20974276a354e7f12e72c52670a09a8f032e7c93ff3b890e752dbeeffdad2b81",
+      "date": "2026-09-25",
+      "reason": "the researcher saved the scene with a camera position that shows the whole robot",
+      "evidence": "docs/scene/inventory_after_camera_diff.json",
+      "checked": "111 objects: 0 added, 0 removed, 0 moved, 0 resized",
+      "tool": "scripts/diag_scene_inventory.py"
+    },
+    {
+      "from": "20974276a354e7f12e72c52670a09a8f032e7c93ff3b890e752dbeeffdad2b81",
+      "to": "537f1bbbb7d674a395107398b46b7b6a765428b2942acefd529bf0c24dc35eb4",
+      "date": "2026-10-14",
+      "scope": "robot",
+      "reason": "/Wall removed and the floor enlarged to 7 x 7 tiles (ruled 2026-10-10 and 2026-10-13); the robot's subtree untouched, so robot measurements carry over. Whether G0, G1b and traversability carry over is decided separately, by scripts/regress_floor.py.",
+      "evidence": "docs/scene/inventory_floor35_diff.json",
+      "checked": "80 added (all under /floor), 3 removed (the /Wall tree), 0 moved, 0 resized; nothing under /youBot touched",
+      "tool": "scripts/scene_extend_floor.py"
+    }
+  ],
+  "scope": "An entry without 'scope' proves the WHOLE scene's measurable content identical. An entry with 'scope': 'robot' proves only the robot's subtree identical: it carries measurements of the robot (the footprint table) across an edit that changed the world, and nothing else. tests/test_footprint_config.py checks each entry against its evidence."
+}

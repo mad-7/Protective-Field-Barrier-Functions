@@ -1,0 +1,11 @@
+{
+  "controller": "zero_action",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "environment": "968d88aff1933508a422e5181ffdf9cb0b631f00eabfb23ee4fe0903f26772a9",
+  "sets": {
+    "scenarios/tune/tune_narrow.json": "ca3e86837b7ed76505da53e27a0293b296b1edb6202bb98e249692e411038974",
+    "scenarios/tune/tune_medium.json": "1d64113444a521aafec6cfd9f70c0e21dc876938e633d0193ac57528d431838a",
+    "scenarios/tune/tune_wide.json": "3881ce35d2bcbb88b65d72289c890f28f8a64c46a1912314bca31836cbfb9ac1"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "seed": 0,
+  "experiment": "DISPLAY_20260920T003606Z",
+  "created_utc": "2026-09-20T00:36:06.503570+00:00",
+  "commit": "78b6e93c95fb11ee959b1ee5d91e6f30f5fd2265",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd",
+  "display_enabled": false
+}

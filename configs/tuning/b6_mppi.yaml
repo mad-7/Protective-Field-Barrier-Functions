@@ -1,0 +1,24 @@
+# The tuning space of B6, field-aware MPPI (scripts/tune_classical.py; A16). APPROVED 2026-10-27, after
+# the rulings of that day on candidate 0, the real-time criterion and B6's model (items 2-4); committed
+# before the first candidate runs. A winner on a range boundary is reported, never extended.
+# Candidate 0 is the configured block (configs/base.yaml, baselines.mppi), re-ruled 2026-10-27: noise
+# 0.1/0.1/0.1, smoothness 0.01, temperature 0.01, goal_progress 10 (from a disclosed manual check, not
+# counted in N). Every range is re-centred on it (geometric centres on the log scales; temperature on a
+# log scale that includes 0.01). Names are dotted for the block's nested leaves (pfbnav/eval/tuning.py,
+# flatten_numeric).
+# NOT TUNED (ruled 2026-10-27): samples, horizon_steps and iterations. samples x horizon are fixed by
+# the declared real-time measurement on the training host (scripts/measure_realtime.py; the largest
+# pair with p95 compute <= 50 ms in 0.7-0.9 m aisles), iterations stays 1; the runner refuses B6 until
+# baselines.mppi.compute_measurement names that measurement. Nor the declared strings (model, scan,
+# hard_rejection).
+controller: field_aware_mppi
+config_block: baselines.mppi
+space:
+  temperature:            {low: 0.001, high: 0.1,   scale: log}   # per-step cost; centre 0.01
+  noise_std.0:            {low: 0.03,  high: 0.3,   scale: log}   # m/s, vx; centre 0.095
+  noise_std.1:            {low: 0.03,  high: 0.3,   scale: log}   # m/s, vy; centre 0.095
+  noise_std.2:            {low: 0.03,  high: 0.3,   scale: log}   # rad/s, wz; centre 0.095
+  weights.route_tracking: {low: 0.1,   high: 10.0,  scale: log}   # per m^2; centre 1.0
+  weights.goal_progress:  {low: 1.0,   high: 100.0, scale: log}   # per m; centre 10
+  weights.field_breach:   {low: 1.0,   high: 100.0, scale: log}   # per point-state; centre 10
+  weights.smoothness:     {low: 0.001, high: 0.1,   scale: log}   # per (m/s)^2; centre 0.01

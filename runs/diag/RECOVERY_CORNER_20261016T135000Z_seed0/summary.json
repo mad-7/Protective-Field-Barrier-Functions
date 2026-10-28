@@ -1,0 +1,176 @@
+{
+  "bare": {
+    "label": "bare",
+    "steps": 500,
+    "final_s_m": 1.4832541920686593,
+    "stops": [
+      {
+        "step": 126,
+        "final": false,
+        "s_m": 1.4465387566809007,
+        "layout_pose": [
+          4.45953891205217,
+          6.853017986161953,
+          -1.7431685447005105
+        ],
+        "yaw_rel_route_deg": 0.9080972762607292,
+        "speed": 0.23587386045218534,
+        "certified": {
+          "stop_active": false,
+          "stop_triggered": true,
+          "field_id": 1,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 1,
+          "breached": true,
+          "at_rest": false,
+          "speed": 0.23593633796744776,
+          "restart_blocked": false,
+          "enabled": true
+        },
+        "recovery": null,
+        "n_inside_at_rest": 0
+      },
+      {
+        "step": 500,
+        "final": true,
+        "s_m": 1.4832541920686593,
+        "layout_pose": [
+          4.455694864933936,
+          6.816374644590086,
+          -1.738741055905914
+        ],
+        "yaw_rel_route_deg": 1.1617736980325748,
+        "speed": 2.0747092924821205e-05,
+        "certified": {
+          "stop_active": true,
+          "stop_triggered": false,
+          "field_id": 0,
+          "warning": true,
+          "warning_entered": false,
+          "warning_entries": 1,
+          "breached": false,
+          "at_rest": true,
+          "speed": 1.935558112974003e-05,
+          "restart_blocked": true,
+          "enabled": true
+        },
+        "recovery": null,
+        "n_inside_at_rest": 0
+      }
+    ]
+  },
+  "recovery": {
+    "label": "recovery",
+    "steps": 500,
+    "final_s_m": 1.600176300340831,
+    "stops": [
+      {
+        "step": 126,
+        "final": false,
+        "s_m": 1.4465387566809007,
+        "layout_pose": [
+          4.45953891205217,
+          6.853017986161953,
+          -1.7431685447005105
+        ],
+        "yaw_rel_route_deg": 0.9080972762607292,
+        "speed": 0.23587386045218534,
+        "certified": {
+          "stop_active": false,
+          "stop_triggered": true,
+          "field_id": 1,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 1,
+          "breached": true,
+          "at_rest": false,
+          "speed": 0.23593633796744776,
+          "restart_blocked": false,
+          "enabled": true
+        },
+        "recovery": {
+          "mode": "pass",
+          "attempts": 0,
+          "gave_up": null
+        },
+        "n_inside_at_rest": 0
+      },
+      {
+        "step": 218,
+        "final": false,
+        "s_m": 1.5697746826352996,
+        "layout_pose": [
+          4.442427503082216,
+          6.730825721441849,
+          -1.7247309750051845
+        ],
+        "yaw_rel_route_deg": 1.9644922042807489,
+        "speed": 0.11249494250553257,
+        "certified": {
+          "stop_active": false,
+          "stop_triggered": true,
+          "field_id": 0,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 1,
+          "breached": true,
+          "at_rest": false,
+          "speed": 0.0897724278229551,
+          "restart_blocked": false,
+          "enabled": true
+        },
+        "recovery": {
+          "mode": "pass",
+          "attempts": 1,
+          "gave_up": null
+        },
+        "n_inside_at_rest": 0
+      },
+      {
+        "step": 500,
+        "final": true,
+        "s_m": 1.600176300340831,
+        "layout_pose": [
+          4.44188914419931,
+          6.699980058575837,
+          -1.7126487737166045
+        ],
+        "yaw_rel_route_deg": 2.656751345346882,
+        "speed": 2.0303719766524348e-05,
+        "certified": {
+          "stop_active": true,
+          "stop_triggered": false,
+          "field_id": 0,
+          "warning": false,
+          "warning_entered": false,
+          "warning_entries": 1,
+          "breached": true,
+          "at_rest": true,
+          "speed": 1.9016936327910658e-05,
+          "restart_blocked": false,
+          "enabled": true
+        },
+        "recovery": {
+          "mode": "off",
+          "attempts": 1,
+          "gave_up": "inside_min_margin"
+        },
+        "n_inside_at_rest": 2
+      }
+    ],
+    "recovery": {
+      "recovery_attempts": 1,
+      "recovery_endings": {
+        "cleared": 1,
+        "distance": 0,
+        "new_stop": 0,
+        "not_released": 0,
+        "no_permitted_direction": 0
+      },
+      "recovery_gave_up": "inside_min_margin",
+      "recovery_distance_m": 0.06541059635326524,
+      "recovery_steps": 19
+    }
+  }
+}

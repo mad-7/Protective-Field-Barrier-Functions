@@ -1,0 +1,82 @@
+{
+  "profile": "forward",
+  "speed_m_s": 0.3,
+  "distance_m": 5.0,
+  "runs": {
+    "display_on": {
+      "profile": "forward",
+      "speed": 0.3,
+      "repetition": 0,
+      "steps": 362,
+      "distance_travelled_m": 5.010660754860995,
+      "max_abs_cross_track": 0.00018327163398661325,
+      "rms_cross_track": 0.00012697914803592186,
+      "final_heading_error_deg": 0.010493759332649519,
+      "scored_from_step": 21,
+      "realised_speed": 0.27966479287672596,
+      "clamp_translation_steps": 0,
+      "clamp_omega_steps": 0,
+      "budget_steps": 0,
+      "display_in_force": true
+    },
+    "display_off": {
+      "profile": "forward",
+      "speed": 0.3,
+      "repetition": 0,
+      "steps": 362,
+      "distance_travelled_m": 5.010660754860995,
+      "max_abs_cross_track": 0.00018327163398661325,
+      "rms_cross_track": 0.00012697914803592186,
+      "final_heading_error_deg": 0.010493759332649519,
+      "scored_from_step": 21,
+      "realised_speed": 0.27966479287672596,
+      "clamp_translation_steps": 0,
+      "clamp_omega_steps": 0,
+      "budget_steps": 0,
+      "display_in_force": false
+    }
+  },
+  "comparison": {
+    "identical": true,
+    "rows": [
+      362,
+      362
+    ],
+    "columns_compared": [
+      "step",
+      "t",
+      "x",
+      "y",
+      "yaw",
+      "cross_track",
+      "heading_error",
+      "yaw_ref",
+      "cmd_vx",
+      "cmd_vy",
+      "cmd_wz",
+      "clamp_scale",
+      "omega_clipped",
+      "budget_scale",
+      "travelled"
+    ],
+    "first_difference": null,
+    "max_abs_difference": {
+      "step": 0.0,
+      "t": 0.0,
+      "x": 0.0,
+      "y": 0.0,
+      "yaw": 0.0,
+      "cross_track": 0.0,
+      "heading_error": 0.0,
+      "yaw_ref": 0.0,
+      "cmd_vx": 0.0,
+      "cmd_vy": 0.0,
+      "cmd_wz": 0.0,
+      "clamp_scale": 0.0,
+      "omega_clipped": 0.0,
+      "budget_scale": 0.0,
+      "travelled": 0.0
+    }
+  },
+  "identical": true
+}

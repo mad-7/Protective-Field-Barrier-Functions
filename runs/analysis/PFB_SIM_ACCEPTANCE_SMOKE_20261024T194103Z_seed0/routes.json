@@ -1,0 +1,100 @@
+[
+ {
+  "seed": 2000000,
+  "stratum": "narrow",
+  "outcome": "success",
+  "steps": 591,
+  "reached_goal": true,
+  "stalled": false,
+  "final_s_m": 9.872449397026053,
+  "stops": [
+   {
+    "step": 340,
+    "s": 6.518839326625318,
+    "category": "prediction",
+    "subtypes": [
+     "heading",
+     "motion"
+    ]
+   }
+  ],
+  "scan_fault_stops": 0,
+  "fallback_steps": 0,
+  "fallback_reasons": {},
+  "fallback_rollout_contacts": 0,
+  "contact_steps": 0,
+  "modes": {
+   "nominal": 18,
+   "filtered": 534,
+   "brake": 0,
+   "fallback": 0,
+   "latched": 39
+  },
+  "pfb_ms": {
+   "mean": 12.779546023839723,
+   "p95": 22.823599982075393,
+   "max": 62.277100048959255
+  },
+  "over_budget_steps": 0
+ },
+ {
+  "seed": 2000001,
+  "stratum": "narrow",
+  "outcome": "success",
+  "steps": 887,
+  "reached_goal": true,
+  "stalled": false,
+  "final_s_m": 12.150900296542419,
+  "stops": [],
+  "scan_fault_stops": 0,
+  "fallback_steps": 14,
+  "fallback_reasons": {
+   "infeasible": 14
+  },
+  "fallback_rollout_contacts": 0,
+  "contact_steps": 0,
+  "modes": {
+   "nominal": 0,
+   "filtered": 873,
+   "brake": 0,
+   "fallback": 14,
+   "latched": 0
+  },
+  "pfb_ms": {
+   "mean": 35.70559019329952,
+   "p95": 88.41444000136107,
+   "max": 132.742999936454
+  },
+  "over_budget_steps": 35
+ },
+ {
+  "seed": 2000002,
+  "stratum": "narrow",
+  "outcome": "success",
+  "steps": 496,
+  "reached_goal": true,
+  "stalled": false,
+  "final_s_m": 9.443248025592816,
+  "stops": [],
+  "scan_fault_stops": 0,
+  "fallback_steps": 1,
+  "fallback_reasons": {
+   "infeasible": 1
+  },
+  "fallback_rollout_contacts": 0,
+  "contact_steps": 0,
+  "modes": {
+   "nominal": 19,
+   "filtered": 476,
+   "brake": 0,
+   "fallback": 1,
+   "latched": 0
+  },
+  "pfb_ms": {
+   "mean": 14.68741310658985,
+   "p95": 24.094824970234185,
+   "max": 87.86849991884083
+  },
+  "over_budget_steps": 1
+ }
+]

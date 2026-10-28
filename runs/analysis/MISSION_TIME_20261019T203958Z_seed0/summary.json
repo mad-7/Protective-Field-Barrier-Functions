@@ -1,0 +1,66 @@
+{
+  "lethal": 0.1,
+  "soft": 0.03,
+  "old_run": "..\\pfb-nav-pre-a20\\runs\\analysis\\ORACLE_FREE_info_20261019T194420Z_seed0",
+  "new_run": "runs\\analysis\\ORACLE_FREE_info_20261019T164220Z_seed0",
+  "old": {
+    "medium": {
+      "routes": 707,
+      "traversable": 707,
+      "median_time_s": 27.99012491021053,
+      "median_s_per_m": 2.686441809933589
+    },
+    "narrow": {
+      "routes": 857,
+      "traversable": 857,
+      "median_time_s": 26.80782581251026,
+      "median_s_per_m": 2.6951631957222366
+    },
+    "wide": {
+      "routes": 707,
+      "traversable": 707,
+      "median_time_s": 27.426587552785147,
+      "median_s_per_m": 2.68872153917221
+    }
+  },
+  "new": {
+    "medium": {
+      "routes": 707,
+      "traversable": 707,
+      "median_time_s": 25.47425575393324,
+      "median_s_per_m": 2.4401576975574026
+    },
+    "narrow": {
+      "routes": 857,
+      "traversable": 857,
+      "median_time_s": 25.314491268948796,
+      "median_s_per_m": 2.4379528330421016
+    },
+    "wide": {
+      "routes": 707,
+      "traversable": 707,
+      "median_time_s": 24.74961569204647,
+      "median_s_per_m": 2.4359655442095205
+    }
+  },
+  "matched": {
+    "narrow": {
+      "pairs": 857,
+      "median_ratio": 0.9073778271423047,
+      "min_ratio": 0.5416322688020873,
+      "max_ratio": 1.9777683751129485
+    },
+    "medium": {
+      "pairs": 707,
+      "median_ratio": 0.9051471061517502,
+      "min_ratio": 0.5913369626301914,
+      "max_ratio": 1.673476745302025
+    },
+    "wide": {
+      "pairs": 707,
+      "median_ratio": 0.9060114140024422,
+      "min_ratio": 0.8605508189220104,
+      "max_ratio": 1.0359346391580864
+    }
+  }
+}

@@ -1,0 +1,33 @@
+# Planner margins by criterion (supervisor, 2026-10-13, item 3). Offline: no simulator.
+# The criterion: an ideal tracker following every planned route exactly, at its stratum's
+# traversal speed, field along the path tangent, produces zero field breaches against the mapped
+# world; and no stratum loses plannability, grid quantisation included. The smallest lethal and
+# soft margins meeting both are REPORTED; the supervisor rules the values.
+# Everything measured (half_width, the footprint, the fields, the strata, the planner's
+# resolution) is read from base.yaml; only the candidates and the check's own settings live here.
+defaults: ../base.yaml
+
+planner_margins:
+  lethal_margins: [0.03, 0.05, 0.07, 0.09, 0.10]   # m, added to half_width (0.03 is today's)
+  soft_margins: [0.03, 0.08, 0.13, 0.20, 0.30]     # m, added to the circumscribed radius
+  sample_spacing_m: 0.02         # m between poses along a route; every vertex taken twice
+  inside_offset_m: 0.05          # m toward the inside of bends -- INFORMATION ONLY (ruled)
+  # Where breaches happen, for the REPORT only (the criterion counts every breach): within these
+  # of the route's start or goal (arc length), or of a bend. The goal approach matters because a
+  # tracker held at traversal speed up to a goal in front of a shelf breaches whatever the margins.
+  start_window_m: 0.5
+  goal_window_m: 1.0
+  bend_window_m: 0.3
+  quantisation_offsets: 10       # sub-cell positions per axis for the narrowest-aisle check
+  quantisation_aisle_length_m: 6.0
+  sets:                          # tune, pilot and training plans; never scenarios/test (rule 2)
+    - scenarios/tune/tune_narrow.json
+    - scenarios/tune/tune_medium.json
+    - scenarios/tune/tune_wide.json
+    - scenarios/tune/tune_unmapped_narrow.json
+    - scenarios/tune/tune_unmapped_medium.json
+    - scenarios/tune/tune_unmapped_wide.json
+    - scenarios/pilot/pilot_narrow.json
+    - scenarios/train/train_narrow.json
+    - scenarios/train/train_medium.json
+    - scenarios/train/train_wide.json

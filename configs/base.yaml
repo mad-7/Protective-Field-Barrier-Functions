@@ -1,0 +1,916 @@
+# Base configuration (v2). All physical quantities in SI units.
+# Values marked VERIFY must be checked against the scene model in WP0.
+
+host:
+  # Which machine this is, for runs to be read against: timings are a property of the
+  # host, not of the method (supervisor, 2026-09-20). The rest of the identity --
+  # hostname, CPU, cores, GPU, RAM, OS -- is detected and written into every run's
+  # provenance.json; `shared` cannot be detected and is declared here.
+  shared: false            # true when the machine is shared with other load during a run
+
+sim:
+  endpoint: "tcp://127.0.0.1"
+  port: 23000              # instance i listens on port + port_stride * i
+  port_stride: 2           # 23000, 23002, 23004, 23006: the researcher's launch ports,
+                           #   spaced so an add-on that opens a second port beside its
+                           #   own cannot collide with the next instance
+  dt: 0.05                 # s, physics step (20 Hz)
+  display_enabled: false   # rendering costs ~7 ms of a ~27 ms step and changes no
+                           #   physics (measured 2026-09-19; trajectories checked
+                           #   bit-identical by scripts/regress_display_off.py). Applied
+                           #   by SimClient.start() and read back; recorded in every run's
+                           #   provenance. Set true to watch a run. A headless instance
+                           #   has no display and records false. An instance that refuses
+                           #   the setting (seen 2026-09-20, mid-run, cause unexplained)
+                           #   is counted and reported, not fatal: the run records what
+                           #   was in force.
+  reply_timeout_s: 120.0   # s, the longest one remote call may wait for its reply before
+                           #   SimError (pfbnav/sim/client.py). Without it an instance that stops
+                           #   answering hangs the run forever, silently: the B1 evaluation of
+                           #   2026-10-17 stalled after episode 51 in a host memory exhaustion.
+                           #   Far above any single call (a step ~50 ms, a scene load seconds).
+  scene: "scenes/warehouse_v2.ttt"
+  scene_sha256: "537f1bbbb7d674a395107398b46b7b6a765428b2942acefd529bf0c24dc35eb4"
+                           # the committed scene: /Wall removed and the floor 7 x 7 tiles
+                           #   (2026-10-14, runs/diag/FLOOR_EDIT_20261013T230903Z; was 20974276,
+                           #   the camera edit d936360; wheel spheres collidable since 61e4494).
+                           #   Every run refuses a scene with another hash. Scene edits are
+                           #   deliberate, read back, committed alone, and update this value
+                           #   in the same commit. History: docs/reproducibility.md.
+  floor_half_extent_m: 17.5  # m, the scene's floor is [-h, h]^2: 7 x 7 tiles of 5 m (ruled
+                           #   2026-10-10; was 7.5, nine tiles, which halls overhung by up to 7 m).
+                           #   Read back on the simulator by tests/test_floor_sim.py. Every built
+                           #   world must fit on it at any placement yaw (tests/test_extent.py,
+                           #   pfbnav/world/extent.py): worst reach 14.55 m.
+  robot_spawn_radius_m: 0.01  # m, bound on the robot's scene pose's distance from the origin
+                           #   (read back by tests/test_floor_sim.py; 0.11 mm in the inventory
+                           #   of 20974276). A detector's bound, not a robot constant.
+  physics:                 # FROZEN 2026-09-18 by the D7 probe; applied on every start(),
+                           #   overriding the scene file (which still says Bullet).
+                           #   No tuning after G1b. See docs/decision_log.md.
+    engine: 1              # 0 Bullet, 1 ODE, 2 Vortex, 3 Newton, 4 MuJoCo. ODE: 0.47 deg
+                           #   lateral drift at 0.12 m/s against Bullet's 20.55.
+    dynamic_step: 0.005    # s, dynamics substep. Scene default, left unchanged; drift
+                           #   0.47/1.11/0.84 deg at 0.005/0.002/0.001 s, no trend.
+    solver_sensitivity_drift_deg: 0.64   # deg, spread of lateral drift across those three
+                           #   steps; non-monotonic, so numerical noise. Quoted with every
+                           #   drift figure (ruling 7 on the D7/G1b report).
+  objects:                 # scene object paths, resolved with sim.getObject
+    base_ref: "/youBot/youBot_ref"   # pose + velocity reference frame     (confirmed 09-17)
+    chassis: "/youBot"               # chassis shape: contact and bbox     (confirmed 09-17)
+    robot_tree: "/youBot"            # model root, excluded from obstacles (confirmed 09-17)
+    floor: "/floor"                  # excluded from the wheels' obstacle set (confirmed 09-17)
+    wheels:                          # order [fl, fr, rl, rr]; read off the scene
+      #   2026-09-17: the front wheels hang off the passive front-axle joint
+      #   /youBot/Joint, not off the model root. Each rollingJoint carries the
+      #   stock mecanum roller Script that drives its slippingJoint; leave it in place.
+      - "/youBot/Joint/Rectangle0/rollingJoint_fl"
+      - "/youBot/Joint/Rectangle0/rollingJoint_fr"
+      - "/youBot/rollingJoint_rl"
+      - "/youBot/rollingJoint_rr"
+
+robot:
+  # Robot envelope: the half-extents of everything that can strike an obstacle -- the
+  # chassis, the wheels and the sensor pods. Measured 2026-09-17 from
+  # scenes/warehouse_v2.ttt (tests/test_chassis_geometry.py, tests/test_footprint_probe.py).
+  half_length: 0.2854      # m, set by the CHASSIS, not by a scanner: with the S300 layout
+                           #   (scene 0ae35a50) the scanners sit on the diagonal corners and
+                           #   reach 0.3205 m at +-30 deg, inside the wheel corners, so
+                           #   nothing protrudes fore or aft any more. Upper bound of the
+                           #   probe FOOTPRINT_20260922T170810Z (front 0.28534, rear
+                           #   0.28514), rounded up. Was 0.3520, set by the forward Hokuyo
+                           #   pod: the robot is 67 mm shorter at each end.
+  half_width: 0.2086       # m, D8 2026-09-18: set by the hidden wheel spheres
+                           #   (wheel_respondable_*), collidable since ruling 1. Upper
+                           #   bound of the probe (FOOTPRINT_20260918T164846Z: left
+                           #   0.20856, right 0.2085), rounded up: under-stating a safety
+                           #   footprint is the unsafe direction. The ruling said 0.2085;
+                           #   0.2086 is the probe's upper bound. Was 0.1970, the visible
+                           #   wheel mesh (0.1958). The chassis alone is 0.1789.
+                           #   Unchanged by the S300 layout: re-measured on scene 0ae35a50
+                           #   (FOOTPRINT_20260922T170810Z: left 0.20856, right 0.20850) --
+                           #   the scanners stay inside the wheels sideways.
+  wheel_radius: 0.05       # m
+  half_wheelbase: 0.228    # m, measured 2026-09-17 from the wheel joint positions
+  half_track: 0.1585       # m, measured 2026-09-17 (left 0.1585, right 0.1586; the
+                           #   0.1 mm asymmetry is below anything that matters here)
+  wheel_sign: [-1, -1, -1, -1]   # per-wheel sign vector, measured 2026-09-17 by gate G0:
+                           #   with [1,1,1,1] the robot ran backwards on both translation
+                           #   axes (commanded +0.100 m/s, realised -0.092 m/s on each).
+                           #   The wheel-layout test puts fl/fr at body +x, so the frame is
+                           #   right and the inversion is here. Same as the v1 scene needed.
+  # D8: the measured footprint, e(psi) per whole degree with a periodic spline
+  # (pfbnav/safety/footprint_table.py), built by scripts/build_footprint_table.py from
+  # FOOTPRINT_20260922T170810Z on scene 0ae35a50 (the S300 layout; inscribed 0.20945,
+  # circumscribed 0.33742, spline margin 0.95 mm). The rectangle above stays for G0's case
+  # placement and as the inscribed radius; the table is the footprint the PFB uses.
+  footprint_table: "configs/footprint/youbot_envelope_1deg.csv"
+  yaw_offset: 1.5707963    # rad (= pi/2), rotation from base_ref +x to chassis forward
+                           #   measured 2026-09-17: the /youBot frame is X-up and
+                           #   base_ref is a quarter turn from chassis forward, as in v1.
+                           #   Which of the two alignments is forward is confirmed by G1.
+
+actuation:
+  mode: holonomic          # holonomic | unicycle
+  v_max: 0.5               # m/s, forward/backward. RULED 2026-10-19 (A20 limits): G1b's outcome
+                           #   rule in full (G1b-SPREAD_20261019T153126Z, three invocations at
+                           #   a_max 0.5 / alpha_max 1.4) passes to 0.50 -- translate_while_rotating
+                           #   ends 4.947-4.962 deg against 5.0 (margin 0.038 deg, spread 0.015),
+                           #   a result specific to the A20 limits. A tracking ceiling, not a safety
+                           #   parameter: the fields cover reachable speeds to 0.51 regardless.
+                           #   The box is square again (v_max = vy_max = 0.50).
+                           # PRE-A20 (kept, not deleted): 0.4. D8 wrote the gate's output: the
+                           #   G1b re-run under the wheel budget (2026-09-20, three
+                           #   invocations, G1b-SPREAD_20260920T215108Z) passes to 0.40
+                           #   and FAILS at 0.50, where translate_while_rotating ends
+                           #   5.033-5.052 deg against the 5.0 deg limit in all three.
+                           #   Was 0.50, from the re-run measured BEFORE the budget.
+                           #   A commanded axis ceiling inside the wheel budget, not a
+                           #   speed reached (A9).
+  vy_max: 0.5              # m/s, lateral. Confirmed by the A20 G1b (2026-10-19) at every grid speed
+                           #   and both extensions. The "non-square box" reasoning below is PRE-A20:
+                           #   since 2026-10-19 v_max = vy_max = 0.50.
+                           # m/s, lateral. D8: axis ceiling inside the wheel budget
+                           #   (ruling 2); the same re-run passes lateral at every grid
+                           #   speed and both extensions, so vy_max stays 0.50 -- the top
+                           #   of the tested grid. The box is deliberately non-square:
+                           #   the budget, not the box, is the real constraint, and
+                           #   squaring vy_max down to v_max would discard a measured
+                           #   capability. (For the supervisor to confirm.)
+  w_max: 1.5               # rad/s
+  a_max: 0.5               # m/s^2, commanded acceleration limit. A20 (ruled 2026-10-18): a
+                           #   SAFETY-DESIGN PARAMETER co-specified with the protective fields, not
+                           #   a measured youBot property. Band coherence: a_max T (T = 0.15 s) must
+                           #   be below the narrowest band width, 0.10 m/s, so a_max < 0.67. Was 1.0
+                           #   (VERIFY). That it is achievable -- the limiter binds, not the torque
+                           #   cap -- is measured in the simulator (scripts/check_acceleration.py).
+  alpha_max: 1.4           # rad/s^2, yaw acceleration limit. A20: a_max / outermost radius,
+                           #   rounded down, so no body point accelerates faster than a_max (the
+                           #   footprint table's 0.337 m and the rectangle's 0.354 m both give
+                           #   1.4). A safety-design parameter, as a_max. Was 3.0 (VERIFY).
+                           #   Applied SYMMETRICALLY by the limiter (increase and
+                           #   decrease alike), and the yaw braking the protective
+                           #   fields assume (certified alpha_brake; ruled 2026-10-16).
+  # D9: the limiter bounds deceleration separately, so no controller can command a stop
+  # faster than the PFB's stopping-distance model assumes. This must never exceed
+  # certified.a_brake -- enforced by tests/test_infrastructure.py -- which makes the barrier
+  # conservative by construction rather than by whatever the simulated contact delivers.
+  # The 2.3-3.0 m/s^2 measured by the braking diagnostic is the velocity-controlled
+  # joints' authority, not braking physics, and is deliberately not used here.
+  a_decel_max: 1.0         # m/s^2, deceleration limit; <= certified.a_brake
+  # Ruling 2 (WP0 results report): the mecanum wheel-speed budget
+  #   |vx| + |vy| + (l+w)|wz| <= fraction * v_rim,
+  # which is exactly the fastest wheel's rim speed. v_max and vy_max stay as axis ceilings
+  # inside it. Enforced by direction-preserving projection, never clipping; every binding
+  # is counted. ONE share is enforced, `filter_fraction`, for every method: the base projects
+  # every command into it, and the PFB's QP optimises directly in that polytope (ruled
+  # 2026-10-26: one share for all methods is fairer; no code change). No controller's command is
+  # projected into `nominal_fraction` before the filter, as earlier descriptions here said. It is
+  # used only OFFLINE, by the free-orientation oracle's schedule (scripts/quantify_oracle_free.py)
+  # and the classical route cap (pfbnav/eval/route_profiles.py), to plan their speeds.
+  wheel_budget:
+    v_rim: 0.617           # m/s VERIFY: 12.34 rad/s * 0.05 m, measured in G1-ODE on the
+                           #   saturating diagonal. A TORQUE limit, confirmed 2026-09-18
+                           #   (WHEEL_TORQUE_20260918T164140Z): saturated wheels sit at the
+                           #   2.5 N m cap at 12.32 rad/s. So it is a torque-balance point
+                           #   that moves with load (payload, floor, wheels sharing the
+                           #   work) -- hence VERIFY stays. Not to be raised (ruling 2).
+    nominal_fraction: 0.80 # 0.494 m/s at the fastest rim: planning only (the oracle schedule and
+                           #   the route cap), never enforced on a command
+    filter_fraction: 0.95  # the enforced share, for every method: 0.586 m/s
+
+estimation:
+  # Ruling 4 (WP0 results report): the safety layers use the estimated *actual* body
+  # velocity -- filtered pose differencing of youBot_ref -- never the command, which
+  # over-states realised speed by 8-28 %, and never wheel odometry, which inherits the
+  # command's error because the shortfall is ground slip. PRIVILEGED: the pose is the
+  # simulator's ground truth, which a real AMR lacks. pfbnav/sim/velocity_estimate.py.
+  velocity:
+    filter_tau: 0.10       # s, first-order low-pass; alpha = dt/(tau+dt) = 1/3   VERIFY
+    latency_steps: 0       # WP2 sensitivity check sets 1 (declared, not tuned)
+    noise_std: [0.0, 0.0, 0.0]   # m/s, m/s, rad/s; WP2 sensitivity check sets non-zero
+
+scanners:
+  policy_bins: 36          # observation stream (360 deg)
+  plausibility:            # RULED 2026-10-23, the scan-fault fix (pfbnav/sim/scan_guard.py)
+    neighbour_bins: 2      # bins either side of the last accepted scan a range may come from
+                           #   (one step of rotation at w_max is 1.4 bins of 3 deg)
+    range_tolerance_m: 0.06  # m, one step of translation at the top speed (0.025) plus noise
+    corrupt_bins: 6        # bins outside the bound that make a packet implausible
+    rerenders: 2           # re-renders of the same tick before the fail-safe
+  filter_bins: 120         # filter stream, with exact bearings
+  range_max: 5.0           # m
+  range_min: 0.05          # m, self-filter beyond footprint
+  # How a vision sensor's depth pixel becomes a point (pfbnav/sim/depth_geometry.py).
+  # ESTABLISHED 2026-09-21 from the raw capture of SCANCHECK_20260921T151356Z: on three
+  # walls, mirrored/perpendicular left a median residual of ~10 mm, against 0.65-0.85 m
+  # for direct order and 0.15 m for euclidean depth -- one to two orders of magnitude.
+  # The ~10 mm left over is NOT explained yet (no single scale, offset or angle fits it);
+  # the next check separates scale from offset by distance. Not VERIFY: the convention is
+  # settled even though the residual is not.
+  pixel_mirror: true       # pixel 0 lies towards the sensor's +x (mirrored order)
+  rays_per_degree: 4.2666667  # rays per degree of each sensor's field of view.
+                           #   Derivation (SCANRES, 2026-09-21, front wall at 1 and 2 m,
+                           #   the worst case): the range error is pixel sampling and falls
+                           #   in exact proportion to pixel width -- median 14.2 / 4.4 /
+                           #   2.2 mm per metre at 80 / 256 / 512 rays on 120 deg sensors,
+                           #   worst case 62.9 / 19.8 / 9.8 mm. 512 over 120 deg (0.234 deg
+                           #   per pixel) is the lowest tested density within the scanner
+                           #   check's 10 mm, so the density is what carries over to a
+                           #   sensor of another width (a 135 deg sensor gets 576). What the
+                           #   bins need (2 rays per bin) is a floor the client enforces.
+                           #   VERIFY until the multi-wall check passes at this density.
+  coverage_depth: 1.0      # m beyond the footprint edge over which a bin must be observed
+                           #   end to end to count as valid (pfbnav/sim/coverage.py).
+                           #   Derivation: covers the certified field's furthest reach
+                           #   (~0.57 m from the body origin ahead at 0.40 m/s, ~0.22 m
+                           #   beyond the edge) with margin, and is the region the coverage
+                           #   map sweeps (supervisor, 2026-09-21: footprint edge to 1 m).
+  self_filter_margin: 0.005  # m; a return inside the footprint + this is the robot itself
+                           #   and is dropped. The footprint is already an upper bound, so
+                           #   this only absorbs float noise at the boundary; a real
+                           #   obstacle there is in contact, which contact checks decide
+                           #   (hard rule 4).
+  depth_is_euclidean: false  # depth is perpendicular, along the sensor's +z
+
+filter:                    # the PFB (WP2, ruled 2026-10-23). Its FIELD reads the certified keys
+                           #   (Q2, rule 16: reach time, a_brake, limits, margins, bands); only the
+                           #   filter's own settings are here. Was t_react / a_brake / margin (v1),
+                           #   removed: restated constants.
+  enabled: false
+  alpha: 2.0               # 1/s, class-K gain. PROVISIONAL: tuned with B7 on the tune layouts over
+                           #   {1, 2, 5, 10, 20}, before L5's pilot (Q4)                   VERIFY
+  lag_allowance_s: 0.05    # s, added to one control step to make the prediction horizon (Q2); the
+                           #   noise/latency sensitivity check covers it                   VERIFY
+  motion_fractions: [0.0, 0.25, 0.5, 0.75, 1.0]  # the realised fraction lambda of the predicted
+                           #   motion over dt + lag that every barrier row must hold over (ruled
+                           #   2026-10-26, rule 7: the declared grid, with a test bounding its gap to
+                           #   a dense minimum over [0, 1]; tests/test_pfb.py)
+  motion_grid_margin_m: 0.0005  # m subtracted from every row, so the 5-point grid's minimum is a LOWER
+                           #   bound of the minimum over all lambda: the measured gap, grid minus
+                           #   dense (201 points), was at most 0.454 mm over 24,390 rows of random
+                           #   scans with commands up to the top band and 1.5 rad/s (2026-10-26),
+                           #   rounded up. Asserted, with a positive control, by tests/test_pfb.py
+  binning_penalty_m: 0.0005  # m, the measured scan residual at its upper bound (Q6; -0.27..+0.50 mm,
+                           #   TRAVERSABILITY_20260927T222532Z), not the derived sector-min term
+  creep_fraction: 0.9      # the creep regime: 0.9 x the standstill exits (as the recovery's creep)
+  row_window_m: 0.5        # m, rows with more linearised slack than this are left out of the QP
+                           #   (every TRUE row is still checked at the solution)
+  linearisations: 2        # the first about u_nom, and one re-linearisation (Q3)
+  linearisation_margin_m: 0.0005  # m, the linearised rows are tightened by 0.5 mm (the binning
+                           #   penalty's size; 0.1 mm left 0.1-0.17 mm second-order misses on a
+                           #   binding row), so the QP's answer passes the TRUE rows, which are
+                           #   checked with no tolerance (found 2026-10-23: a 1e-7 m tolerance
+                           #   rejected solutions off by 0.01 mm and sent 28 % of steps to the
+                           #   fallback)
+  yaw_trust_rad_s: 0.05    # rad/s, per linearisation the yaw rate stays within this of its point and
+                           #   the rows are CHORDS there: the field is convex in |w| (found
+                           #   2026-10-23: tangents overshot, 3-15 mm misses)              VERIFY
+  band_speed_margin_m_s: 0.002  # m/s kept below each band's speed limit: an estimate a hair above
+                           #   the command at the limit tipped the certified layer into the next band
+                           #   (found 2026-10-23)                                          VERIFY
+  qp_solver: clarabel        # interior point; about 1 ms per QP against OSQP's 12 ms (setup), the
+                           #   same answers (2026-10-24, per-step budget). osqp is kept as the check
+
+certified:                 # certified-layer emulator (always on)
+  enabled: true
+  response_time: 0.10      # s
+  a_brake: 1.0             # m/s^2
+  restart_delay: 2.0       # s
+  n_field_sets: 3          # discrete speed bands
+  band_top_speeds: [0.10, 0.30, 0.51]   # m/s, A20 (ruled 2026-10-18): bands INDEXED BY REACHABLE
+                           #   SPEED, v + a_max T capped by the box and the wheel budget. The top
+                           #   band covers the largest reachable composed speed (0.5074 m/s, at
+                           #   (0.086, 0.5)): 0.40 left lateral commands above 0.40 with no field,
+                           #   a defect of the G1b ruling. Band 0 is the creep/departure band
+                           #   (composed speed <= 0.025 m/s). History below.
+                           # m/s, one per field set; a band's field is sized
+                           #   for its top speed. VERIFY: proposed with the D2 derivation
+                           #   (WP1); band 0 is the field a stationary robot carries, and
+                           #   its top speed sets the narrowest aisle's clearance floor.
+                           #   The top was 0.50 until 2026-09-20: the G1b re-run under the
+                           #   wheel budget puts v_max at 0.40, so a band topped at 0.50
+                           #   would size a field for a speed the base cannot be commanded
+                           #   to reach. The lower tops are unchanged -- nothing measured
+                           #   moved them -- so only the unreachable top is re-set, to
+                           #   v_max. The field's sideways reach does not grow with speed
+                           #   (Minkowski), so this changes stopping depth ahead, not the
+                           #   strata's lateral fit.
+  # Field shape (WP1 report, ruling 2 as corrected): the Minkowski sum of the footprint
+  # with the braking segment along the travel direction, offset by `margin` ahead and
+  # behind and `lateral_margin` abeam -- ahead e + D(v) + 0.10, abeam e + 0.05 at every
+  # speed, behind e + 0.10; at rest e + 0.10 all round. pfbnav/safety/certified.py.
+  margin: 0.10             # m, AHEAD when moving, and only ahead. Behind and abeam a moving
+                           #   field carries lateral_margin: the trailing margin was ruled down
+                           #   from 0.10 to 0.05 on 2026-09-28, since the at-rest field is 0.05
+                           #   all round and a robot driving away from something needs no more
+                           #   margin to it than one standing still. NOT the at-rest margin.
+  lateral_margin: 0.05     # m, abeam of the travel direction when moving -- and the AT-REST
+                           #   margin all round.                                       VERIFY
+                           # Corrected 2026-09-27 (supervisor). The at-rest field must be the
+                           #   INFIMUM of the moving fields, or the field shrinks as speed
+                           #   rises: with `margin` at rest it did, over 80 % of bearings at
+                           #   every band and by up to 62.6 mm, so the robot was protected
+                           #   less the faster it went. It surfaced as a narrow-aisle
+                           #   deadlock -- a stop taken off-centre could not be cleared,
+                           #   because the field to escape was larger than the one driven in.
+                           #   Monotonicity in speed is asserted per bearing by
+                           #   tests/test_certified_layer.py, and must hold before the strata
+                           #   lock. VERIFY on 0.05 as the at-rest margin: a stopped robot may
+                           #   now be approached to 0.05 m, which is close for a person. What
+                           #   makes that safe is the RESTART CONDITION -- the robot may be
+                           #   approached but may never drive toward an intrusion -- and the
+                           #   number itself is proposed, not measured.
+  # The WARNING field, the emulator's own rather than "the field of the band above"
+  # (supervisor 2026-09-26). Depth D_w = warning_scale * D(v) + warning_extra AHEAD; abeam,
+  # behind and at rest it extends the protective field by warning_extra_abeam (2026-09-28, D2).
+  # All three VERIFY:
+  # a real S300 configures warning zones independently of its protective zones, and these are
+  # proposed numbers, not measured ones. The field is strictly larger than the protective
+  # field, so it is always entered first, and entries are counted as a SECONDARY near-miss
+  # metric. It is reported and never acts: it is not in the observation (the 82-D layout keeps
+  # only stop_active) and never overrides a command.
+  warning_scale: 1.5       # x the protective stopping depth                      VERIFY
+  warning_extra: 0.05      # m, the extension AHEAD (depth and margin); unchanged  VERIFY
+  warning_extra_abeam: 0.02  # m, the extension abeam, behind and at rest           VERIFY
+                           #   Ruled 2026-09-28 (D2). One 0.05 extension all round put a robot
+                           #   tracking at the committed 50 mm bound in the narrowest aisle
+                           #   inside the warning field for 100 % of its traverse (measured,
+                           #   TRAVERSABILITY_20260927T222532Z: 170/170 steps), so the
+                           #   near-miss metric was saturated there. The abeam extension must be
+                           #   strictly below the 29.1 mm between the protective field's abeam
+                           #   reach and that wall; 0.02 leaves 9.1 mm. Derived, asserted by
+                           #   tests/test_d2_aisle_strata.py, and MEASURED 2026-09-28
+                           #   (TRAVERSABILITY_20260928T223451Z, wall faces at the clearance,
+                           #   line held closed-loop): 0/170 warning steps at the offset, where
+                           #   the 0.05 extension gave 170/170. Positive, so a stationary robot
+                           #   can still be warned.
+  standstill_enter: 0.01   # m/s, at or below this a moving robot comes to rest   VERIFY
+  standstill_exit: 0.02    # m/s, above this a resting robot is moving            VERIFY
+  # rad/s, the same thresholds for ROTATION (ruled 2026-10-19: at rest needs both the estimate and
+  # the applied command below the standstill threshold, so a spin is a moving state, S2): the
+  # translational ones over the footprint table's outermost radius 0.3374 m, so at rest no body
+  # point moves faster than the translational threshold. Derived, not chosen.          VERIFY
+  standstill_yaw_enter: 0.0296
+  standstill_yaw_exit: 0.0592    # rounded DOWN from 0.05927, so the robot leaves rest no later
+                           #   Hysteresis, lower entry and higher exit, so an estimate
+                           #   near one threshold cannot flip the field every step; both
+                           #   must sit above the velocity estimate's noise at rest.
+                           #   Transitions are logged (StandstillDetector).
+
+reward:
+  k_progress: 5.0
+  time_cost: 0.01
+  k_stop: 5.0
+  k_intervention: 0.1
+  k_proximity: 0.0         # > 0 only for the shaped variants
+  goal_bonus: 200.0
+  contact_penalty: 200.0
+  goal_tolerance: 0.25     # m
+  max_steps: 4000          # steps (200 s at dt 0.05). RULED 2026-10-20 (A23), a CORRECTION: an
+                           #   A5 dependent of v_max never re-derived after A20. Rule: the horizon
+                           #   covers the privileged oracle schedule of every traversable built
+                           #   route with margin (tests/test_horizon.py, over every built set;
+                           #   the test sets too once built). time_cost per step unchanged. Was
+                           #   1500 (75 s): the oracle tracker needs a median 88 s on the tune
+                           #   set (emulated ~1.25 x its schedule).
+  horizon_margin: 1.3      # x the schedule time the horizon must cover: emulated completions ran
+                           #   1.12-1.25 x their schedules on eight tune routes (2026-10-20)
+
+tracking:                  # proportional path tracker used by gate G1b (D6).
+                           # gates.yaml requires these gains to be committed here.
+  k_cross_track: 1.0       # 1/s, lateral velocity per metre of cross-track error  VERIFY
+  k_heading: 2.0           # 1/s, yaw rate per radian of heading error             VERIFY
+                           #   First estimates, never run. If G1b fails, separate a
+                           #   controller-tuning failure from a platform limit before
+                           #   concluding anything about v_max.
+
+world:
+  # D2: aisle strata by PER-SIDE clearance (robot centred, aligned), not by aisle width.
+  # Approved (WP1 report, ruling 4). The narrow floor is lateral margin 0.05 + G1b's
+  # committed peak cross-track 0.05 + slack 0.03 = 0.13 m (slack raised by the supervisor,
+  # 2026-09-26); the at-rest D2 floor for a CENTRED robot (footprint + omnidirectional
+  # margin 0.10, reaching 0.30951 m sideways on the S300 footprint: 0.1009 m per side; it
+  # was 0.3093 / 0.1007 on the pod footprint) sits below it. Medium and wide edges are
+  # documented design choices. Aisle width is 2 * (half_width + clearance): narrow starts
+  # at 0.677 m. Per-stratum traversal speeds are derived and logged
+  # (pfbnav/world/strata.py, tests/test_d2_aisle_strata.py).
+  #
+  # OPEN, with the supervisor (2026-09-26): the binding case is NOT the moving field. The
+  # at-rest field is wider abeam (margin 0.10 against lateral_margin 0.05), so its floor
+  # for a robot displaced by the committed peak cross-track is
+  # 0.30951 - 0.2086 + 0.05 = 0.15091 m -- ABOVE this 0.13 floor. At 0.13 a robot may come
+  # to rest at most 0.0291 m off-centre, while the controller is permitted 0.05 m, and a
+  # latched stop holds WHILE the field is breached, so a stop taken off-centre in a narrow
+  # aisle cannot be cleared. Admitting a stop anywhere the controller may be would put the
+  # narrow floor at 0.15091 + slack = 0.181 m, leaving a 0.181-0.20 stratum. Raising the
+  # slack to 0.03 does not reach this: it was already satisfied at 0.12 while moving
+  # (moving floor with the offset is 0.1009 m). Awaiting a ruling before the strata lock.
+  # m, slack in the narrow floor (ruling 4). Raised 0.02 -> 0.03 by the supervisor on 2026-09-26.
+  #
+  # CORRECTED 2026-09-27. The 0.0096 m "scan penalty" this slack was justified against does not
+  # exist. It was the test walls' HALF-THICKNESS: a cuboid 0.02 m thick is placed by its centre
+  # and presents its surface 10 mm nearer, and the scanner measures the surface. Both the
+  # 2026-09-23 D2 figure (9.5 mm clear where 19.1 mm was predicted) and its tolerance (0.01 m,
+  # exactly the half-thickness) were measuring the wall, not the sensor.
+  #
+  # What the scan actually costs, measured 2026-09-27 over six traverses at three clearances
+  # (TRAVERSABILITY_20260927T222532Z, the positive control that found this):
+  #   range residual vs the wall FACE   -0.27 .. +0.50 mm, and it does NOT scale with distance,
+  #                                     so it is not the ~1 % pixel sampling once assumed
+  #   sector-min binning (DERIVED)      0.43 mm at 0.12, 0.37 mm at 0.13
+  #   ------------------------------------------------------------------
+  #   total                             about 1 mm, not 9.6 mm
+  #
+  # RULED 2026-09-28 (D1): 0.03 is kept as a DELIBERATE BUFFER, a chosen number, not a derived
+  # one. Its original motivation -- a 9.6 mm scan penalty -- was the test walls' half-thickness
+  # artefact above; the real scan costs about 1 mm, so 0.03 covers it roughly thirty times over.
+  # The floor is not reverted: a wider buffer is the safe direction and the strata are admissible
+  # as measured.
+  narrow_floor_slack: 0.03
+  layout:                  # what the generator builds (WP1, option 1 of 2026-09-23):
+                           #   polygons, baked into the planner's map and instantiated into
+                           #   the fixed scene at episode reset. Sizes are the warehouse the
+                           #   experiment is about; they are choices, not measurements.
+    bounds: [0.0, 0.0, 14.0, 10.0]   # m, (x_min, y_min, x_max, y_max) of the hall
+    wall_thickness: 0.2    # m, the perimeter
+    shelf_depth: 0.8       # m across the aisle (a pallet rack is ~0.8-1.2 m deep)
+    shelf_height: 1.6      # m, well above the 0.221 m scan plane, so a shelf is sensed at
+                           #   scanner height and not merely present
+    wall_height: 1.6       # m, the perimeter
+    shelf_length_fraction: [0.70, 0.92]  # of the usable span along the aisle, sampled per
+                           #   row. A FRACTION, not an absolute length: rows short against
+                           #   the hall leave open floor beside them, the plan crosses it
+                           #   diagonally, and a narrow-aisle layout never makes the robot
+                           #   use a narrow aisle (seen 2026-09-23 with 2.4-4.0 m rows in a
+                           #   14 m hall). Rows alternate which end they leave open, so a
+                           #   traverse threads the aisles.
+    rows: [2, 4]           # how many shelf rows a layout has, inclusive
+    end_clearance: 1.2     # m kept clear at each end of a row, so the robot can turn out
+    min_aisle_travel: 1.5  # m of the planned route that must lie BETWEEN two shelf rows
+                           #   for a scenario to be kept. Without it a layout's stratum need
+                           #   not describe the episode: a plan can go round the block and
+                           #   never enter a narrow aisle (2026-09-23). Measured on the plan,
+                           #   not assumed from the endpoints.
+    validity:              # ruled 2026-10-15: every built route must be traversable by the
+                           #   free-orientation oracle (pfbnav/world/oracle.py, route_validity)
+                           #   -- start valid (band-0 field along the initial direction clear at
+                           #   the start yaw), goal valid (clear on arrival) and no residual
+                           #   band-0 breach between. On failure the GOAL is re-sampled, never
+                           #   the layout; rejections are logged by cause and per stratum. The
+                           #   check's resolution is the quantification's (planner_oracle_free).
+      sample_spacing_m: 0.02   # m between checked poses along the route
+      yaw_step_deg: 15         # deg, the body-yaw grid; the route's own directions are added
+      heading_round_deg: 1.0   # deg, field shapes shared across routes (lead term < 1 mm)
+      coarse_stride: 16        # the exact coarse-first separating-axis test
+      goal_resamples: 8        # goal re-draws for one start before the next endpoint pair
+      yaw_rate_step: 0.05          # rad/s: the rotation sweep's yaw rate (tangent tracking at band
+                                   #   0's top speed, the turn taken over planner.lookahead) is
+                                   #   rounded UP to this, so shapes are shared and the field only
+                                   #   grows (ruled 2026-10-16)
+    unmapped:              # obstacles the planner is NOT told about (rate preregistered)
+      size: [0.25, 0.60]   # m, square footprint sampled in this range (pallet, cage, bin)
+      height: 0.80         # m: above the scan plane, so an unmapped obstacle is SENSED
+                           #   even though it is not mapped. One below the plane would test
+                           #   the limitation recorded in writeup_notes, not the method.
+      count: [1, 2]        # how many, when an episode has any
+      margin: 0.15         # m kept between an unmapped obstacle and any shelf or wall, so
+                           #   it never merges into geometry the planner already knows
+      min_arc_from_start: 2.0    # m along the plan before an unmapped obstacle may appear.
+                           #   One ON the route is the case the safety layers exist for; one
+                           #   AT the start is not a test -- the robot spawns in contact with
+                           #   it (measured 2026-09-25: an obstacle 0.023 m from the plan at
+                           #   the start ended the episode on step 1). 2.0 m is five times
+                           #   the certified field's forward reach at the top band, so the
+                           #   layer has room to act.
+      min_distance_to_goal: 1.0  # m, so an unmapped obstacle cannot sit on the goal and make
+                           #   an episode unwinnable rather than difficult
+      # ROUTE-RELATIVE placement, every split (A13, supervisor 2026-09-29). Uniform placement
+      # over free floor put an obstacle within 0.3 m of the route in only 8-15 % of scenarios.
+      # Now, after the route is planned: offset to the obstacle's nearest SURFACE uniform on
+      # [0, offset_max], side uniform, position uniform over arc length excluding
+      # min_arc_from_start at the start and arc_to_goal at the goal (pfbnav/world/placement.py).
+      # Kept only if the robot can get past ALL unmapped obstacles at once within the route's
+      # corridor at the narrow floor (`bypass`, revised 2026-10-02); "reachable in the true
+      # world" admitted detours through other aisles, which a stack that never replans can't use.
+      route_relative:
+        offset_max: 0.6    # m, to the nearest surface, as ruled
+        first_offset_max: 0.3  # m, the FIRST obstacle's cap (ruled 2026-09-30, option a): every
+                           #   scenario then has a surface within 0.3 m of the route. "First"
+                           #   is an index: position, side and size are drawn as for the
+                           #   others. Uncapped, 1-2 obstacles engage only 62.5 %.
+        arc_to_goal: 1.0   # m of route arc excluded at the goal, as ruled
+        attempts_per_obstacle: 200   # re-samples of ONE obstacle before its route is given up;
+                           #   the layout itself is never re-sampled
+        bypass:            # ruled 2026-10-02 (pfbnav/world/bypass.py). The clearance is NOT here:
+                           #   robot.half_width + the narrow stratum's min_clearance, read from
+                           #   both, so the gap past an obstacle meets the test of any aisle.
+          corridor_half_width: 1.0  # m, W: local avoidance within the route's corridor. Ruled
+                           #   fallback: 1.5 m ONLY if a tune (20/stratum) or pilot (150) set
+                           #   cannot be built in full within the re-sampling cap.
+          resolution: 0.01 # m, the check grid. A gap at the floor always passes; one up to half
+                           #   a cell (5 mm) per side below it may. Chosen, not ruled.   VERIFY
+  aisle_strata:            # m per side. A20 (ruled 2026-10-18): F = the smallest clearance with
+                           #   the three D2 gaps >= 0 (binned) under the reachable-motion field,
+                           #   0.1435, plus the recorded 0.03 buffer = 0.1735; narrow [F, F + 0.07],
+                           #   medium [F + 0.07, 0.40], wide [0.40, 0.80]
+                           #   (scripts/compute_narrow_floor.py). Was narrow [0.13, 0.20], medium
+                           #   [0.20, 0.40] (0.12 -> 0.13, slack 0.03).
+    # S2 (ruled 2026-10-19): the moving fields nest -- with the coupling term the nesting test
+    # showed necessary (a body that turns while it translates) -- so F by its rule is
+    # 0.1687 + 0.03 = 0.1987 (scripts/compute_narrow_floor.py). The ruling named 0.1926, computed
+    # before the coupling term; A20's first F was 0.1735 (narrow [0.1735, 0.2435]).
+    - {name: narrow, min_clearance: 0.1987, max_clearance: 0.2687}
+    - {name: medium, min_clearance: 0.2687, max_clearance: 0.40}
+    - {name: wide,   min_clearance: 0.40, max_clearance: 0.80}
+
+evaluation:                # RULED 2026-10-23
+  ring_steps: 200          # steps (10 s) of per-step trace every evaluation keeps, dumped on
+                           #   stationary triggers, contacts and unrecoverable stops (pfbnav/eval/ring.py)
+
+baselines:                 # the classical comparators (WP3). Not part of the environment's
+                           #   identity: changing them does not move the freeze.
+  pure_pursuit:            # B1, holonomic Pure Pursuit on the observation (pfbnav/control/
+                           #   pure_pursuit.py); also G4's positive control (A15). UNTUNED until
+                           #   B1's tuning under the equal-tuning-budget rule.
+    cruise_speed: 0.25     # m/s, translation toward the lookahead point                VERIFY
+    k_omega: 1.5           # 1/s, yaw rate per radian of lookahead bearing               VERIFY
+    goal_slowdown: 0.5     # m, within this distance of the goal the speed falls linearly VERIFY
+  regulated_pure_pursuit:  # B2, holonomic Regulated Pure Pursuit (pfbnav/control/regulated_pure_
+                           #   pursuit.py; ruled 2026-10-24). INITIAL values, Nav2's defaults where
+                           #   Nav2 has one; every one is tuned under the equal-tuning-budget rule on
+                           #   the tune set only. B7 = B2's tuned values plus the PFB.
+    desired_speed: 0.5     # m/s, the box ceiling (the route cap and regulation slow it)    VERIFY
+    lookahead_time: 1.5    # s, lookahead = |v_hat| x this, clipped (Nav2 default)          VERIFY
+    min_lookahead: 0.3     # m (Nav2 default)                                               VERIFY
+    max_lookahead: 0.9     # m (Nav2 default)                                               VERIFY
+    min_radius: 0.9        # m, curvature regulation below this radius (Nav2 default)       VERIFY
+    proximity_distance: 0.6  # m of clearance to the footprint below which it slows (Nav2's
+                           #   cost scaling distance)                                       VERIFY
+    approach_distance: 0.6 # m of route remaining at which the goal slow-down starts (Nav2) VERIFY
+    min_speed: 0.05        # m/s, floor of the curvature and proximity regulation           VERIFY
+    min_approach_speed: 0.05  # m/s, floor of the goal slow-down (Nav2 default)            VERIFY
+    k_omega: 1.5           # 1/s, yaw rate per radian of the lookahead bearing (as B1)      VERIFY
+    proximity_gain: 1.0    # 1, Nav2's cost_scaling_gain (default 1.0, <= 1): speed x gain x d/D
+                           #   below proximity_distance (added 2026-10-26, ruled)          VERIFY
+  dwa:                     # B3, holonomic DWA over (vx, vy, wz) (pfbnav/control/dwa.py; ruled
+                           #   2026-10-26: code-only in parallel with Stage 1). INITIAL values,
+                           #   DWB's where DWB has one; every one is tuned under the equal-tuning-
+                           #   budget rule on the tune set only (configs/tuning/b3_dwa.yaml). The
+                           #   window's accelerations are actuation.a_max / alpha_max, its ceilings
+                           #   the actuation box and the enforced wheel budget: not repeated here.
+                           #   Every value is read as a number (the tuner replaces them as floats);
+                           #   the sample counts must be whole.
+                           # CANDIDATE 0 = the standard DWA defaults (ruled 2026-10-27), from Nav2
+                           #   DWB's default parameters: nav2_bringup/params/nav2_params.yaml, ROS 2
+                           #   Humble (FollowPath, dwb_core::DWBLocalPlanner; local_costmap), read
+                           #   2026-10-27. DWB's critics are in costmap cells (resolution 0.05 m), so
+                           #   each weight is converted to metres and expressed per unit of
+                           #   w_progress (GoalDist, 24 per cell = 480 per m); each conversion is
+                           #   stated on its line. The ranges of window_time and w_clearance were
+                           #   extended down to include DWB's values (ruled 2026-10-27, A28a: a
+                           #   correction of the declaration before any run).
+    max_speed: 0.5         # m/s, translation speed ceiling of the samples. DWB sets max_speed_xy to
+                           #   the robot's own limit (0.26 is the TurtleBot's): here the box ceiling
+    window_time: 0.05      # s, the window's reach a_max x this, alpha_max x this. DWB's window is
+                           #   acc_lim x sim_period = 1 / controller_frequency (20 Hz) = 0.05 s
+                           #   (range 0.05-0.40, A28a; B3's first 0.15 kept the estimate's lag,
+                           #   filter_tau 0.10 + one step, from throttling acceleration below a_max:
+                           #   the tuning covers it)
+    sim_time: 1.7          # s, rollout horizon: DWB sim_time 1.7. Must be >= the braking time
+                           #   max(max_speed / 2 a_decel_max, w_max / 2 alpha_max) = 0.536 s,
+                           #   so a surviving sample is admissible in Fox's sense
+    sim_granularity: 0.025 # m, most translation between rollout states (dwb_plugins'
+                           #   StandardTrajectoryGenerator default; the Humble yaml sets
+                           #   linear_granularity 0.05). Resolution, not tuned
+    angular_sim_granularity: 0.1  # rad, most yaw between rollout states (the generator's default;
+                           #   the yaml sets 0.025). Resolution, not tuned
+    vx_samples: 5          # grid points over the window's vx extent (odd, so the estimate itself
+                           #   is a sample). Resolution, not tuned. DWB's defaults are 20 / 5 / 20;
+                           #   B3 keeps 5 / 5 / 7 for compute (7 x 7 x 9 doubled the cost), now
+                           #   under the real-time criterion (p95 <= 50 ms, ruled 2026-10-27)
+    vy_samples: 5          # likewise for vy (DWB 5)
+    wz_samples: 7          # likewise for wz (DWB vtheta_samples 20)
+    safety_margin: 0.0     # m, a state collides when a scan point comes nearer the footprint than
+                           #   min(this, the point's clearance now). DWB's BaseObstacle rejects
+                           #   only a footprint in collision: 0 (the range's floor)
+    clearance_cap: 0.33    # m, the clearance at and beyond which the clearance cost is zero: the
+                           #   inflation band beyond the robot, inflation_radius 0.55 - robot_radius
+                           #   0.22
+    w_path: 1.333          # 1/m, the end state's distance to the route: PathDist 32 / GoalDist 24
+    w_progress: 1.0        # 1/m, the route arc reached by the end state (a reward); the unit of the
+                           #   weights (GoalDist 24 per cell), not tuned
+    w_heading: 0.133       # 1/rad, the end yaw's error to the route tangent there: PathAlign 32 per
+                           #   cell of the point forward_point_distance 0.1 m ahead, 2 cells per rad
+                           #   = 64 per rad, / 480 per m
+    w_clearance: 0.020     # 1/m, the trajectory's clearance shortfall below clearance_cap. DWB:
+                           #   BaseObstacle 0.02 x the inflation cost 252 exp(-3.0 d) (cost_scaling
+                           #   _factor 3.0), its secant over the 0.33 m band 480 per m -> 9.6 per m,
+                           #   / 480 = 0.020 (range 0.02-5, A28a)
+
+  recovery:               # the declared classical recovery (RULED 2026-10-16; docs/pending/
+                           #   recovery_spec.md), identical for B1, B2, B3, B6 and B7
+                           #   (pfbnav/control/recovery.py). Learned policies get none.
+    wait: 1.0              # s, after the certified layer's restart_delay, still blocked
+    speed: 0.018           # m/s, translation only (no yaw). RULED 2026-10-19 (A22): the
+                           #   creep regime must sit BELOW the 0.02 standstill exit (the detector
+                           #   leaves rest only above it): at 0.02 a 45 deg command's magnitude
+                           #   rounds to 0.020000000000000004 and the robot would count as moving.
+                           #   0.018 is 10 % below: float rounding and estimator noise (the estimate
+                           #   stays under the command under slip) cannot reach the threshold.
+                           #   Rotational equivalent, derived as the yaw thresholds are (over the
+                           #   outermost radius 0.3374): 0.018 / 0.3374 = 0.0533 rad/s (recorded
+                           #   only; the recovery does not turn). An attempt to max_distance
+                           #   takes 0.30 / 0.018 = 16.7 s, so in a 75 s episode (1500 x 0.05 s)
+                           #   fewer than max_attempts fit; attempt times are reported in G4.
+                           # Was 0.02. A20 (ruled 2026-10-18): re-derived so
+                           #   its REACHABLE speed stays in band 0, 0.02 + a_max T = 0.095 <= 0.10.
+                           #   It equals the standstill exit, so the at-rest field contains its
+                           #   reach. Was 0.08, with the reasoning below. Inside band 0 (top 0.10): the
+                           #   velocity estimate never exceeded the command in 198 G1b runs
+                           #   (max ratio 0.985), so it stays <= 0.079
+                           #   (scripts/check_recovery_speed.py)
+    max_distance: 0.30     # m per attempt, integrated from the velocity estimate
+    max_attempts: 5        # per episode; then recovery stops intervening
+    directions: 72         # candidate body-frame directions, evenly spaced (every 5 deg)
+    tie_tolerance: 0.001   # m of clearance within which directions tie; the tie goes to the
+                           #   one closest to the route direction
+  ideal_tracker:           # WP2 (2026-10-23): the PFB acceptance step's nominal controller -- tangent
+                           #   tracking of the planned route, blind to the scan (pfbnav/control/
+                           #   ideal_tracker.py). Not a baseline.
+    cruise_speed: 0.5      # m/s, about the top speed, so every slow-down is the PFB's
+    k_cross: 1.0           # 1/s, lateral velocity toward the route per metre of cross-track
+    k_yaw: 1.5             # 1/s, yaw rate per radian of heading error to the tangent
+    goal_slowdown: 0.5     # m, linear slow-down to the goal
+  route_cap:               # RULED 2026-10-20: the declared, map-based speed and yaw-rate cap EVERY
+                           #   classical baseline (B1, B2, B3, B6, B7) carries along its route; the
+                           #   oracle restricted to the MAPPED world, body along the tangent
+                           #   (pfbnav/planning/route_profile.py, pfbnav/control/route_cap.py).
+                           #   Computed offline per scenario. Never faster; learned arms get none.
+    sample_spacing_m: 0.02 # m between route samples (the oracle's own spacing)
+    inside_offset_m: 0.05  # m, each band also checked this far toward the inside of bends: the
+                           #   committed tracking bound (gates.yaml D2 max cross-track)
+    lead_m: 0.10           # m, each cap is the minimum over the next lead_m: one reach time
+                           #   (0.15 s) at the top band's speed limit, rounded up       VERIFY
+    decel: 0.5             # m/s^2, the backward pass: half the limiter's a_decel_max 1.0, so the
+                           #   cap leaves room for the velocity estimate's lag          VERIFY
+    creep_fraction: 0.9    # nothing clear: speed and yaw rate at 0.9 x the standstill exits (the
+                           #   creep regime, as the recovery's 0.018 m/s)
+  oracle_tracker:          # RULED 2026-10-20 (pre-declared 2026-10-17): G4's PRIVILEGED positive
+                           #   control. Its schedule is the free-orientation oracle over ALL
+                           #   obstacles; never a comparator.
+    k_cross: 1.0           # 1/s, lateral velocity toward the route per metre of cross-track
+    k_yaw: 2.0             # 1/s, yaw rate per radian of yaw error to the schedule
+    yaw_rate_ladder: [0.20, 0.15, 0.10, 0.05]   # rad/s. RULED 2026-10-20: the yaw-rate
+                           #   allowance is the largest rate keeping band 0 admissible, rounded
+                           #   down to this 0.05 grid, PER ROUTE (the schedule's body turns no
+                           #   faster, every state's field carries its sweep, the tracker caps
+                           #   its yaw rate there). Computed: in the narrowest aisle alone band 0
+                           #   admits ~0.5 rad/s at the 50 mm offset; the binding places are shelf
+                           #   ends along routes. Tune, mapped world: 60/60 band-0 traversable at
+                           #   0.20, 54/60 at 0.25 -> 0.20. A 90-route training sample: 7 routes
+                           #   need less (6 at 0.15, 1 at 0.10). The ladder starts at 0.20.
+    yaw_tolerance_rad: 0.05  # rad: where the schedule's speed is below min_speed, rotate in
+                             #   place until the yaw is within this
+    min_speed: 0.018       # m/s, the creep speed (0.9 x the standstill exit): where the
+                           #   schedule's speed tends to zero the tracker creeps, at rest's field
+  mppi:                  # B6 (A16, 2026-10-15): holonomic MPPI, field-aware, an H1 comparator.
+                           #   STRUCTURE DECLARED before implementation (WP3, vectorised rollouts in
+                           #   our stack -- not Nav2); every NUMBER is an initial value, tuned under
+                           #   the equal-tuning-budget rule on the tune set only. Same route,
+                           #   certified layer beneath, scan stream and classical recovery as every
+                           #   baseline. The field it avoids is the CERTIFIED LAYER's discrete band
+                           #   field (FieldGeometry.select, the band picked by the rollout state's
+                           #   speed), never the PFB's continuous field: B6 is the hand-designed
+                           #   "avoid what stops you", not a soft PFB.
+                           # CANDIDATE 0 (ruled 2026-10-27): noise 0.1/0.1/0.1, smoothness 0.01,
+                           #   temperature 0.01, goal_progress 10. DISCLOSED: these came from a
+                           #   MANUAL CHECK of 2026-10-27, not counted in the N = 24 budget -- the
+                           #   declared initial values (temperature 1.0, noise wz 0.5, smoothness
+                           #   0.1, progress 1.0) did not move the robot, and these did, on two
+                           #   synthetic routes only (no scenario of any set): a straight open
+                           #   route along +x (nothing in the scan) and a straight 0.9 m aisle
+                           #   (walls at y = +-0.45, tests/test_mppi.py). Recorded in the decision
+                           #   log; the methods state it.
+    model: holonomic       # kinematic (vx, vy, wz) at sim.dt, box, wheel budget AND the
+                           #   acceleration limiter, as the base applies a command (ruled
+                           #   2026-10-27)
+    horizon_steps: 30      # rollout length in steps of sim.dt (1.5 s). NOT TUNED (ruled
+                           #   2026-10-27): fixed with `samples` by the declared real-time
+                           #   measurement on the training host (scripts/measure_realtime.py):
+                           #   the largest pair of samples {256, 512, 1024} x horizon {15, 20, 30}
+                           #   with p95 compute <= 50 ms in 0.7-0.9 m aisles               VERIFY
+    samples: 1024          # rollouts per control step; NOT TUNED, as horizon_steps        VERIFY
+    temperature: 0.01      # lambda of the path-integral weighting, on per-step costs (the
+                           #   rollout cost / horizon_steps; confirmed 2026-10-27). Candidate 0
+    noise_std: [0.10, 0.10, 0.10]   # m/s, m/s, rad/s: sampling noise on (vx, vy, wz). Candidate 0
+    iterations: 1          # optimisation passes per control step, warm-started from the
+                           #   previous step's sequence shifted by one. NOT TUNED (ruled
+                           #   2026-10-27): fixed at 1
+    compute_measurement: null   # the run directory of the declared real-time measurement that
+                           #   fixed horizon_steps and samples; scripts/tune_classical.py refuses
+                           #   B6 while it is null (ruled 2026-10-27)
+    scan: filter           # the 120-bin filter stream with its bearings and validity; an
+                           #   invalid bin is an obstacle at the footprint's boundary on its
+                           #   bearing (the shared convention, ruled 2026-10-27,
+                           #   pfbnav/safety/unobserved.py), never free space (hard rule 5)
+    weights:               # the cost terms are DECLARED; their weights are tuned. No heading
+                           #   term (confirmed 2026-10-27); smoothness within the rollout
+      route_tracking: 1.0  # squared distance of each rollout state to the planned route
+      goal_progress: 10.0  # minus the arc length gained along the route over the rollout.
+                           #   Candidate 0
+      field_breach: 10.0   # per scan point inside the certified field of each rollout state,
+                           #   sized by the certified composition max(estimate, rollout
+                           #   command) with reach (ruled 2026-10-27)
+      smoothness: 0.01     # squared change of command between consecutive steps of the
+                           #   rollout. Candidate 0
+
+    hard_rejection: footprint   # a rollout whose footprint (robot.footprint_table) contains
+                           #   any scan point at any state costs +inf: rejected, not weighed
+
+planner:
+  resolution: 0.05         # m/cell
+  # Two-tier inflation (D1, supervisor review 2026-09-17). The global planner is
+  # intentionally NOT footprint-complete: lethal cells are those the robot centre can
+  # never occupy whatever its heading, and a soft cost discourages the band out to the
+  # circumscribed radius. Margins are stored, not radii: the inscribed radius is
+  # robot.half_width and the circumscribed radius is the footprint table's largest
+  # extent (D8; no longer hypot(half_length, half_width), whose corners over-stated the
+  # robot by 52 mm), so a copied number here would go stale the next time the envelope
+  # is measured.
+  lethal_margin: 0.10      # m, added to the inscribed radius (0.2086 -> 0.3086). RULED
+                           #   2026-10-16 (0.03 -> 0.07 ruled 2026-10-15, then 0.10 before
+                           #   A18): 0.2386 sat inside the 0.2586 at-rest field (D1); at 0.10
+                           #   a tracker 50 mm inside a bend sits exactly on the band-0 side
+                           #   field (breaches ~94 % -> 0.8-4.2 % of routes). The ceiling the
+                           #   narrow floor allows: centreline band 2 x (0.13 - 0.10) = 0.06 m,
+                           #   one cell plus 0.01 (tests/test_plannability.py). Lands with A18.
+  soft_margin: 0.03        # m, added to the circumscribed radius (0.3374 -> 0.3674 on the
+                           #   S300 footprint; the table's 0.3374 is the probe's 0.3371 plus
+                           #   the 0.95 mm spline margin. It was 0.3519 with the pods, so
+                           #   the soft band shrinks by 14.5 mm)
+                           #   CHOSEN 2026-10-16 by the declared rule at lethal 0.10 (fewest
+                           #   bend-stop routes under the free-orientation oracle, ties to the
+                           #   smaller): every candidate 0.03-0.30 tied at zero (A18).
+  lookahead: 0.8           # m, how far along the plan the tracked waypoint sits. It feeds
+                           #   the observation's three lookahead channels (ruled 2026-09-23).
+  track_window: 1.0        # m of arc length the tracker will search ahead of where it
+                           #   already is. Monotonic projection alone is not enough: on a
+                           #   path that doubles back, the return leg can be the nearest
+                           #   point on the whole remaining path, and the tracker would leap
+                           #   forward and be paid for metres never travelled
+                           #   (tests/test_lookahead.py). At v_max 0.40 m/s and dt 0.05 s the
+                           #   robot covers 0.02 m a step, so 1.0 m is fifty steps of slack
+                           #   and still far below the arc length to a doubled-back leg.
+  soft_weight: 1.0         # how much the soft tier costs the search: a move into a cell of
+                           #   soft cost c costs length * (1 + soft_weight * c), so at 1.0 a
+                           #   cell on the lethal boundary is twice as expensive as free
+                           #   space and the planner accepts a detour of up to twice the
+                           #   distance to leave the band. D1 fixed the tiers but not this
+                           #   weight. VERIFY: a stated choice, to be tuned on
+                           #   scenarios/tune only (hard rule 2) once plans are run.
+
+env:                       # the Gymnasium environment (WP1)
+  # FROZEN 2026-10-03 for L1 (supervisor's ruling 3): the code identity of the environment -- the
+  # import closure of pfbnav.envs.nav_env plus the Lua scanner and the footprint table
+  # (pfbnav/envs/freeze.py). scripts/train.py refuses any other; tests/test_freeze.py fails on
+  # drift. Re-freezing needs the filter-off bit-identity test on the simulator and a decision-
+  # log entry, and a filter-off behaviour change invalidates prior L1 runs.
+  # RE-FROZEN 2026-10-10 (was d61a536e...): the stale-pose fix in NavEnv.reset and its step-0
+  # check (docs/decision_log.md). No L1 run predates it.
+  # RE-FROZEN 2026-10-13 (was 3f4c7a83..., acknowledged by the supervisor): pfbnav/sim/contact.py's
+  # documentation corrected (the floor is in no contact set), a docstring only, no behaviour.
+  # RE-FROZEN 2026-10-16 (was c63a1083...): the generator's validity rules (scenarios.py now
+  # imports oracle.py, A18). Reset rebuilds a recorded world through world_of, unchanged; the
+  # filter-off bit-identity test reruns on the simulator. No L1 run exists.
+  # RE-FROZEN 2026-10-16 again (was 645358f2...): the classical-recovery rulings -- the outcome
+  # labelling fix (reward.py: stuck also when at rest with the own field breached) and the typed
+  # controller input built beside the observation (nav_env.py, envs/controller_input.py,
+  # envs/route_view.py; information only). certified.py and lookahead.py are untouched (both sit
+  # in the scenario identity's closure, A18). The filter-off bit-identity test reruns on the
+  # simulator. No L1 run exists.
+  # RE-FROZEN 2026-10-16, third time (was 564802d8...): the rotation-aware protective field
+  # (certified.py: the stopping sweep includes yaw braking at the current yaw rate, alpha_brake =
+  # actuation.alpha_max; strata.py passes it). Bit-identical at zero yaw rate (stored fields).
+  # The filter-off bit-identity test reruns on the simulator. No L1 run exists.
+  # RE-FROZEN 2026-10-16, fourth time (was ff14176d...): the field is never sized below true
+  # motion -- band from max(estimate, applied command), rotation sweep from the larger yaw rate
+  # (certified.py, step_loop.py) -- and the validity oracle's rotation sweep (route_check.py,
+  # oracle.py, scenarios.py). The filter-off bit-identity test reruns on the simulator.
+  # ... and the rotation sweep made EXACT and continuous in the yaw rate (2026-10-16,
+  # after the simulator control): no padding, so a noise-level yaw rate moves the field
+  # by a noise-level amount.
+  # RE-FROZEN 2026-10-18, fifth time (was 968d88af...): the simulator client raises SimError when
+  # an instance does not reply within sim.reply_timeout_s, instead of waiting forever (client.py;
+  # the B1 evaluation of 2026-10-17 stalled silently in a host memory exhaustion; hard rule 9). No
+  # behaviour change while the instance answers. The filter-off bit-identity test reruns.
+  # RE-FROZEN 2026-10-18, sixth time (was cc233459...): A20 -- the protective field contains the
+  # motion reachable before braking acts (certified.py; strata.py derives the reach parameters),
+  # and the generator's validity check tracks at band 0's speed limit (scenarios.py). A filter-off
+  # BEHAVIOUR change by design (fields, limits and bands all moved); the bit-identity test reruns.
+  # RE-FROZEN 2026-10-19, seventh time (was cb9c839c...): A21 -- nesting for stops begun in motion
+  # (S2: the moving fields carry e(0) more turn, the at-rest reach and the turning drift), at rest
+  # needs the yaw rate below its threshold too, the rigid-body restart condition, the at-rest
+  # trigger counter (certified.py, step_loop.py, strata.py); and (same freeze, before any run of it)
+  # the restart test clearing the whole field the commanded twist selects, and the stationary /
+  # creep split of the at-rest triggers. Behaviour change by design; the filter-off bit-identity
+  # test reruns.
+  # RE-FROZEN 2026-10-21, eighth time (was 42816b7c...): A24 -- the receding release (certified.py),
+  # a blocking defect under the freeze of 2026-10-20 (ruled 2026-10-21); reward.py's docstring.
+  # Without a creep stop the layer is bit-identical to A22's (tests/test_receding_release.py);
+  # the filter-off bit-identity test reruns.
+  # RE-FROZEN 2026-10-23, ninth time (was 9ed9cfca...): the scan-fault fix (ruled 2026-10-23) --
+  # the plausibility guard, same-tick re-renders and the fail-safe (step_loop.py, scan_guard.py,
+  # scanner.py, lua/scanner_v2.lua), scan-fault counters and info keys (nav_env.py). Without a
+  # corrupted render the read path is the plain read; the filter-off bit-identity test reruns.
+  # RE-FROZEN 2026-10-24, tenth time (was 94ac13c7...): WP2 step 4 -- the PFB in the step loop's
+  # filter slot (step_loop.py, nav_env.py's `pfb` info key); pfb.py and pfb_field.py enter the
+  # closure. Off, nothing is built and the slot returns the command object itself. Same freeze,
+  # before any run of it: the intervention term made the PFB's alone (ruled 2026-10-24; reward.py,
+  # nav_env.py) -- a filter-off REWARD change (0 instead of request-vs-applied), with no L1 run in
+  # existence. The filter-off bit-identity test (the step loop's traces) reruns.
+  # Re-pinned 2026-10-25 within re-freeze 10, before its bit-identity run (was be0a5e16...): stale
+  # docstrings corrected in nav_env.py, observation.py, robot.py and pfb.py; no code changed.
+  # RE-FROZEN 2026-10-26, eleventh time (was bd3f8878...): the rulings of 2026-10-26 -- the PFB's
+  # rows over the realised motion fraction, its field's partials path corrected to the certified
+  # field, and its exact speed-ups (pfb.py, pfb_field.py); latched steps excluded from the
+  # intervention term (reward.py, nav_env.py); the nominal-share descriptions (robot.py,
+  # step_loop.py). Filter-off behaviour unchanged (the term was already 0 without the filter); the
+  # filter-off bit-identity test reruns and must show L1 unaffected.
+  # RE-FROZEN 2026-10-27, twelfth time (was b0ec422c...): the rulings of 2026-10-27 -- the shared
+  # invalid-bin convention (pfbnav/safety/unobserved.py, new in the closure; pfb.py enters an
+  # unobserved bin into its rows as an obstacle on the footprint's boundary -- the command is the
+  # same fallback as before, still labelled "unobserved", now counted in PFBResult.unobserved), and
+  # the PFB's per-step compute and unobserved count in the step info (step_loop.py, nav_env.py:
+  # `pfb_seconds`, `pfb["unobserved"]`; information only) for the real-time criterion. Off, the PFB
+  # is not built: filter-off behaviour unchanged. The filter-off bit-identity test reruns. No L1 run
+  # exists.
+  frozen_code_sha256: d7cd5e3a0cc6d30ebba7c82f01c3c35a90f87df947a82833ece2b4da72a25f50
+
+  # The step-0 check (2026-10-10): at every reset the robot's measured pose, mapped into the
+  # layout, must equal the scenario's start within these, or the reset raises. Settling moves the
+  # robot ~0.1 mm; the stale-pose bug these exist to catch put it up to 7.2 m away. Not physical
+  # constants of the robot: a detector's thresholds, set two orders above the noise.
+  start_pose_tolerance_m: 0.01     # m
+  start_pose_tolerance_rad: 0.01   # rad
+  # Per-step wall-clock budget. What binds is the AGGREGATE over the instances on the
+  # training host (>= 25 steps/s, derived in docs/requirements.md from ~20M total steps
+  # against the 6-week window); the per-instance, per-step figure follows from it and the
+  # instance count and is computed in pfbnav/eval/step_budget.py, never written down:
+  #   per-step p95 budget = instances / aggregate_steps_per_s  (0.160 s at 4 instances)
+  # The 40 ms that stood here until 2026-09-23 came from the >= 100 steps/s target that was
+  # withdrawn as an arithmetic error (2026-09-20).
+  observation:             # the 82-D layout ruled 2026-09-23 (docs/decision_log.md).
+                           #   Channels and order live in pfbnav/envs/observation.py; only
+                           #   the scales that are not already physical parameters are here.
+    goal_scale: 18.0       # m, what the goal-distance channel divides by, clipped at 1.
+                           #   The hall's diagonal is hypot(14, 10) = 17.2 m, so a goal
+                           #   anywhere in it stays below 1 and distant goals stay
+                           #   distinguishable. VERIFY: a scaling choice, not a measurement.
+    proximity_threshold: 0.5   # m, where the (currently unused) proximity term reaches 0.
+                           #   reward.k_proximity is 0 except in the shaped variants.
+    # Sensor dropout, the declared augmentation, TRAINING only and never applied to the
+    # filter's 120-bin stream: the certified layer and the PFB must see the sensor the robot
+    # really has, or the safety layers measure better than they are. Mechanism ruled by the
+    # supervisor on 2026-09-26, replacing the flat per-bin rate of 2026-09-23.
+    # Preregistered before any policy trains; a training config may not vary it per method.
+    dropout:
+      arc_probability: 0.10  # P(an episode begins with a blocked arc), held all episode.
+                           #   The failure that matters -- a smeared lens, tape, a mount that
+                           #   sees the payload -- and one a policy cannot average away over a
+                           #   few steps the way it can with per-step noise.
+      arc_bins: [1, 6]     # contiguous policy bins blinded, inclusive; 10 deg each, so 10-60
+                           #   deg of the ring. The arc wraps: bin 0 is not a boundary.
+      per_step_rate: 0.01  # per bin, per step, so the validity channels move in EVERY
+                           #   episode and not only in the sampled ones.
+                           # A dropped bin reads range 0.0, never range_max: range_max is
+                           #   unobserved space presented as free, which hard rule 5 forbids.
+  step_budget:
+    aggregate_steps_per_s: 25    # steps/s summed over instances, on the TRAINING host.
+                                 #   VERIFY: still to be committed to preregistration as
+                                 #   G2_compute_budget.min_steps_per_second before G2 runs.
+    instances: 4                 # planned parallelism; G2 measures 1..4 (gates.yaml)
+    over_budget_is_fatal: false  # a step over budget is counted and logged, never fatal:
+                                 #   the budget is a compute requirement, not a safety one,
+                                 #   and a laptop figure is not the training host's
+
+training:
+  algo: sac
+  total_timesteps: 300000  # fixed after gate G2
+  learning_rate: 3.0e-4
+  buffer_size: 200000
+  learning_starts: 2000
+  batch_size: 256
+  tau: 0.005
+  gamma: 0.99
+  train_freq: 1            # environment steps between updates; with gradient_steps 1 this is
+  gradient_steps: 1        #   one update per step, the 7.5M updates docs/requirements.md budgets
+  ent_coef: auto           # SAC's learned temperature (SB3 default)                    VERIFY
+  net_arch: [256, 256]     # hidden layers of actor and critics (SB3 default)           VERIFY
+  device: auto             # SB3 picks CUDA if present; determinism is claimed on CPU only,
+                           #   and provenance records the host                          VERIFY
+  checkpoint_every: 25000  # steps between checkpoints; never overwritten (hard rule 10)
+  scenarios:               # the training set, ruled 2026-10-03: equal thirds by stratum, ~2,000,
+    - scenarios/train/train_narrow.json   # train seed range, rate 0.25. Built by
+    - scenarios/train/train_medium.json   #   scripts/build_scenario_sets.py once its size is
+    - scenarios/train/train_wide.json     #   preregistered; train.py refuses until they exist

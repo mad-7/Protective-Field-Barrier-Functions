@@ -1,0 +1,292 @@
+{
+  "frozen_utc": "2026-10-27T17:59:57.534009+00:00",
+  "commit": "fd94cce582e81cc15a8453005fb8f12f06d82500",
+  "hash": "sha256 of the text with line endings normalised to LF",
+  "sha256": {
+    "preregistration/AMENDMENTS.md": "6f93cf713318683a4913f79999b5a2d29703e0bdfdf4a0ccf68151bfad8b63a8",
+    "preregistration/endpoints.yaml": "3186cdc1478bcc1cc6e9af6e01e828a14dc61c68cbda4aa9070bea3808a33c59",
+    "preregistration/gates.yaml": "f7c120b7806fbe300d723a3654f4645f96a1220556a607f8e0790888534f795e",
+    "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+  },
+  "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+  "scenarios_sha256": "d7dd5febbe750a80cab283ddf696070790a177b2e97dd1414c4e127f53f4323c",
+  "relocked_for": "A28b",
+  "supersedes": {
+    "frozen_utc": "2026-10-27T16:47:24.253225+00:00",
+    "commit": "3f97f0bf0730f6065dcbf03b5aa7c48c1a772192",
+    "hash": "sha256 of the text with line endings normalised to LF",
+    "sha256": {
+      "preregistration/AMENDMENTS.md": "d587905d74e83e423ed73291ec02b1c899ea4440888cf3eed9d9c52350f1cb3e",
+      "preregistration/endpoints.yaml": "82f79f76c62ae8c2e05490837373b2dac4cd4ece4fd7b4ddbdf2e7bc530b50fc",
+      "preregistration/gates.yaml": "f7c120b7806fbe300d723a3654f4645f96a1220556a607f8e0790888534f795e",
+      "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+    },
+    "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+    "scenarios_sha256": "d7dd5febbe750a80cab283ddf696070790a177b2e97dd1414c4e127f53f4323c",
+    "relocked_for": "A28a",
+    "supersedes": {
+      "frozen_utc": "2026-10-27T12:24:14.162445+00:00",
+      "commit": "4fa4798632be5b177f3d733560deb6b5cc9b70cd",
+      "hash": "sha256 of the text with line endings normalised to LF",
+      "sha256": {
+        "preregistration/AMENDMENTS.md": "1938050d09ae513dfd7be256f8eeb75b6d9b55774d061e79193d8fb4168fbb20",
+        "preregistration/endpoints.yaml": "4a7f91a38128f14aadb7aaf10aa08753dac5d128714223543a8a612c97d4a323",
+        "preregistration/gates.yaml": "e0becc49f11888e021b4c5206f1c6be09e121be5093819a6586d6a4b9df6a8b5",
+        "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+      },
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "d7dd5febbe750a80cab283ddf696070790a177b2e97dd1414c4e127f53f4323c",
+      "relocked_for": "A28",
+      "supersedes": {
+        "frozen_utc": "2026-10-27T12:23:32.852236+00:00",
+        "commit": "bb45f302ec4bd78e31ab455b7c47866325536294",
+        "hash": "sha256 of the text with line endings normalised to LF",
+        "sha256": {
+          "preregistration/AMENDMENTS.md": "ece90e3f95651a369950780c751ad68499cdcb7eaa131b476529a98dd33271ec",
+          "preregistration/endpoints.yaml": "54d3fb3788c90f2d637295afc0299ec30412c77b2ededd6eef56b1b77e9847e9",
+          "preregistration/gates.yaml": "9940e42963bf1745dd33fcd633862157689455f32e7c8aca7630214da441aed3",
+          "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+        },
+        "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+        "scenarios_sha256": "d7dd5febbe750a80cab283ddf696070790a177b2e97dd1414c4e127f53f4323c",
+        "relocked_for": "A27",
+        "supersedes": {
+          "frozen_utc": "2026-10-26T17:11:33.472891+00:00",
+          "commit": "3a89311ab9a0c6f870f73473707a532bc9e3f4d9",
+          "hash": "sha256 of the text with line endings normalised to LF",
+          "sha256": {
+            "preregistration/AMENDMENTS.md": "a470531203906dd727df901a61a84408eaee91b08b52570f7177e8dc89eb9375",
+            "preregistration/endpoints.yaml": "7fd230dad1aff697eb9c9c8a2b74cc5761c595c0c99cbb3c77ba83d72e33546b",
+            "preregistration/gates.yaml": "9940e42963bf1745dd33fcd633862157689455f32e7c8aca7630214da441aed3",
+            "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+          },
+          "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+          "scenarios_sha256": "d7dd5febbe750a80cab283ddf696070790a177b2e97dd1414c4e127f53f4323c",
+          "relocked_for": "A14a",
+          "supersedes": {
+            "frozen_utc": "2026-10-24T18:57:31.648047+00:00",
+            "commit": "6965c967cc50dbdd0ede560fbd089ab52a37e6d8",
+            "hash": "sha256 of the text with line endings normalised to LF",
+            "sha256": {
+              "preregistration/AMENDMENTS.md": "c634949500827230a55d638919b977413d5a2ea8e91cfdaff8096d6749709d9e",
+              "preregistration/endpoints.yaml": "30903d39a71aaa0ce4ad44f70e4b3e74693f7cae89454d57570385fb25cdb30d",
+              "preregistration/gates.yaml": "9940e42963bf1745dd33fcd633862157689455f32e7c8aca7630214da441aed3",
+              "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+            },
+            "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+            "scenarios_sha256": "d7dd5febbe750a80cab283ddf696070790a177b2e97dd1414c4e127f53f4323c",
+            "relocked_for": "A26",
+            "supersedes": {
+              "frozen_utc": "2026-10-23T19:05:43.482922+00:00",
+              "commit": "a36eb416ed23017fa575927bfe7f40351617101a",
+              "hash": "sha256 of the text with line endings normalised to LF",
+              "sha256": {
+                "preregistration/AMENDMENTS.md": "4c1171f01ff92347f7ae24ffd05d6f9cc17d155547c5ba6122b4b4f9db483173",
+                "preregistration/endpoints.yaml": "6773135dc0b5a7a9a18095d2fc860360312200909cf40f10a308a2acb8cde435",
+                "preregistration/gates.yaml": "9940e42963bf1745dd33fcd633862157689455f32e7c8aca7630214da441aed3",
+                "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+              },
+              "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+              "scenarios_sha256": "d7dd5febbe750a80cab283ddf696070790a177b2e97dd1414c4e127f53f4323c",
+              "relocked_for": "A25",
+              "supersedes": {
+                "frozen_utc": "2026-10-21T20:29:02.391182+00:00",
+                "commit": "a42d57b30a9330c4b56334bca071989fe1269559",
+                "hash": "sha256 of the text with line endings normalised to LF",
+                "sha256": {
+                  "preregistration/AMENDMENTS.md": "ebec31562eb9c4dafc344b8123cf0805d1f39ce20ed2a85290b38aeb4e9f291b",
+                  "preregistration/endpoints.yaml": "e75b4f913ec6a46417f169d4199a145241f5adc0583ac8cfc9cb49e671114277",
+                  "preregistration/gates.yaml": "68528ecb7c7b208fad48e4dc1a2059b2d4641a44947032c65ab1fa4714ac7b7b",
+                  "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+                },
+                "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                "scenarios_sha256": "d7dd5febbe750a80cab283ddf696070790a177b2e97dd1414c4e127f53f4323c",
+                "relocked_for": "A24",
+                "supersedes": {
+                  "frozen_utc": "2026-10-20T18:04:53.674618+00:00",
+                  "commit": "a3e7fcc7c2c5ea191781e17d149ebc8313718422",
+                  "hash": "sha256 of the text with line endings normalised to LF",
+                  "sha256": {
+                    "preregistration/AMENDMENTS.md": "63ede661a7162bf99564577a4d6849f5f4ea6367f49db49aafe3a3f0a26f8b78",
+                    "preregistration/endpoints.yaml": "e75b4f913ec6a46417f169d4199a145241f5adc0583ac8cfc9cb49e671114277",
+                    "preregistration/gates.yaml": "68528ecb7c7b208fad48e4dc1a2059b2d4641a44947032c65ab1fa4714ac7b7b",
+                    "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+                  },
+                  "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                  "scenarios_sha256": "d9f045f97f35e824ab310756b47c54cca69c1ab6400bd7793899f54b751964c5",
+                  "relocked_for": "A23",
+                  "supersedes": {
+                    "frozen_utc": "2026-10-19T23:05:34.550554+00:00",
+                    "commit": "ec4f86429f65d5eba3cce00796f721b0d0d269e2",
+                    "hash": "sha256 of the text with line endings normalised to LF",
+                    "sha256": {
+                      "preregistration/AMENDMENTS.md": "4bdbe582359990178c52b82e903064218d3a32cbb6ec52fd9395192c2ec3318e",
+                      "preregistration/endpoints.yaml": "e75b4f913ec6a46417f169d4199a145241f5adc0583ac8cfc9cb49e671114277",
+                      "preregistration/gates.yaml": "ded2542879abeeda8ad4d99d32333b0c2a7f14ac5ddb1684cced189a96fd77ee",
+                      "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+                    },
+                    "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                    "scenarios_sha256": "d9f045f97f35e824ab310756b47c54cca69c1ab6400bd7793899f54b751964c5",
+                    "relocked_for": "A22",
+                    "supersedes": {
+                      "frozen_utc": "2026-10-19T22:17:59.744142+00:00",
+                      "commit": "234f5a7855a00ad48ff0821f10e68146d8359c7e",
+                      "hash": "sha256 of the text with line endings normalised to LF",
+                      "sha256": {
+                        "preregistration/AMENDMENTS.md": "765466d954ccab1ac2a4576c8ec6f8bd817a2f72622b29e2c04ac5e3a18d9172",
+                        "preregistration/endpoints.yaml": "e75b4f913ec6a46417f169d4199a145241f5adc0583ac8cfc9cb49e671114277",
+                        "preregistration/gates.yaml": "ded2542879abeeda8ad4d99d32333b0c2a7f14ac5ddb1684cced189a96fd77ee",
+                        "preregistration/scenario_sets.yaml": "d2a766ec144b4093b36e9ca17f24a17e4f3afe66b58ff41a630561f80ac0b262"
+                      },
+                      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                      "scenarios_sha256": "0b377d1dd16b5f4c692248c3437dc4ab850ce8b7e208420f9c130366b951829d",
+                      "relocked_for": "A21",
+                      "supersedes": {
+                        "frozen_utc": "2026-10-18T20:24:43.491887+00:00",
+                        "commit": "fa856afead6b11542d506f8edd55b70dbe8acfdf",
+                        "hash": "sha256 of the text with line endings normalised to LF",
+                        "sha256": {
+                          "preregistration/AMENDMENTS.md": "09193db7b0450fd398acd2e1cc31ab47941020365479596887245b4e9beb26ef",
+                          "preregistration/endpoints.yaml": "c72e67ec4d4d8aee204f4d1db0e0180a4d57e8e8636d2331a9f8160a9ee85613",
+                          "preregistration/gates.yaml": "ded2542879abeeda8ad4d99d32333b0c2a7f14ac5ddb1684cced189a96fd77ee",
+                          "preregistration/scenario_sets.yaml": "0e5837470eb6a14ae3da27aec096609afc93a616ec747117e4179ee8a878c556"
+                        },
+                        "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                        "scenarios_sha256": "72b72e8323b8901ffebf617b90cdae479d26ce88843ff033e0ca463e2d07d563",
+                        "relocked_for": "A20",
+                        "supersedes": {
+                          "frozen_utc": "2026-10-17T13:13:33.689371+00:00",
+                          "commit": "050c264754de86fd4c4369f466b8d4dcf81fce45",
+                          "hash": "sha256 of the text with line endings normalised to LF",
+                          "sha256": {
+                            "preregistration/AMENDMENTS.md": "e36b40ce3323eef85ed8384d356f2c1c4e23b87ecea2412d915a98dd8fff38cc",
+                            "preregistration/endpoints.yaml": "50b5dbdc8da63fa2775ce8fdeb5847ddeb0460e9cb8a61bf7cdfacaa850c0a47",
+                            "preregistration/gates.yaml": "ded2542879abeeda8ad4d99d32333b0c2a7f14ac5ddb1684cced189a96fd77ee",
+                            "preregistration/scenario_sets.yaml": "3371c372d73f08dfde3cd2fce8309c1ea70d30154f0f6959c50e3263909da24b"
+                          },
+                          "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                          "scenarios_sha256": "9d5eca08ec00907ed49ff786303e2e16e147cdcdf8694ee55863e092c0d92483",
+                          "relocked_for": "A19",
+                          "supersedes": {
+                            "frozen_utc": "2026-10-16T09:14:22.115240+00:00",
+                            "commit": "db2ba363d1062fbf784536a3bf9ec9bda5ad2b3b",
+                            "hash": "sha256 of the text with line endings normalised to LF",
+                            "sha256": {
+                              "preregistration/AMENDMENTS.md": "0084026b73ea72511dabf3731e1ec4e16154c25fc64b306eec4d147bb8687db6",
+                              "preregistration/endpoints.yaml": "50b5dbdc8da63fa2775ce8fdeb5847ddeb0460e9cb8a61bf7cdfacaa850c0a47",
+                              "preregistration/gates.yaml": "ded2542879abeeda8ad4d99d32333b0c2a7f14ac5ddb1684cced189a96fd77ee",
+                              "preregistration/scenario_sets.yaml": "3371c372d73f08dfde3cd2fce8309c1ea70d30154f0f6959c50e3263909da24b"
+                            },
+                            "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                            "scenarios_sha256": "b2c043b22aa8183ec4c147b606f60b11130466fdb4436875db2be1f09c662bc8",
+                            "relocked_for": "A18",
+                            "supersedes": {
+                              "frozen_utc": "2026-10-15T19:26:03.623402+00:00",
+                              "commit": "28d8756279f5f45ab2432346fed4e5457fa42d26",
+                              "hash": "sha256 of the text with line endings normalised to LF",
+                              "sha256": {
+                                "preregistration/AMENDMENTS.md": "8038ef84554dae30c906df94eafd0bbab25a36207d4cb452d2fdf20b02a3f9ed",
+                                "preregistration/endpoints.yaml": "50b5dbdc8da63fa2775ce8fdeb5847ddeb0460e9cb8a61bf7cdfacaa850c0a47",
+                                "preregistration/gates.yaml": "ded2542879abeeda8ad4d99d32333b0c2a7f14ac5ddb1684cced189a96fd77ee",
+                                "preregistration/scenario_sets.yaml": "3371c372d73f08dfde3cd2fce8309c1ea70d30154f0f6959c50e3263909da24b"
+                              },
+                              "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                              "scenarios_sha256": "2e8c24b06b10aaf7b9bbab05d833a22781293e58f747cacb46a1e2f211b883d1",
+                              "relocked_for": "A17",
+                              "supersedes": {
+                                "frozen_utc": "2026-10-15T16:40:22.533502+00:00",
+                                "commit": "4861be649cf770c3c80a3d063630e95d805fd5e8",
+                                "hash": "sha256 of the text with line endings normalised to LF",
+                                "sha256": {
+                                  "preregistration/AMENDMENTS.md": "67df2a21919f67d2ae5b0f5b19944fafc2bead0d21bc86b7baaa7abc4cb1328b",
+                                  "preregistration/endpoints.yaml": "fea9f0ed25d53bee0f139ce4d891be292c48f6e2aa4fa3dcc1674dd7a7df55a1",
+                                  "preregistration/gates.yaml": "ded2542879abeeda8ad4d99d32333b0c2a7f14ac5ddb1684cced189a96fd77ee",
+                                  "preregistration/scenario_sets.yaml": "3371c372d73f08dfde3cd2fce8309c1ea70d30154f0f6959c50e3263909da24b"
+                                },
+                                "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                                "scenarios_sha256": "2e8c24b06b10aaf7b9bbab05d833a22781293e58f747cacb46a1e2f211b883d1",
+                                "relocked_for": "A16",
+                                "supersedes": {
+                                  "frozen_utc": "2026-10-05T19:52:35.569613+00:00",
+                                  "commit": "ec97bd91f770ce7f86f66342c6d4e796ffcb18dd",
+                                  "hash": "sha256 of the text with line endings normalised to LF",
+                                  "sha256": {
+                                    "preregistration/AMENDMENTS.md": "1072dc4e44423211e9527af2f539fe84213c7138d945fa2b46ba9b31bb74a488",
+                                    "preregistration/endpoints.yaml": "817bfb9f7201e19a05a0e6af5c12f9ae584dc2915092494a5d4bda015d263dcc",
+                                    "preregistration/gates.yaml": "ded2542879abeeda8ad4d99d32333b0c2a7f14ac5ddb1684cced189a96fd77ee",
+                                    "preregistration/scenario_sets.yaml": "3371c372d73f08dfde3cd2fce8309c1ea70d30154f0f6959c50e3263909da24b"
+                                  },
+                                  "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                                  "scenarios_sha256": "2e8c24b06b10aaf7b9bbab05d833a22781293e58f747cacb46a1e2f211b883d1",
+                                  "relocked_for": "A15",
+                                  "supersedes": {
+                                    "frozen_utc": "2026-10-03T19:53:30.879378+00:00",
+                                    "commit": "4c3ffae7471f601e5fcfd5d755a5d930c4710e14",
+                                    "hash": "sha256 of the text with line endings normalised to LF",
+                                    "sha256": {
+                                      "preregistration/AMENDMENTS.md": "0e479855ce09e50b9b33549763a6627ad8d4207508eab36a366999b5318c02a6",
+                                      "preregistration/endpoints.yaml": "817bfb9f7201e19a05a0e6af5c12f9ae584dc2915092494a5d4bda015d263dcc",
+                                      "preregistration/gates.yaml": "524a00faea6f13b4eed64594cb8a9fb374482da3886948cd10af2b1818fb9538",
+                                      "preregistration/scenario_sets.yaml": "3371c372d73f08dfde3cd2fce8309c1ea70d30154f0f6959c50e3263909da24b"
+                                    },
+                                    "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                                    "scenarios_sha256": "2e8c24b06b10aaf7b9bbab05d833a22781293e58f747cacb46a1e2f211b883d1",
+                                    "relocked_for": "A13",
+                                    "supersedes": {
+                                      "frozen_utc": "2026-10-02T15:41:58.833957+00:00",
+                                      "commit": "aaca564c3960af2d2a87dd58da27b68bdd83b346",
+                                      "hash": "sha256 of the text with line endings normalised to LF",
+                                      "sha256": {
+                                        "preregistration/AMENDMENTS.md": "a707ae9b716e536cecf5a6eaf5ebf281d0645dc27ced220cd8c7706ab72c9c78",
+                                        "preregistration/endpoints.yaml": "817bfb9f7201e19a05a0e6af5c12f9ae584dc2915092494a5d4bda015d263dcc",
+                                        "preregistration/gates.yaml": "524a00faea6f13b4eed64594cb8a9fb374482da3886948cd10af2b1818fb9538",
+                                        "preregistration/scenario_sets.yaml": "4c49d79a7ca5805cfa17f26ad5cb0a999683d93e6481bbb521348320a28d1e99"
+                                      },
+                                      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                                      "scenarios_sha256": "2e8c24b06b10aaf7b9bbab05d833a22781293e58f747cacb46a1e2f211b883d1",
+                                      "relocked_for": "A13",
+                                      "supersedes": {
+                                        "frozen_utc": "2026-10-01T17:11:31.255222+00:00",
+                                        "commit": "cb41aa959b8de322c58b2f2abca125f84f5a7fe0",
+                                        "hash": "sha256 of the text with line endings normalised to LF",
+                                        "sha256": {
+                                          "preregistration/AMENDMENTS.md": "3feb7fcac15ca835d0ed003867d679281540990970b07482fafaf4e1eda3f8cc",
+                                          "preregistration/endpoints.yaml": "817bfb9f7201e19a05a0e6af5c12f9ae584dc2915092494a5d4bda015d263dcc",
+                                          "preregistration/gates.yaml": "524a00faea6f13b4eed64594cb8a9fb374482da3886948cd10af2b1818fb9538",
+                                          "preregistration/scenario_sets.yaml": "0773c52cd2d83790f5535538597d4ecfcf8e69245bfbc0abab6f42e004d76dab"
+                                        },
+                                        "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                                        "scenarios_sha256": "7b72fc4b2eafccc3a7aac4f6f23f829296552761f1bf7ba7066b8e876a30d281",
+                                        "relocked_for": "A13",
+                                        "supersedes": {
+                                          "frozen_utc": "2026-09-28T22:34:23.376310+00:00",
+                                          "commit": "853ce00bdce5c456264a68a7c6ee0efefbca7556",
+                                          "hash": "sha256 of the text with line endings normalised to LF",
+                                          "sha256": {
+                                            "preregistration/AMENDMENTS.md": "8c5c3f719624d89077d15e50ce2b1c53d38f5e3fe6e01a38cbfa1f29e5a23ef5",
+                                            "preregistration/endpoints.yaml": "817bfb9f7201e19a05a0e6af5c12f9ae584dc2915092494a5d4bda015d263dcc",
+                                            "preregistration/gates.yaml": "524a00faea6f13b4eed64594cb8a9fb374482da3886948cd10af2b1818fb9538"
+                                          },
+                                          "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+                                          "scenarios_sha256": "654ac61c9ac14c2f699e30d475fea8967ec4f42bb50cc13bb67a7918cc2783b1"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

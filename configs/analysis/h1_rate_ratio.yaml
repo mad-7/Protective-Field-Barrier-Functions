@@ -1,0 +1,53 @@
+# H1 power, rerun under the rate-ratio estimand. Ruled by the supervisor on 2026-10-02 (rulings on
+# the H1 power report). Nothing measured is restated: route lengths from the pilot set; alpha, the
+# comparators and the Holm family from preregistration/endpoints.yaml.
+defaults: ../base.yaml
+
+h1_rate_ratio:
+  sizes_per_cell: [50, 75, 100]       # pairs = size x the number of strata (H1 pools them)
+  comparator_rates_per_100m: [2, 5, 10]
+  l5_ratio: 0.7                       # the 30 % margin
+  difficulty_cv: [0.5, 1.0, 1.5]      # shared scenario difficulty, all arms
+  seed_cv: [0.15, 0.3, 0.5]           # per-seed multiplier, constant across scenarios (ruled)
+  classical: [B1, B2, B3, B6]          # A16: B4 retired (= B1), B6 MPPI
+  learned: [L1, L2, L3]               # and L5
+  secondary_other_ratio_to_l5: 2.0
+  route_lengths_from: scenarios/pilot/pilot_narrow.json
+  holm_level: alpha_over_family_with_conditional   # alpha / 3 for every power calculation (ruled)
+  candidates:                         # ruled
+    T1: {mode: policy_scoped, seeds: 5}   # seeds fixed, scenarios resampled; secondary
+    T2: {mode: two_level, seeds: 5}       # method-level
+    T3: {mode: two_level, seeds: 10}      # method-level, five more seeds per learned arm
+  reps: 4000                          # grid replicates; Monte Carlo SE at power 0.80: 0.006
+  calibration:                        # FIRST: equal rates, every candidate, both directions
+    reps: 10000
+    # Declared before running (choice of Claude's, flagged for the supervisor): a candidate is
+    # EXCLUDED if, in any calibration cell, its rejection rate on either side -- averaged over the
+    # comparators of one kind (classical or learned) -- exceeds the nominal level/2 by more than
+    # 3 Monte Carlo standard errors of a rate at nominal over `reps`. With 81 cells x 2 sides x 2
+    # kinds = 324 checks, a bare "> nominal" would exclude a perfectly calibrated test by noise.
+    tolerance_mc_se: 3.0
+    # Also calibrated at seed CV 0 (choice of Claude's, flagged): T1 holds seeds fixed, so its null
+    # is "these trained policies are equal", which holds only when seeds do not differ. At seed
+    # CV > 0 and equal METHOD rates, T1 rejecting is correct for its estimand, not a size error.
+    # These cells are reported beside the ruled ones and count toward exclusion for T2 and T3 too.
+    extra_seed_cv: [0.0]
+  bootstrap_check:                    # the normal approximation against the full bootstrap
+    reps: 200
+    draws: 2000
+    cells:                            # [scenario, rate, difficulty_cv, seed_cv, size_per_cell]
+      - [all_at_margin, 5, 1.0, 0.3, 50]
+      - [all_at_margin, 5, 1.0, 0.3, 100]
+      - [equal_rates, 5, 1.0, 0.3, 100]
+      - [equal_rates, 2, 1.0, 0.3, 50]
+      - [all_at_margin, 10, 1.5, 0.5, 100]
+  decision:                           # declared before running (supervisor, 2026-10-02)
+    comparator_rate_per_100m: 5
+    difficulty_cv: 1.0
+    seed_cv: 0.3
+    scenario: all_at_margin
+    min_power: 0.80
+    order: [T2, T3]                   # T2 if it reaches 0.80 at some size <= 100; else T3
+                                      #   (five more seeds per learned arm, subject to G2); else
+                                      #   stop and report. Excluded candidates are skipped.
+    always_reported: T1

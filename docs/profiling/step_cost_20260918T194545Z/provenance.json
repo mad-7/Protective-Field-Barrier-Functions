@@ -1,0 +1,22 @@
+{
+  "seed": 0,
+  "created_utc": "2026-09-18T19:45:45.200786+00:00",
+  "instances": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "steps": 400,
+  "passes": 3,
+  "machine": {
+    "logical_cores": 8,
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "physical_cores": 4
+  },
+  "commit": "486495cfcee6dda06e442cc9ce27881aed6c2fc9",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd"
+}

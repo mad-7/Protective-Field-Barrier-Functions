@@ -1,0 +1,56 @@
+# preregistration/endpoints.yaml
+source: "Research plan §1 and §4 (2026-09-17), as amended by A3 and supervisor rulings 2026-09-20 to 2026-09-28"
+alpha: 0.05
+test: wilcoxon_signed_rank, two-sided, paired by scenario
+unit: scenario; learned methods seed-averaged per scenario (5 seeds each)
+pairing: all controllers for a scenario run in one process
+reporting: bootstrap 95% CIs; IQM alongside means; paired detectability floor with every effect; physics engine stated
+
+confirmatory_family:
+  correction: holm
+  members: [H1, H2]
+  conditional_members: [H1N]      # added only if narrow_rule triggers
+
+H1:
+  statement: L5 triggers fewer protective stops than every comparator
+  comparators: [B1, B2, B3, B4, L1, L2, L3]
+  logic: intersection_union       # all comparisons must reject at alpha; no within-H1 correction
+  endpoint: protective_stops_per_100m
+  population: test, condition unmapped_static, all clearance strata pooled
+  reporting: raw, and above the per-stratum unavoidable-stop floor
+  success: every comparison significant in the predicted direction AND each effect exceeds its paired detectability floor
+
+H2:
+  statement: removing proximity shaping under PFB improves narrow-stratum success
+  comparison: L5 vs L4
+  endpoint: success_rate
+  population: test, clearance stratum narrow (0.13-0.20 m per side), conditions mapped_only and unmapped_static pooled
+  secondary_reporting: per condition
+  success: difference >= +15 percentage points AND significant after Holm
+
+H1N:                               # conditional co-primary
+  statement: L5 achieves higher narrow-stratum completion than every comparator
+  comparators: [B1, B2, B3, B4, L1, L2, L3]
+  logic: intersection_union
+  endpoint: completion_rate
+  population: test, clearance stratum narrow
+  secondary: distance_to_first_stop
+
+narrow_rule:
+  pilot: 150 narrow episodes per method, pilot seed range, 30 per seed
+  methods: [B1, B2, B3, B4, L1, L2, L3, L4, L5]
+  statistic: exact one-sided 95% upper bound (Clopper-Pearson) on unrecoverable_stop proportion
+  trigger: upper bound >= 0.02 for ANY listed method
+  note: at n = 150 the rule passes only with zero events
+  timing: after methods exist, before any test episode is evaluated
+
+exploratory:                       # reported, labelled, outside the Holm family
+  H3: mission time decreases with field granularity (1, 3, 5 field sets, continuous PFB)
+  H4: holonomic (L5) versus unicycle (A1) — deadlocks and protective stops
+  H5: L5 versus B5 — mission time without increased protective stops
+  H6: robust versus nominal PFB — ground-truth contacts under measured mismatch (A3)
+  secondary:
+    - Newton external-validity evaluation of final policies (A8)
+    - stop_active ablation, one L5 seed
+    - velocity-estimate noise and latency sensitivity (WP2)
+    - warning-field entries as a near-miss metric

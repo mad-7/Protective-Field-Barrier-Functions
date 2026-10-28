@@ -1,0 +1,192 @@
+{
+  "scene": "scenes/pending/warehouse_v2_s300.ttt",
+  "scene_sha256": "0ae35a50290d097857bb3cd828858f70a736ae0fa2102f0fac1e69b452164790",
+  "pinned_scene_sha256": "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd",
+  "inherited_pods_present": [],
+  "sensors": [
+    {
+      "handle": 93,
+      "alias": "sensor1",
+      "model": 90,
+      "x_m": 0.22638871121998072,
+      "y_m": -0.1468270426865375,
+      "heading_deg": -112.55763344856022,
+      "fov_deg": 135.0,
+      "rays_as_found": 256,
+      "rays_at_configured_density": 576,
+      "world_z_m": 0.22069512337572325
+    },
+    {
+      "handle": 96,
+      "alias": "sensor2",
+      "model": 90,
+      "x_m": 0.22638871121998072,
+      "y_m": -0.1468270426865375,
+      "heading_deg": 22.44236689306302,
+      "fov_deg": 135.0,
+      "rays_as_found": 256,
+      "rays_at_configured_density": 576,
+      "world_z_m": 0.22069512337572325
+    },
+    {
+      "handle": 102,
+      "alias": "sensor1",
+      "model": 99,
+      "x_m": -0.22630673834433965,
+      "y_m": 0.14461637024764587,
+      "heading_deg": 67.44236655145178,
+      "fov_deg": 135.0,
+      "rays_as_found": 256,
+      "rays_at_configured_density": 576,
+      "world_z_m": 0.2206951233732015
+    },
+    {
+      "handle": 105,
+      "alias": "sensor2",
+      "model": 99,
+      "x_m": -0.22630673834433965,
+      "y_m": 0.14461637024764587,
+      "heading_deg": -157.55763310692498,
+      "fov_deg": 135.0,
+      "rays_as_found": 256,
+      "rays_at_configured_density": 576,
+      "world_z_m": 0.2206951233732015
+    }
+  ],
+  "scanner_models": [
+    {
+      "parent": {
+        "handle": 33,
+        "alias": "youBot",
+        "type": 0
+      },
+      "dynamics": [
+        {
+          "handle": 90,
+          "alias": "SickS300",
+          "property_dynamic": false,
+          "property_respondable": false,
+          "property_mass_kg": 17.0,
+          "param_static": 1,
+          "param_respondable": 0,
+          "special": {
+            "collidable": true,
+            "measurable": true,
+            "detectable": true,
+            "renderable": true
+          },
+          "dynamic_reads_agree": true
+        }
+      ],
+      "handle": 90,
+      "alias": "SickS300",
+      "shapes": 1,
+      "mass_kg": 17.0,
+      "body_bbox_min_m": [
+        0.15198029328391668,
+        -0.21824974892558274,
+        0.10410022967526229
+      ],
+      "body_bbox_max_m": [
+        0.29781193484797464,
+        -0.07241339110625535,
+        0.25669045933562146
+      ],
+      "abs_extent_xy_m": [
+        0.29781193484797464,
+        0.21824974892558274
+      ],
+      "protrusion": {
+        "beyond_x_m": 0.012411934847974648,
+        "beyond_y_m": 0.03934974892558274
+      },
+      "scripts": [
+        {
+          "handle": 91,
+          "disabled": false
+        },
+        {
+          "handle": 94,
+          "disabled": false
+        },
+        {
+          "handle": 97,
+          "disabled": false
+        }
+      ]
+    },
+    {
+      "parent": {
+        "handle": 33,
+        "alias": "youBot",
+        "type": 0
+      },
+      "dynamics": [
+        {
+          "handle": 99,
+          "alias": "SickS300",
+          "property_dynamic": false,
+          "property_respondable": false,
+          "property_mass_kg": 17.0,
+          "param_static": 1,
+          "param_respondable": 0,
+          "special": {
+            "collidable": true,
+            "measurable": true,
+            "detectable": true,
+            "renderable": true
+          },
+          "dynamic_reads_agree": true
+        }
+      ],
+      "handle": 99,
+      "alias": "SickS300",
+      "shapes": 1,
+      "mass_kg": 17.0,
+      "body_bbox_min_m": [
+        -0.29772995227475046,
+        0.07020270889139907,
+        0.10410014168907333
+      ],
+      "body_bbox_max_m": [
+        -0.151898310710692,
+        0.216039066710726,
+        0.2566903713494325
+      ],
+      "abs_extent_xy_m": [
+        0.29772995227475046,
+        0.216039066710726
+      ],
+      "protrusion": {
+        "beyond_x_m": 0.012329952274750478,
+        "beyond_y_m": 0.037139066710726004
+      },
+      "scripts": [
+        {
+          "handle": 100,
+          "disabled": false
+        },
+        {
+          "handle": 103,
+          "disabled": false
+        },
+        {
+          "handle": 106,
+          "disabled": false
+        }
+      ]
+    }
+  ],
+  "scan_plane": {
+    "sensor_world_z_m": [
+      0.22069512337572325,
+      0.22069512337572325,
+      0.2206951233732015,
+      0.2206951233732015
+    ],
+    "wheel_top_world_z_m": 0.09997454347693782,
+    "chassis_top_world_z_m": 0.17637190710140987,
+    "clears_wheel_tops": true,
+    "clears_chassis_top": true
+  }
+}

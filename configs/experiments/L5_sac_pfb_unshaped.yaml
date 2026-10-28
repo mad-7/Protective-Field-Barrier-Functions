@@ -1,0 +1,7 @@
+# L5: proposed method. SAC trained with PFB in the loop, no proximity shaping.
+defaults: ../base.yaml
+experiment: L5_sac_pfb_unshaped
+filter:
+  enabled: true
+reward:
+  k_proximity: 0.0

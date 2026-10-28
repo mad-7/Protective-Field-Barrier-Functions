@@ -1,0 +1,57 @@
+{
+  "run": "DSTEP_20260918T202513Z_seed0",
+  "run_commit": "cc04c637c19a76964687c7b1f9d657ca4b577187",
+  "run_dirty": false,
+  "scene_sha256": "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd",
+  "band_deg": 0.64,
+  "frozen_step_s": 0.005,
+  "reference_signed_drift_deg": 0.8312113634284765,
+  "recorded_largest_passing_step_s": 0.05,
+  "corrected_largest_passing_step_s": null,
+  "candidates": {
+    "0.005": {
+      "signed_drift_deg": 0.8312113634284765,
+      "recorded_magnitude_deg": 0.8312113634284765,
+      "g1b_pass_with_ceilings": false,
+      "g0_zero_lag": true,
+      "recorded_drift_within_band": true,
+      "recorded_passes_a10": false,
+      "signed_gap_deg": 0.0,
+      "drift_within_band": true,
+      "passes_a10": false
+    },
+    "0.010": {
+      "signed_drift_deg": -0.1767899158716375,
+      "recorded_magnitude_deg": 0.1767899158716375,
+      "g1b_pass_with_ceilings": true,
+      "g0_zero_lag": true,
+      "recorded_drift_within_band": false,
+      "recorded_passes_a10": false,
+      "signed_gap_deg": -1.0080012793001139,
+      "drift_within_band": false,
+      "passes_a10": false
+    },
+    "0.025": {
+      "signed_drift_deg": -0.802429431733187,
+      "recorded_magnitude_deg": 0.802429431733187,
+      "g1b_pass_with_ceilings": true,
+      "g0_zero_lag": true,
+      "recorded_drift_within_band": true,
+      "recorded_passes_a10": true,
+      "signed_gap_deg": -1.6336407951616634,
+      "drift_within_band": false,
+      "passes_a10": false
+    },
+    "0.050": {
+      "signed_drift_deg": -1.3226402318223747,
+      "recorded_magnitude_deg": 1.3226402318223747,
+      "g1b_pass_with_ceilings": true,
+      "g0_zero_lag": true,
+      "recorded_drift_within_band": true,
+      "recorded_passes_a10": true,
+      "signed_gap_deg": -2.1538515952508512,
+      "drift_within_band": false,
+      "passes_a10": false
+    }
+  }
+}

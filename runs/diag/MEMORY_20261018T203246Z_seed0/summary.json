@@ -1,0 +1,26 @@
+{
+  "bound_mb_per_100_episodes": 10.0,
+  "warmup": 20,
+  "measured": 200,
+  "steps_per_episode": 25,
+  "scenarios": 20,
+  "processes": {
+    "python": {
+      "private_slope_mb_per_100": -0.01447067426700276,
+      "private_slope_se": 0.2442178157239462,
+      "rss_slope_mb_per_100": -66.7033754945437,
+      "private_first_mb": 705.31640625,
+      "private_last_mb": 709.2578125,
+      "verdict": "PASS"
+    },
+    "sim": {
+      "private_slope_mb_per_100": 1.713626141434721,
+      "private_slope_se": 0.10969982685818765,
+      "rss_slope_mb_per_100": -6.486355518262996,
+      "private_first_mb": 186.9453125,
+      "private_last_mb": 191.796875,
+      "verdict": "PASS"
+    }
+  },
+  "verdict": "PASS"
+}

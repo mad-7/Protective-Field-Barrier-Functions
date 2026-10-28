@@ -1,0 +1,18 @@
+{
+  "routes": 2,
+  "reached_goal": 1,
+  "stalled": 1,
+  "stops": 1,
+  "by_category": {
+    "unattributed": 1
+  },
+  "prediction_subtypes": {},
+  "fallback_steps": 16,
+  "fallback_rollout_contacts": 0,
+  "contact_steps": 0,
+  "verdict": "STOP AND REPORT",
+  "smoke": true,
+  "steps": 2087,
+  "scan_fault_stops": 0,
+  "over_budget_steps": 1070
+}

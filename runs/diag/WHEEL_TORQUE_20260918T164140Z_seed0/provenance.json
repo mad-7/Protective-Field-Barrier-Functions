@@ -1,0 +1,9 @@
+{
+  "seed": 0,
+  "experiment": "WHEEL_TORQUE_20260918T164140Z",
+  "created_utc": "2026-09-18T16:41:40.699644+00:00",
+  "commit": "61e4494253fa9c28cbeb94699b34f56e668e6b4a",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd"
+}

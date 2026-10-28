@@ -1,0 +1,40 @@
+
+G4_learned_pilot:
+  # Ruled by the supervisor on 2026-10-03 (amendment A15). A generic gate on every learned
+  # method's PILOT seed, run before that method's confirmatory seeds. Not a performance claim: it
+  # decides whether the pipeline works well enough on the frozen environment to spend
+  # confirmatory seeds on it.
+  applies_to: [L1, L2, L4, L5, A1]
+  pilot_training_seeds: [9000000, 9000001]   # from the pilot range only; the second only on a
+                                             #   learning/checkpoint failure (below). Pilot seeds
+                                             #   never enter H1 or H2.
+  integrity:                                 # every one must hold
+    - the run reached training.total_timesteps and wrote final_model.zip
+    - environment.json records the frozen environment identity (env.frozen_code_sha256)
+    - no NaN or infinity in the logged actor, critic or entropy-coefficient losses
+    - episodes.jsonl has one line per episode, each with an outcome, timesteps strictly increasing
+    - no environment exception ended or skipped an episode
+  learning:                                  # on the training episode log, in episode order
+    window_fraction: 0.10                    # first and last 10 % of training episodes
+    min_last_success: 0.20                   # success rate over the last 10 %
+    min_improvement: 0.15                    # last 10 % minus first 10 %
+  checkpoint:                                # deterministic policy, each scenario once
+    sets: [scenarios/tune/tune_narrow.json, scenarios/tune/tune_medium.json,
+           scenarios/tune/tune_wide.json]    # the tune set at rate 0.25, 60 scenarios
+    min_success: 0.30
+    max_contact_rate: 0.10                   # episodes with any ground-truth contact
+  recorded_not_gated: [steps_per_second, reset_wall_clock, stops_per_100m,
+                       outcome_distribution, per_stratum_success]
+  controls:                                  # required before any pilot verdict is read
+    zero_action: must FAIL checkpoint -- all timeouts, no successes
+    holonomic_pure_pursuit: must PASS checkpoint   # tracking the planned path; it is also B1
+    if_either_misbehaves: the gate is broken; report, read no verdict
+  on_failure:
+    integrity: fix; a fresh pilot seed; the failed run is kept
+    learning_or_checkpoint: >-
+      one second pilot seed, unchanged; if it passes, G4 passes and the first failure is recorded
+      for the seed-CV discussion; if it fails, stop and report
+    hyperparameter_change_after_failure: applies identically to every learned method; restarts the pilot
+  standing_rule: >-
+    after G4 passes, every confirmatory seed trains unconditionally and stays in the analysis
+    whatever its outcome

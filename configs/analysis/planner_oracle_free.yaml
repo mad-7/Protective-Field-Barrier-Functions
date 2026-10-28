@@ -1,0 +1,39 @@
+# The oracle with FREE body orientation (supervisor, 2026-10-15, second ruling). Offline.
+# Lethal margin RULED 0.07. The oracle may choose its body yaw -- continuous along the route, within
+# actuation.w_max, actuation.alpha_max (VERIFY) and the wheel budget at the nominal share -- with the
+# field along the velocity direction and the footprint rotating with the body (pfbnav/world/oracle.py).
+# Phase `decide`: every soft margin; the declared choice (fewest routes with a stop at a bend) and
+# the residual rule (<= 2 % of routes in every stratum -> re-sample; otherwise stop and report).
+# Phase `info`, at the chosen soft margin: mission time against constant top speed, and the 50 mm
+# inside-bend breach rate at lethal 0.07 and 0.10 with narrow plannability -- information only.
+# The unavoidable-stop floor is platform-specific (holonomic, full route knowledge); A1's own floor
+# is the tangent-locked oracle's, reported beside it.
+defaults: ../base.yaml
+
+planner_margins:
+  lethal_margins: [0.07]                                     # m, RULED 2026-10-15
+  soft_margins: [0.03, 0.05, 0.08, 0.10, 0.13, 0.20, 0.30]   # m, candidates
+  sample_spacing_m: 0.02         # m between poses along a route; every vertex taken twice
+  inside_offset_m: 0.05          # m toward the inside of bends -- INFORMATION ONLY (ruled)
+  start_window_m: 0.5            # where each stop happens, for the report and the bend count
+  goal_window_m: 1.0
+  bend_window_m: 0.3
+  quantisation_offsets: 10       # sub-cell positions per axis for the narrowest-aisle check
+  quantisation_aisle_length_m: 6.0
+  sets:                          # tune, pilot and training plans; never scenarios/test (rule 2)
+    - scenarios/tune/tune_narrow.json
+    - scenarios/tune/tune_medium.json
+    - scenarios/tune/tune_wide.json
+    - scenarios/tune/tune_unmapped_narrow.json
+    - scenarios/tune/tune_unmapped_medium.json
+    - scenarios/tune/tune_unmapped_wide.json
+    - scenarios/pilot/pilot_narrow.json
+    - scenarios/train/train_narrow.json
+    - scenarios/train/train_medium.json
+    - scenarios/train/train_wide.json
+
+oracle_free:
+  yaw_step_deg: 15               # deg, the body-yaw grid, anchored at each scenario's start yaw
+  heading_round_deg: 1.0         # deg, field shapes shared across routes (lead term < 1 mm)
+  coarse_stride: 16              # exact coarse-first separating-axis test (route_check)
+  info_lethal_margins: [0.07, 0.10]   # m, phase `info` (ruled: 50 mm figure at both)

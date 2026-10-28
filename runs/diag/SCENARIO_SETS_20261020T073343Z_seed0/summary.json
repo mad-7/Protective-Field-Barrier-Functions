@@ -1,0 +1,732 @@
+{
+  "dry_run": false,
+  "scenario_module_matches_lock": true,
+  "bypass_corridor_half_width_m": 1.0,
+  "sets": {
+    "tune_narrow": {
+      "split": "tune",
+      "stratum": "narrow",
+      "episode_rate": 0.25,
+      "seeds": [
+        2000000,
+        2000019
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 0.25,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 5,
+        "engaged": 5,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 265,
+        "rejected": 256,
+        "by_cause": {
+          "no_bypass_within_corridor": 29,
+          "overlaps_other_unmapped": 3,
+          "too_close_to_mapped": 224
+        },
+        "rejection_rate": 0.9660377358490566,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "narrow": {
+          "built": 20,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 0,
+          "residual": 0,
+          "start_invalid": 0
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 5,
+          "mean_arc_fraction": 0.49779028248500073
+        },
+        "others": {
+          "n": 4,
+          "mean_arc_fraction": 0.4078413236423367
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 9,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 0,
+          "open_floor": 9
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.0,
+          "open_floor": 1.0
+        }
+      },
+      "locked": false,
+      "path": "scenarios/tune/tune_narrow.json"
+    },
+    "tune_medium": {
+      "split": "tune",
+      "stratum": "medium",
+      "episode_rate": 0.25,
+      "seeds": [
+        2000020,
+        2000039
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 0.35,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 7,
+        "engaged": 7,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 214,
+        "rejected": 205,
+        "by_cause": {
+          "no_bypass_within_corridor": 34,
+          "overlaps_other_unmapped": 5,
+          "too_close_to_mapped": 166
+        },
+        "rejection_rate": 0.9579439252336449,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "medium": {
+          "built": 20,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 0,
+          "residual": 0,
+          "start_invalid": 0
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 7,
+          "mean_arc_fraction": 0.5293631710034273
+        },
+        "others": {
+          "n": 2,
+          "mean_arc_fraction": 0.8251866822888848
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 9,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 1,
+          "open_floor": 8
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.1111111111111111,
+          "open_floor": 0.8888888888888888
+        }
+      },
+      "locked": false,
+      "path": "scenarios/tune/tune_medium.json"
+    },
+    "tune_wide": {
+      "split": "tune",
+      "stratum": "wide",
+      "episode_rate": 0.25,
+      "seeds": [
+        2000040,
+        2000059
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 0.25,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 5,
+        "engaged": 5,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 33,
+        "rejected": 27,
+        "by_cause": {
+          "no_bypass_within_corridor": 10,
+          "too_close_to_mapped": 17
+        },
+        "rejection_rate": 0.8181818181818182,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "wide": {
+          "built": 20,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 0,
+          "residual": 0,
+          "start_invalid": 0
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 5,
+          "mean_arc_fraction": 0.6665589157862362
+        },
+        "others": {
+          "n": 1,
+          "mean_arc_fraction": 0.23845408645353638
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 6,
+        "counts": {
+          "aisle": 2,
+          "aisle_mouth": 0,
+          "open_floor": 4
+        },
+        "shares": {
+          "aisle": 0.3333333333333333,
+          "aisle_mouth": 0.0,
+          "open_floor": 0.6666666666666666
+        }
+      },
+      "locked": false,
+      "path": "scenarios/tune/tune_wide.json"
+    },
+    "pilot_narrow": {
+      "split": "pilot",
+      "stratum": "narrow",
+      "episode_rate": 1.0,
+      "seeds": [
+        9000000,
+        9000149
+      ],
+      "requested": 150,
+      "built": 150,
+      "failures": 0,
+      "episode_rate_achieved": 1.0,
+      "engagement": {
+        "scenarios": 150,
+        "with_unmapped": 150,
+        "engaged": 150,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": true,
+      "placement": {
+        "attempts": 12274,
+        "rejected": 12036,
+        "by_cause": {
+          "near_goal": 2,
+          "no_bypass_within_corridor": 784,
+          "outside_hall": 7,
+          "overlaps_other_unmapped": 206,
+          "too_close_to_mapped": 11037
+        },
+        "rejection_rate": 0.9806094182825484,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "narrow": {
+          "built": 150,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 7,
+          "residual": 0,
+          "start_invalid": 6
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 150,
+          "mean_arc_fraction": 0.6516506500744316
+        },
+        "others": {
+          "n": 75,
+          "mean_arc_fraction": 0.6106718499734572
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 225,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 7,
+          "open_floor": 218
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.03111111111111111,
+          "open_floor": 0.9688888888888889
+        }
+      },
+      "locked": false,
+      "path": "scenarios/pilot/pilot_narrow.json"
+    },
+    "tune_unmapped_narrow": {
+      "split": "tune",
+      "stratum": "narrow",
+      "episode_rate": 1.0,
+      "seeds": [
+        2000060,
+        2000079
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 1.0,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 20,
+        "engaged": 20,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": true,
+      "placement": {
+        "attempts": 2308,
+        "rejected": 2275,
+        "by_cause": {
+          "no_bypass_within_corridor": 133,
+          "overlaps_other_unmapped": 31,
+          "too_close_to_mapped": 2111
+        },
+        "rejection_rate": 0.9857019064124783,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "narrow": {
+          "built": 20,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 0,
+          "residual": 0,
+          "start_invalid": 0
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 20,
+          "mean_arc_fraction": 0.5768543023766578
+        },
+        "others": {
+          "n": 9,
+          "mean_arc_fraction": 0.669091397111652
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 29,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 3,
+          "open_floor": 26
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.10344827586206896,
+          "open_floor": 0.896551724137931
+        }
+      },
+      "locked": false,
+      "path": "scenarios/tune/tune_unmapped_narrow.json"
+    },
+    "tune_unmapped_medium": {
+      "split": "tune",
+      "stratum": "medium",
+      "episode_rate": 1.0,
+      "seeds": [
+        2000080,
+        2000099
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 1.0,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 20,
+        "engaged": 20,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": true,
+      "placement": {
+        "attempts": 1694,
+        "rejected": 1660,
+        "by_cause": {
+          "no_bypass_within_corridor": 234,
+          "outside_hall": 1,
+          "overlaps_other_unmapped": 43,
+          "too_close_to_mapped": 1382
+        },
+        "rejection_rate": 0.9799291617473436,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "medium": {
+          "built": 20,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 0,
+          "residual": 0,
+          "start_invalid": 0
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 20,
+          "mean_arc_fraction": 0.6436364786847384
+        },
+        "others": {
+          "n": 12,
+          "mean_arc_fraction": 0.7093289840145061
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 32,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 3,
+          "open_floor": 29
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.09375,
+          "open_floor": 0.90625
+        }
+      },
+      "locked": false,
+      "path": "scenarios/tune/tune_unmapped_medium.json"
+    },
+    "tune_unmapped_wide": {
+      "split": "tune",
+      "stratum": "wide",
+      "episode_rate": 1.0,
+      "seeds": [
+        2000100,
+        2000119
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 1.0,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 20,
+        "engaged": 20,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": true,
+      "placement": {
+        "attempts": 197,
+        "rejected": 170,
+        "by_cause": {
+          "no_bypass_within_corridor": 67,
+          "too_close_to_mapped": 103
+        },
+        "rejection_rate": 0.8629441624365483,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "wide": {
+          "built": 20,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 0,
+          "residual": 0,
+          "start_invalid": 0
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 20,
+          "mean_arc_fraction": 0.6864350056033409
+        },
+        "others": {
+          "n": 7,
+          "mean_arc_fraction": 0.5858971370542194
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 27,
+        "counts": {
+          "aisle": 14,
+          "aisle_mouth": 2,
+          "open_floor": 11
+        },
+        "shares": {
+          "aisle": 0.5185185185185185,
+          "aisle_mouth": 0.07407407407407407,
+          "open_floor": 0.4074074074074074
+        }
+      },
+      "locked": false,
+      "path": "scenarios/tune/tune_unmapped_wide.json"
+    },
+    "train_narrow": {
+      "split": "train",
+      "stratum": "narrow",
+      "episode_rate": 0.25,
+      "seeds": [
+        1000000,
+        1000666
+      ],
+      "requested": 667,
+      "built": 667,
+      "failures": 0,
+      "episode_rate_achieved": 0.24737631184407796,
+      "engagement": {
+        "scenarios": 667,
+        "with_unmapped": 165,
+        "engaged": 165,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 7122,
+        "rejected": 6859,
+        "by_cause": {
+          "near_goal": 4,
+          "no_bypass_within_corridor": 565,
+          "outside_hall": 3,
+          "overlaps_other_unmapped": 170,
+          "too_close_to_mapped": 6117
+        },
+        "rejection_rate": 0.9630721707385566,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "narrow": {
+          "built": 667,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 9,
+          "residual": 0,
+          "start_invalid": 7
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 165,
+          "mean_arc_fraction": 0.5835751375702237
+        },
+        "others": {
+          "n": 89,
+          "mean_arc_fraction": 0.590736978976039
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 254,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 5,
+          "open_floor": 249
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.01968503937007874,
+          "open_floor": 0.9803149606299213
+        }
+      },
+      "locked": false,
+      "path": "scenarios/train/train_narrow.json"
+    },
+    "train_medium": {
+      "split": "train",
+      "stratum": "medium",
+      "episode_rate": 0.25,
+      "seeds": [
+        1000667,
+        1001333
+      ],
+      "requested": 667,
+      "built": 667,
+      "failures": 0,
+      "episode_rate_achieved": 0.24287856071964017,
+      "engagement": {
+        "scenarios": 667,
+        "with_unmapped": 162,
+        "engaged": 162,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 7145,
+        "rejected": 6887,
+        "by_cause": {
+          "near_goal": 1,
+          "no_bypass_within_corridor": 929,
+          "overlaps_other_unmapped": 168,
+          "too_close_to_mapped": 5789
+        },
+        "rejection_rate": 0.963890832750175,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "medium": {
+          "built": 667,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 0,
+          "residual": 0,
+          "start_invalid": 0
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 162,
+          "mean_arc_fraction": 0.5908710720260176
+        },
+        "others": {
+          "n": 88,
+          "mean_arc_fraction": 0.5927983974267305
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 250,
+        "counts": {
+          "aisle": 0,
+          "aisle_mouth": 15,
+          "open_floor": 235
+        },
+        "shares": {
+          "aisle": 0.0,
+          "aisle_mouth": 0.06,
+          "open_floor": 0.94
+        }
+      },
+      "locked": false,
+      "path": "scenarios/train/train_medium.json"
+    },
+    "train_wide": {
+      "split": "train",
+      "stratum": "wide",
+      "episode_rate": 0.25,
+      "seeds": [
+        1001334,
+        1002000
+      ],
+      "requested": 667,
+      "built": 667,
+      "failures": 0,
+      "episode_rate_achieved": 0.24437781109445278,
+      "engagement": {
+        "scenarios": 667,
+        "with_unmapped": 163,
+        "engaged": 163,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 1266,
+        "rejected": 1032,
+        "by_cause": {
+          "near_goal": 2,
+          "no_bypass_within_corridor": 336,
+          "overlaps_other_unmapped": 9,
+          "too_close_to_mapped": 685
+        },
+        "rejection_rate": 0.8151658767772512,
+        "scenarios_lost_to_placement": 0
+      },
+      "route_validity": {
+        "wide": {
+          "built": 667,
+          "failed_seeds": 0,
+          "goal_invalid": 0,
+          "goal_resamples": 0,
+          "residual": 0,
+          "start_invalid": 0
+        }
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 163,
+          "mean_arc_fraction": 0.596491127708483
+        },
+        "others": {
+          "n": 71,
+          "mean_arc_fraction": 0.5379303603831332
+        }
+      },
+      "bypass_control": {
+        "routes_set_aside": 0,
+        "scenarios_lost": 0
+      },
+      "built_in_full": true,
+      "locations": {
+        "obstacles": 234,
+        "counts": {
+          "aisle": 112,
+          "aisle_mouth": 18,
+          "open_floor": 104
+        },
+        "shares": {
+          "aisle": 0.47863247863247865,
+          "aisle_mouth": 0.07692307692307693,
+          "open_floor": 0.4444444444444444
+        }
+      },
+      "locked": false,
+      "path": "scenarios/train/train_wide.json"
+    }
+  }
+}

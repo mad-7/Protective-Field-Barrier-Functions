@@ -1,0 +1,689 @@
+{
+  "source_commit": "f839db3",
+  "slip": 0.95,
+  "steps": 1500,
+  "stops": 54,
+  "max_containment_excess_m": -0.06316185437815908,
+  "stops_ending_inside_min_margin": 0,
+  "unsettled_stops": 0,
+  "episodes": [
+    {
+      "set": "scenarios/tune/tune_narrow.json",
+      "index": 3,
+      "seed": 2000003,
+      "stratum": "narrow",
+      "plan_length_m": 8.761601513128797,
+      "final_s_m": 1.1183931878793725,
+      "min_centre_clearance_m": 0.30414931291985514,
+      "stops": [
+        {
+          "step": 37,
+          "s_m": 0.35861647699425203,
+          "field_speed": 0.25,
+          "field_yaw_rate": -0.12506989990802392,
+          "settled": true,
+          "rest_step": 50,
+          "containment_excess_m": -0.06316185437815991,
+          "rest_margin_m": 0.04218967822977038
+        },
+        {
+          "step": 83,
+          "s_m": 0.4093260151867048,
+          "field_speed": 0.04999996159571801,
+          "field_yaw_rate": -0.13999999999999999,
+          "settled": true,
+          "rest_step": 91,
+          "containment_excess_m": -0.06316185437816008,
+          "rest_margin_m": 0.029377683092256357
+        },
+        {
+          "step": 131,
+          "s_m": 0.4233776159900042,
+          "field_speed": 0.04999996130177346,
+          "field_yaw_rate": -0.13999999999999999,
+          "settled": true,
+          "rest_step": 139,
+          "containment_excess_m": -0.06316185437815952,
+          "rest_margin_m": 0.018142727640244105
+        },
+        {
+          "step": 178,
+          "s_m": 0.43739521800604547,
+          "field_speed": 0.049999960979728315,
+          "field_yaw_rate": -0.13381272891229637,
+          "settled": true,
+          "rest_step": 186,
+          "containment_excess_m": -0.06316185437815924,
+          "rest_margin_m": 0.008146070551636131
+        },
+        {
+          "step": 374,
+          "s_m": 0.5701676563480659,
+          "field_speed": 0.04314553520388545,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 381,
+          "containment_excess_m": -0.0631618543781598,
+          "rest_margin_m": 0.010929846761065787
+        },
+        {
+          "step": 633,
+          "s_m": 0.763360174249378,
+          "field_speed": 0.040657745705443095,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 640,
+          "containment_excess_m": -0.06316185437815997,
+          "rest_margin_m": 0.020125768770154373
+        },
+        {
+          "step": 810,
+          "s_m": 0.8764351815889933,
+          "field_speed": 0.03813239819416906,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 819,
+          "containment_excess_m": -0.06316185437815924,
+          "rest_margin_m": 0.024555549740639504
+        },
+        {
+          "step": 994,
+          "s_m": 0.9957790903682756,
+          "field_speed": 0.035786264436000824,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 1003,
+          "containment_excess_m": -0.06316185437816008,
+          "rest_margin_m": 0.03613702320039308
+        },
+        {
+          "step": 1112,
+          "s_m": 1.1040946091937338,
+          "field_speed": 0.0351373001383195,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 1121,
+          "containment_excess_m": -0.06316185437816019,
+          "rest_margin_m": 0.03864759145505314
+        }
+      ],
+      "recovery": {
+        "recovery_attempts": 5,
+        "recovery_endings": {
+          "cleared": 5,
+          "distance": 0,
+          "new_stop": 0,
+          "not_released": 0,
+          "no_permitted_direction": 0
+        },
+        "recovery_deadlock": null,
+        "recovery_gave_up": "cap"
+      }
+    },
+    {
+      "set": "scenarios/tune/tune_narrow.json",
+      "index": 6,
+      "seed": 2000006,
+      "stratum": "narrow",
+      "plan_length_m": 9.693422466344982,
+      "final_s_m": 0.5270121043930205,
+      "min_centre_clearance_m": 0.3041954336224164,
+      "stops": [
+        {
+          "step": 11,
+          "s_m": 0.04127316813146207,
+          "field_speed": 0.24990285862497263,
+          "field_yaw_rate": 0.1414976214576448,
+          "settled": true,
+          "rest_step": 24,
+          "containment_excess_m": -0.06316185437815997,
+          "rest_margin_m": 0.04753819666774922
+        },
+        {
+          "step": 57,
+          "s_m": 0.09131740597802909,
+          "field_speed": 0.04999994688939714,
+          "field_yaw_rate": 0.13999999999999999,
+          "settled": true,
+          "rest_step": 67,
+          "containment_excess_m": -0.06316185437816035,
+          "rest_margin_m": 0.03125432889330604
+        },
+        {
+          "step": 108,
+          "s_m": 0.11324047550190584,
+          "field_speed": 0.04999994610422676,
+          "field_yaw_rate": 0.13549181704786445,
+          "settled": true,
+          "rest_step": 116,
+          "containment_excess_m": -0.06316185437815952,
+          "rest_margin_m": 0.020893898065387162
+        },
+        {
+          "step": 155,
+          "s_m": 0.124748546188374,
+          "field_speed": 0.025,
+          "field_yaw_rate": 0.06999999999999999,
+          "settled": true,
+          "rest_step": 161,
+          "containment_excess_m": -0.06316185437816002,
+          "rest_margin_m": 0.014253231378921205
+        },
+        {
+          "step": 353,
+          "s_m": 0.2573288263285591,
+          "field_speed": 0.04239241864516534,
+          "field_yaw_rate": 0.06999999999999999,
+          "settled": true,
+          "rest_step": 360,
+          "containment_excess_m": -0.06316185437815991,
+          "rest_margin_m": 0.014718703427702207
+        },
+        {
+          "step": 500,
+          "s_m": 0.3438913974445088,
+          "field_speed": 0.04194331298180753,
+          "field_yaw_rate": 0.06999999999999999,
+          "settled": true,
+          "rest_step": 507,
+          "containment_excess_m": -0.0631618543781593,
+          "rest_margin_m": 0.008592412663819271
+        },
+        {
+          "step": 634,
+          "s_m": 0.41727171697569054,
+          "field_speed": 0.04078156413158611,
+          "field_yaw_rate": 0.06999999999999999,
+          "settled": true,
+          "rest_step": 641,
+          "containment_excess_m": -0.0631618543781598,
+          "rest_margin_m": 0.01539942180639553
+        },
+        {
+          "step": 741,
+          "s_m": 0.46390316308858015,
+          "field_speed": 0.039108599214039266,
+          "field_yaw_rate": 0.06999999999999999,
+          "settled": true,
+          "rest_step": 750,
+          "containment_excess_m": -0.06316185437815985,
+          "rest_margin_m": 0.014150135499864658
+        },
+        {
+          "step": 853,
+          "s_m": 0.5172757013967823,
+          "field_speed": 0.038544256866302556,
+          "field_yaw_rate": 0.06999999999999999,
+          "settled": true,
+          "rest_step": 862,
+          "containment_excess_m": -0.0631618543781603,
+          "rest_margin_m": 0.013347924004243117
+        }
+      ],
+      "recovery": {
+        "recovery_attempts": 5,
+        "recovery_endings": {
+          "cleared": 5,
+          "distance": 0,
+          "new_stop": 0,
+          "not_released": 0,
+          "no_permitted_direction": 0
+        },
+        "recovery_deadlock": null,
+        "recovery_gave_up": "cap"
+      }
+    },
+    {
+      "set": "scenarios/tune/tune_narrow.json",
+      "index": 10,
+      "seed": 2000010,
+      "stratum": "narrow",
+      "plan_length_m": 11.61774897154529,
+      "final_s_m": 0.2735273454120283,
+      "min_centre_clearance_m": 0.30611627061758123,
+      "stops": [
+        {
+          "step": 3,
+          "s_m": 0.006478635881510381,
+          "field_speed": 0.04999995808203493,
+          "field_yaw_rate": -0.13999999999999999,
+          "settled": true,
+          "rest_step": 11,
+          "containment_excess_m": -0.06316185437816002,
+          "rest_margin_m": 0.05575102854355446
+        },
+        {
+          "step": 51,
+          "s_m": 0.01864851158262845,
+          "field_speed": 0.04999995816695191,
+          "field_yaw_rate": -0.13999999999999999,
+          "settled": true,
+          "rest_step": 61,
+          "containment_excess_m": -0.06316185437815991,
+          "rest_margin_m": 0.023777076011562703
+        },
+        {
+          "step": 133,
+          "s_m": 0.04791605388618725,
+          "field_speed": 0.04233129865966881,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 140,
+          "containment_excess_m": -0.06316185437815985,
+          "rest_margin_m": 0.012036975034689201
+        },
+        {
+          "step": 245,
+          "s_m": 0.10051928080230468,
+          "field_speed": 0.04083124385255775,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 252,
+          "containment_excess_m": -0.06316185437815969,
+          "rest_margin_m": 0.013072893044992484
+        },
+        {
+          "step": 370,
+          "s_m": 0.1647909253581145,
+          "field_speed": 0.03973017240743292,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 377,
+          "containment_excess_m": -0.06316185437815958,
+          "rest_margin_m": 0.01847495428395446
+        },
+        {
+          "step": 492,
+          "s_m": 0.22538755730746193,
+          "field_speed": 0.03866815326633774,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 499,
+          "containment_excess_m": -0.06316185437815969,
+          "rest_margin_m": 0.023842779897674804
+        },
+        {
+          "step": 596,
+          "s_m": 0.26804244175847924,
+          "field_speed": 0.038069443228370206,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 603,
+          "containment_excess_m": -0.06316185437816046,
+          "rest_margin_m": 0.025852319325256
+        }
+      ],
+      "recovery": {
+        "recovery_attempts": 5,
+        "recovery_endings": {
+          "cleared": 5,
+          "distance": 0,
+          "new_stop": 0,
+          "not_released": 0,
+          "no_permitted_direction": 0
+        },
+        "recovery_deadlock": null,
+        "recovery_gave_up": "cap"
+      }
+    },
+    {
+      "set": "scenarios/tune/tune_narrow.json",
+      "index": 12,
+      "seed": 2000012,
+      "stratum": "narrow",
+      "plan_length_m": 9.653265047352551,
+      "final_s_m": 1.6912026985273232,
+      "min_centre_clearance_m": 0.420542549310278,
+      "stops": [
+        {
+          "step": 134,
+          "s_m": 1.5492603096750341,
+          "field_speed": 0.25,
+          "field_yaw_rate": 0.10533124291929022,
+          "settled": true,
+          "rest_step": 147,
+          "containment_excess_m": -0.06316185437815908,
+          "rest_margin_m": 0.10478185286612457
+        },
+        {
+          "step": 183,
+          "s_m": 1.629228782962849,
+          "field_speed": 0.17499182922675385,
+          "field_yaw_rate": 0.10925176912794221,
+          "settled": true,
+          "rest_step": 195,
+          "containment_excess_m": -0.06316185437815985,
+          "rest_margin_m": 0.04952830887155568
+        },
+        {
+          "step": 234,
+          "s_m": 1.6689840023796734,
+          "field_speed": 0.025000000000000005,
+          "field_yaw_rate": 0.06999999999999999,
+          "settled": true,
+          "rest_step": 240,
+          "containment_excess_m": -0.06316185437815985,
+          "rest_margin_m": 0.0353237393288337
+        },
+        {
+          "step": 281,
+          "s_m": 1.6771383885339493,
+          "field_speed": 0.025000000000000005,
+          "field_yaw_rate": 0.06999999999999999,
+          "settled": true,
+          "rest_step": 287,
+          "containment_excess_m": -0.06316185437815952,
+          "rest_margin_m": 0.028708521824164557
+        },
+        {
+          "step": 353,
+          "s_m": 1.6841222437932735,
+          "field_speed": 0.030048535236121325,
+          "field_yaw_rate": 0.08513559236373353,
+          "settled": true,
+          "rest_step": 360,
+          "containment_excess_m": -0.06316185437815935,
+          "rest_margin_m": 0.02532663497993426
+        },
+        {
+          "step": 429,
+          "s_m": 1.6886931748859872,
+          "field_speed": 0.03002861127270697,
+          "field_yaw_rate": 0.06484369624528584,
+          "settled": true,
+          "rest_step": 436,
+          "containment_excess_m": -0.06316185437815935,
+          "rest_margin_m": 0.02442478731960629
+        },
+        {
+          "step": 506,
+          "s_m": 1.6904613264511823,
+          "field_speed": 0.030203177366903873,
+          "field_yaw_rate": 0.04655940824246717,
+          "settled": true,
+          "rest_step": 513,
+          "containment_excess_m": -0.06316185437815985,
+          "rest_margin_m": 0.023696508656911475
+        },
+        {
+          "step": 599,
+          "s_m": 1.6912026985273232,
+          "field_speed": 0.03016466976918208,
+          "field_yaw_rate": 0.029251495974454395,
+          "settled": true,
+          "rest_step": 606,
+          "containment_excess_m": -0.0631618543781598,
+          "rest_margin_m": 0.03159583253897669
+        },
+        {
+          "step": 677,
+          "s_m": 1.6912026985273232,
+          "field_speed": 0.030143880767009763,
+          "field_yaw_rate": 0.01906693754024975,
+          "settled": true,
+          "rest_step": 686,
+          "containment_excess_m": -0.06316185437815997,
+          "rest_margin_m": 0.02534184178073018
+        }
+      ],
+      "recovery": {
+        "recovery_attempts": 5,
+        "recovery_endings": {
+          "cleared": 5,
+          "distance": 0,
+          "new_stop": 0,
+          "not_released": 0,
+          "no_permitted_direction": 0
+        },
+        "recovery_deadlock": null,
+        "recovery_gave_up": "cap"
+      }
+    },
+    {
+      "set": "scenarios/tune/tune_wide.json",
+      "index": 1,
+      "seed": 2000041,
+      "stratum": "wide",
+      "plan_length_m": 7.891012609662073,
+      "final_s_m": 4.292429802349796,
+      "min_centre_clearance_m": 0.33670658366482087,
+      "stops": [
+        {
+          "step": 350,
+          "s_m": 4.0814539798006715,
+          "field_speed": 0.25,
+          "field_yaw_rate": -0.1282471622211644,
+          "settled": true,
+          "rest_step": 363,
+          "containment_excess_m": -0.06316185437815952,
+          "rest_margin_m": 0.056184486563797376
+        },
+        {
+          "step": 396,
+          "s_m": 4.135470517395995,
+          "field_speed": 0.07499954889445277,
+          "field_yaw_rate": -0.1741508952326129,
+          "settled": true,
+          "rest_step": 405,
+          "containment_excess_m": -0.06316185437816108,
+          "rest_margin_m": 0.03847270084863763
+        },
+        {
+          "step": 445,
+          "s_m": 4.154091334552942,
+          "field_speed": 0.04999995885862363,
+          "field_yaw_rate": -0.13999999999999999,
+          "settled": true,
+          "rest_step": 453,
+          "containment_excess_m": -0.06316185437816052,
+          "rest_margin_m": 0.027292695538424505
+        },
+        {
+          "step": 492,
+          "s_m": 4.168013544597887,
+          "field_speed": 0.04999995846315106,
+          "field_yaw_rate": -0.1317348721935379,
+          "settled": true,
+          "rest_step": 500,
+          "containment_excess_m": -0.06316185437815935,
+          "rest_margin_m": 0.017258773680436268
+        },
+        {
+          "step": 539,
+          "s_m": 4.1795839242510695,
+          "field_speed": 0.025,
+          "field_yaw_rate": -0.06999999999999999,
+          "settled": true,
+          "rest_step": 545,
+          "containment_excess_m": -0.06316185437815913,
+          "rest_margin_m": 0.010875794527356653
+        },
+        {
+          "step": 611,
+          "s_m": 4.193221992054856,
+          "field_speed": 0.07119760345701272,
+          "field_yaw_rate": -0.10825741571645477,
+          "settled": true,
+          "rest_step": 620,
+          "containment_excess_m": -0.0631618543781598,
+          "rest_margin_m": 0.005625624097963855
+        },
+        {
+          "step": 692,
+          "s_m": 4.210042557951039,
+          "field_speed": 0.045610217545836565,
+          "field_yaw_rate": -0.1298072415088882,
+          "settled": true,
+          "rest_step": 702,
+          "containment_excess_m": -0.06316185437815924,
+          "rest_margin_m": 0.006724485836202443
+        },
+        {
+          "step": 775,
+          "s_m": 4.229974615809214,
+          "field_speed": 0.04545160287630315,
+          "field_yaw_rate": -0.13999999999999999,
+          "settled": true,
+          "rest_step": 785,
+          "containment_excess_m": -0.06316185437815974,
+          "rest_margin_m": 0.007189261491935106
+        },
+        {
+          "step": 860,
+          "s_m": 4.251424722689694,
+          "field_speed": 0.046968646111045745,
+          "field_yaw_rate": -0.13999999999999999,
+          "settled": true,
+          "rest_step": 870,
+          "containment_excess_m": -0.06316185437816052,
+          "rest_margin_m": 0.008279811518221492
+        },
+        {
+          "step": 947,
+          "s_m": 4.275193346319911,
+          "field_speed": 0.04845445065218998,
+          "field_yaw_rate": -0.13999999999999999,
+          "settled": true,
+          "rest_step": 957,
+          "containment_excess_m": -0.06316185437815991,
+          "rest_margin_m": 0.009605360772690197
+        }
+      ],
+      "recovery": {
+        "recovery_attempts": 5,
+        "recovery_endings": {
+          "cleared": 5,
+          "distance": 0,
+          "new_stop": 0,
+          "not_released": 0,
+          "no_permitted_direction": 0
+        },
+        "recovery_deadlock": null,
+        "recovery_gave_up": "cap"
+      }
+    },
+    {
+      "set": "scenarios/tune/tune_wide.json",
+      "index": 4,
+      "seed": 2000044,
+      "stratum": "wide",
+      "plan_length_m": 8.994564264100717,
+      "final_s_m": 1.1516878379816697,
+      "min_centre_clearance_m": 0.39396090752757384,
+      "stops": [
+        {
+          "step": 88,
+          "s_m": 0.9699993834861506,
+          "field_speed": 0.25,
+          "field_yaw_rate": 0.148804467070431,
+          "settled": true,
+          "rest_step": 101,
+          "containment_excess_m": -0.06316185437815963,
+          "rest_margin_m": 0.09659719172120473
+        },
+        {
+          "step": 137,
+          "s_m": 1.0343307092473606,
+          "field_speed": 0.1249951776984084,
+          "field_yaw_rate": 0.1731161086929216,
+          "settled": true,
+          "rest_step": 148,
+          "containment_excess_m": -0.06316185437816013,
+          "rest_margin_m": 0.06049469454386386
+        },
+        {
+          "step": 186,
+          "s_m": 1.0609361099323518,
+          "field_speed": 0.025000000000000005,
+          "field_yaw_rate": 0.06999999999999999,
+          "settled": true,
+          "rest_step": 192,
+          "containment_excess_m": -0.06316185437815947,
+          "rest_margin_m": 0.05160714400389421
+        },
+        {
+          "step": 232,
+          "s_m": 1.0713012608569352,
+          "field_speed": 0.049999958118139766,
+          "field_yaw_rate": 0.13999999999999999,
+          "settled": true,
+          "rest_step": 240,
+          "containment_excess_m": -0.06316185437815952,
+          "rest_margin_m": 0.0387927035925244
+        },
+        {
+          "step": 279,
+          "s_m": 1.0850773101622642,
+          "field_speed": 0.049999957660624296,
+          "field_yaw_rate": 0.12549454069687851,
+          "settled": true,
+          "rest_step": 287,
+          "containment_excess_m": -0.06316185437815963,
+          "rest_margin_m": 0.026467732269803146
+        },
+        {
+          "step": 350,
+          "s_m": 1.0978299124127933,
+          "field_speed": 0.042463121376411846,
+          "field_yaw_rate": 0.11449999981550607,
+          "settled": true,
+          "rest_step": 357,
+          "containment_excess_m": -0.06316185437815963,
+          "rest_margin_m": 0.020459434144819044
+        },
+        {
+          "step": 425,
+          "s_m": 1.107288234209267,
+          "field_speed": 0.04077432706611541,
+          "field_yaw_rate": 0.119278514550428,
+          "settled": true,
+          "rest_step": 432,
+          "containment_excess_m": -0.06316185437816013,
+          "rest_margin_m": 0.02147539271989285
+        },
+        {
+          "step": 500,
+          "s_m": 1.1166799847814548,
+          "field_speed": 0.04076958450498988,
+          "field_yaw_rate": 0.11966582848181301,
+          "settled": true,
+          "rest_step": 507,
+          "containment_excess_m": -0.06316185437815935,
+          "rest_margin_m": 0.022413314918663774
+        },
+        {
+          "step": 575,
+          "s_m": 1.1262283866392393,
+          "field_speed": 0.04076829655005362,
+          "field_yaw_rate": 0.11977068468981839,
+          "settled": true,
+          "rest_step": 582,
+          "containment_excess_m": -0.06316185437816019,
+          "rest_margin_m": 0.023285752865746523
+        },
+        {
+          "step": 650,
+          "s_m": 1.1359297301803815,
+          "field_speed": 0.04076985086202712,
+          "field_yaw_rate": 0.11964309098806722,
+          "settled": true,
+          "rest_step": 659,
+          "containment_excess_m": -0.06316185437816002,
+          "rest_margin_m": 0.01915425070878568
+        }
+      ],
+      "recovery": {
+        "recovery_attempts": 5,
+        "recovery_endings": {
+          "cleared": 5,
+          "distance": 0,
+          "new_stop": 0,
+          "not_released": 0,
+          "no_permitted_direction": 0
+        },
+        "recovery_deadlock": null,
+        "recovery_gave_up": "cap"
+      }
+    }
+  ]
+}

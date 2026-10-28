@@ -1,0 +1,6 @@
+# The equal-tuning-budget rule (ruled 2026-10-26): every classical baseline (B1, B2, B3, B6) is tuned
+# with the same number of candidates on the tune set only; B7 reuses B2's tuned parameters and is
+# tuned in alpha only. Learned arms share SAC's hyperparameters instead (configs/methods.yaml).
+candidates: 24             # per classical baseline, candidate 0 (the configured defaults) included
+selection:                 # ruled 2026-10-26, the rule ruled for alpha (2026-10-24)
+  success_window: 0.05     # 1, five percentage points of the best success rate

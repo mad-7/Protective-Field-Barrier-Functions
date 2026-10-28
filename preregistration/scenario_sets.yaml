@@ -1,0 +1,87 @@
+# preregistration/scenario_sets.yaml -- amendment A13, 2026-09-29
+#
+# How scenario sets are constructed. Ruled by the supervisor on 2026-09-29 (rulings on the
+# scenario-sets request). The TEST size is deliberately absent: it is amendment A14, fixed after
+# G2 on the training host and the H1 power analysis.
+#
+# The numbers already preregistered in gates.yaml (layout_sets.unmapped: count 1-2, size
+# 0.25-0.60 m, height 0.80 m, margin 0.15 m, the episode rates) stand and are not restated here.
+
+unmapped_placement:
+  rule: route_relative              # replaces uniform placement over free floor
+  splits: [train, tune, test]       # every split, so training sees the test distribution
+  offset_to_nearest_surface_m: [0.0, 0.6]   # uniform; to the obstacle's nearest SURFACE,
+                                            #   never its centre
+  # Ruled 2026-09-30 (option a). Uncapped, 1-2 obstacles put one within 0.3 m of the route in
+  # only 62.5 % of scenarios (1 - (0.5 + 0.25) / 2), below the validity check by construction.
+  # The first obstacle's offset is uniform on [0, 0.3] m; any further obstacle's on [0, 0.6] m.
+  first_obstacle_offset_max_m: 0.3
+  first_is_an_index_not_a_location: >-
+    the capped obstacle's along-route position, side and size are drawn exactly as for the
+    other obstacles, independent of the cap; only its offset range differs
+  side: uniform_left_right
+  arc_excluded_from_start_m: 2.0    # position uniform over the route's arc length, excluding
+  arc_excluded_to_goal_m: 1.0       #   the first 2 m and the last 1 m
+  feasibility: >-
+    revised 2026-10-02 (replacing "the goal remains reachable in the true world", which admitted
+    detours through other aisles that a stack which never replans cannot take): an obstacle is
+    kept only if, judged jointly with every unmapped obstacle already placed, the robot can get
+    from start to goal keeping its centre at least robot half_width + the narrow-stratum floor
+    (0.1987 m since A21) from every surface, and never further than the corridor half-width W from the
+    planned route
+  bypass:
+    clearance: narrow_stratum_floor   # 0.1987 m per side beyond the footprint (A21), read from the
+                                      #   strata; the gap past an obstacle is an aisle
+    corridor_half_width_m: 1.0        # W; ruled 2026-10-02
+    fallback: >-
+      W = 1.5 m only if a tune (20 per stratum) or pilot (150) set cannot be built in full within
+      the re-sampling cap; not needed (every set built in full at W = 0.75, 1.0 and 1.5 m)
+    joint: true                       # all unmapped obstacles judged together
+    positive_control: each route's empty corridor must pass before any obstacle is placed
+    check_grid_m: 0.01                # half-cell allowance: a gap up to 5 mm per side below the
+                                      #   floor may be admitted
+  locations_reported: per stratum -- inside an aisle, at an aisle mouth, on open floor
+  on_rejection: >-
+    re-sample the obstacle, never the layout; if a route cannot hold its obstacles within
+    attempts_per_obstacle, the next endpoint pair of the same layout is tried
+  attempts_per_obstacle: 200
+  rejection_rate: logged per stratum, by cause
+  validity:
+    applies_to: unmapped_static test sets
+    engaged_offset_m: 0.3           # an obstacle surface within this distance of the route
+    min_engaged_share: 0.90
+    verified_by: a dry run before the test sets are locked
+  offset_analysis:
+    status: descriptive and exploratory; NOT a confirmatory endpoint
+    measure: the per-scenario MINIMUM surface offset of the unmapped obstacles to the route
+    caveat: >-
+      the distribution of that minimum is shaped by design -- the cap guarantees one obstacle
+      within 0.3 m -- and is reported as such
+
+scenario_sets:
+  tune:
+    per_stratum: 20                 # at the tune rate (0.25), route-relative placement
+  pilot:
+    size: 150                       # DISTINCT narrow scenarios from the pilot seed range
+    stratum: narrow
+    condition: unmapped_static
+    learned_methods: scenario i runs with training seed i mod 5 (30 scenarios per seed)
+    classical_baselines: all 150, once each
+    why: >-
+      deterministic baselines on 30 scenarios would give only 30 episodes, and a learned
+      method's episodes sharing a scenario are clustered, which the Clopper-Pearson bound -- a
+      bound on independent trials -- does not allow
+  train:                            # ruled 2026-10-03
+    per_stratum: 667                # equal thirds by stratum, ~2,000 in all, train seed range,
+                                    #   at the preregistered train rate (0.25)
+    order: >-
+      training seed k visits the whole set in its own permutation, the same permutation for every
+      method's seed k; seeds carry all training randomness, including order
+    curriculum: none
+  tune_unmapped:                    # ruled 2026-10-03 (decision tree, Step 0); DISPOSABLE
+    per_stratum: 20                 # tune seed range, unmapped rate 1.0 (the H1 population's)
+    purpose: >-
+      the seed-CV, stop-rate and inter-comparator-gap measurement the decision tree plans on; the
+      0.25 tune rate would dilute the stop rate relative to unmapped_static. Logged as a tune
+      regeneration.
+  test: pending_A14

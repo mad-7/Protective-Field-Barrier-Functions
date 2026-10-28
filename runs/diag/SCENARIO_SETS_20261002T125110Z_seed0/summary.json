@@ -1,0 +1,177 @@
+{
+  "dry_run": true,
+  "sets": {
+    "tune_narrow": {
+      "split": "tune",
+      "stratum": "narrow",
+      "episode_rate": 0.25,
+      "seeds": [
+        2000000,
+        2000019
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 0.25,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 5,
+        "engaged": 5,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 81,
+        "rejected": 72,
+        "by_cause": {
+          "overlaps_other_unmapped": 3,
+          "too_close_to_mapped": 69
+        },
+        "rejection_rate": 0.8888888888888888,
+        "scenarios_lost_to_placement": 0
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 5,
+          "mean_arc_fraction": 0.5053236024982402
+        },
+        "others": {
+          "n": 4,
+          "mean_arc_fraction": 0.23152177265005228
+        }
+      },
+      "locked": false,
+      "path": "runs/diag/SCENARIO_SETS_20261002T125110Z_seed0/tune_narrow.json"
+    },
+    "tune_medium": {
+      "split": "tune",
+      "stratum": "medium",
+      "episode_rate": 0.25,
+      "seeds": [
+        2000020,
+        2000039
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 0.35,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 7,
+        "engaged": 7,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 51,
+        "rejected": 42,
+        "by_cause": {
+          "overlaps_other_unmapped": 2,
+          "too_close_to_mapped": 40
+        },
+        "rejection_rate": 0.8235294117647058,
+        "scenarios_lost_to_placement": 0
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 7,
+          "mean_arc_fraction": 0.575996996595269
+        },
+        "others": {
+          "n": 2,
+          "mean_arc_fraction": 0.6872836116887859
+        }
+      },
+      "locked": false,
+      "path": "runs/diag/SCENARIO_SETS_20261002T125110Z_seed0/tune_medium.json"
+    },
+    "tune_wide": {
+      "split": "tune",
+      "stratum": "wide",
+      "episode_rate": 0.25,
+      "seeds": [
+        2000040,
+        2000059
+      ],
+      "requested": 20,
+      "built": 20,
+      "failures": 0,
+      "episode_rate_achieved": 0.25,
+      "engagement": {
+        "scenarios": 20,
+        "with_unmapped": 5,
+        "engaged": 5,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": null,
+      "placement": {
+        "attempts": 11,
+        "rejected": 5,
+        "by_cause": {
+          "too_close_to_mapped": 5
+        },
+        "rejection_rate": 0.45454545454545453,
+        "scenarios_lost_to_placement": 0
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 5,
+          "mean_arc_fraction": 0.5237858094041966
+        },
+        "others": {
+          "n": 1,
+          "mean_arc_fraction": 0.2906739358354355
+        }
+      },
+      "locked": false,
+      "path": "runs/diag/SCENARIO_SETS_20261002T125110Z_seed0/tune_wide.json"
+    },
+    "pilot_narrow": {
+      "split": "pilot",
+      "stratum": "narrow",
+      "episode_rate": 1.0,
+      "seeds": [
+        9000000,
+        9000149
+      ],
+      "requested": 150,
+      "built": 150,
+      "failures": 0,
+      "episode_rate_achieved": 1.0,
+      "engagement": {
+        "scenarios": 150,
+        "with_unmapped": 150,
+        "engaged": 150,
+        "threshold_m": 0.3,
+        "engaged_share": 1.0
+      },
+      "validity_check": true,
+      "placement": {
+        "attempts": 4550,
+        "rejected": 4325,
+        "by_cause": {
+          "outside_hall": 4,
+          "overlaps_other_unmapped": 61,
+          "too_close_to_mapped": 4260
+        },
+        "rejection_rate": 0.9505494505494505,
+        "scenarios_lost_to_placement": 0
+      },
+      "position_by_index": {
+        "capped": {
+          "n": 150,
+          "mean_arc_fraction": 0.593323056820931
+        },
+        "others": {
+          "n": 75,
+          "mean_arc_fraction": 0.6190179701616546
+        }
+      },
+      "locked": false,
+      "path": "runs/diag/SCENARIO_SETS_20261002T125110Z_seed0/pilot_narrow.json"
+    }
+  }
+}

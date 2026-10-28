@@ -1,0 +1,19 @@
+# SUPERSEDED 2026-09-22 -- do not use for new runs; use configs/base.yaml.
+#
+# Kept so the runs that cite it stay readable (G0_20260918*, WP0 ruling 1).
+#
+# Why it existed: G0 re-run after the wheel spheres' collidable flag was turned on
+# (ruling 1, WP0 results report). It inherited base.yaml and changed only the envelope
+# width the cases are placed from. G0 places its negative case 10 mm outside
+# robot.half_width; with the spheres counted, the robot reaches 0.2085 m sideways
+# (FOOTPRINT_20260918T133012Z), so the base value of the day, 0.1970, would have put that
+# wall 1.5 mm *inside* the robot and tested the stale config rather than the contact check.
+# It existed only because G0 ran before D8 in the ruled order.
+#
+# Why it is superseded: D8 has since written the measured value into base.yaml as 0.2086 --
+# the probe's upper bound, re-confirmed on the S300 scene (FOOTPRINT_20260922T170810Z: left
+# 0.20856). The override below is therefore 0.1 mm BELOW the base value, which under-states
+# the robot: the unsafe direction, and the opposite of what this file was for.
+defaults: ../base.yaml
+robot:
+  half_width: 0.2085       # m, superseded by base.yaml's 0.2086 (the probe's upper bound)

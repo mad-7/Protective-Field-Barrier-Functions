@@ -1,0 +1,122 @@
+# preregistration/endpoints.yaml
+source: "Research plan §1 and §4 (2026-09-17), as amended by A3 and supervisor rulings 2026-09-20 to 2026-09-28; analysis and tuning by A14a (rulings 2026-10-02, 2026-10-03, 2026-10-24, 2026-10-26); contingency H1prime by A27 (ruling 2026-10-26); declarations of 2026-10-27 by A28"
+alpha: 0.05
+test: two-level bootstrap interval on the log rate ratio (H1) / success-rate difference (H2); see analysis (A14a)
+unit: scenario, paired across arms; learned methods by seed within scenario (seed count in A14b)
+pairing: all controllers for a scenario run in one process
+reporting: the effect with its interval at the comparison's Holm level; the policy-scoped interval as secondary; IQM alongside means; the detectability floor (95th percentile of the effect under within-scenario arm-label swaps) reported with every effect, not part of any criterion; physics engine stated
+
+confirmatory_family:
+  correction: holm
+  members: [H1, H2]
+  conditional_members: [H1N]      # added only if narrow_rule triggers
+  pivot:                          # A27 (ruled 2026-10-26): the filter-only path
+    trigger: L1's or L5's pilot fails G4 twice (both pilot seeds of G4_learned_pilot)
+    members: [H1prime]            # then the confirmatory family is H1prime alone, at alpha 0.05; H1, H2 and H1N are not tested confirmatorily
+    otherwise: H1prime is exploratory and this family stands unchanged
+
+H1:
+  statement: L5 triggers fewer protective stops than every comparator
+  comparators: [B1, B2, B3, B6, L1, L2, L3]   # A16: B6 (field-aware MPPI) replaces retired B4
+  logic: intersection_union       # all comparisons must reject at alpha; no within-H1 correction
+  endpoint: protective_stops_per_100m
+  scan_faults: >-   # A25 (ruled 2026-10-23)
+    stops decided on a scan-faulted packet are excluded from this count and reported
+    alongside it per method; scan_faults reported prominently if they differ materially
+    between methods
+  population: test, condition unmapped_static, all clearance strata pooled
+  reporting: raw, and above the per-stratum unavoidable-stop floor; success rate and mission time beside it for every comparison in the same table, the discussion leading with the stop-throughput trade-off; B6 the decisive comparator (A26)
+  success: every comparison significant in the predicted direction (A14a; the detectability floor is reported, not a criterion)
+
+H1prime:                           # A27 contingency hypothesis (ruled 2026-10-26); confirmatory only under the pivot
+  statement: B7 triggers fewer protective stops than B1, B2 and B6
+  comparators: [B1, B2, B6]
+  logic: intersection_union       # all comparisons must reject at alpha; no within-H1prime correction
+  endpoint: protective_stops_per_100m
+  scan_faults: as H1 (A25)
+  population: test, condition unmapped_static, all clearance strata pooled
+  analysis: >-
+    the A14a rate ratio, B7 over each comparator, continuity 0.5; every arm runs once, so the
+    interval has the scenario part only (no seed part), t quantile with n - 1 df; this case must pass
+    the A14a calibration gate at equal rates before H1prime is tested, else stop and report
+  reporting: success rate and mission time beside it for every comparison in the same table
+  success: every comparison significant in the predicted direction
+
+H2:
+  statement: removing proximity shaping under PFB improves narrow-stratum success
+  comparison: L5 vs L4
+  endpoint: success_rate
+  population: test, clearance stratum narrow (0.1987-0.2687 m per side; A21), conditions mapped_only and unmapped_static pooled
+  secondary_reporting: per condition
+  success: difference >= +15 percentage points AND significant after Holm
+
+H1N:                               # conditional co-primary
+  statement: L5 achieves higher narrow-stratum completion than every comparator
+  comparators: [B1, B2, B3, B6, L1, L2, L3]   # A16: B6 (field-aware MPPI) replaces retired B4
+  logic: intersection_union
+  endpoint: completion_rate
+  population: test, clearance stratum narrow
+  secondary: distance_to_first_stop
+
+narrow_rule:
+  pilot: 150 narrow episodes per method, pilot seed range, 30 per seed
+  methods: [B1, B2, B3, B6, L1, L2, L3, L4, L5]   # A16
+  statistic: exact one-sided 95% upper bound (Clopper-Pearson) on unrecoverable_stop proportion
+  trigger: upper bound >= 0.02 for ANY listed method
+  note: at n = 150 the rule passes only with zero events
+  timing: after methods exist, before any test episode is evaluated
+
+exploratory:                       # reported, labelled, outside the Holm family
+  H3: PFB-(b) banded versus PFB-(a) continuous -- protective stops, success and mission time (A26, restated 2026-10-23 before training; exploratory ablation)
+  H4: holonomic (L5) versus unicycle (A1) — deadlocks and protective stops; expected (A17), A1 materially higher narrow-stratum stop rate than L5; A1's floor from the tangent-locked oracle, reported beside L5's
+  H5: L5 versus B7 (RPP + PFB, no learning) — mission time and protective stops (A16, B7 replaces retired B5)
+  H1prime: B7 versus B1, B2 and B6 -- exploratory unless the pivot triggers (A27; see H1prime)
+  H6: robust versus nominal PFB — ground-truth contacts under measured mismatch (A3)
+  L2_sensitivity: L2 at d = 0.05 and d = 0.2 stops per episode (L2-d005, L2-d020) -- protective stops, success and mission time beside L2 at d = 0.1; outside the Holm family; first in the cut order (A28)
+  secondary:
+    - Newton external-validity evaluation of final policies (A8)
+    - stop_active ablation, one L5 seed
+    - velocity-estimate noise and latency sensitivity (WP2)
+    - warning-field entries as a near-miss metric
+
+analysis:                          # A14a (rulings 2026-10-02, 2026-10-03, 2026-10-26)
+  H1_estimand: rate ratio of protective stops, total stops / total distance per arm, L5 over the comparator; scan-fault stops excluded (A25)
+  continuity: 0.5 added to each arm's total stops
+  interval: >-
+    two-level bootstrap of the log rate ratio -- scenarios resampled jointly across arms, a learned
+    arm's seeds within the arm, a classical arm's scenarios only -- with its variance in closed form
+    for the linearised statistic (pfbnav/eval/rate_ratio.py); each learned arm's seed part scaled by
+    K/(K-1); t quantile
+  df:
+    learned_vs_classical: K - 1 of the learned arm (flat)
+    learned_vs_learned: Welch-Satterthwaite over the scenario part (n - 1) and each seed part (K - 1)
+    fallback_declared: seeds as units -- per-seed log rate ratios against the classical arm, one-sample t, K - 1 df; if it fails calibration, stop and report
+  rejection: the two-sided interval at the comparison's Holm level lies wholly below 0 (log scale) in L5's favour
+  claim: method-level (two-level); the policy-scoped interval (seeds fixed) is secondary, never substituted
+  H2: the narrow-stratum success-rate difference, L5 minus L4, the same corrected two-level interval on the mean (Welch-Satterthwaite)
+  family: Holm step-down at familywise alpha 0.05 over H1, H2 (and H1N if added); power planned at alpha/3
+  decision_tree: docs/decision_log.md, 2026-10-03 (Step 0, branches 1-5, H2 method-level, one seed count for L5 and L4 capped at 20 subject to G2), as preregistered in A14a; branch 3's classical comparators are B1, B2, B3, B6 (A16)
+
+tuning:                            # A14a (ruled 2026-10-24)
+  pfb_alpha:
+    grid_per_s: [1, 2, 5, 10, 20]
+    with: B7                       # B2's tuned parameters plus the PFB, nothing else
+    set: tune set at the training unmapped rate
+    selection: among settings within 5 percentage points of the best success, the fewest protective stops per 100 m; ties by mission time
+    frozen_for: [L3, L4, L5, B7]
+
+declared:                          # A28 (ruled 2026-10-27): fixed before any arm is tuned or trained
+  L2_cost_limit: 0.1 protective stops triggered per episode, set a priori (supersedes the 2026-10-03 selection of d on the tune set, which would have given L2 a per-arm tuning budget no other learned arm has)
+  L2_multiplier: lambda_0 = 0, eta = 3e-4 per gradient step on the cost critic's batch estimate, projected onto [0, 100]; declared, not tuned
+  invalid_bin: an invalid bin is an obstacle at the footprint's boundary on its bearing, one shared function for B1 (through the classical recovery), B2, B3, B6 and the PFB; the certified layer keeps its own rule (an invalid bin breaches every field)
+  B6_candidate_0: noise 0.1/0.1/0.1, smoothness 0.01, temperature 0.01, goal progress 10 -- from a manual check on two synthetic routes, disclosed, not counted in N
+  B6_compute: samples and horizon fixed by the declared real-time measurement on the training host (gates.yaml realtime_compute), not tuned; iterations 1
+  B6_noise_seed: from the scenario alone, not the run's seed (recorded in the methods)
+  B3_candidate_0: the standard DWA defaults (Nav2 DWB, ROS 2 Humble), converted and cited in configs/base.yaml
+
+per_method_reporting:              # A28 (ruled 2026-10-27): per method and stratum, beside every result
+  - pfb_infeasible (steps on which the PFB found no command satisfying its CBF)
+  - dwa_blocked_steps (B3: no admissible sample)
+  - mppi_all_rejected (B6: every rollout rejected)
+  - invalid_bin_steps (steps with any invalid bin, the environment's count)
+  - per-step compute of the controller, the PFB and their sum: p50, p95 and max, with the host

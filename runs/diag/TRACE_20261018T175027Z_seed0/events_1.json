@@ -1,0 +1,295 @@
+[
+ {
+  "step": 359,
+  "kind": "trigger",
+  "layout_pose": [
+   9.565767366562103,
+   4.687157394039741,
+   -0.19104508156573186
+  ],
+  "velocity": [
+   0.23302747502030513,
+   -0.028378788893430724,
+   -0.17556741435614412
+  ],
+  "applied": [
+   0.247690416174135,
+   -0.033903653718792705,
+   -0.20405067301360214
+  ],
+  "certified": {
+   "stop_active": false,
+   "stop_triggered": true,
+   "field_id": 1,
+   "warning": false,
+   "warning_entered": false,
+   "warning_entries": 1,
+   "breached": true,
+   "at_rest": false,
+   "speed": 0.23480568917985717,
+   "field_speed": 0.25000000000000006,
+   "field_yaw_rate": -0.200171598669607,
+   "yaw_sweep": -0.026695271352618403,
+   "restart_blocked": false,
+   "enabled": true
+  },
+  "nearest": {
+   "distance_m": 0.08362594852124981,
+   "bearing_deg": -47.99714973174321,
+   "valid": true
+  },
+  "recovery": {
+   "mode": "pass",
+   "attempts": 0
+  },
+  "inside_at_rest_field": [],
+  "inside_field_in_force": [
+   {
+    "bearing_deg": -41.951339486014724,
+    "range_m": 0.4176099896430969,
+    "field_m": 0.4213412959554053,
+    "by_m": 0.003731306312308391,
+    "valid": true
+   },
+   {
+    "bearing_deg": -38.96952136610269,
+    "range_m": 0.43528011441230774,
+    "field_m": 0.44855193401549714,
+    "by_m": 0.013271819603189405,
+    "valid": true
+   },
+   {
+    "bearing_deg": -35.96824062215071,
+    "range_m": 0.4562471807003021,
+    "field_m": 0.4711463069633724,
+    "by_m": 0.014899126263070273,
+    "valid": true
+   }
+  ]
+ },
+ {
+  "step": 431,
+  "kind": "release",
+  "layout_pose": [
+   9.600397699486578,
+   4.67737201855426,
+   -0.20379477803060286
+  ],
+  "velocity": [
+   -0.002295638216721276,
+   0.014989121478592035,
+   -0.0002563038867367776
+  ],
+  "applied": [
+   -0.008682408883346515,
+   0.0492403876506104,
+   0.0
+  ],
+  "certified": {
+   "stop_active": false,
+   "stop_triggered": false,
+   "field_id": 0,
+   "warning": true,
+   "warning_entered": false,
+   "warning_entries": 1,
+   "breached": false,
+   "at_rest": true,
+   "speed": 5.624957361936186e-06,
+   "field_speed": 5.624957361936186e-06,
+   "field_yaw_rate": -4.6398771229677115e-06,
+   "yaw_sweep": -4.639913003733905e-07,
+   "restart_blocked": false,
+   "enabled": true
+  },
+  "nearest": {
+   "distance_m": 0.0712700268192717,
+   "bearing_deg": -47.99890850545449,
+   "valid": true
+  },
+  "recovery": {
+   "mode": "recover",
+   "attempts": 1
+  },
+  "inside_at_rest_field": [],
+  "inside_field_in_force": []
+ },
+ {
+  "step": 437,
+  "kind": "trigger",
+  "layout_pose": [
+   9.627806290521201,
+   4.6796152037836745,
+   -0.25443679880886694
+  ],
+  "velocity": [
+   0.12033402600140689,
+   0.009665016572431705,
+   -0.18417755241558748
+  ],
+  "applied": [
+   0.21366503585991176,
+   -0.024726705665585016,
+   -0.23732378485134908
+  ],
+  "certified": {
+   "stop_active": false,
+   "stop_triggered": true,
+   "field_id": 1,
+   "warning": false,
+   "warning_entered": false,
+   "warning_entries": 2,
+   "breached": true,
+   "at_rest": false,
+   "speed": 0.08866325430934434,
+   "field_speed": 0.16798535718346763,
+   "field_yaw_rate": -0.24065940478285447,
+   "yaw_sweep": -0.03371876533002508,
+   "restart_blocked": false,
+   "enabled": true
+  },
+  "nearest": {
+   "distance_m": 0.06432424851701524,
+   "bearing_deg": -44.9216214164186,
+   "valid": true
+  },
+  "recovery": {
+   "mode": "pass",
+   "attempts": 1
+  },
+  "inside_at_rest_field": [],
+  "inside_field_in_force": [
+   {
+    "bearing_deg": -50.94904479290141,
+    "range_m": 0.3577693998813629,
+    "field_m": 0.3597529679043661,
+    "by_m": 0.0019835680230032016,
+    "valid": true
+   },
+   {
+    "bearing_deg": -47.964122352011614,
+    "range_m": 0.3669285178184509,
+    "field_m": 0.3767560729785631,
+    "by_m": 0.009827555160112189,
+    "valid": true
+   },
+   {
+    "bearing_deg": -44.9216214164186,
+    "range_m": 0.3778430223464966,
+    "field_m": 0.3968558971127676,
+    "by_m": 0.019012874766271004,
+    "valid": true
+   },
+   {
+    "bearing_deg": -41.95490142966688,
+    "range_m": 0.39022088050842285,
+    "field_m": 0.4197822017247534,
+    "by_m": 0.02956132121633054,
+    "valid": true
+   },
+   {
+    "bearing_deg": -38.996319613311236,
+    "range_m": 0.4045160114765167,
+    "field_m": 0.4466894203218471,
+    "by_m": 0.042173408845330385,
+    "valid": true
+   },
+   {
+    "bearing_deg": -35.99898330360494,
+    "range_m": 0.421499103307724,
+    "field_m": 0.46946935381425947,
+    "by_m": 0.04797025050653547,
+    "valid": true
+   }
+  ]
+ },
+ {
+  "step": 1500,
+  "kind": "final",
+  "layout_pose": [
+   9.66138341046707,
+   4.66524215234868,
+   -0.26940242214358023
+  ],
+  "velocity": [
+   1.2509578298794331e-05,
+   1.863579073268195e-05,
+   -1.3788594952425985e-05
+  ],
+  "applied": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "certified": {
+   "stop_active": true,
+   "stop_triggered": false,
+   "field_id": 0,
+   "warning": false,
+   "warning_entered": false,
+   "warning_entries": 2,
+   "breached": true,
+   "at_rest": true,
+   "speed": 1.8428972386452845e-05,
+   "field_speed": 1.8428972386452845e-05,
+   "field_yaw_rate": 1.1337878092903978e-06,
+   "yaw_sweep": 1.133789951748392e-07,
+   "restart_blocked": false,
+   "enabled": true
+  },
+  "nearest": {
+   "distance_m": 0.046910066506344134,
+   "bearing_deg": -44.93008743589483,
+   "valid": true
+  },
+  "recovery": {
+   "mode": "off",
+   "attempts": 1
+  },
+  "inside_at_rest_field": [
+   {
+    "bearing_deg": -47.91954512239352,
+    "range_m": 0.3481805920600891,
+    "field_m": 0.3489128711366999,
+    "by_m": 0.0007322790766107756,
+    "valid": true
+   },
+   {
+    "bearing_deg": -44.93008743589483,
+    "range_m": 0.35799843072891235,
+    "field_m": 0.36158646703701897,
+    "by_m": 0.0035880363081066124,
+    "valid": true
+   },
+   {
+    "bearing_deg": -41.97943205407098,
+    "range_m": 0.3692612051963806,
+    "field_m": 0.3719413114765385,
+    "by_m": 0.0026801062801579123,
+    "valid": true
+   }
+  ],
+  "inside_field_in_force": [
+   {
+    "bearing_deg": -47.91954512239352,
+    "range_m": 0.3481805920600891,
+    "field_m": 0.3489128711366999,
+    "by_m": 0.0007322790766107756,
+    "valid": true
+   },
+   {
+    "bearing_deg": -44.93008743589483,
+    "range_m": 0.35799843072891235,
+    "field_m": 0.36158646703701897,
+    "by_m": 0.0035880363081066124,
+    "valid": true
+   },
+   {
+    "bearing_deg": -41.97943205407098,
+    "range_m": 0.3692612051963806,
+    "field_m": 0.3719413114765385,
+    "by_m": 0.0026801062801579123,
+    "valid": true
+   }
+  ]
+ }
+]

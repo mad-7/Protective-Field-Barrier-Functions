@@ -1,0 +1,21 @@
+{
+  "routes": 60,
+  "reached_goal": 48,
+  "stalled": 12,
+  "stops": 29,
+  "by_category": {
+    "prediction": 11,
+    "infeasible": 15,
+    "unattributed": 1,
+    "creep": 2
+  },
+  "prediction_subtypes": {
+    "heading": 11,
+    "motion": 1
+  },
+  "fallback_steps": 264,
+  "fallback_rollout_contacts": 0,
+  "contact_steps": 0,
+  "verdict": "STOP AND REPORT",
+  "smoke": false
+}

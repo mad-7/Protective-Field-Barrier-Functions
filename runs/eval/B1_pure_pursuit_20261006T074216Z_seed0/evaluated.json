@@ -1,0 +1,11 @@
+{
+  "controller": "B1_pure_pursuit",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "environment": "d61a536ed4aa065f2703f90cdb38cd4bd89cd62ca2248df5647f01f0bcc85aa5",
+  "sets": {
+    "scenarios/tune/tune_narrow.json": "d7aa83f0c3a5f5907aca8c611e0b3fd343158474ecf92e033a460a97a2fb9168",
+    "scenarios/tune/tune_medium.json": "91d6261098d026adae939a0ef95074b33930b8eea3cda38170e6e44bfd681d97",
+    "scenarios/tune/tune_wide.json": "490918bf94304e6f82594aa8abaea74e902b55f65dbc59fc94375fa5d6631c0d"
+  }
+}

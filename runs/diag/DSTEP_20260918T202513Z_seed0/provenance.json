@@ -1,0 +1,9 @@
+{
+  "seed": 0,
+  "experiment": "DSTEP_20260918T202513Z",
+  "created_utc": "2026-09-18T20:25:13.987581+00:00",
+  "commit": "cc04c637c19a76964687c7b1f9d657ca4b577187",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "340dbc5d75972436833d016e025e5294937b48af7ef9ccf69500124a6805dcdd"
+}

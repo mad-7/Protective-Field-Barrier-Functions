@@ -1,0 +1,26 @@
+[
+  {
+    "lethal_margin": 0.1,
+    "soft_margin": 0.03,
+    "stratum": "narrow",
+    "min_clearance_m": 0.13,
+    "positions": 20,
+    "failures": []
+  },
+  {
+    "lethal_margin": 0.1,
+    "soft_margin": 0.03,
+    "stratum": "medium",
+    "min_clearance_m": 0.2,
+    "positions": 20,
+    "failures": []
+  },
+  {
+    "lethal_margin": 0.1,
+    "soft_margin": 0.03,
+    "stratum": "wide",
+    "min_clearance_m": 0.4,
+    "positions": 20,
+    "failures": []
+  }
+]

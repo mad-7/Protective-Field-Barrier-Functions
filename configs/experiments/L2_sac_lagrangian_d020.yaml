@@ -1,0 +1,6 @@
+# L2-d020: L2 at d = 0.2 protective stops per episode, the EXPLORATORY sensitivity (ruled 2026-10-27;
+# configs/methods.yaml). Outside every confirmatory family; first in the cut order.
+defaults: L2_sac_lagrangian.yaml
+experiment: L2-d020
+lagrangian:
+  cost_limit: 0.2        # d, protective stops triggered per episode

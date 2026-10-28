@@ -1,0 +1,9 @@
+# Gate G2's own criteria (hard rule 16: no measured constant here; the frozen thresholds --
+# min_steps_per_second, max_rendered_episode_fraction, parallel_instances, measure_seconds,
+# n_training_runs, wallclock_budget_weeks -- are read from preregistration/gates.yaml).
+#
+# preregistration/gates.yaml states in words that "the selected instance count must produce
+# essentially no over-budget steps". RULED 2026-10-27: at most 0.1 % of the SAC phase's steps over the
+# per-step budget (the threshold ruled for scan faults, A25), with scan faults reported beside it per
+# instance count; A28 writes the number into gates.yaml.
+max_over_budget_share: 0.001  # 1, share of SAC-phase steps over the per-step budget (N / 25 s)

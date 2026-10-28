@@ -1,0 +1,22 @@
+{
+  "seed": 0,
+  "experiment": "B1_pure_pursuit_20261017T201329Z",
+  "created_utc": "2026-10-17T20:13:29.587232+00:00",
+  "commit": "569317d7db7ea17d8c32a5518a826b98f8dc9e6e",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "537f1bbbb7d674a395107398b46b7b6a765428b2942acefd529bf0c24dc35eb4",
+  "display_enabled": true,
+  "host": {
+    "hostname": "DESKTOP-5MIDQ97",
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.10",
+    "cpu_model": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "logical_cores": 8,
+    "physical_cores": 4,
+    "ram_total_gb": 7.7,
+    "gpu": "none available to torch",
+    "shared": false,
+    "torch": "2.11.0+cpu"
+  }
+}

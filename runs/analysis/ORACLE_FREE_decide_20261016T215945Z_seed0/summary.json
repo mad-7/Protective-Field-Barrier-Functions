@@ -1,0 +1,62 @@
+{
+  "by_soft": {
+    "0.03": {
+      "all": {
+        "routes": 2271,
+        "plannable": 2271,
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0,
+        "residual_share": 0.0,
+        "clear": 2271,
+        "bend_stop_routes": 0,
+        "unavoidable_stops_per_100m": 0.0,
+        "a1_tangent_stops_per_100m": 2.1255839887499297
+      },
+      "per_stratum": {
+        "medium": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.13113351926762962
+        },
+        "narrow": {
+          "routes": 857,
+          "plannable": 857,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 857,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 5.564424118704819
+        },
+        "wide": {
+          "routes": 707,
+          "plannable": 707,
+          "start_invalid": 0,
+          "goal_invalid": 0,
+          "residual": 0,
+          "residual_share": 0.0,
+          "clear": 707,
+          "bend_stop_routes": 0,
+          "unavoidable_stops_per_100m": 0.0,
+          "a1_tangent_stops_per_100m": 0.04034509057559738
+        }
+      },
+      "plannable_everywhere": true,
+      "residual_rule": "re-sample",
+      "quantisation_failures": 0
+    }
+  },
+  "chosen_soft": 0.03,
+  "residual_rule": "re-sample",
+  "floor_note": "The unavoidable-stop floor is platform-specific: a holonomic base with full knowledge of its route (the oracle). A1's floor is the tangent-locked oracle's."
+}

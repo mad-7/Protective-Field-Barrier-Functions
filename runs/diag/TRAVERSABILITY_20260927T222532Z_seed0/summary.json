@@ -1,0 +1,111 @@
+{
+  "traverses": [
+    {
+      "stratum": "narrow",
+      "clearance_m": 0.13,
+      "speed_m_s": 0.4,
+      "offset_m": 0.0,
+      "steps": 170,
+      "steps_breached": 0,
+      "stops": 0,
+      "distance_m": 3.012522692260892,
+      "fraction_inside": 0.0,
+      "permanently_inside": false,
+      "admissible": true,
+      "stops_per_100m": 0.0
+    },
+    {
+      "stratum": "narrow",
+      "clearance_m": 0.13,
+      "speed_m_s": 0.4,
+      "offset_m": 0.05,
+      "steps": 170,
+      "steps_breached": 0,
+      "stops": 0,
+      "distance_m": 3.012522692260892,
+      "fraction_inside": 0.0,
+      "permanently_inside": false,
+      "admissible": true,
+      "stops_per_100m": 0.0
+    },
+    {
+      "stratum": "medium",
+      "clearance_m": 0.2,
+      "speed_m_s": 0.4,
+      "offset_m": 0.0,
+      "steps": 170,
+      "steps_breached": 0,
+      "stops": 0,
+      "distance_m": 3.012522692260892,
+      "fraction_inside": 0.0,
+      "permanently_inside": false,
+      "admissible": true,
+      "stops_per_100m": 0.0
+    },
+    {
+      "stratum": "medium",
+      "clearance_m": 0.2,
+      "speed_m_s": 0.4,
+      "offset_m": 0.05,
+      "steps": 170,
+      "steps_breached": 0,
+      "stops": 0,
+      "distance_m": 3.012522692260892,
+      "fraction_inside": 0.0,
+      "permanently_inside": false,
+      "admissible": true,
+      "stops_per_100m": 0.0
+    },
+    {
+      "stratum": "wide",
+      "clearance_m": 0.4,
+      "speed_m_s": 0.4,
+      "offset_m": 0.0,
+      "steps": 170,
+      "steps_breached": 0,
+      "stops": 0,
+      "distance_m": 3.012522692260892,
+      "fraction_inside": 0.0,
+      "permanently_inside": false,
+      "admissible": true,
+      "stops_per_100m": 0.0
+    },
+    {
+      "stratum": "wide",
+      "clearance_m": 0.4,
+      "speed_m_s": 0.4,
+      "offset_m": 0.05,
+      "steps": 170,
+      "steps_breached": 0,
+      "stops": 0,
+      "distance_m": 3.012522692260892,
+      "fraction_inside": 0.0,
+      "permanently_inside": false,
+      "admissible": true,
+      "stops_per_100m": 0.0
+    }
+  ],
+  "unavoidable_stop_floor_per_100m": {
+    "narrow": 0.0,
+    "medium": 0.0,
+    "wide": 0.0
+  },
+  "inadmissible_strata": [],
+  "passed": true,
+  "criterion": "a stratum in which a robot tracking within the committed cross-track bound is permanently inside the field is inadmissible; raise the floor, never shrink the field",
+  "offset_m": 0.05,
+  "traverse_m": 3.0,
+  "display": {
+    "in_force": false,
+    "refusals": 0,
+    "consistent": true,
+    "starts": 6,
+    "retries": 0,
+    "refusal_fraction": 0.0
+  },
+  "physics": {
+    "engine": 1,
+    "dynamic_step": 0.005,
+    "solver_sensitivity_drift_deg": 0.64
+  }
+}

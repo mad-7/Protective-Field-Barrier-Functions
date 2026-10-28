@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(preregistration/**)",
+      "Edit(scenarios/test/**)",
+      "Edit(runs/**)",
+      "Bash(git push *)",
+      "Bash(git tag *)",
+      "Bash(git reset --hard *)",
+      "Bash(rm -rf *)",
+      "Bash(python scripts/train.py *)",
+      "Bash(python scripts/evaluate.py *)",
+      "Bash(python scripts/tune_baselines.py *)",
+      "Bash(python scripts/gate_g2_throughput.py *)",
+      "Bash(nohup *)",
+      "Bash(tmux *)",
+      "Bash(screen *)",
+      "Bash(*coppeliaSim*)"
+    ],
+    "ask": [
+      "Edit(pfbnav/safety/**)",
+      "Edit(configs/base.yaml)",
+      "Edit(lua/**)",
+      "Bash(python scripts/gate_g1_fidelity.py *)",
+      "Bash(pytest -m sim*)"
+    ]
+  }
+}

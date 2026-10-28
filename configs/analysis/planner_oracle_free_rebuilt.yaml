@@ -1,0 +1,36 @@
+# The oracle check on the sets REBUILT under A18 (lethal 0.10, soft 0.03, the generator's validity
+# rules). The same procedure as planner_oracle_free_l010.yaml at the chosen soft margin only.
+# Expected (stated before the run): every route plannable; zero start-invalid, goal-invalid and
+# residual routes; zero bend-stop routes; free floor 0 in every stratum. The check runs the same
+# oracle the generator ran, so it confirms the rules were applied end to end (re-planned from each
+# scenario's recorded start and goal), not the oracle itself. It also gives A1's tangent-locked floor
+# on the final sets, which H4 reports beside L5's.
+defaults: ../base.yaml
+
+planner_margins:
+  lethal_margins: [0.10]                                     # m, RULED 2026-10-16
+  soft_margins: [0.03]           # m, CHOSEN 2026-10-16 (A18)
+  sample_spacing_m: 0.02         # m between poses along a route; every vertex taken twice
+  inside_offset_m: 0.05          # m toward the inside of bends -- INFORMATION ONLY (ruled)
+  start_window_m: 0.5            # where each stop happens, for the report and the bend count
+  goal_window_m: 1.0
+  bend_window_m: 0.3
+  quantisation_offsets: 10       # sub-cell positions per axis for the narrowest-aisle check
+  quantisation_aisle_length_m: 6.0
+  sets:                          # tune, pilot and training plans; never scenarios/test (rule 2)
+    - scenarios/tune/tune_narrow.json
+    - scenarios/tune/tune_medium.json
+    - scenarios/tune/tune_wide.json
+    - scenarios/tune/tune_unmapped_narrow.json
+    - scenarios/tune/tune_unmapped_medium.json
+    - scenarios/tune/tune_unmapped_wide.json
+    - scenarios/pilot/pilot_narrow.json
+    - scenarios/train/train_narrow.json
+    - scenarios/train/train_medium.json
+    - scenarios/train/train_wide.json
+
+oracle_free:
+  yaw_step_deg: 15               # deg, the body-yaw grid, anchored at each scenario's start yaw
+  heading_round_deg: 1.0         # deg, field shapes shared across routes (lead term < 1 mm)
+  coarse_stride: 16              # exact coarse-first separating-axis test (route_check)
+  info_lethal_margins: [0.10]   # m, phase `info` if run (not required by the 2026-10-16 ruling)

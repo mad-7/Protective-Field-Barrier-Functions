@@ -1,0 +1,54 @@
+{
+  "by_lethal": {
+    "0.1": {
+      "medium": {
+        "routes": 707,
+        "plannable": 707,
+        "offset_breach_routes": 477,
+        "offset_breach_share": 0.6746817538896747,
+        "mission_time_ratio_median": 1.2200788487787013
+      },
+      "narrow": {
+        "routes": 857,
+        "plannable": 857,
+        "offset_breach_routes": 631,
+        "offset_breach_share": 0.7362893815635939,
+        "mission_time_ratio_median": 1.2189764165210508
+      },
+      "wide": {
+        "routes": 707,
+        "plannable": 707,
+        "offset_breach_routes": 453,
+        "offset_breach_share": 0.6407355021216408,
+        "mission_time_ratio_median": 1.2179827721047602
+      }
+    }
+  },
+  "floor_note": "The unavoidable-stop floor is platform-specific: a holonomic base with full knowledge of its route (the oracle). A1's floor is the tangent-locked oracle's.",
+  "quantisation": [
+    {
+      "lethal_margin": 0.1,
+      "soft_margin": 0.03,
+      "stratum": "narrow",
+      "min_clearance_m": 0.1735,
+      "positions": 20,
+      "failures": []
+    },
+    {
+      "lethal_margin": 0.1,
+      "soft_margin": 0.03,
+      "stratum": "medium",
+      "min_clearance_m": 0.2435,
+      "positions": 20,
+      "failures": []
+    },
+    {
+      "lethal_margin": 0.1,
+      "soft_margin": 0.03,
+      "stratum": "wide",
+      "min_clearance_m": 0.4,
+      "positions": 20,
+      "failures": []
+    }
+  ]
+}

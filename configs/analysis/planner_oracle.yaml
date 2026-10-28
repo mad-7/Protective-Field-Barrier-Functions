@@ -1,0 +1,31 @@
+# Soft margin under the ORACLE criterion (supervisor, 2026-10-15). Offline: no simulator.
+# Lethal margin RULED 0.07 (lethal radius 0.2786 m). An oracle tracker follows each re-planned
+# route exactly, in the fastest band whose field (along the tangent) is clear, under the
+# deceleration limit (actuation.a_decel_max). Criterion: zero routes with a band-0 breach. The soft
+# margin minimising band-0 breaches at bends is chosen; residual rule (declared): <= 2 % of routes
+# in every stratum -> re-sample those routes; any stratum above -> stop and report.
+# Everything measured is read from base.yaml; only the candidates and the check's settings are here.
+defaults: ../base.yaml
+
+planner_margins:
+  lethal_margins: [0.07]                                  # m, RULED 2026-10-15
+  soft_margins: [0.03, 0.05, 0.08, 0.10, 0.13, 0.20, 0.30]  # m, candidates
+  sample_spacing_m: 0.02         # m between poses along a route; every vertex taken twice
+  inside_offset_m: 0.05          # m toward the inside of bends -- INFORMATION ONLY (ruled)
+  # Where band-0 breaches happen, for the report (start and goal are also the validity rules):
+  start_window_m: 0.5
+  goal_window_m: 1.0
+  bend_window_m: 0.3
+  quantisation_offsets: 10       # sub-cell positions per axis for the narrowest-aisle check
+  quantisation_aisle_length_m: 6.0
+  sets:                          # tune, pilot and training plans; never scenarios/test (rule 2)
+    - scenarios/tune/tune_narrow.json
+    - scenarios/tune/tune_medium.json
+    - scenarios/tune/tune_wide.json
+    - scenarios/tune/tune_unmapped_narrow.json
+    - scenarios/tune/tune_unmapped_medium.json
+    - scenarios/tune/tune_unmapped_wide.json
+    - scenarios/pilot/pilot_narrow.json
+    - scenarios/train/train_narrow.json
+    - scenarios/train/train_medium.json
+    - scenarios/train/train_wide.json

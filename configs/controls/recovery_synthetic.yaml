@@ -1,0 +1,30 @@
+# CLOSED 2026-10-16 AS A RECORDED NEGATIVE RESULT (supervisor, ruling (b)): under the corrected
+# fields (rotation sweep, max(estimate, applied)) 0 of 80 declared candidate scenes robustly reproduce
+# a restart-blocked corner stop for B1 across the three slips (docs/decision_log.md). Kept unchanged
+# for the record; not run as a gate.
+#
+# The synthetic recovery control on CURRENT geometry (ruled 2026-10-16). DECLARED BEFORE ANY RUN.
+# Read by pfbnav/eval/recovery_control.py (the known-answer check) and
+# scripts/control_recovery_synthetic.py (the simulator run). Margins, footprint, B1 and recovery are
+# all read from configs/base.yaml (hard rule 16): this file carries only the scene and the criteria.
+#
+# The scene, in the frame of the robot's start pose (x forward, y left, m): one shelf whose near
+# corner sits ahead-left; the shelf runs back from it along the robot's left. The goal is round the
+# corner, so the planner's route -- at today's lethal 0.10 -- bends left round it. B1 cuts the bend,
+# the certified layer stops it, and at rest its restart is blocked with the at-rest field clear.
+scene:
+  corner_m: [1.5, 0.55]          # the shelf's near corner
+  shelf_length_m: 2.0            # back from the corner along -x
+  shelf_depth_m: 1.0             # from the corner along +y
+  goal_from_corner_m: [0.8, 0.6] # the goal, relative to the corner
+  map_margin_m: 1.0              # free floor round the scene in the planner's map
+steps: 500                       # control steps per arm (25 s)
+known_answer:
+  slips: [0.85, 0.92, 1.0]       # realised / commanded translation; G1b measured 0.84-0.97
+criteria:                        # all must hold (ruled: release, then 0.5 m of route)
+  min_route_clearance_m: 0.3086  # the route is a genuine lethal-0.10 route (half_width + 0.10)
+  stop_within_steps: 200         # the first stop comes at the bend, not elsewhere
+  min_at_rest_margin_m: 0.010    # at rest after that stop, the at-rest field clear by >= 10 mm
+  min_block_depth_m: 0.002       # and B1's band-0 leading field breached by >= 2 mm (blocked)
+  progress_after_release_m: 0.5  # RULED: after the release, B1 makes 0.5 m of route progress
+  bare_max_progress_m: 0.10      # the control arm: bare B1 stays blocked at the corner

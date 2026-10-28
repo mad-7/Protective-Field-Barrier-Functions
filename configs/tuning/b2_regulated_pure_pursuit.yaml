@@ -1,0 +1,23 @@
+# The tuning space of B2, holonomic Regulated Pure Pursuit (scripts/tune_classical.py). Ranges
+# APPROVED by the supervisor 2026-10-26; proximity_gain (Nav2's cost_scaling_gain) added the same day
+# under that ruling ("include RPP's curvature and proximity speed-scaling parameters if absent").
+# Curvature scaling is min_radius and min_speed; proximity scaling is proximity_distance,
+# proximity_gain and min_speed. Every range brackets the initial value in configs/base.yaml
+# (baselines.regulated_pure_pursuit), which is candidate 0. Combinations the controller refuses (e.g.
+# min_speed above desired_speed) are re-drawn and counted. The runner refuses this file unless it is
+# committed and unmodified (ruled: commit the ranges before the first candidate runs). A winner on a
+# range boundary is reported, never extended.
+controller: regulated_pure_pursuit
+config_block: baselines.regulated_pure_pursuit
+space:
+  desired_speed:      {low: 0.20, high: 0.50}             # m/s, up to the box ceiling
+  lookahead_time:     {low: 0.5,  high: 3.0, scale: log}  # s
+  min_lookahead:      {low: 0.20, high: 0.60}             # m
+  max_lookahead:      {low: 0.60, high: 1.50}             # m (>= min_lookahead by construction)
+  min_radius:         {low: 0.3,  high: 2.0, scale: log}  # m, curvature scaling below this radius
+  proximity_distance: {low: 0.2,  high: 1.2}              # m of clearance to the footprint
+  proximity_gain:     {low: 0.25, high: 1.0}              # 1, Nav2's cost_scaling_gain (<= 1)
+  approach_distance:  {low: 0.3,  high: 1.2}              # m of route remaining
+  min_speed:          {low: 0.02, high: 0.15}             # m/s, floor of curvature/proximity scaling
+  min_approach_speed: {low: 0.02, high: 0.10}             # m/s (<= min_speed, else re-drawn)
+  k_omega:            {low: 0.5,  high: 3.0, scale: log}  # 1/s

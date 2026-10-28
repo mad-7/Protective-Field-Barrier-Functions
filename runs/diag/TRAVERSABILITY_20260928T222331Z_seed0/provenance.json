@@ -1,0 +1,22 @@
+{
+  "seed": 0,
+  "experiment": "TRAVERSABILITY_20260928T222331Z",
+  "created_utc": "2026-09-28T22:23:31.615742+00:00",
+  "commit": "187728b0bebd1935c12d0853c4dba98396cd255f",
+  "dirty": false,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "20974276a354e7f12e72c52670a09a8f032e7c93ff3b890e752dbeeffdad2b81",
+  "display_enabled": false,
+  "host": {
+    "hostname": "DESKTOP-5MIDQ97",
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.10",
+    "cpu_model": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "logical_cores": 8,
+    "physical_cores": 4,
+    "ram_total_gb": 7.7,
+    "gpu": "none available to torch",
+    "shared": false,
+    "torch": "2.11.0+cpu"
+  }
+}

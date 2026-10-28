@@ -1,0 +1,36 @@
+[
+  {
+    "shape": "/Wall/Cuboid",
+    "parent": "/Wall",
+    "collidable": true,
+    "measurable": true,
+    "detectable": true,
+    "respondable": 1,
+    "static": 1,
+    "triangles": 48,
+    "plan_min_xy_m": [
+      -7.600000000000001,
+      -7.6
+    ],
+    "plan_max_xy_m": [
+      7.599999999999999,
+      7.6
+    ],
+    "z_range_m": [
+      0.0,
+      0.25
+    ],
+    "plan_vertex_distance_m": [
+      10.67754653466797,
+      10.748023074035522
+    ],
+    "covers_origin": false,
+    "on_old_floor": true,
+    "scripts_beside_it": [
+      {
+        "alias": "/Wall/Script",
+        "code": "sim=require'sim'\n\nrequire 'configUi'\r\n\r\nsim.setBufferProperty(sim.getObject('..'), 'customData.__schema__',sim.packTable{\r\n    xSize={\r\n        default=5,\r\n        maximum=200,\r\n        minimum=1,\r\n        name=\"X size\",\r\n        type=\"float\",\r\n        ui={\r\n            control=\"spinbox\",\r\n            order=10,col=1\r\n        },\r\n    },\r\n    ySize={\r\n        default=5,\r\n        maximum=200,\r\n        minimum=1,\r\n        name=\"Y size\",\r\n        type=\"float\",\r\n        ui={\r\n            control=\"spinbox\",\r\n            order=20,col=1\r\n        },\r\n    },\r\n    thickness={\r\n        default=0.2,\r\n        maximum=1,\r\n        minimum=0.05,\r\n        name=\"Thickness\",\r\n        type=\"float\",\r\n        ui={\r\n            control=\"spinbox\",\r\n            order=30,col=2\r\n        },\r\n    },\r\n    height={\r\n        default=0.5,\r\n        maximum=5,\r\n        minimum=0.01,\r\n        name=\"Height\",\r\n        type=\"float\",\r\n        ui={\r\n            control=\"spinbox\",\r\n            order=40,col=2\r\n        },\r\n    },\r\n    color={\r\n        type='color',\r\n        name='Color',\r\n        default={1,1,1},\r\n        ui={order=50,col=1,},\r\n    },\r\n})\r\n\r\nconfigUi=ConfigUI('ExternalWall',nil,function(config)\r\n    local self=sim.getObject('..')\r\n    \r\n    local children=sim.getObjectsInTree(self,sim.sceneobject_shape,1)\r\n    sim.removeObjects(children)\r\n    \r\n    local p=sim.createPrimitiveShape(sim.primitiveshape_cuboid,{config.xSize+config.thickness*2,config.thickness,config.height})\r\n    sim.setObjectColor(p,0,sim.colorcomponent_ambient_diffuse,config.color)\r\n    sim.setObjectPosition(p,{0,-config.ySize*0.5-config.thickness*0.5,config.height*0.5})\r\n    local all={p}\r\n    p=sim.copyPasteObjects({p},0)[1]\r\n    sim.setObjectPosition(p,{0,config.ySize*0.5+config.thickness*0.5,config.height*0.5})\r\n    all[2]=p\r\n    p=sim.createPrimitiveShape(sim.primitiveshape_cuboid,{config.thickness,config.ySize+config.thickness*2,config.height})\r\n    sim.setObjectColor(p,0,sim.colorcomponent_ambient_diffuse,config.color)\r\n    sim.setObjectPosition(p,{-config.xSize*0.5-config.thickness*0.5,0,config.height*0.5})\r\n    all[3]=p\r\n    p=sim.copyPasteObjects({p},0)[1]\r\n    sim.setObjectPosition(p,{config.xSize*0.5+config.thickness*0.5,0,config.height*0.5})\r\n    all[4]=p\r\n    p=sim.groupShapes(all)\r\n    sim.setObjectParent(p,self,true)\r\n    local prop=sim.getObjectProperty(p)\r\n    sim.setObjectProperty(p,(prop|sim.objectproperty_selectable|sim.objectproperty_ignoreviewfitting)-sim.objectproperty_selectable)\r\n    sim.setBoolProperty(p, 'respondable', true)\r\nend)\r\n\r\nconfigUi.getObjectCallback = function() return sim.getObject '..' end\r\n"
+      }
+    ]
+  }
+]

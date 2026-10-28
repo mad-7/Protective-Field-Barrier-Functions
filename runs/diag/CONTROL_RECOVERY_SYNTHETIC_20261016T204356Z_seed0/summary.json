@@ -1,0 +1,132 @@
+{
+  "criteria": {
+    "stops_early": true,
+    "at_rest_field_clear": true,
+    "restart_blocked": false,
+    "recovery_released": false,
+    "progress_after_release": false,
+    "bare_stays_blocked": true,
+    "route_clearance": true,
+    "no_contact": true
+  },
+  "all_pass": false,
+  "route_clearance_m": 0.3396784799285386,
+  "recovery": {
+    "analysis": {
+      "stopped": true,
+      "first_stop_step": 104,
+      "s_at_stop": 1.1588156418320283,
+      "rest_step": 117,
+      "stop_state": {
+        "at_rest_margin": 0.028235885983321496,
+        "restart_permitted": false,
+        "block_depth": 0.001516081679147574
+      },
+      "released_step": 176,
+      "s_at_release": 1.2056141141538024,
+      "progress_after_release": 0.10535486460898347,
+      "progress_after_stop": 0.1521533369307575,
+      "min_centre_clearance": 0.3255725986237563
+    },
+    "contact": false,
+    "report": {
+      "recovery_attempts": 5,
+      "recovery_endings": {
+        "cleared": 2,
+        "distance": 0,
+        "new_stop": 0,
+        "not_released": 3,
+        "no_permitted_direction": 0
+      },
+      "recovery_attempt_log": [
+        {
+          "start_step": 176,
+          "heading_deg": -104.99999999999999,
+          "ending": "cleared",
+          "distance_m": 0.000750734950620808,
+          "steps": 1
+        },
+        {
+          "start_step": 251,
+          "heading_deg": -104.99999999999999,
+          "ending": "cleared",
+          "distance_m": 0.022178100743710842,
+          "steps": 8
+        },
+        {
+          "start_step": 334,
+          "heading_deg": -104.99999999999999,
+          "ending": "not_released",
+          "distance_m": 0.0,
+          "steps": 1
+        },
+        {
+          "start_step": 335,
+          "heading_deg": -104.99999999999999,
+          "ending": "not_released",
+          "distance_m": 0.0,
+          "steps": 1
+        },
+        {
+          "start_step": 336,
+          "heading_deg": -104.99999999999999,
+          "ending": "not_released",
+          "distance_m": 0.0,
+          "steps": 1
+        }
+      ],
+      "recovery_deadlock": null,
+      "recovery_gave_up": "cap",
+      "recovery_distance_m": 0.022928835694331653,
+      "recovery_steps": 12,
+      "recovery_time_s": 0.6000000000000001
+    }
+  },
+  "bare": {
+    "analysis": {
+      "stopped": true,
+      "first_stop_step": 104,
+      "s_at_stop": 1.1588156418320283,
+      "rest_step": 117,
+      "stop_state": {
+        "at_rest_margin": 0.028235885983321496,
+        "restart_permitted": false,
+        "block_depth": 0.001516081679147574
+      },
+      "released_step": null,
+      "s_at_release": null,
+      "progress_after_release": 0.0,
+      "progress_after_stop": 0.046868968580275894,
+      "min_centre_clearance": 0.33816458405447036
+    },
+    "contact": false,
+    "report": null
+  },
+  "prediction_all_pass": false,
+  "predicted_criteria_by_slip": {
+    "0.85": {
+      "stops_early": true,
+      "at_rest_field_clear": true,
+      "restart_blocked": false,
+      "recovery_released": true,
+      "progress_after_release": false,
+      "bare_stays_blocked": true
+    },
+    "0.92": {
+      "stops_early": true,
+      "at_rest_field_clear": true,
+      "restart_blocked": false,
+      "recovery_released": true,
+      "progress_after_release": false,
+      "bare_stays_blocked": true
+    },
+    "1.0": {
+      "stops_early": true,
+      "at_rest_field_clear": true,
+      "restart_blocked": true,
+      "recovery_released": false,
+      "progress_after_release": false,
+      "bare_stays_blocked": true
+    }
+  }
+}

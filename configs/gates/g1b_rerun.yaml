@@ -1,0 +1,10 @@
+# G1b re-run under amendment A6. Inherits everything from base.yaml, including the
+# frozen physics (ODE, 0.005 s), and changes only the commanded-velocity box.
+defaults: ../base.yaml
+actuation:
+  # A measurement ceiling, not a limit: the box sits at or above every speed the gate
+  # tests (grid to 0.50 m/s, lateral extension to 0.45 m/s), so the clamp cannot decide
+  # the result. v_max and vy_max are *outputs* of this run (A5, A6); D8 writes them into
+  # base.yaml afterwards. Clamp bindings are still counted per run.
+  v_max: 0.5               # m/s
+  vy_max: 0.5              # m/s

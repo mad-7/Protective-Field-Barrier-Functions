@@ -1,0 +1,800 @@
+{
+  "overall": {
+    "episodes": 60,
+    "counts": {
+      "success": 0,
+      "collision": 0,
+      "timeout": 60,
+      "unrecoverable_stop": 0
+    },
+    "shares": {
+      "success": 0.0,
+      "collision": 0.0,
+      "timeout": 1.0,
+      "unrecoverable_stop": 0.0
+    },
+    "success_rate": 0.0,
+    "contact_rate": 0.0,
+    "largest_outcome_share": 1.0,
+    "protective_stops": 0,
+    "distance_m": 0.10846638866523589,
+    "stops_per_100m": 0.0,
+    "recovery_distance_m": 0.0,
+    "stops_per_100m_excluding_recovery": 0.0,
+    "planned_length_m": 622.4416372867379,
+    "stops_per_100m_planned": 0.0,
+    "mean_return": -14.99797741039405
+  },
+  "per_set": {
+    "tune_narrow": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.036155462888411934,
+      "stops_per_100m": 0.0,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 0.0,
+      "planned_length_m": 216.20059805385893,
+      "stops_per_100m_planned": 0.0,
+      "mean_return": -14.997654288059081
+    },
+    "tune_medium": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.036155462888411934,
+      "stops_per_100m": 0.0,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 0.0,
+      "planned_length_m": 209.1376215337654,
+      "stops_per_100m_planned": 0.0,
+      "mean_return": -14.998039538775634
+    },
+    "tune_wide": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.036155462888411934,
+      "stops_per_100m": 0.0,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 0.0,
+      "planned_length_m": 197.1034176991137,
+      "stops_per_100m_planned": 0.0,
+      "mean_return": -14.998238404347427
+    }
+  },
+  "per_stratum": {
+    "medium": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.036155462888411934,
+      "stops_per_100m": 0.0,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 0.0,
+      "planned_length_m": 209.1376215337654,
+      "stops_per_100m_planned": 0.0,
+      "mean_return": -14.998039538775634
+    },
+    "narrow": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.036155462888411934,
+      "stops_per_100m": 0.0,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 0.0,
+      "planned_length_m": 216.20059805385893,
+      "stops_per_100m_planned": 0.0,
+      "mean_return": -14.997654288059081
+    },
+    "wide": {
+      "episodes": 20,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 20,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "distance_m": 0.036155462888411934,
+      "stops_per_100m": 0.0,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 0.0,
+      "planned_length_m": 197.1034176991137,
+      "stops_per_100m_planned": 0.0,
+      "mean_return": -14.998238404347427
+    }
+  },
+  "recovery": {
+    "episodes": 60,
+    "episodes_with_recovery": 0,
+    "attempts": 0,
+    "endings": {},
+    "deadlocks": {},
+    "distance_m": 0.0,
+    "time_s": 0.0,
+    "suspected_defects": [],
+    "per_episode": [
+      {
+        "scenario_seed": 2000000,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000001,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000002,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000003,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000004,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000005,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000006,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000007,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000008,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000009,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000010,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000011,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000012,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000013,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000014,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000015,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000016,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000017,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000018,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000019,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000020,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000021,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000022,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000023,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000024,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000025,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000026,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000027,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000028,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000029,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000030,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000031,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000032,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000033,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000034,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000035,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000036,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000037,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000038,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000039,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000040,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000041,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000042,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000043,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000044,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000045,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000046,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000047,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000048,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000049,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000050,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000051,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000052,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000053,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000054,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000055,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000056,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000057,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000058,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2000059,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "routes": 60,
+  "reached_goal": 48,
+  "stalled": 12,
+  "stops": 30,
+  "by_category": {
+    "infeasible": 13,
+    "prediction": 17
+  },
+  "prediction_subtypes": {
+    "heading": 17
+  },
+  "fallback_steps": 243,
+  "fallback_rollout_contacts": 0,
+  "contact_steps": 0,
+  "verdict": "PASS",
+  "smoke": false
+}

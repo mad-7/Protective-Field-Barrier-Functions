@@ -1,0 +1,62 @@
+{
+  "limits": {
+    "a_max": 0.5,
+    "alpha_max": 1.4,
+    "a_decel_max": 1.0
+  },
+  "profiles": {
+    "forward": {
+      "C1_limiter_binds": true,
+      "C2_torque_cap_wheel_steps_in_ramp": 0,
+      "torque_cap_wheel_steps_total": 0,
+      "ramp_steps": 16,
+      "achieved_accel": 0.4318217790109945,
+      "achieved_over_a_max": 0.863643558021989,
+      "achieved_decel": 0.9615656669627586,
+      "passes": true
+    },
+    "lateral": {
+      "C1_limiter_binds": true,
+      "C2_torque_cap_wheel_steps_in_ramp": 0,
+      "torque_cap_wheel_steps_total": 0,
+      "ramp_steps": 20,
+      "achieved_accel": 0.3895188303798122,
+      "achieved_over_a_max": 0.7790376607596244,
+      "achieved_decel": 0.8713641551437775,
+      "passes": true
+    },
+    "diagonal": {
+      "C1_limiter_binds": true,
+      "C2_torque_cap_wheel_steps_in_ramp": 0,
+      "torque_cap_wheel_steps_total": 0,
+      "ramp_steps": 16,
+      "achieved_accel": 0.38865366348388525,
+      "achieved_over_a_max": 0.7773073269677705,
+      "achieved_decel": 0.9264563149567763,
+      "passes": true
+    },
+    "yaw": {
+      "C1_limiter_binds": true,
+      "C2_torque_cap_wheel_steps_in_ramp": 0,
+      "torque_cap_wheel_steps_total": 0,
+      "ramp_steps": 15,
+      "achieved_alpha": 1.3038857348073445,
+      "achieved_over_alpha_max": 0.9313469534338176,
+      "passes": true
+    },
+    "combined": {
+      "C1_limiter_binds": true,
+      "C2_torque_cap_wheel_steps_in_ramp": 0,
+      "torque_cap_wheel_steps_total": 0,
+      "ramp_steps": 10,
+      "achieved_accel": 0.4214932948033735,
+      "achieved_over_a_max": 0.842986589606747,
+      "achieved_decel": 0.9634075998972885,
+      "achieved_alpha": 1.2250329638087432,
+      "achieved_over_alpha_max": 0.8750235455776737,
+      "passes": true
+    }
+  },
+  "positive_control_capped_wheel_steps": 16,
+  "verdict": "PASS"
+}
