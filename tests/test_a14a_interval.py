@@ -5,10 +5,10 @@ classical_df flat_k_minus_1).
 
 That code is kept as tests/data/rate_ratio_0329941.py.txt, extracted unchanged from commit 0329941 of
 the original repository (the repository moved on 2026-10-28 and its history starts at a later
-commit, so `git show` of that commit no longer works). Its SHA-256 is pinned below."""
+commit, so `git show` of that commit no longer works). Its SHA-256, of the text with line endings
+normalised (a Windows checkout turns LF into CRLF), is pinned below."""
 from __future__ import annotations
 
-import hashlib
 import importlib.util
 import sys
 from pathlib import Path
@@ -18,6 +18,7 @@ import pytest
 from scipy import stats
 
 from pfbnav.eval import rate_ratio as rr
+from pfbnav.utils.hashing import normalise_eol, text_sha256
 
 REPO = Path(__file__).resolve().parents[1]
 CALIBRATED_AT = "0329941"            # the commit of the calibration run that adopted flat K - 1
@@ -29,9 +30,8 @@ LEVEL = 0.05 / 3                     # the power level alpha/3 (A14a); any level
 @pytest.fixture(scope="module")
 def old(tmp_path_factory):
     """pfbnav/eval/rate_ratio.py exactly as it was when calibration passed, imported from a copy."""
-    raw = CALIBRATED_COPY.read_bytes()
-    assert hashlib.sha256(raw).hexdigest() == CALIBRATED_SHA256,         f"tests/data/rate_ratio_0329941.py.txt is not the code of commit {CALIBRATED_AT}"
-    source = raw.decode("utf-8")
+    assert text_sha256(CALIBRATED_COPY) == CALIBRATED_SHA256,         f"tests/data/rate_ratio_0329941.py.txt is not the code of commit {CALIBRATED_AT}"
+    source = normalise_eol(CALIBRATED_COPY.read_bytes()).decode("utf-8")
     path = tmp_path_factory.mktemp("calibrated") / "rate_ratio_calibrated.py"
     path.write_text(source, encoding="utf-8")
     spec = importlib.util.spec_from_file_location("rate_ratio_calibrated", path)

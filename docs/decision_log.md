@@ -9912,3 +9912,7 @@ and the two tests that use it errored (first run on the training host: 1505 pass
 - **Not changed:** the analysis scripts that also read old commits (`scripts/reemulate_b1_traces.py`,
   `scripts/compare_rebuilt_sets.py --against`, `scripts/regress_floor.py --rev`) are not in the fast
   suite and need the original repository's history to reproduce those past analyses.
+- **Correction, same day:** the first version hashed the raw bytes, and the training host (a Windows
+  checkout, CRLF) got `6cc85484...` for the same text, so both tests errored there. The test now uses
+  `pfbnav.utils.hashing.text_sha256` (line endings normalised, the project's rule for identity hashes);
+  a CRLF copy of the file was checked to give the pinned `27435685...67268008`.
