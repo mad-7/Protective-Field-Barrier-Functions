@@ -1,0 +1,25 @@
+{
+ "note": "A22 reference for the emulator's positive control (2026-10-20): bare B1 on the 2026-10-13 corner scenario (tests/data/corner_stop_20261013.json, lethal 0.03), simulated under the A21 field and the A22 whole-field restart. One stop, then held: the whole-field restart blocks the A20 run's six stop-restart cycles.",
+ "run": "runs/diag/RECOVERY_CORNER_20261020T152314Z_seed0",
+ "commit": "6207c7d",
+ "steps": 500,
+ "stops": [
+  {
+   "step": 86,
+   "s_m": 0.9458
+  }
+ ],
+ "final": {
+  "step": 500,
+  "s_m": 0.9827,
+  "stop_active": true,
+  "restart_blocked": true,
+  "at_rest": true
+ },
+ "trigger_decision": {
+  "step": 85,
+  "s_m": 0.9339,
+  "note": "the pose the trigger was decided at: the simulator's s_m is recorded AFTER each step's motion, so the decision pose of step n is step n-1's"
+ },
+ "braking_travel_m": 0.0488
+}

@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pfbnav"
+version = "2.0.0.dev0"
+description = "Protective-Field Barrier functions for learned local planning on industrial mobile robots"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "scipy",
+  "pyyaml",
+  "pandas",
+  "matplotlib",
+  "gymnasium",
+  "stable-baselines3",
+  "torch",
+  "qpsolvers[osqp]",
+  "clarabel",
+  "coppeliasim-zmqremoteapi-client",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.setuptools.packages.find]
+include = ["pfbnav*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["sim: requires a running CoppeliaSim instance (deselect with -m 'not sim')"]
+
+[tool.ruff]
+line-length = 100

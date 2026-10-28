@@ -1,0 +1,386 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.13, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\PC\Desktop\pfb-nav
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.12.1
+collected 130 items / 118 deselected / 12 selected
+
+tests\test_chassis_geometry.py 
+planar envelope in the body frame (half-extents, m)
+  chassis shape only  : length 0.2854  width 0.1789
+  wheels (12 shapes)  : length 0.3133  width 0.2437
+  whole robot tree    : length 0.3501  width 0.2437
+
+  wheel overhang beyond the chassis: length +0.0279  width +0.0648 m
+  tree overhang beyond the chassis : length +0.0647  width +0.0648 m
+
+  a positive overhang means geometry outside the shape the contact check
+  watches, and outside the footprint the PFB is given.
+.
+chassis geometry measured from the scene
+  scene              : scenes/warehouse_v2.ttt
+  chassis object     : /youBot
+  pose reference     : /youBot/youBot_ref
+  bbox in shape frame: min=[-0.081, -0.1785, -0.2851] max=[0.081, 0.1785, 0.2851] m
+  yaw_offset applied : +1.5708 rad
+
+  quantity          envelope        chassis    difference
+  half_length          0.2854      0.2854     -0.0000 m
+  half_width           0.1970      0.1789     -0.0181 m
+  half_height               -      0.1768           - m
+
+  with yaw_offset + pi/2: half_length=0.1789 half_width=0.2854 m
+
+  frame alignment measured from the transform, independent of the config
+  (+/- 0.0001 rad; the two alignments have equal area, so both are listed):
+    yaw_offset +1.5698 rad -> half_length=0.2852 half_width=0.1786 m
+    yaw_offset +3.1406 rad -> half_length=0.1786 half_width=0.2852 m
+    configured yaw_offset is +0.0010 rad from the first of these
+
+  the chassis must not exceed the envelope; a negative difference is the
+  wheels standing proud of it, which is expected laterally.
+F
+v1 collision threshold 0.2 m vs measured half_length 0.2854 m, half_width 0.1789 m
+.
+tests\test_contact_sim.py 
+chassis set: 52 objects
+
+wheel set: 30 objects
+..
+probe cuboid inside the chassis: detected without rebind=True, after rebind=True, part=chassis, with ('/youBot', '/Cuboid')
+.
+wall at 0.188 m in the wheel band: contact=True via wheels; chassis-only check would report False
+.
+tests\test_footprint_probe.py 
+collidable envelope along body +y (lateral), swept at 0.0025 m over [0.1, 0.4]
+  configured half-extent: 0.1970 m
+
+  chassis      : outer face in (0.1770, 0.1795] m
+  wheels       : outer face in (0.1945, 0.1970] m   (contact not continuous from the start)
+  whole robot  : outer face in (0.1945, 0.1970] m
+
+  chassis      : #################################........................................................................................
+  wheels       : ........################################.................................................................................
+  whole robot  : ########################################.................................................................................
+
+  wheels beyond the chassis     : +0.0175 m (+/- 0.0025 m)
+  any geometry beyond the chassis: +0.0175 m (+/- 0.0025 m)
+  that band can be struck without ChassisContact seeing it.
+
+  cross-check: the collision probe puts the chassis face in (0.1770, 0.1795] m,
+  against 0.1970 m measured from the bounding box (independent method).
+.
+collidable envelope along body +x (forward), swept at 0.0025 m over [0.2, 0.6]
+  configured half-extent: 0.2854 m
+
+  chassis      : outer face in (0.2845, 0.2870] m
+  wheels       : outer face in (0.2770, 0.2795] m
+  whole robot  : outer face in (0.3495, 0.3520] m   (contact not continuous from the start)
+
+  chassis      : ####################################.............................................................................................................................
+  wheels       : #################################................................................................................................................................
+  whole robot  : ####################################...#######################...................................................................................................
+
+  wheels beyond the chassis     : -0.0075 m (+/- 0.0025 m)
+  any geometry beyond the chassis: +0.0650 m (+/- 0.0025 m)
+  that band can be struck without ChassisContact seeing it.
+
+  cross-check: the collision probe puts the chassis face in (0.2845, 0.2870] m,
+  against 0.2854 m measured from the bounding box (independent method).
+F
+tests\test_scene_objects.py 
+objects under /youBot (64 total):
+  shape  /youBot
+  joint  /youBot/rollingJoint_rr
+  joint  /youBot/rollingJoint_rl
+  joint  /youBot/Joint
+  shape  /youBot/ME_Platfo2_sub1
+  joint  /youBot/youBotArmJoint0
+  dummy  /youBot/youBot_ref
+  dummy  /youBot/LiDAR
+  type 17 /youBot/rollingJoint_rr/Script
+  shape  /youBot/rollingJoint_rr/intermediateLink_rr
+  type 17 /youBot/rollingJoint_rl/Script
+  shape  /youBot/rollingJoint_rl/intermediateLink_rl
+  shape  /youBot/Joint/Rectangle0
+  shape  /youBot/ME_Platfo2_sub1/Rectangle
+  shape  /youBot/ME_Platfo2_sub1/Rectangle13
+  shape  /youBot/youBotArmJoint0/Rectangle22
+  type 17 /youBot/LiDAR/Script
+  shape  /youBot/LiDAR/body
+  type 9 /youBot/LiDAR/sensor1
+  type 9 /youBot/LiDAR/sensor2
+  shape  /youBot/rollingJoint_rr/intermediateLink_rr/swedishWheel_rr
+  joint  /youBot/rollingJoint_rr/intermediateLink_rr/slippingJoint_rr
+  shape  /youBot/rollingJoint_rl/intermediateLink_rl/swedishWheel_rl
+  joint  /youBot/rollingJoint_rl/intermediateLink_rl/slippingJoint_rl
+  joint  /youBot/Joint/Rectangle0/rollingJoint_fl
+  joint  /youBot/Joint/Rectangle0/rollingJoint_fr
+  shape  /youBot/youBotArmJoint0/Rectangle22/ME_Arm1_m0_sub0_sub0
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1
+  type 17 /youBot/LiDAR/sensor1/Script
+  type 17 /youBot/LiDAR/sensor2/Script
+  shape  /youBot/rollingJoint_rr/intermediateLink_rr/slippingJoint_rr/wheel_respondable_rr
+  shape  /youBot/rollingJoint_rl/intermediateLink_rl/slippingJoint_rl/wheel_respondable_rl
+  type 17 /youBot/Joint/Rectangle0/rollingJoint_fl/Script
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl
+  type 17 /youBot/Joint/Rectangle0/rollingJoint_fr/Script
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl/swedishWheel_fl
+  joint  /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl/slippingJoint_fl
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr/swedishWheel_fr
+  joint  /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr/slippingJoint_fr
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/ME_Arm2_13_sub0
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl/slippingJoint_fl/wheel_respondable_fl
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr/slippingJoint_fr/wheel_respondable_fr
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/ME_Arm2_13_sub0/Cylinder
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/ME_Arm3_01_sub1_sub0_sub0
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/ME_Arm3_01_sub1_sub0_sub0/Cylinder1
+  dummy  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/ME_Arm3_01_sub1_sub0_sub0/youBot_orientationBase
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/ME_Arm4_me
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/ME_Arm4_me/Cylinder2
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7
+  type 17 /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/ME_Arm5_me_sub1
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5/Rectangle2
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5/youBotGripperJoint2
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5/youBotGripperJoint2/Rectangle6
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5/youBotGripperJoint2/Rectangle6/Rectangle3
+.
+resolved scene objects:
+  base_ref       /youBot/youBot_ref                 -> handle 92
+  chassis        /youBot                            -> handle 36
+  robot_tree     /youBot                            -> handle 36
+  wheels[fl]     /youBot/Joint/Rectangle0/rollingJoint_fl -> handle 51
+  wheels[fr]     /youBot/Joint/Rectangle0/rollingJoint_fr -> handle 57
+  wheels[rl]     /youBot/rollingJoint_rl            -> handle 43
+  wheels[rr]     /youBot/rollingJoint_rr            -> handle 37
+..
+
+================================== FAILURES ===================================
+______________ test_chassis_fits_inside_the_configured_footprint ______________
+
+cfg = {'sim': {'endpoint': 'tcp://127.0.0.1', 'port': 23000, 'dt': 0.05, 'scene': 'scenes/warehouse_v2.ttt', ...}, 'robot': ...0.3, 'w_max': 1.5, ...}, 'scanners': {'policy_bins': 36, 'filter_bins': 120, 'range_max': 5.0, 'range_min': 0.05}, ...}
+sim_client = <pfbnav.sim.client.SimClient object at 0x00000226CC2EB770>
+
+    def test_chassis_fits_inside_the_configured_footprint(cfg, sim_client):
+        """The chassis box against the configured envelope, plus the frame alignment.
+    
+        `robot.half_length` / `half_width` describe the whole robot envelope, chassis
+        plus wheels, so the chassis alone must fit inside them with room to spare
+        laterally. `tests/test_footprint_probe.py` is the authority on the envelope
+        itself; this checks the chassis and the body frame.
+        """
+        geom = ChassisGeometry.from_config(cfg)
+        objects = SceneObjects.from_config(cfg)
+    
+        chassis = sim_client.object(objects.chassis)
+        base_ref = sim_client.object(objects.base_ref)
+        lo, hi = _bbox_in_shape_frame(sim_client.sim, chassis)
+        matrix = sim_client.sim.getObjectMatrix(chassis, base_ref)
+    
+        measured = chassis_extent_in_body(lo, hi, matrix, geom.yaw_offset)
+        quarter_turn = chassis_extent_in_body(lo, hi, matrix, geom.yaw_offset + math.pi / 2)
+    
+        # Measured independently of the configured offset, so the report says what the
+        # frame actually is instead of only whether it looks close to what was expected.
+        aligned_at, aligned_half = tightest_yaw_offset(lo, hi, matrix, resolution=ALIGN_RESOLUTION)
+        other_half = chassis_extent_in_body(lo, hi, matrix, aligned_at + math.pi / 2)
+        misalignment = wrap_angle(geom.yaw_offset - aligned_at)
+    
+        d_length = measured[0] - geom.half_length
+        d_width = measured[1] - geom.half_width
+    
+        report = "\n".join([
+            "",
+            "chassis geometry measured from the scene",
+            f"  scene              : {cfg['sim']['scene']}",
+            f"  chassis object     : {objects.chassis}",
+            f"  pose reference     : {objects.base_ref}",
+            f"  bbox in shape frame: min={[round(v, 4) for v in lo]} "
+            f"max={[round(v, 4) for v in hi]} m",
+            f"  yaw_offset applied : {geom.yaw_offset:+.4f} rad",
+            "",
+            "  quantity          envelope        chassis    difference",
+            f"  half_length       {geom.half_length:9.4f}   {measured[0]:9.4f}   {d_length:+9.4f} m",
+            f"  half_width        {geom.half_width:9.4f}   {measured[1]:9.4f}   {d_width:+9.4f} m",
+            f"  half_height               -   {measured[2]:9.4f}           - m",
+            "",
+            f"  with yaw_offset + pi/2: half_length={quarter_turn[0]:.4f} "
+            f"half_width={quarter_turn[1]:.4f} m",
+            "",
+            "  frame alignment measured from the transform, independent of the config",
+            f"  (+/- {ALIGN_RESOLUTION:g} rad; the two alignments have equal area, so both "
+            "are listed):",
+            f"    yaw_offset {aligned_at:+.4f} rad -> half_length={aligned_half[0]:.4f} "
+            f"half_width={aligned_half[1]:.4f} m",
+            f"    yaw_offset {aligned_at + math.pi / 2:+.4f} rad -> "
+            f"half_length={other_half[0]:.4f} half_width={other_half[1]:.4f} m",
+            f"    configured yaw_offset is {misalignment:+.4f} rad from the first of these",
+            "",
+            "  the chassis must not exceed the envelope; a negative difference is the",
+            "  wheels standing proud of it, which is expected laterally.",
+        ])
+        print(report)
+    
+        off_axis = min(abs(wrap_angle(misalignment - k * math.pi / 2)) for k in range(-2, 3))
+        hint = ""
+        if off_axis > 2 * ALIGN_RESOLUTION:
+            hint = (f"\nrobot.yaw_offset is {off_axis:+.4f} rad away from any alignment of the "
+                    "chassis box, so the body frame is skewed against the chassis.")
+        elif abs(d_length) > CHASSIS_TOL_M or abs(d_width) > CHASSIS_TOL_M:
+            hint = ("\nrobot.yaw_offset is aligned with the chassis box but may be the wrong "
+                    "one of the two alignments; compare the two rows above.")
+    
+>       assert abs(d_length) <= CHASSIS_TOL_M and abs(d_width) <= CHASSIS_TOL_M, (
+            f"{report}\n\nmeasured chassis half-extents differ from the values in "
+            f"configs/base.yaml by more than {CHASSIS_TOL_M} m.{hint}"
+        )
+E       AssertionError: 
+E         chassis geometry measured from the scene
+E           scene              : scenes/warehouse_v2.ttt
+E           chassis object     : /youBot
+E           pose reference     : /youBot/youBot_ref
+E           bbox in shape frame: min=[-0.081, -0.1785, -0.2851] max=[0.081, 0.1785, 0.2851] m
+E           yaw_offset applied : +1.5708 rad
+E         
+E           quantity          envelope        chassis    difference
+E           half_length          0.2854      0.2854     -0.0000 m
+E           half_width           0.1970      0.1789     -0.0181 m
+E           half_height               -      0.1768           - m
+E         
+E           with yaw_offset + pi/2: half_length=0.1789 half_width=0.2854 m
+E         
+E           frame alignment measured from the transform, independent of the config
+E           (+/- 0.0001 rad; the two alignments have equal area, so both are listed):
+E             yaw_offset +1.5698 rad -> half_length=0.2852 half_width=0.1786 m
+E             yaw_offset +3.1406 rad -> half_length=0.1786 half_width=0.2852 m
+E             configured yaw_offset is +0.0010 rad from the first of these
+E         
+E           the chassis must not exceed the envelope; a negative difference is the
+E           wheels standing proud of it, which is expected laterally.
+E         
+E         measured chassis half-extents differ from the values in configs/base.yaml by more than 0.01 m.
+E         robot.yaw_offset is +0.0010 rad away from any alignment of the chassis box, so the body frame is skewed against the chassis.
+E       assert (4.868108901312507e-05 <= 0.01 and 0.018066476210851196 <= 0.01)
+E        +  where 4.868108901312507e-05 = abs(-4.868108901312507e-05)
+E        +  and   0.018066476210851196 = abs(-0.018066476210851196)
+
+tests\test_chassis_geometry.py:188: AssertionError
+___ test_collidable_envelope_along_a_body_axis[0-body +x (forward)-0.2-0.6] ___
+
+cfg = {'sim': {'endpoint': 'tcp://127.0.0.1', 'port': 23000, 'dt': 0.05, 'scene': 'scenes/warehouse_v2.ttt', ...}, 'robot': ...0.3, 'w_max': 1.5, ...}, 'scanners': {'policy_bins': 36, 'filter_bins': 120, 'range_max': 5.0, 'range_min': 0.05}, ...}
+sim_client = <pfbnav.sim.client.SimClient object at 0x00000226CC2EB770>
+axis = 0, axis_name = 'body +x (forward)', lo = 0.2, hi = 0.6
+
+    @pytest.mark.parametrize("axis, axis_name, lo, hi", [
+        (1, "body +y (lateral)", 0.100, 0.400),
+        (0, "body +x (forward)", 0.200, 0.600),
+    ])
+    def test_collidable_envelope_along_a_body_axis(cfg, sim_client, axis, axis_name, lo, hi):
+        geom = ChassisGeometry.from_config(cfg)
+        objects = SceneObjects.from_config(cfg)
+        sim = sim_client.sim
+        base_ref = sim_client.object(objects.base_ref)
+    
+        wheel_shapes = [h for path in objects.wheels
+                        for h in sim_client.shapes_in_tree(sim_client.object(path))]
+        groups = {
+            "chassis": sim_client.entity_for([sim_client.object(objects.chassis)]),
+            "wheels": sim_client.entity_for(wheel_shapes),
+            "whole robot": sim_client.entity_for(
+                sim_client.shapes_in_tree(sim_client.object(objects.robot_tree))),
+        }
+        offsets = np.arange(lo, hi + SWEEP_STEP / 2, SWEEP_STEP)
+    
+        plate = _make_plate(sim, axis, base_ref, geom.yaw_offset)
+        try:
+            profiles = _sweep_axis(sim, plate, base_ref, geom.yaw_offset, axis, offsets, groups)
+        finally:
+            sim.removeObjects([plate])
+    
+        edges = {name: _edge_of(offsets, hits) for name, hits in profiles.items()}
+        configured = geom.half_width if axis == 1 else geom.half_length
+        half_plate = PLATE_THICKNESS_M / 2.0
+    
+        def bracket(edge: float) -> tuple[float, float]:
+            """Interval containing the true outer face, from the last offset that touched.
+    
+            The plate spans [offset - half, offset + half], so contact means
+            offset - half < face, and the first offset that missed gives
+            face <= offset + step - half. Reporting `edge + half` instead would
+            overstate every face by a plate thickness.
+            """
+            return edge - half_plate, edge + SWEEP_STEP - half_plate
+    
+        lines = ["", f"collidable envelope along {axis_name}, swept at {SWEEP_STEP} m "
+                     f"over [{lo}, {hi}]",
+                 f"  configured half-extent: {configured:.4f} m", ""]
+        for name, (edge, clean) in edges.items():
+            if edge is None:
+                lines.append(f"  {name:<12} : no contact anywhere in the swept range")
+            else:
+                low, high = bracket(edge)
+                lines.append(f"  {name:<12} : outer face in ({low:.4f}, {high:.4f}] m"
+                             + ("" if clean else "   (contact not continuous from the start)"))
+        lines.append("")
+        for name, hits in profiles.items():
+            lines.append(f"  {name:<12} : {''.join('#' if h else '.' for h in hits)}")
+    
+        chassis_edge, chassis_clean = edges["chassis"]
+        wheels_edge, _ = edges["wheels"]
+        robot_edge, _ = edges["whole robot"]
+        if chassis_edge is not None:
+            # Differences between groups are measured with the same plate, so the plate
+            # thickness cancels: only the sweep step limits them.
+            if wheels_edge is not None:
+                lines.append(f"\n  wheels beyond the chassis     : {wheels_edge - chassis_edge:+.4f} m"
+                             f" (+/- {SWEEP_STEP} m)")
+            if robot_edge is not None:
+                lines.append(f"  any geometry beyond the chassis: {robot_edge - chassis_edge:+.4f} m"
+                             f" (+/- {SWEEP_STEP} m)")
+                lines.append("  that band can be struck without ChassisContact seeing it.")
+            low, high = bracket(chassis_edge)
+            lines.append(f"\n  cross-check: the collision probe puts the chassis face in "
+                         f"({low:.4f}, {high:.4f}] m,")
+            lines.append(f"  against {configured:.4f} m measured from the bounding box "
+                         f"(independent method).")
+        print("\n".join(lines))
+    
+        assert chassis_edge is not None, (
+            f"the chassis never responded anywhere in [{lo}, {hi}] m along {axis_name}, even "
+            f"though the sweep starts at {lo} m, inside its {configured:.4f} m half-extent. "
+            "The probe is misplaced, so nothing here is a measurement."
+        )
+        assert chassis_clean, (
+            "the chassis contact profile is not a clean inside-to-outside step; the probe "
+            "is catching something other than what the sweep assumes"
+        )
+        assert robot_edge is not None and robot_edge >= chassis_edge - 1e-9, (
+            "the whole-robot envelope is inside the chassis envelope, which is impossible; "
+            "the collections or the probe transform are wrong"
+        )
+        envelope_low, _ = bracket(robot_edge)
+>       assert configured >= envelope_low - FOOTPRINT_TOL_M, (
+            f"configs/base.yaml gives a {configured:.4f} m half-extent along {axis_name}, but "
+            f"collidable geometry reaches at least {envelope_low:.4f} m. The footprint the PFB "
+            "is given would sit inside the robot, so the filter would treat obstacles that are "
+            "already touching the robot as clear."
+        )
+E       AssertionError: configs/base.yaml gives a 0.2854 m half-extent along body +x (forward), but collidable geometry reaches at least 0.3495 m. The footprint the PFB is given would sit inside the robot, so the filter would treat obstacles that are already touching the robot as clear.
+E       assert 0.2854 >= (0.34950000000000014 - 0.0025)
+
+tests\test_footprint_probe.py:180: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_chassis_geometry.py::test_chassis_fits_inside_the_configured_footprint
+FAILED tests/test_footprint_probe.py::test_collidable_envelope_along_a_body_axis[0-body +x (forward)-0.2-0.6]
+================ 2 failed, 10 passed, 118 deselected in 5.41s =================

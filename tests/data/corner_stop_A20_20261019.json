@@ -1,0 +1,39 @@
+{
+ "note": "A20 reference for the emulator's positive control (2026-10-19): bare B1 on the 2026-10-13 corner scenario (tests/data/corner_stop_20261013.json, lethal 0.03), simulated at f839db3 under the A20 field and limits.",
+ "run": "runs/diag/RECOVERY_CORNER_20261018T202835Z_seed0",
+ "commit": "f839db3",
+ "steps": 500,
+ "stops": [
+  {
+   "step": 87,
+   "s_m": 0.9575
+  },
+  {
+   "step": 141,
+   "s_m": 1.0705
+  },
+  {
+   "step": 192,
+   "s_m": 1.1109
+  },
+  {
+   "step": 238,
+   "s_m": 1.1231
+  },
+  {
+   "step": 285,
+   "s_m": 1.1377
+  },
+  {
+   "step": 331,
+   "s_m": 1.1487
+  }
+ ],
+ "final": {
+  "step": 500,
+  "s_m": 1.1537,
+  "stop_active": true,
+  "restart_blocked": true,
+  "at_rest": true
+ }
+}

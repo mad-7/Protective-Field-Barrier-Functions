@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+.pytest_cache/
+runs/*
+!runs/.gitkeep
+.claude/settings.local.json
+
+# Scene edits awaiting their turn in the commit order (hard rule 12): never staged,
+# never part of a run. Committed only by being copied over scenes/warehouse_v2.ttt
+# deliberately, read back, and committed alone with sim.scene_sha256.
+scenes/pending/

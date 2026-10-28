@@ -1,0 +1,41 @@
+{
+  "about": "The 2026-10-13 corner stop, the positive control for the classical recovery (ruled 2026-10-16). tune_wide scenario 2000057 as built before the A18 rebuild (set file at 31a519f^), traced in runs/diag/TRACE_20261013T221601Z_seed0 (trace 17): B1, planned at the then lethal margin 0.03, stopped at step 126 passing the end of shelf_1 at 0.263 m abeam and never restarted. Tune layouts may be used for debugging (rule 2).",
+  "planner_lethal_margin": 0.03,
+  "first_stop_step": 126,
+  "first_stop_layout_pose": [
+    4.460026028026843,
+    6.85316410246599,
+    -1.744039499102801
+  ],
+  "outcome_2026_10_13": "unrecoverable_stop",
+  "scenario": {
+    "seed": 2000057,
+    "split": "tune",
+    "stratum": "wide",
+    "start": [
+      4.739783461838819,
+      8.28930356532814,
+      -1.764515847443166
+    ],
+    "goal": [
+      9.898834945544017,
+      5.000000000000002
+    ],
+    "layout_sha256": "427042102dceac9d44465beaf28f5c412ee6f814823022aa0b324fff4570b47f",
+    "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+    "scenarios_sha256": "2e8c24b06b10aaf7b9bbab05d833a22781293e58f747cacb46a1e2f211b883d1",
+    "scenario_sha256": "0ce663bbc1b994481a79a467472c42af1b05070ab3fe17ef465c68faa595f91b",
+    "unmapped_count": 0,
+    "clearance_m": 0.7700071306562775,
+    "path_length_m": 8.087307133980794,
+    "path_min_clearance_m": 0.2589761128309738,
+    "aisle_travel_m": 5.1772168521629025,
+    "unmapped_offsets_m": [],
+    "unmapped_arcs_m": [],
+    "unmapped_polygons": [],
+    "placement_attempts": 0,
+    "placement_rejections": {},
+    "bypass_corridor_m": 0.0,
+    "bypass_control_failures": 0
+  }
+}

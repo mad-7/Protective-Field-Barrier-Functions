@@ -1,0 +1,231 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.13.13, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\PC\Desktop\pfb-nav
+configfile: pyproject.toml
+testpaths: tests
+plugins: anyio-4.12.1
+collected 134 items / 118 deselected / 16 selected
+
+tests\test_chassis_geometry.py 
+robot shapes against the configured envelope (0.3520 x 0.1970 m)
+  (bounding boxes, so these over-state rotated parts; the probe sweep is exact)
+
+   overhang   length    width   shape
+   +0.0467   0.3133   0.2437   /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl/slippingJoint_fl/wheel_respondable_fl
+   +0.0353   0.3018   0.2323   /youBot/rollingJoint_rr/intermediateLink_rr/slippingJoint_rr/wheel_respondable_rr
+   +0.0245   0.2911   0.2215   /youBot/rollingJoint_rl/intermediateLink_rl/slippingJoint_rl/wheel_respondable_rl
+   +0.0164   0.2829   0.2134   /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr/slippingJoint_fr/wheel_respondable_fr
+   +0.0066   0.2909   0.2036   /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr
+   +0.0066   0.2899   0.2036   /youBot/rollingJoint_rr/intermediateLink_rr
+   +0.0065   0.2863   0.2035   /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl
+   +0.0065   0.2891   0.2035   /youBot/rollingJoint_rl/intermediateLink_rl
+   -0.0013   0.2979   0.1957   /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr/swedishWheel_fr
+   -0.0013   0.2968   0.1957   /youBot/rollingJoint_rr/intermediateLink_rr/swedishWheel_rr
+   -0.0014   0.2927   0.1956   /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl/swedishWheel_fl
+   -0.0014   0.2958   0.1956   /youBot/rollingJoint_rl/intermediateLink_rl/swedishWheel_rl
+.
+planar envelope in the body frame (half-extents, m)
+  chassis shape only  : length 0.2854  width 0.1789
+  wheels (12 shapes)  : length 0.3133  width 0.2437
+  whole robot tree    : length 0.3501  width 0.2437
+
+  wheel overhang beyond the chassis: length +0.0279  width +0.0648 m
+  tree overhang beyond the chassis : length +0.0647  width +0.0648 m
+
+  a positive overhang means geometry outside the shape the contact check
+  watches, and outside the footprint the PFB is given.
+.
+chassis geometry measured from the scene
+  scene              : scenes/warehouse_v2.ttt
+  chassis object     : /youBot
+  pose reference     : /youBot/youBot_ref
+  bbox in shape frame: min=[-0.081, -0.1785, -0.2851] max=[0.081, 0.1785, 0.2851] m
+  yaw_offset applied : +1.5708 rad
+
+  quantity          envelope        chassis    difference
+  half_length          0.3520      0.2854     -0.0666 m
+  half_width           0.1970      0.1789     -0.0181 m
+  half_height               -      0.1768           - m
+
+  with yaw_offset + pi/2: half_length=0.1789 half_width=0.2854 m
+
+  frame alignment measured from the transform, independent of the config
+  (+/- 0.0001 rad; the two alignments have equal area, so both are listed):
+    yaw_offset +1.5698 rad -> half_length=0.2852 half_width=0.1786 m
+    yaw_offset +3.1406 rad -> half_length=0.1786 half_width=0.2852 m
+    configured yaw_offset is +0.0010 rad from the first of these
+
+  the chassis must not exceed the envelope; a negative difference is the
+  wheels standing proud of it, which is expected laterally.
+.
+v1 collision threshold 0.2 m vs measured half_length 0.2854 m, half_width 0.1789 m
+.
+tests\test_contact_sim.py 
+chassis set: 52 objects
+
+wheel set: 33 objects
+..
+probe cuboid inside the chassis: detected without rebind=True, after rebind=True, part=chassis, with ('/youBot', '/Cuboid')
+.
+wall at 0.188 m (wheels, lateral): contact=True via attachments ('/youBot/rollingJoint_rl/intermediateLink_rl/swedishWheel_rl', '/Cuboid'); chassis-only check would report False
+.
+wall at 0.32 m (LiDAR pod, forward): contact=True via attachments ('/youBot/LiDAR[0]/body', '/Cuboid'); chassis-only check would report False
+.
+tests\test_footprint_probe.py 
+collidable envelope along body +y (left), swept at 0.0025 m over [0.1, 0.3]
+  configured half-extent: 0.1970 m
+
+  chassis      : outer face in (0.1770, 0.1795] m
+  wheels       : outer face in (0.1945, 0.1970] m   (contact not continuous from the start)
+  whole robot  : outer face in (0.1945, 0.1970] m
+
+  chassis      : #################################................................................
+  wheels       : ........################################.........................................
+  whole robot  : ########################################.........................................
+
+  wheels beyond the chassis     : +0.0175 m (+/- 0.0025 m)
+  any geometry beyond the chassis: +0.0175 m (+/- 0.0025 m)
+  RobotContact covers that band through its attachments check; the footprint must cover it too.
+
+  footprint margin over the robot envelope: +0.0025 m
+  negative means the configured footprint sits inside the robot, which the PFB cannot be allowed to believe.
+.
+collidable envelope along body -y (right), swept at 0.0025 m over [0.1, 0.3]
+  configured half-extent: 0.1970 m
+
+  chassis      : outer face in (0.1770, 0.1795] m
+  wheels       : outer face in (0.1945, 0.1970] m   (contact not continuous from the start)
+  whole robot  : outer face in (0.1945, 0.1970] m
+
+  chassis      : #################################................................................
+  wheels       : ........################################.........................................
+  whole robot  : ########################################.........................................
+
+  wheels beyond the chassis     : +0.0175 m (+/- 0.0025 m)
+  any geometry beyond the chassis: +0.0175 m (+/- 0.0025 m)
+  RobotContact covers that band through its attachments check; the footprint must cover it too.
+
+  footprint margin over the robot envelope: +0.0025 m
+  negative means the configured footprint sits inside the robot, which the PFB cannot be allowed to believe.
+.
+collidable envelope along body +x (forward), swept at 0.0025 m over [0.2, 0.45]
+  configured half-extent: 0.3520 m
+
+  chassis      : outer face in (0.2845, 0.2870] m
+  wheels       : outer face in (0.2770, 0.2795] m
+  whole robot  : outer face in (0.3495, 0.3520] m   (contact not continuous from the start)
+
+  chassis      : ####################################.................................................................
+  wheels       : #################################....................................................................
+  whole robot  : ####################################...#######################.......................................
+
+  wheels beyond the chassis     : -0.0075 m (+/- 0.0025 m)
+  any geometry beyond the chassis: +0.0650 m (+/- 0.0025 m)
+  RobotContact covers that band through its attachments check; the footprint must cover it too.
+
+  footprint margin over the robot envelope: +0.0025 m
+  negative means the configured footprint sits inside the robot, which the PFB cannot be allowed to believe.
+.
+collidable envelope along body -x (rear), swept at 0.0025 m over [0.2, 0.45]
+  configured half-extent: 0.3520 m
+
+  chassis      : outer face in (0.2845, 0.2870] m
+  wheels       : outer face in (0.2770, 0.2795] m
+  whole robot  : outer face in (0.3495, 0.3520] m   (contact not continuous from the start)
+
+  chassis      : ####################################.................................................................
+  wheels       : #################################....................................................................
+  whole robot  : ####################################...#######################.......................................
+
+  wheels beyond the chassis     : -0.0075 m (+/- 0.0025 m)
+  any geometry beyond the chassis: +0.0650 m (+/- 0.0025 m)
+  RobotContact covers that band through its attachments check; the footprint must cover it too.
+
+  footprint margin over the robot envelope: +0.0025 m
+  negative means the configured footprint sits inside the robot, which the PFB cannot be allowed to believe.
+.
+tests\test_scene_objects.py 
+objects under /youBot (71 total):
+  shape  /youBot
+  joint  /youBot/rollingJoint_rr
+  joint  /youBot/rollingJoint_rl
+  joint  /youBot/Joint
+  shape  /youBot/ME_Platfo2_sub1
+  joint  /youBot/youBotArmJoint0
+  dummy  /youBot/youBot_ref
+  dummy  /youBot/LiDAR[0]
+  dummy  /youBot/LiDAR[1]
+  type 17 /youBot/rollingJoint_rr/Script
+  shape  /youBot/rollingJoint_rr/intermediateLink_rr
+  type 17 /youBot/rollingJoint_rl/Script
+  shape  /youBot/rollingJoint_rl/intermediateLink_rl
+  shape  /youBot/Joint/Rectangle0
+  shape  /youBot/ME_Platfo2_sub1/Rectangle
+  shape  /youBot/ME_Platfo2_sub1/Rectangle13
+  shape  /youBot/youBotArmJoint0/Rectangle22
+  type 17 /youBot/LiDAR[0]/Script
+  shape  /youBot/LiDAR[0]/body
+  type 9 /youBot/LiDAR[0]/sensor1
+  type 9 /youBot/LiDAR[0]/sensor2
+  type 17 /youBot/LiDAR[1]/Script
+  shape  /youBot/LiDAR[1]/body
+  type 9 /youBot/LiDAR[1]/sensor1
+  type 9 /youBot/LiDAR[1]/sensor2
+  shape  /youBot/rollingJoint_rr/intermediateLink_rr/swedishWheel_rr
+  joint  /youBot/rollingJoint_rr/intermediateLink_rr/slippingJoint_rr
+  shape  /youBot/rollingJoint_rl/intermediateLink_rl/swedishWheel_rl
+  joint  /youBot/rollingJoint_rl/intermediateLink_rl/slippingJoint_rl
+  joint  /youBot/Joint/Rectangle0/rollingJoint_fl
+  joint  /youBot/Joint/Rectangle0/rollingJoint_fr
+  shape  /youBot/youBotArmJoint0/Rectangle22/ME_Arm1_m0_sub0_sub0
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1
+  type 17 /youBot/LiDAR[0]/sensor1/Script
+  type 17 /youBot/LiDAR[0]/sensor2/Script
+  type 17 /youBot/LiDAR[1]/sensor1/Script
+  type 17 /youBot/LiDAR[1]/sensor2/Script
+  shape  /youBot/rollingJoint_rr/intermediateLink_rr/slippingJoint_rr/wheel_respondable_rr
+  shape  /youBot/rollingJoint_rl/intermediateLink_rl/slippingJoint_rl/wheel_respondable_rl
+  type 17 /youBot/Joint/Rectangle0/rollingJoint_fl/Script
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl
+  type 17 /youBot/Joint/Rectangle0/rollingJoint_fr/Script
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl/swedishWheel_fl
+  joint  /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl/slippingJoint_fl
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr/swedishWheel_fr
+  joint  /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr/slippingJoint_fr
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/ME_Arm2_13_sub0
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fl/intermediateLink_fl/slippingJoint_fl/wheel_respondable_fl
+  shape  /youBot/Joint/Rectangle0/rollingJoint_fr/intermediateLink_fr/slippingJoint_fr/wheel_respondable_fr
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/ME_Arm2_13_sub0/Cylinder
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/ME_Arm3_01_sub1_sub0_sub0
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/ME_Arm3_01_sub1_sub0_sub0/Cylinder1
+  dummy  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/ME_Arm3_01_sub1_sub0_sub0/youBot_orientationBase
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/ME_Arm4_me
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/ME_Arm4_me/Cylinder2
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7
+  type 17 /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/Script
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/ME_Arm5_me_sub1
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5/Rectangle2
+  joint  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5/youBotGripperJoint2
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5/youBotGripperJoint2/Rectangle6
+  shape  /youBot/youBotArmJoint0/Rectangle22/youBotArmJoint1/Rectangle10/youBotArmJoint2/Rectangle9/youBotArmJoint3/Rectangle8/youBotArmJoint4/Rectangle7/youBotGripperJoint1/Rectangle5/youBotGripperJoint2/Rectangle6/Rectangle3
+.
+resolved scene objects:
+  base_ref       /youBot/youBot_ref                 -> handle 89
+  chassis        /youBot                            -> handle 33
+  robot_tree     /youBot                            -> handle 33
+  wheels[fl]     /youBot/Joint/Rectangle0/rollingJoint_fl -> handle 48
+  wheels[fr]     /youBot/Joint/Rectangle0/rollingJoint_fr -> handle 54
+  wheels[rl]     /youBot/rollingJoint_rl            -> handle 40
+  wheels[rr]     /youBot/rollingJoint_rr            -> handle 34
+..
+
+===================== 16 passed, 118 deselected in 10.78s =====================
