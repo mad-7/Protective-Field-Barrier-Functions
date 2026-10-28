@@ -8,7 +8,8 @@ v1 results (A* + SAC/TD3 comparison) are reproducible from tag `v1-chapter-resul
 ## Setup
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev]"
+pip install -r requirements-dev.txt   # pinned versions (training host: requirements.txt)
+pip install -e . --no-deps
 bash scripts/install_hooks.sh
 pytest -m "not sim"
 ```

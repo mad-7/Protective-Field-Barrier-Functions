@@ -1,0 +1,46 @@
+# Runtime dependencies for pfb-nav, as tested on the laptop (Python 3.10.10, Windows 11), 2026-10-28.
+# Direct dependencies only, pinned; their own dependencies (cbor2, tqdm, ...) resolve through pip.
+# This pins the packages the code imports; it does not make the host bit-identical to the laptop.
+# Determinism is claimed within one scene load only (CLAUDE.md), and every run records torch and the
+# host in provenance.json.
+#
+# Install (host, inside a venv; Python >= 3.10):
+#     python -m venv .venv
+#     source .venv/bin/activate           # Windows: .venv\Scripts\Activate.ps1
+#     pip install -r requirements.txt
+#     pip install -e . --no-deps          # the package itself, without re-resolving the pins
+#
+# If the host's Python is newer than 3.10 and a pin has no wheel for it, relax THAT pin only and
+# say so in the decision log; do not loosen the rest.
+
+numpy==2.2.6
+scipy==1.13.0
+pyyaml==6.0.1
+pandas==2.3.3
+matplotlib==3.10.8
+shapely==2.1.2                      # footprint geometry (pfbnav/eval/pfb_acceptance.py, scripts/)
+psutil==5.9.5                       # host identity in provenance.json (cores, RAM); G2 reads it
+
+gymnasium==1.2.3
+stable-baselines3==2.7.1
+tensorboard==2.20.0                 # scripts/train.py writes ["csv", "tensorboard"]; SB3 fails without it
+
+# torch is HOST-SPECIFIC. This pin is the version used here (a CPU build). On a GPU host, install the
+# CUDA build from the matching index BEFORE the line below, e.g.
+#     pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cu128
+# (use the CUDA tag that matches the host's driver: `nvidia-smi`). The version must stay 2.11.0;
+# provenance.json records torch.__version__ and whether CUDA is available.
+torch==2.11.0
+
+# PFB QPs
+qpsolvers==4.13.0
+osqp==1.1.1
+clarabel==0.11.1
+
+# CoppeliaSim ZeroMQ remote API (pfbnav/sim/client.py imports both)
+coppeliasim-zmqremoteapi-client==2.0.4
+pyzmq==27.1.0
+
+# NOT installable with pip: CoppeliaSim 4.10 Edu (Bullet 2.83), run headless, one instance per port
+# sim.port + sim.port_stride * i, with scenes/warehouse_v2.ttt (its SHA-256 is pinned in
+# configs/base.yaml; runs refuse any other scene).

@@ -1,0 +1,5 @@
+# Development and test tools (pytest -m "not sim", ruff check .), on top of the runtime pins.
+# Not needed to run training, G2 or the tuning scripts; install them to run the fast suite on the host.
+-r requirements.txt
+pytest==9.0.2
+ruff==0.16.8

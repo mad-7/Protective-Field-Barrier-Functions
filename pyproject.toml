@@ -19,6 +19,10 @@ dependencies = [
   "qpsolvers[osqp]",
   "clarabel",
   "coppeliasim-zmqremoteapi-client",
+  "pyzmq",
+  "shapely",
+  "psutil",
+  "tensorboard",
 ]
 
 [project.optional-dependencies]
