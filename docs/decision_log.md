@@ -9895,3 +9895,20 @@ multipliers, compared with the A28a runs `L2_TOY_20261027T16*/17*` by the same c
 ruling's reason for rejecting (a) -- a final checkpoint that depends on the phase -- is reduced, not
 removed, on the toy. Running candidates 2 and 3 now to choose among passers would be a selection
 outside the declared rule; any such step needs a ruling.
+
+## 2026-10-28 - The repository moved; one test no longer reads git history
+
+The project moved to a new folder and GitHub repository whose history starts at two `init` commits
+(the full history stays in the original `pfb-nav` folder). `tests/test_a14a_interval.py` compared the
+confirmatory interval with `pfbnav/eval/rate_ratio.py` as of commit `0329941` (the calibration run
+that adopted flat K - 1), fetched with `git show`; on the new repository that commit does not exist
+and the two tests that use it errored (first run on the training host: 1505 passed, 1 skipped,
+2 errors).
+- **Change:** the file is stored unchanged as `tests/data/rate_ratio_0329941.py.txt` (extracted with
+  `git show 0329941:pfbnav/eval/rate_ratio.py` in the original repository, 13,670 bytes), the test
+  reads it, and the test asserts its SHA-256 (`27435685...67268008`) before using it. The comparison,
+  its tolerances and its positive control are unchanged. The `.txt` suffix keeps the old module out of
+  pytest collection and ruff.
+- **Not changed:** the analysis scripts that also read old commits (`scripts/reemulate_b1_traces.py`,
+  `scripts/compare_rebuilt_sets.py --against`, `scripts/regress_floor.py --rev`) are not in the fast
+  suite and need the original repository's history to reproduce those past analyses.

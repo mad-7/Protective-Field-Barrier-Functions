@@ -1,11 +1,15 @@
 """A14a (ruled 2026-10-26): the confirmatory interval is the closed-form t interval on the log rate
 ratio, scenario and seed variance combined with K/(K-1), the ruled df -- and the implementation equals
 the form that passed calibration (commit 0329941, runs/power/CORRECTED_20261003T181634Z_seed0,
-classical_df flat_k_minus_1)."""
+classical_df flat_k_minus_1).
+
+That code is kept as tests/data/rate_ratio_0329941.py.txt, extracted unchanged from commit 0329941 of
+the original repository (the repository moved on 2026-10-28 and its history starts at a later
+commit, so `git show` of that commit no longer works). Its SHA-256 is pinned below."""
 from __future__ import annotations
 
+import hashlib
 import importlib.util
-import subprocess
 import sys
 from pathlib import Path
 
@@ -17,14 +21,17 @@ from pfbnav.eval import rate_ratio as rr
 
 REPO = Path(__file__).resolve().parents[1]
 CALIBRATED_AT = "0329941"            # the commit of the calibration run that adopted flat K - 1
+CALIBRATED_COPY = REPO / "tests" / "data" / "rate_ratio_0329941.py.txt"
+CALIBRATED_SHA256 = "27435685271543ce4a853fcfbd462dad8b6622d91f16a19e10eb7efa67268008"
 LEVEL = 0.05 / 3                     # the power level alpha/3 (A14a); any level would do
 
 
 @pytest.fixture(scope="module")
 def old(tmp_path_factory):
     """pfbnav/eval/rate_ratio.py exactly as it was when calibration passed, imported from a copy."""
-    source = subprocess.run(["git", "show", f"{CALIBRATED_AT}:pfbnav/eval/rate_ratio.py"],
-                            cwd=REPO, capture_output=True, text=True, check=True).stdout
+    raw = CALIBRATED_COPY.read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == CALIBRATED_SHA256,         f"tests/data/rate_ratio_0329941.py.txt is not the code of commit {CALIBRATED_AT}"
+    source = raw.decode("utf-8")
     path = tmp_path_factory.mktemp("calibrated") / "rate_ratio_calibrated.py"
     path.write_text(source, encoding="utf-8")
     spec = importlib.util.spec_from_file_location("rate_ratio_calibrated", path)

@@ -55,6 +55,8 @@ The project's context is in the repo, not in any session's memory (the old folde
 - `pyproject.toml`: added `pyzmq`, `shapely`, `psutil`, `tensorboard` to `dependencies`. The code
   imports all four, and a fresh `pip install -e .` would have failed on `shapely` and `psutil`.
 - `SESSION_HANDOFF.md`: this file.
+- `tests/data/rate_ratio_0329941.py.txt` and `tests/test_a14a_interval.py`: the test no longer reads
+  git history (the host's first run had 2 errors for that reason; now fixed, see the decision log).
 
 ## Where the work stands
 - **Plan of record:** CLAUDE.md, "Current work package". Stage 1 is in progress.
