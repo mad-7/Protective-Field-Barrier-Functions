@@ -9951,3 +9951,46 @@ commit `e0f426a`, scene `537f1bbb`).
 - **Tests:** `tests/test_mppi.py` asserts (20, 1024, 1) and the named run, and its reach check reads the
   configured horizon; `tests/test_tuning.py` checks B6's refusal with `compute_measurement` cleared,
   because `runs/` exists only on the host and the refusal would otherwise pass or fail by machine.
+
+## 2026-10-29 - Rulings on the questions of 2026-10-29 (supervisor)
+
+Recorded as given; the implementation of point 1 follows.
+1. **SAC on the GPU, approved.** All learned arms and seeds on the same device, no mixing. Every run's
+   provenance records device, driver, CUDA and cuDNN versions. The methods state that training is
+   statistically, not bit-for-bit, reproducible. G2 runs on the GPU.
+2. **Learned arms' real-time compute.** When L1's checkpoints exist, time the trained policy's
+   inference on CPU, single process, against the 50 ms criterion (and policy + PFB once L5's exist);
+   report beside the classical timings. Not yet implemented; it needs a checkpoint.
+3. **B7.** The interim figure (~15 ms) is reported as a sum of separately measured p95s, labelled an
+   approximation, not a bound. It is replaced by B7's measured combined p95 from its tuning runs'
+   step-loop timings. No extra run.
+4. **L2: proceed with candidate 1** under the declared first-pass rule; candidates 2 and 3 are not run.
+   The residual cycle is recorded (20-episode means up to 4 stops; 78-82 % of windows from episode 250
+   within 1.25 d). In the main study L2's training-cost trajectory and window-pass fraction are
+   reported beside its results, as a stated limitation of the comparator.
+5. **The integral projected onto >= 0** (Stooke et al., Algorithm 2): accepted. The published
+   algorithm supersedes the ruling's shorthand K_I * sum(e).
+6. **No derivative term on the first update** (there is no previous error): accepted and recorded.
+7. **No laptop G2.** All citable runs, all tuning included, run on the training host; the refusal of
+   a G2 result from another host stays. The laptop is for development and diagnostics only.
+- **B6 candidate 0's narrow-aisle stall:** tuning handles it within the committed ranges; if the tuned
+  winner still fails narrow aisles, it is reported as a baseline finding.
+- **Then:** G2 and L1's pilot on the training host, followed by B2 tuning, B7 and alpha.
+
+**Implemented for point 1** (`configs/base.yaml`, `pfbnav/control/sac.py`, `pfbnav/utils/runio.py`,
+`scripts/train.py`):
+- `training.device` is `cuda` (was `auto`, VERIFY). `auto` is no longer accepted: SB3 resolves it,
+  and a configured `cuda` too, to the CPU without a word where CUDA is absent, which is the mixing the
+  ruling forbids. `learner_device` accepts `cuda` or `cpu` only and refuses `cuda` on a host without
+  CUDA. No experiment config overrides the device (a test checks every one that has `training:`).
+- `host_identity` adds `gpu_driver` (from `nvidia-smi`; None without it, the error where it fails),
+  `cuda` (`torch.version.cuda`) and `cudnn` (`torch.backends.cudnn.version()`), keys always present.
+- `scripts/train.py` stamps the device the model was built on into `provenance.json`
+  (`learner_device`, read back from the model, hard rule 13). G2 already records it per worker
+  (`sac.device` in each worker's JSON); its review checks every worker reports CUDA.
+- The development toy configs (`pfbnav/training/l2_toy.py`, the tests) stay on `cpu`: they are not
+  citable runs (point 7).
+- **Host stack:** torch reinstalled at the pinned 2.11.0 as the CUDA 12.8 build (`2.11.0+cu128`) after
+  a first install had pulled 2.14.1+cu130; the GPU is an RTX 5070 Ti (Blackwell, CUDA >= 12.8). The
+  real-time measurement of earlier today ran on `2.11.0+cpu`; it used no torch (B6, the PFB and the
+  classical controllers are NumPy), so it stands.

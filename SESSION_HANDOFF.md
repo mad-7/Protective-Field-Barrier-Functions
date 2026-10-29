@@ -64,7 +64,12 @@ The project's context is in the repo, not in any session's memory (the old folde
   (Stooke et al. 2020) updated once per episode. The toy control passed on seeds 0-3 with candidate 1
   (0.1, 2e-3, 0); `pid_candidate: 1` is set in the L2 configs (`7066d04`). Candidates 2 and 3 were
   not run.
-- **Open points for the supervisor** (also in `docs/decision_log.md`, 2026-10-27):
+- **Update 2026-10-29:** the open points below were ANSWERED (decision log, "Rulings on the
+  questions of 2026-10-29"): L2 proceeds with candidate 1; the projection and the first update are
+  accepted; no laptop G2 (every citable run on the training host); SAC on the GPU. The real-time
+  measurement ran (B6 = 1024 x 20, `41325c4`). The training host is `DESKTOP-55VR508` (RTX 5070 Ti,
+  torch 2.11.0+cu128, conda env `mahdi`). Next: G2, then L1's pilot.
+- **Open points for the supervisor (as of 2026-10-27; answered 2026-10-29):**
   1. The limit cycle is reduced, not removed, on the toy (20-episode means still reach 4 stops per
      episode; windows meeting 1.25 d from episode 250: 0.78-0.82). Four passes in four may be partly
      luck. Running candidates 2 and 3 to choose among passers is outside the declared rule.

@@ -211,6 +211,14 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
 - **A28b applied and relocked (b9c1b42); candidate 1 SELECTED** (passed on seeds 0-3, 2026-10-27).
   Flagged to the supervisor: the cycle persists under the PID (20-episode means still reach 4 after
   episode 750; late windows meeting 1.25 d 0.78-0.82 against A28a's 0.69-0.77).
+- **2026-10-29: real-time measured on the training host** (DESKTOP-55VR508): B6 = 1024 x 20 (37.1 ms
+  p95), every classical controller and the PFB within 50 ms. **RULED 2026-10-29:** SAC on the GPU for
+  every learned arm and seed (`training.device: cuda`, no `auto`, no fallback; provenance carries
+  driver/CUDA/cuDNN; training statistically, not bit-for-bit, reproducible); learned arms' inference
+  timed on CPU once L1's checkpoints exist; B7's p95 a labelled sum until its tuning runs measure it;
+  L2 proceeds with candidate 1 (residual cycle reported as a comparator limitation); projected
+  integral and first update without derivative accepted; **no laptop G2: every citable run, all
+  tuning included, on the training host.** Next: G2, L1's pilot, then B2 tuning, B7 and alpha.
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 

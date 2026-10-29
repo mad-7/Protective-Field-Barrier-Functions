@@ -67,14 +67,41 @@ def host_identity(cfg: dict | None = None) -> dict:
         import psutil
         info["physical_cores"] = psutil.cpu_count(logical=False)
         info["ram_total_gb"] = round(psutil.virtual_memory().total / 1024 ** 3, 1)
+    # Ruled 2026-10-29: device, driver, CUDA and cuDNN versions in every run's provenance.
+    info["gpu_driver"] = gpu_driver_version()
+    info["cuda"] = None
+    info["cudnn"] = None
     if importlib.util.find_spec("torch") is not None:
         import torch
         info["torch"] = torch.__version__
         info["gpu"] = (torch.cuda.get_device_name(0) if torch.cuda.is_available()
                        else "none available to torch")
+        info["cuda"] = torch.version.cuda               # the CUDA torch was built with, or None
+        info["cudnn"] = (torch.backends.cudnn.version() if torch.cuda.is_available() else None)
     elif shutil.which("nvidia-smi"):
         info["gpu"] = "nvidia-smi present, torch not installed"
     return info
+
+
+def parse_driver_version(stdout: str) -> str | None:
+    """The first GPU's driver version from `nvidia-smi --query-gpu=driver_version
+    --format=csv,noheader` output, or None if it printed nothing."""
+    lines = [line.strip() for line in stdout.splitlines() if line.strip()]
+    return lines[0] if lines else None
+
+
+def gpu_driver_version() -> str | None:
+    """The NVIDIA driver version, None where there is no `nvidia-smi`, and a string saying so
+    where it ran and failed: "no driver" and "the query failed" are not the same record."""
+    import shutil
+
+    if shutil.which("nvidia-smi") is None:
+        return None
+    out = subprocess.run(["nvidia-smi", "--query-gpu=driver_version", "--format=csv,noheader"],
+                         capture_output=True, text=True, check=False)
+    if out.returncode != 0:
+        return f"nvidia-smi failed ({out.returncode}): {out.stderr.strip()[:200]}"
+    return parse_driver_version(out.stdout)
 
 
 def scene_provenance(cfg: dict, repo: Path = REPO_ROOT) -> dict[str, str]:
@@ -110,6 +137,15 @@ def stamp_display(run_dir: str | Path, status: dict) -> None:
     path = Path(run_dir) / "provenance.json"
     meta = json.loads(path.read_text())
     meta["display"] = status
+    path.write_text(json.dumps(meta, indent=2))
+
+
+def stamp_learner_device(run_dir: str | Path, device: str) -> None:
+    """Merge the device the learner was actually built on into a run's `provenance.json`: the
+    configured `training.device` read back from the model (ruled 2026-10-29; hard rule 13)."""
+    path = Path(run_dir) / "provenance.json"
+    meta = json.loads(path.read_text())
+    meta["learner_device"] = str(device)
     path.write_text(json.dumps(meta, indent=2))
 
 

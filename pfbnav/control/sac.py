@@ -7,6 +7,10 @@ Stable-Baselines3's SAC; the network is an MLP on the 82-D observation.
 **Determinism is within one process** (CLAUDE.md): the same seed and the same transitions give
 the same updates here, bit for bit, on the CPU. Separate invocations against the simulator are
 not claimed to repeat.
+
+**Device (ruled 2026-10-29):** every learned arm and seed trains on the GPU, no mixing; training is
+statistically, not bit-for-bit, reproducible. `training.device` is `cuda` or `cpu`, never `auto`,
+and `cuda` on a host without CUDA is refused: SB3 would otherwise fall back to the CPU silently.
 """
 from __future__ import annotations
 
@@ -22,6 +26,25 @@ _KEYS = {"learning_rate": float, "buffer_size": int, "learning_starts": int, "ba
          "tau": float, "gamma": float, "train_freq": int, "gradient_steps": int}
 
 
+#: The devices a learner may be configured on (ruled 2026-10-29). `auto` is not one: it lets a
+#: host without CUDA train on the CPU without saying so, mixing devices across arms or seeds.
+DEVICES = ("cuda", "cpu")
+
+
+def learner_device(name: str) -> str:
+    """The configured learner device, checked: one of `DEVICES`, and `cuda` only where CUDA is
+    available. Raises rather than falling back."""
+    if name not in DEVICES:
+        raise ValueError(f"training.device is {name!r}; it must be one of {DEVICES} (ruled "
+                         "2026-10-29: one device for every learned arm and seed, no fallback)")
+    if name == "cuda":
+        import torch
+        if not torch.cuda.is_available():
+            raise RuntimeError("training.device is 'cuda' but torch sees no CUDA device on this "
+                               f"host (torch {torch.__version__}); refusing to train on the CPU")
+    return name
+
+
 def sac_kwargs(training: dict[str, Any]) -> dict[str, Any]:
     """The SB3 keyword arguments for the `training:` block. Every key is required: a missing
     hyperparameter must not fall back to a library default nobody chose."""
@@ -34,7 +57,7 @@ def sac_kwargs(training: dict[str, Any]) -> dict[str, Any]:
     ent = training["ent_coef"]
     kwargs["ent_coef"] = ent if isinstance(ent, str) else float(ent)
     kwargs["policy_kwargs"] = {"net_arch": [int(n) for n in training["net_arch"]]}
-    kwargs["device"] = str(training["device"])
+    kwargs["device"] = learner_device(str(training["device"]))
     return kwargs
 
 

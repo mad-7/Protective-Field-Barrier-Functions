@@ -11,7 +11,7 @@ import pytest
 from gymnasium import spaces
 
 from pfbnav.control.base import Controller
-from pfbnav.control.sac import SACController, make_sac, sac_kwargs
+from pfbnav.control.sac import SACController, learner_device, make_sac, sac_kwargs
 from pfbnav.training.record import RECORD_KEY, EpisodeLog, EpisodeRecorder
 
 TRAINING = {"algo": "sac", "learning_rate": 3e-4, "buffer_size": 5000, "learning_starts": 50,
@@ -55,6 +55,37 @@ def test_every_hyperparameter_is_required_and_mapped():
             sac_kwargs(broken)
     with pytest.raises(ValueError, match="algo"):
         sac_kwargs({**TRAINING, "algo": "ppo"})
+
+
+def test_the_device_is_cuda_or_cpu_and_never_falls_back(monkeypatch):
+    """Ruled 2026-10-29: one device for every learned arm and seed. `auto` is refused (it would
+    let a host without CUDA train on the CPU silently), and so is `cuda` where CUDA is absent."""
+    import torch
+
+    assert learner_device("cpu") == "cpu"
+    for bad in ("auto", "cuda:1", "mps", ""):
+        with pytest.raises(ValueError, match="one of"):
+            sac_kwargs({**TRAINING, "device": bad})
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
+    with pytest.raises(RuntimeError, match="no CUDA"):
+        learner_device("cuda")
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    assert learner_device("cuda") == "cuda"          # positive control: the same call passes
+
+
+def test_every_learned_arm_is_configured_on_the_gpu():
+    """Ruled 2026-10-29: all learned arms and seeds on the GPU, no mixing."""
+    from pathlib import Path
+
+    from pfbnav.config import load_config
+
+    root = Path(__file__).resolve().parents[1] / "configs"
+    assert load_config(root / "base.yaml")["training"]["device"] == "cuda"
+    learned = [p for p in sorted((root / "experiments").glob("*.yaml"))
+               if "training" in load_config(p)]
+    assert learned                                    # the check saw the experiment configs
+    for path in learned:
+        assert load_config(path)["training"]["device"] == "cuda", path.name
 
 
 def test_the_recorder_moves_the_environments_record_and_gives_sb3_what_it_expects():
@@ -168,10 +199,14 @@ def test_training_refuses_an_environment_that_is_not_frozen_or_not_the_frozen_on
         script.preflight(cfg)
 
 
-def test_the_base_config_carries_every_sac_hyperparameter():
+def test_the_base_config_carries_every_sac_hyperparameter(monkeypatch):
     from pathlib import Path
 
+    import torch
+
     from pfbnav.config import load_config
+    # The base config asks for CUDA (ruled 2026-10-29); this checks the mapping, on any host.
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
     cfg = load_config(Path(__file__).resolve().parents[1] / "configs" / "base.yaml")
     kw = sac_kwargs(cfg["training"])
     assert kw["train_freq"] == 1 and kw["gradient_steps"] == 1   # one update per step (G2)

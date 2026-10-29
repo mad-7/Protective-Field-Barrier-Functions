@@ -60,7 +60,7 @@ from pfbnav.training.record import EpisodeLog, EpisodeRecorder
 from pfbnav.utils.cli import add_display_flag, apply_display
 from pfbnav.utils.hashing import text_sha256
 from pfbnav.utils.memory import MemoryRecord
-from pfbnav.utils.runio import create_run_dir
+from pfbnav.utils.runio import create_run_dir, stamp_learner_device
 from pfbnav.utils.seeding import seed_everything
 from pfbnav.world.scenarios import load_set, verify
 
@@ -147,6 +147,7 @@ def main() -> int:
     model = None
     try:
         model = make_learner(EpisodeRecorder(env), cfg, args.seed)
+        stamp_learner_device(run_dir, str(model.device))
         model.set_logger(configure(str(run_dir / "sb3"), ["csv", "tensorboard"]))
         model.learn(total_timesteps=int(t["total_timesteps"]),
                     callback=CallbackList([log, checkpoints]))

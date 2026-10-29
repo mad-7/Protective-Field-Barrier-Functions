@@ -909,8 +909,10 @@ training:
   gradient_steps: 1        #   one update per step, the 7.5M updates docs/requirements.md budgets
   ent_coef: auto           # SAC's learned temperature (SB3 default)                    VERIFY
   net_arch: [256, 256]     # hidden layers of actor and critics (SB3 default)           VERIFY
-  device: auto             # SB3 picks CUDA if present; determinism is claimed on CPU only,
-                           #   and provenance records the host                          VERIFY
+  device: cuda             # RULED 2026-10-29: every learned arm and seed on the GPU, no mixing;
+                           #   never `auto` (a host without CUDA is refused, not run on the CPU).
+                           #   Training is statistically, not bit-for-bit, reproducible;
+                           #   provenance records device, driver, CUDA and cuDNN
   checkpoint_every: 25000  # steps between checkpoints; never overwritten (hard rule 10)
   scenarios:               # the training set, ruled 2026-10-03: equal thirds by stratum, ~2,000,
     - scenarios/train/train_narrow.json   # train seed range, rate 0.25. Built by
