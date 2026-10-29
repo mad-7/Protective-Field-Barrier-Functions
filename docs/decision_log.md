@@ -10056,3 +10056,33 @@ committed; G2 waits.
   development only), as it reproduces existing data rather than producing a citable result; (2)
   commit the host build under a declared tolerance on descriptive fields with exact identity fields,
   which hard rule 19 requires to be stated with its false-alarm rate and null-tested first.
+
+## 2026-10-29 - Ruled: laptop re-stamp approved; set verification with a declared float tolerance
+
+**Supervisor's ruling, recorded as given.** Re-stamping the ten committed sets on the laptop is
+approved as reproduction of existing data, within ruling 7: identities and scenario hashes match
+exactly across hosts; 158 recorded floats differ by at most 1.9e-15 m (AVX-512 vs AVX2 rounding, same
+NumPy wheel). For future verification: identities and hashes compared exactly; recorded floats with a
+declared absolute tolerance of **1e-9 m**. The measured cross-host difference is its null test (hard
+rule 19), recorded here. After this change all set verification runs on the training host; future
+sets, the A14 test sets included, are built there.
+
+**Implemented** (`pfbnav/eval/set_compare.py`, `scripts/compare_rebuilt_sets.py`,
+`configs/base.yaml` `world.set_verification.float_abs_tol_m: 1.0e-9`):
+- Every string, integer, boolean, key, list length and type must match exactly (an integer never
+  compares as a float; a NaN never matches); floats within the tolerance. The result reports
+  `identical` (bit for bit) and `accepted` (the ruled criterion) and the largest float difference;
+  the script prints ALL IDENTICAL, ACCEPTED WITHIN TOLERANCE (max ...) or DIFFERENCES FOUND and fails
+  only on the last.
+- **Null test and expected false-alarm rate (hard rule 19):** under the null (same commit, rebuilt on
+  another CPU) the measured differences are at most 1.9e-15 m, ~5e5 times below the tolerance, so the
+  expected false-alarm rate is zero. The test reproduces the measured values (one unit in the last
+  place, and the 1.887e-15 m maximum) and requires them accepted and not identical.
+- **Positive control:** a polygon vertex moved by 1e-8, 1e-6 or 0.01 m is refused; a changed hash,
+  integer, boolean, key, list length, int-to-float type, or a NaN is refused at any tolerance.
+- Writing the type test found that the first version compared records with `!=`, under which Python
+  calls 3 and 3.0 equal; records are now compared through the strict walk only.
+- A29's laptop re-stamp still requires ALL IDENTICAL (the approved form). Checked on the laptop
+  against the unchanged sets: ALL IDENTICAL.
+- `set_compare.py` is outside the environment freeze and the scenario identity's closure: neither
+  moves.

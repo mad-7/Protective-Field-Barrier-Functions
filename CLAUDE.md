@@ -223,6 +223,10 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   band from the raw request, above the 0.51 top band). Fixed as a blocking defect: band from
   min(|request|, speed_cap). A29 drafted (`docs/pending/A29_amendment.md`); env re-frozen 3757aeca.
   The researcher applies A29, relocks, reruns the filter-off bit-identity test, then G2.
+- **2026-10-29: A29 applied and relocked (2c3b5e0).** The host's re-stamp differed from the laptop
+  build only by last-bit rounding (max 1.9e-15 m). RULED: re-stamp on the laptop (exact); from now on
+  identities/hashes exact and floats within `world.set_verification.float_abs_tol_m` 1e-9 m; all set
+  building and verification on the training host (A14 test sets included).
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 

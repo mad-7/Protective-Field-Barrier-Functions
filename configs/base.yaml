@@ -386,6 +386,11 @@ tracking:                  # proportional path tracker used by gate G1b (D6).
                            #   concluding anything about v_max.
 
 world:
+  set_verification:        # RULED 2026-10-29 (scripts/compare_rebuilt_sets.py)
+    float_abs_tol_m: 1.0e-9   # m, recorded floats of a rebuilt set; identities and hashes exact.
+                           #   Null test: the same commit on the laptop (AVX2) and the training
+                           #   host (AVX-512) differed by at most 1.9e-15 m in 158 floats. All set
+                           #   building and verification runs on the training host
   # D2: aisle strata by PER-SIDE clearance (robot centred, aligned), not by aisle width.
   # Approved (WP1 report, ruling 4). The narrow floor is lateral margin 0.05 + G1b's
   # committed peak cross-track 0.05 + slack 0.03 = 0.13 m (slack raised by the supervisor,
