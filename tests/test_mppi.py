@@ -214,12 +214,13 @@ def test_the_band_and_rest_rows_follow_the_layer(table):
 def test_params_from_the_config_and_their_refusals():
     block = CFG["baselines"]["mppi"]
     p = MPPIParams.from_block(block)
-    assert (p.horizon_steps, p.samples, p.iterations) == (30, 1024, 1)
+    # samples x horizon fixed by the real-time measurement on the training host (2026-10-29).
+    assert (p.horizon_steps, p.samples, p.iterations) == (20, 1024, 1)
     # Candidate 0, ruled 2026-10-27.
     assert p.noise_std == (0.10, 0.10, 0.10) and p.temperature == 0.01
     assert (p.goal_progress, p.smoothness, p.field_breach, p.route_tracking) == (10.0, 0.01, 10.0,
                                                                                  1.0)
-    assert block["compute_measurement"] is None        # B6 is not tunable until it is measured
+    assert block["compute_measurement"] == "runs/realtime/REALTIME_20261029T095844Z_seed0"
     assert MPPIParams.from_flat(**flatten_numeric(block)) == p
     with pytest.raises(ValueError, match="declared"):
         MPPIParams.from_block({**block, "model": "unicycle"})
@@ -390,7 +391,7 @@ def test_a_straight_open_route_goes_straight(table):
 
 def test_the_configured_candidate_0_drives(table):
     """Candidate 0 (ruled 2026-10-27; it replaced initial values that did not move the robot, the
-    finding of that day) drives forward on an open, straight route at the configured 1024 x 30,
+    finding of that day) drives forward on an open, straight route at the configured 1024 x 20,
     under the acceleration limiter (0.4 m/s is 16 steps away at a_max)."""
     c = FieldAwareMPPI.from_config(CFG)
     c.begin_episode({"scenario_seed": 3})
@@ -418,7 +419,7 @@ def test_the_interface(table):
 
 def test_per_step_time(table, capsys):
     """The real-time criterion is p95 <= 50 ms on the TRAINING host (ruled 2026-10-27), measured by
-    scripts/measure_realtime.py. This prints the time on this host for the configured 1024 x 30 in a
+    scripts/measure_realtime.py. This prints the time on this host for the configured 1024 x 20 in a
     0.9 m aisle and in the open; no figure from a laptop is a property of the training host, so
     nothing is asserted about it. What is asserted: only points within reach (the horizon's travel
     plus the largest field) are used."""
@@ -427,7 +428,7 @@ def test_per_step_time(table, capsys):
                         scan=ray_scan([box(-3.0, 0.45, 5.0, 0.6), box(-3.0, -0.6, 5.0, -0.45)]))
     r = aisle.scan.ranges
     assert len(c.scan_points(aisle)) == int((r <= c.reach).sum())
-    assert c.reach == pytest.approx(PARAMS.speed_cap * 30 * DT + table.max_extent)
+    assert c.reach == pytest.approx(PARAMS.speed_cap * c.p.horizon_steps * DT + table.max_extent)
     times = {}
     for name, inp in (("aisle", aisle), ("open", route_input([[0, 0], [10, 0]], ray_scan()))):
         c.reset()
@@ -437,6 +438,6 @@ def test_per_step_time(table, capsys):
             c.command(inp)
         times[name] = (time.perf_counter() - start) / 3
     with capsys.disabled():
-        print(f"\nB6 per step (1024 x 30): aisle {1e3 * times['aisle']:.0f} ms, open "
+        print(f"\nB6 per step ({c.p.samples} x {c.p.horizon_steps}): aisle {1e3 * times['aisle']:.0f} ms, open "
               f"{1e3 * times['open']:.0f} ms (criterion p95 <= 50 ms on the training host)")
     assert all(math.isfinite(t) for t in times.values())

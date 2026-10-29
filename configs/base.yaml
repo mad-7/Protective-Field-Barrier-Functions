@@ -695,19 +695,21 @@ baselines:                 # the classical comparators (WP3). Not part of the en
     model: holonomic       # kinematic (vx, vy, wz) at sim.dt, box, wheel budget AND the
                            #   acceleration limiter, as the base applies a command (ruled
                            #   2026-10-27)
-    horizon_steps: 30      # rollout length in steps of sim.dt (1.5 s). NOT TUNED (ruled
+    horizon_steps: 20      # rollout length in steps of sim.dt (1.0 s). NOT TUNED (ruled
                            #   2026-10-27): fixed with `samples` by the declared real-time
                            #   measurement on the training host (scripts/measure_realtime.py):
                            #   the largest pair of samples {256, 512, 1024} x horizon {15, 20, 30}
-                           #   with p95 compute <= 50 ms in 0.7-0.9 m aisles               VERIFY
-    samples: 1024          # rollouts per control step; NOT TUNED, as horizon_steps        VERIFY
+                           #   with p95 compute <= 50 ms in 0.7-0.9 m aisles. MEASURED
+                           #   2026-10-29 on DESKTOP-55VR508 (commit e0f426a): 1024 x 20 p95
+                           #   37.1 ms; 1024 x 30 p95 56.5 ms fails
+    samples: 1024          # rollouts per control step; NOT TUNED, as horizon_steps
     temperature: 0.01      # lambda of the path-integral weighting, on per-step costs (the
                            #   rollout cost / horizon_steps; confirmed 2026-10-27). Candidate 0
     noise_std: [0.10, 0.10, 0.10]   # m/s, m/s, rad/s: sampling noise on (vx, vy, wz). Candidate 0
     iterations: 1          # optimisation passes per control step, warm-started from the
                            #   previous step's sequence shifted by one. NOT TUNED (ruled
                            #   2026-10-27): fixed at 1
-    compute_measurement: null   # the run directory of the declared real-time measurement that
+    compute_measurement: runs/realtime/REALTIME_20261029T095844Z_seed0   # the run directory of the declared real-time measurement that
                            #   fixed horizon_steps and samples; scripts/tune_classical.py refuses
                            #   B6 while it is null (ruled 2026-10-27)
     scan: filter           # the 120-bin filter stream with its bearings and validity; an

@@ -9916,3 +9916,38 @@ and the two tests that use it errored (first run on the training host: 1505 pass
   checkout, CRLF) got `6cc85484...` for the same text, so both tests errored there. The test now uses
   `pfbnav.utils.hashing.text_sha256` (line endings normalised, the project's rule for identity hashes);
   a CRLF copy of the file was checked to give the pinned `27435685...67268008`.
+
+## 2026-10-29 - The real-time measurement on the training host; B6 is 1024 x 20
+
+`python scripts/measure_realtime.py --config configs/base.yaml --seed 0`, run by the researcher on the
+training host: `runs/realtime/REALTIME_20261029T095844Z_seed0` (host `DESKTOP-55VR508`, 8 cores / 16
+threads AMD Zen 5, 61.6 GB, Windows, Python 3.10.22, torch 2.11.0+cpu, no GPU visible to torch;
+commit `e0f426a`, scene `537f1bbb`).
+- **Provenance: dirty, accepted.** `git status --porcelain` on the host listed only `README.md` (3
+  lines added) and files Python and pip regenerate: 176 `__pycache__/*.pyc` and 5 `pfbnav.egg-info/*`
+  files that the `init` commit tracked although `.gitignore` excludes them. No `.py`, config, gate,
+  scenario or scene file differed from `e0f426a`, so the code that ran is the commit's. The tracked
+  artefacts are removed from the index in a separate commit so later runs are not dirty for them.
+- **B6, the declared rule:** p95 over the three aisles, ms: 256 x 15/20/30 7.7 / 9.8 / 15.2; 512 x
+  15/20/30 13.5 / 18.7 / 29.5; 1024 x 15/20/30 26.1 / 37.1 / 56.5. The largest pair within 50 ms is
+  **1024 x 20** (max 39.0 ms); 1024 x 30 fails. A28a's stop rule does not apply (256 x 15 is 7.7 ms).
+  Written into `baselines.mppi` (`horizon_steps` 20, VERIFY removed from both; `compute_measurement`
+  names the run).
+- **The rest of the criterion:** B1 0.01 ms, B2 0.04 ms, B3 6.8 ms (max 11.2); PFB moving 14.8 ms,
+  stalled 14.9 ms (539 stalled steps, held at x = 0.642 m in every aisle: the part's positive
+  control), so no finding under `realtime_compute.pfb`. B7 is RPP + PFB, about 15 ms as the SUM of two
+  separately measured p95s, not a joint measurement; the results table says so.
+- **Not measured:** the learned arms and their filter, which `realtime_compute.applies_to` names. The
+  script does not time them. Open; for the supervisor.
+- **Anomaly (B6's behaviour, not its compute):** at candidate 0 B6 makes little or no progress in the
+  0.7 m aisle (0.0 m at every horizon-30 pair, -1.46 m at 256 x 15, 1.27 m at the selected pair,
+  against ~3.9 m in 0.8-0.9 m aisles). B6's tuning on the tune set has to meet this; the methods state
+  it.
+- **Cross-check on the laptop (not evidence, hard rule 15's control on what was timed):** the same code
+  path, `measure_realtime.Aisle` at 1024 x 20, takes a median ~300 ms per step on this laptop (Intel
+  family 6 model 142, 4 cores / 8 threads, NumPy 2.2.6 OpenBLAS) with ~95 scan points within reach,
+  i.e. ~8x the host's 37 ms; the host's p95 scales almost linearly with samples x horizon (7.7 to 56.5
+  ms for 8x the work). The two agree with the hardware; no laptop figure is a property of the host.
+- **Tests:** `tests/test_mppi.py` asserts (20, 1024, 1) and the named run, and its reach check reads the
+  configured horizon; `tests/test_tuning.py` checks B6's refusal with `compute_measurement` cleared,
+  because `runs/` exists only on the host and the refusal would otherwise pass or fail by machine.

@@ -389,17 +389,22 @@ def test_b6_space_brackets_the_configured_values_and_samples_valid_candidates():
     for c in cands:                                   # each builds the controller's own config
         block = mod.with_block(cfg, "baselines.mppi", c)["baselines"]["mppi"]
         assert MPPIParams.from_block(block) == MPPIParams.from_flat(**c)
-    with pytest.raises(SystemExit, match="compute_measurement"):     # not measured yet
+    cfg["baselines"]["mppi"]["compute_measurement"] = None           # as if not measured yet
+    with pytest.raises(SystemExit, match="compute_measurement"):
         mod.preflight(cfg, doc, list(mod.SETS), 5)
 
 
 def test_the_b6_space_is_approved_and_b6_waits_for_its_compute_measurement(tmp_path):
-    """Ranges APPROVED 2026-10-27 (no VERIFY). B6 is still refused until
+    """Ranges APPROVED 2026-10-27 (no VERIFY). B6 is refused until
     `baselines.mppi.compute_measurement` names the declared real-time measurement that fixed its
-    samples and horizon; every other controller is unaffected."""
+    samples and horizon; every other controller is unaffected. The config names the run of
+    2026-10-29; the refusal is checked with it cleared, since runs/ exists only on the host."""
     mod = _script()
     cfg = load_config(REPO / "configs" / "base.yaml")
     assert "VERIFY" not in B6_SPACE.read_text(encoding="utf-8")
+    assert (cfg["baselines"]["mppi"]["compute_measurement"]
+            == "runs/realtime/REALTIME_20261029T095844Z_seed0")
+    cfg["baselines"]["mppi"]["compute_measurement"] = None
     assert "compute_measurement" in mod.measurement_problem("field_aware_mppi", cfg)
     assert mod.measurement_problem("regulated_pure_pursuit", cfg) is None
     doc = yaml.safe_load(B6_SPACE.read_text(encoding="utf-8"))
