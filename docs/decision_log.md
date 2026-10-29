@@ -10086,3 +10086,34 @@ sets, the A14 test sets included, are built there.
   against the unchanged sets: ALL IDENTICAL.
 - `set_compare.py` is outside the environment freeze and the scenario identity's closure: neither
   moves.
+
+## 2026-10-29 - G2 PASS on the training host, 4 instances approved; route schedules recomputed
+
+**Route schedules** (`79e98f9`, host): recomputed after A29's re-stamp, as `tests/test_horizon.py`
+required (it pins each set file's text hash). Against the committed file (`8051bcf`): all 2,271 rows
+bit-identical (max float difference 0.0), only the ten recorded set hashes changed.
+
+**G2** (`runs/gates/G2_20261029T171718Z_seed9000000`, L1's config, seed 9000000).
+- **Provenance:** commit `79e98f9`, clean; host DESKTOP-55VR508; RTX 5070 Ti, driver 617.14, CUDA
+  12.8, cuDNN 91900, torch 2.11.0+cu128 (the 2026-10-29 provenance fields, present); scene
+  `537f1bbb`; display off. The SAC learner ran on `cuda` (worker 0 at N = 4).
+- **Verdict PASS, approved instances 4** (criteria from `gates.yaml` and `configs/gates/g2.yaml`):
+
+  | N | random steps/s | SAC steps/s (aggregate) | SAC over budget | rendered | scan faults |
+  |---|---|---|---|---|---|
+  | 1 | 52.4 | 32.1 | 0 | 0 | 0 |
+  | 2 | 96.7 | 68.7 | 1.5e-4 | 0 | 0 |
+  | 3 | 123.4 | 84.4 | 0 | 0 | 0 |
+  | 4 | 165.9 | 117.3 (29.2-29.4 per instance) | 0 | 0 | 0 |
+
+  Minimum 25 steps/s, over-budget share <= 0.001 and rendered <= 0.10 hold at every N; SAC updates
+  in every window equal its steps (one update per step; 8,416-10,341 per worker), the positive
+  control that the learner ran. Projection at N = 4: 0.74 days (0.11 of the six-week budget).
+  Display: no refusals, 7 starts per worker, consistent.
+- **A29's open risk, first wide test:** 131,527 random-phase steps of saturated random actions over
+  all N, with no exception: the velocity estimate never exceeded the 0.51 m/s top band.
+- **Noted, not anomalies:** every random-phase episode is a 4,000-step timeout (random actions do not
+  reach goals); the SAC window's rendered/not-rendered split counts completed episodes only, so its
+  step totals are below the window's (the episode in progress when the window opened is excluded).
+- **Pending:** the filter-off bit-identity test for re-freeze 13 (`3757aeca`) has not been reported;
+  L1's pilot waits for it.

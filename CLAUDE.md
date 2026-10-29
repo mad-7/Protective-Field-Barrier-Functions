@@ -227,6 +227,9 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   build only by last-bit rounding (max 1.9e-15 m). RULED: re-stamp on the laptop (exact); from now on
   identities/hashes exact and floats within `world.set_verification.float_abs_tol_m` 1e-9 m; all set
   building and verification on the training host (A14 test sets included).
+- **2026-10-29: G2 PASS** (`G2_20261029T171718Z`, commit 79e98f9): 4 instances approved, SAC 117 steps/s
+  at N = 4 on the GPU, over budget 0. Route schedules recomputed (rows identical). Next: the
+  filter-off bit-identity test, then L1's pilot (seed 9000000), the G4 controls, B2 tuning.
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 
