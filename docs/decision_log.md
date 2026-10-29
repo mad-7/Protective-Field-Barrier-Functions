@@ -10028,3 +10028,31 @@ fail loudly, not silently.
 identity's import closure includes `certified.py`, so the lock moves (relock A29). The filter-off
 bit-identity test reruns on the host. Until the researcher applies A29 and relocks,
 `tests/test_preregistration.py::test_the_generator_is_the_one_the_lock_pinned` fails by design.
+
+## 2026-10-29 - A29's re-stamp: the host's rebuild differs from the laptop's in the last bit
+
+**Run:** the ten sets rebuilt on the training host at `2c3b5e0` (Relock A29), `--workers 8`;
+`scripts/compare_rebuilt_sets.py --against 2c3b5e0` -> `runs/diag/COMPARE_SETS_20261029T141018Z_seed0`:
+DIFFERENCES FOUND (tune_narrow identical; the other nine 2-48 each, 179 scenario records). Not
+committed; G2 waits.
+- **What differs:** only `unmapped_offsets_m` (102 fields), `unmapped_arcs_m` (33) and
+  `unmapped_polygons` (23) -- the unmapped obstacles' recorded geometry and distances. Every seed is
+  in both builds; layout hashes, generator hash, starts, goals and `scenario_sha256` are identical.
+- **How much:** over all 158 differing fields, max |difference| 1.9e-15 m (pilot seed 9000070),
+  every field with the same number of values; the first three in train_narrow differ in the 17th
+  significant digit (one unit in the last place).
+- **Not A29:** nothing in `pfbnav/world` or `pfbnav/planning` imports the certified layer; A29 moved
+  the scenario identity's hash only.
+- **Cause (most likely):** the committed sets were built on the laptop (Intel family 6 model 142,
+  AVX2); the host is AMD Zen 5 (AVX-512). Both run the same NumPy 2.2.6 wheel (scipy-openblas 0.3.29,
+  same SciPy and Shapely pins), whose SIMD kernels are dispatched by CPU at run time; some operations
+  round their last bit differently.
+- **Finding for the supervisor:** the generator's scenario identity is exact across machines; its
+  descriptive floating-point output is reproducible to the last bit only on the same CPU family.
+  Physically irrelevant (1e-15 m, against a 1.8 mm across-load simulator spread), but the re-stamp
+  rule (exact reproduction) cannot be met by a host build.
+- **Options put to the researcher:** (1) rebuild on the laptop, where the committed sets were made,
+  and keep the exact comparison -- needs a one-line confirmation against ruling 7 (laptop for
+  development only), as it reproduces existing data rather than producing a citable result; (2)
+  commit the host build under a declared tolerance on descriptive fields with exact identity fields,
+  which hard rule 19 requires to be stated with its false-alarm rate and null-tested first.
