@@ -10115,5 +10115,6 @@ bit-identical (max float difference 0.0), only the ten recorded set hashes chang
 - **Noted, not anomalies:** every random-phase episode is a 4,000-step timeout (random actions do not
   reach goals); the SAC window's rendered/not-rendered split counts completed episodes only, so its
   step totals are below the window's (the episode in progress when the window opened is excluded).
-- **Pending:** the filter-off bit-identity test for re-freeze 13 (`3757aeca`) has not been reported;
-  L1's pilot waits for it.
+- **Re-freeze 13 complete:** the filter-off bit-identity test
+  (`tests/test_step_loop_sim.py -k filter_off`) PASSED on the training host, reported by the researcher
+  on 2026-10-29 (output not pasted). L1's pilot is released.
