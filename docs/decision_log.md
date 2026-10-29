@@ -9994,3 +9994,37 @@ Recorded as given; the implementation of point 1 follows.
   a first install had pulled 2.14.1+cu130; the GPU is an RTX 5070 Ti (Blackwell, CUDA >= 12.8). The
   real-time measurement of earlier today ran on `2.11.0+cpu`; it used no torch (B6, the PFB and the
   classical controllers are NumPy), so it stands.
+
+## 2026-10-29 - G2's first run crashed: the restart check sized from the raw request (A29)
+
+**Run:** `runs/gates/G2_20261029T132046Z_seed9000000` (training host, commit `b6c6128`). N = 1,
+worker 0 exited 1 in the random phase: `ValueError: speed 0.5486192981283979 m/s exceeds the top band
+(0.51 m/s)`, from `CertifiedLayer._restart_allowed` -> `fields.band_for`. The run stays as recorded
+(hard rule 10); G2 reruns after the relock.
+
+**Cause.** The step loop passes the request (`nominal`; with the filter off, the policy's request) as
+the restart check's intended direction. The check selected the departure field's band from that
+request's speed. Random actions are uniform on the action box times the ceilings (0.5, 0.5), up to
+0.71 m/s; the base clamps to the box and the wheel budget and executes at most speed_cap 0.5074 m/s,
+inside the top band 0.51. A request above 0.51 m/s therefore raised whenever the robot was held with
+its field clear. Classical controllers request within the box, so no run before G2 reached it; every
+learned run would have (random exploration, saturated outputs).
+
+**Fix (A29, drafted in `docs/pending/A29_amendment.md`):** the band comes from
+min(|request|, speed_cap); the direction still from the request. Within the cap the result is
+unchanged. Tests in `tests/test_restart_rigid.py`: a sweep over 20,000+ requests (every 5 degrees,
+0.40-0.75 m/s, four yaw rates, the action box's corners) asserting no exception, open space permits,
+and the band top never below the band of the executed speed (the request through
+`clamp_velocity` and `project_to_wheel_budget`); positive control: the same sweep fails on the old
+code (raises at 0.51 m/s), and the old sizing raises on G2's request; an above-cap departure toward
+an intrusion in the shell is still blocked.
+
+**Considered, not changed:** the main field selection's max(estimate, applied) could raise the same
+way if the estimate exceeded 0.51 m/s. Evidence against: the 198 replayed G1b runs (estimate never
+above the command, max ratio 0.985; 2026-10-16). G2's random phase is its first wide test; it would
+fail loudly, not silently.
+
+**Identity:** environment re-frozen `d7cd5e3a...` -> `3757aeca...` (thirteenth); the scenario
+identity's import closure includes `certified.py`, so the lock moves (relock A29). The filter-off
+bit-identity test reruns on the host. Until the researcher applies A29 and relocks,
+`tests/test_preregistration.py::test_the_generator_is_the_one_the_lock_pinned` fails by design.

@@ -132,3 +132,75 @@ def test_an_unobserved_bin_blocks_every_departure_creep_included():
     valid[int(np.argmin(np.abs(BEARINGS - math.radians(55.0))))] = False
     for twist in ((0.0, 0.0, 1.0), (CREEP, 0.0, 0.0), (-0.25, 0.0, 0.0)):
         assert not LAYER._restart_allowed(ranges, BEARINGS, valid, twist)
+
+
+# ------------------------------------------------- A29 (2026-10-29): requests above the speed cap
+def _executed(request):
+    """The twist the base would execute for `request`: the box, then the wheel budget."""
+    from pfbnav.sim.robot import (
+        ActuationLimits,
+        WheelBudget,
+        clamp_velocity,
+        project_to_wheel_budget,
+    )
+    limits, budget = ActuationLimits.from_config(CFG), WheelBudget.from_config(CFG)
+    boxed = clamp_velocity(np.asarray(request, dtype=float), limits)
+    return project_to_wheel_budget(boxed, budget.filter_limit, budget.lever_arm).applied
+
+
+def _requests():
+    """Dense over the region that matters (hard rules 14, 18): every heading at speeds from 0.40
+    to 0.75 m/s -- through the 0.5074 cap, the 0.51 top band and the action box's 0.71 corner --
+    with no, creep, moderate and full turning, plus the action box's own corners."""
+    w_max = float(CFG["actuation"]["w_max"])
+    ceil = np.array([CFG["actuation"]["v_max"], CFG["actuation"]["vy_max"], w_max])
+    out = [s * np.array([math.cos(h), math.sin(h), 0.0]) + np.array([0.0, 0.0, w])
+           for s in np.linspace(0.40, 0.75, 71)
+           for h in np.radians(np.arange(0.0, 360.0, 5.0))
+           for w in (0.0, 0.01, 0.5, -w_max)]
+    out += [ceil * np.array(c) for c in np.array(np.meshgrid([-1, 1], [-1, 1], [-1, 0, 1])).T
+            .reshape(-1, 3)]
+    return out
+
+
+def test_a_request_above_the_speed_cap_never_raises_and_its_field_covers_the_executed_motion(
+        monkeypatch):
+    """The G2 crash of 2026-10-29: a random action asked for 0.549 m/s while the robot was held,
+    and the restart check sized its band from the raw request, above the 0.51 m/s top band. The
+    band now comes from min(|request|, speed_cap). Over every request: no exception, open space
+    still permits the departure, and the selected band's top is never below the band of the speed
+    the base would actually execute."""
+    tops_used = []
+    extent = LAYER.fields.extent
+
+    def spy(b, top, heading, at_rest=False, yaw_rate=0.0):
+        tops_used.append((top, at_rest))
+        return extent(b, top, heading, at_rest=at_rest, yaw_rate=yaw_rate)
+
+    monkeypatch.setattr(LAYER.fields, "extent", spy)
+    open_ranges, open_valid = np.full(120, 5.0), np.ones(120, bool)
+    requests = _requests()
+    for req in requests:
+        tops_used.clear()
+        assert LAYER._restart_allowed(open_ranges, BEARINGS, open_valid, req)
+        (top, at_rest), = tops_used
+        executed = float(np.hypot(*_executed(req)[:2]))
+        assert executed <= P.speed_cap + 1e-12
+        if not at_rest:
+            assert top >= P.band_top_speeds[LAYER.fields.band_for(executed)], req
+    assert len(requests) > 20000
+
+
+def test_the_old_sizing_raised_on_the_same_request_and_the_new_one_still_blocks():
+    """Positive control: the pre-A29 sizing (band of the raw request) raises on the request that
+    crashed G2 and on the action box's corner, so the sweep above exercises the defect. And an
+    above-cap request toward an intrusion in the departure shell is still BLOCKED, not released."""
+    import pytest
+
+    for speed in (0.5486192981283979, math.hypot(CFG["actuation"]["v_max"],
+                                                 CFG["actuation"]["vy_max"])):
+        with pytest.raises(ValueError, match="exceeds the top band"):
+            LAYER.fields.band_for(speed)
+    ranges, valid = _in_the_shell(0.0)
+    assert not LAYER._restart_allowed(ranges, BEARINGS, valid, (0.70, 0.0, 0.0))
+    assert not LAYER._restart_allowed(ranges, BEARINGS, valid, (0.5, 0.5, 0.0))

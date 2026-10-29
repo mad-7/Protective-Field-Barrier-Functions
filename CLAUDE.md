@@ -219,6 +219,10 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   L2 proceeds with candidate 1 (residual cycle reported as a comparator limitation); projected
   integral and first update without derivative accepted; **no laptop G2: every citable run, all
   tuning included, on the training host.** Next: G2, L1's pilot, then B2 tuning, B7 and alpha.
+- **2026-10-29: G2's first run crashed** (a random action at 0.549 m/s; the restart check sized its
+  band from the raw request, above the 0.51 top band). Fixed as a blocking defect: band from
+  min(|request|, speed_cap). A29 drafted (`docs/pending/A29_amendment.md`); env re-frozen 3757aeca.
+  The researcher applies A29, relocks, reruns the filter-off bit-identity test, then G2.
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 

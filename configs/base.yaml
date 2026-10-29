@@ -847,7 +847,11 @@ env:                       # the Gymnasium environment (WP1)
   # `pfb_seconds`, `pfb["unobserved"]`; information only) for the real-time criterion. Off, the PFB
   # is not built: filter-off behaviour unchanged. The filter-off bit-identity test reruns. No L1 run
   # exists.
-  frozen_code_sha256: d7cd5e3a0cc6d30ebba7c82f01c3c35a90f87df947a82833ece2b4da72a25f50
+  # RE-FROZEN 2026-10-29, thirteenth time (was d7cd5e3a...): A29, a blocking defect -- the restart
+  # check sized the departure field from the raw request and raised above the top band (G2's first
+  # run, a random action at 0.549 m/s); it now uses min(|request|, speed_cap) (certified.py). Within
+  # the cap nothing changes. The filter-off bit-identity test reruns. No L1 run exists.
+  frozen_code_sha256: 3757aeca1753a015cc26bb106955d33d0dcf2a70af21425fcf435362b5294cb6
 
   # The step-0 check (2026-10-10): at every reset the robot's measured pose, mapped into the
   # layout, must equal the scenario's start within these, or the reset raises. Settling moves the

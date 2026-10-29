@@ -878,7 +878,12 @@ class CertifiedLayer:
             field = self.fields.extent(b, 0.0, 0.0, at_rest=True, yaw_rate=w)
         else:
             heading = float(math.atan2(vy, vx)) if speed >= 1e-9 else self._heading
-            top = p.band_top_speeds[self.fields.band_for(speed)]
+            # The band of the speed the base can execute (A29, 2026-10-29): the request is a
+            # direction, and a learned policy's may exceed the box and the wheel budget (a corner
+            # of the action box is 0.71 m/s), which the base clamps to at most speed_cap -- the
+            # top band covers that (CertifiedParams validates it). Sizing from the raw request
+            # raised above the top band instead; the field is never below the executed motion.
+            top = p.band_top_speeds[self.fields.band_for(min(speed, p.speed_cap))]
             field = self.fields.extent(b, top, heading, at_rest=False, yaw_rate=w)
         breaching = ~ok | (r < field)
         # Both approach rules are kept, as ruled, after the whole-field test: with the whole
