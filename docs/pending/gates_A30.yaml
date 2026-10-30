@@ -1,0 +1,153 @@
+# Gate criteria. Commit this file BEFORE running any gate script.
+# Once committed, changes require a dated entry in docs/decision_log.md.
+G0_contact_validation:
+  positive_cases: [front_wall_head_on, side_wall_lateral, pod_corner, wheel_edge, rear_wall,
+                   raised_housing]
+  approach_speed: 0.1          # m/s
+  max_detection_lag_steps: 1   # vs geometric prediction
+  negative_case: parallel_pass_gap_10mm
+  max_false_contacts: 0
+  contexts: [gate_script, env_step_loop]
+  required: all cases pass in all contexts
+  case_required_shapes:
+    raised_housing: "/youBot/SickS300"
+
+G1_holonomic_fidelity:
+  profiles: [forward, lateral, diagonal_45, translate_while_rotating]
+  distance: 5.0              # m per profile
+  max_speed_error: 0.10      # relative, mean over steady state
+  max_heading_drift_deg: 5.0 # over the profile distance
+  fallback: "unicycle primary; holonomic becomes caveated ablation"
+
+G1b_closed_loop_tracking:
+  controller: proportional heading + cross-track, gains committed in configs/base.yaml
+  profiles: [forward, lateral, diagonal_45, translate_while_rotating]
+  speeds: [0.10, 0.20, 0.30, 0.40, 0.50]   # m/s, each profile at each speed
+  distance: 5.0
+  max_cross_track: 0.05        # m — below the narrowest per-side aisle clearance
+  rms_cross_track: 0.02        # m
+  max_final_heading_error_deg: 5.0
+  repetitions: 3               # all must pass
+  lateral_extra_speeds: [0.35, 0.45]   # m/s, lateral profile only (A6)
+  outcome: "v_max = highest grid speed passing all profiles in all repetitions, with every lower grid speed passing too; vy_max = the same over the lateral profile at grid and extra speeds (A6)"
+  
+G2_compute_budget:
+  parallel_instances: [1, 2, 3, 4]
+  measure_seconds: 300
+  wallclock_budget_weeks: 6
+  n_training_runs: 25
+  reduction_order: [L2-d005, L2-d020, L5-nowp, PFB-(a), stop_active, A1]  # A28, confirmed A28a
+  never_cut: [L1, L2, L4, L5, B1, B2, B3, B6, B7]   # A28a (ruled 2026-10-27): no learned confirmatory arm and no classical comparator is ever cut
+  min_steps_per_second: 25              # aggregate, on the TRAINING host
+  max_rendered_episode_fraction: 0.10   # Q7: G2 FAILS above this
+  over_budget: >-                       # A25 (ruled 2026-10-23)
+    the selected instance count must produce essentially no over-budget steps; the
+    over-budget count is recorded per run. A run with more than 0.1 % of its steps scan-faulted
+    is flagged, and that host configuration runs fewer instances
+  max_over_budget_share: 0.001          # A28 (ruled 2026-10-27): the numeric reading of "essentially no
+                                        #   over-budget steps"; scan faults reported beside it per N
+
+realtime_compute:                       # A28 (ruled 2026-10-27)
+  p95_max_s: 0.050                      # p95 compute per step <= the control period, on the TRAINING host
+  applies_to: every controller -- B1, B2, B3, B6, B7 (RPP + PFB together), the learned arms and their filter
+  measured_by: scripts/measure_realtime.py, synthetic 0.7-0.9 m aisles, once per host
+  B6_rule: the largest pair of samples {256, 512, 1024} x horizon {15, 20, 30} by samples x horizon with p95 <= p95_max_s in 0.7-0.9 m aisles (a tie in the product to the longer horizon, confirmed A28a); if even 256 x 15 exceeds p95_max_s on the training host, STOP and report -- the criterion is not relaxed (A28a)
+  pfb: the PFB's stalled p95 (held at an obstacle) above p95_max_s on the training host is reported as a finding and a limitation, never resolved by changing the PFB
+  reporting: per-step compute of every controller in the results (p50, p95, max, host)
+
+layout_sets:
+  # Disjoint by a million, so a seed names its split unambiguously (world.layouts.split_of_seed).
+  seed_ranges:
+    train: [1000000, 1999999]
+    tune:  [2000000, 2999999]
+    test:  [3000000, 3999999]
+    # Q2 ruling: development never consumes train seeds. Pilots, smoke tests and debugging
+    # draw from here, and nothing drawn from here may appear in a reported result.
+    pilot: [9000000, 9999999]
+  # Identity of a layout set (ruled 2026-09-23). The generator's code hash is part of it: a
+  # changed generator means a different set, even at the same seeds.
+  identity: [seed, layout_sha256, generator_sha256]
+  verified_at: load          # verify() regenerates and checks, rather than trusting a manifest
+  locked_splits: [test]      # a locked set refuses to be overwritten; regenerating needs an amendment
+  tune_layouts_disposable: true
+  # Q2 ruling: the lock records the generator hash, so a set written by a different generator
+  # cannot pass as the frozen one.
+  lock_records: [generator_sha256]
+  # Unmapped obstacles. A SHARED environment hyperparameter: identical across L1, L2, L4, L5
+  # and A1, never varied per method (ruled 2026-09-23, rates approved 2026-09-26).
+  unmapped:
+    episode_rate:
+      train: 0.25
+      tune:  0.25
+      test:
+        mapped_only: 0.0
+        unmapped_static: 1.0
+    # Q1 ruling: preregister the COUNT DISTRIBUTION and the PLACEMENT RULE, not just the rate.
+    count: [1, 2]            # uniform over this inclusive range, when an episode has any
+    size_m: [0.25, 0.60]     # square footprint, uniform in this range
+    height_m: 0.80           # above the 0.221 m scan plane, so it is SENSED though unmapped
+    placement:
+      margin_m: 0.15               # kept clear of any shelf or wall, so it never merges into
+                                   #   geometry the planner already knows
+      min_arc_from_start_m: 2.0    # along the plan before one may appear: an obstacle ON the
+                                   #   route is the case the layers exist for, one AT the start
+                                   #   spawns the robot in contact (measured 2026-09-25)
+      min_distance_to_goal_m: 1.0  # so it cannot sit on the goal and make an episode
+                                   #   unwinnable rather than difficult
+      excluded_from_baked_map: true # the property the whole design rests on
+    # Logged per episode (ruled 2026-09-23): the count, and each obstacle's lateral offset
+    # from the planned path and arc position along it.
+    logged_per_episode: [unmapped_count, unmapped_offsets_m, unmapped_arcs_m]
+  # Sensor-dropout augmentation, TRAINING only, never applied to the filter's 120-bin stream.
+  # Mechanism ruled 2026-09-26 (Q3), replacing the flat per-bin rate of 2026-09-23.
+  sensor_dropout:
+    arc_probability: 0.10    # P(an episode begins with a blocked arc), held all episode
+    arc_bins: [1, 6]         # contiguous policy bins blinded, inclusive; 10 deg each
+    per_step_rate: 0.01      # per bin, per step
+    dropped_bin_presents_as: invalid   # range 0.0, never range_max: unobserved is not free
+
+G4_learned_pilot:
+  # Ruled by the supervisor on 2026-10-03 (amendment A15). A generic gate on every learned
+  # method's PILOT seed, run before that method's confirmatory seeds. Not a performance claim: it
+  # decides whether the pipeline works well enough on the frozen environment to spend
+  # confirmatory seeds on it.
+  applies_to: [L1, L2, L4, L5, A1]
+  pilot_training_seeds: [9000000, 9000001, 9000002]   # from the pilot range only. Pilot seeds
+                                             #   never enter H1 or H2. A30 (2026-10-30): 9000000
+                                             #   FAILED at 300k steps and is recorded; the pilot
+                                             #   restarts under A30's configuration (1M steps, the
+                                             #   training stall truncation) at 9000001; the second
+                                             #   (only on its learning/checkpoint failure) is
+                                             #   9000002. The pivot counts the restarted pilot only.
+  integrity:                                 # every one must hold
+    - the run reached training.total_timesteps and wrote final_model.zip
+    - environment.json records the frozen environment identity (env.frozen_code_sha256)
+    - no NaN or infinity in the logged actor, critic or entropy-coefficient losses
+    - episodes.jsonl has one line per episode, each with an outcome, timesteps strictly increasing
+    - no environment exception ended or skipped an episode
+  learning:                                  # on the training episode log, in episode order
+    window_fraction: 0.10                    # first and last 10 % of training episodes
+    min_last_success: 0.20                   # success rate over the last 10 %
+    min_improvement: 0.15                    # last 10 % minus first 10 %
+  checkpoint:                                # deterministic policy, each scenario once
+    sets: [scenarios/tune/tune_narrow.json, scenarios/tune/tune_medium.json,
+           scenarios/tune/tune_wide.json]    # the tune set at rate 0.25, 60 scenarios
+    min_success: 0.30
+    max_contact_rate: 0.10                   # episodes with any ground-truth contact
+  recorded_not_gated: [steps_per_second, reset_wall_clock, stops_per_100m,
+                       outcome_distribution, per_stratum_success]
+  controls:                                  # required before any pilot verdict is read
+    zero_action: must FAIL checkpoint -- all timeouts, no successes
+    oracle_tracker_privileged: must PASS checkpoint   # A23: the privileged oracle tracker
+                                                      #   (schedule over every obstacle)
+    b1_with_recovery: recorded, not judged         # A23: under the declared route cap
+    if_either_misbehaves: the gate is broken; report, read no verdict
+  on_failure:
+    integrity: fix; a fresh pilot seed; the failed run is kept
+    learning_or_checkpoint: >-
+      one second pilot seed, unchanged; if it passes, G4 passes and the first failure is recorded
+      for the seed-CV discussion; if it fails, stop and report
+    hyperparameter_change_after_failure: applies identically to every learned method; restarts the pilot
+  standing_rule: >-
+    after G4 passes, every confirmatory seed trains unconditionally and stays in the analysis
+    whatever its outcome

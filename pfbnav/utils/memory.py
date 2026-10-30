@@ -58,6 +58,51 @@ def growth_per_100(start_mb: float, end_mb: float, episodes: int) -> float | Non
     return (end_mb - start_mb) * 100.0 / episodes
 
 
+def levels_off(samples: list[dict[str, Any]], *, total_timesteps: int, settled_from: int,
+               mark_fraction: float, max_growth_mb: float) -> dict[str, Any]:
+    """The training memory criterion (ruled 2026-10-30; operationalised in the decision log).
+
+    "Growth beyond the CUDA start-up cost levels off within the first 10 % of the run": `samples`
+    are {"timestep", "python"} (MB), in time order. The start-up costs (CUDA context, the first
+    update's cuBLAS/cuDNN workspaces, the replay buffer) are over by `settled_from` (the first sample
+    at or after it is the baseline). The mark is `mark_fraction` x `total_timesteps`; the criterion
+    passes when the training process grew at most `max_growth_mb` from the first sample at or after
+    the mark to the last sample, and the samples reach the run's end (within one sampling interval
+    of `total_timesteps`; a check that stopped early cannot pass). Also reports the growth from the
+    baseline to the mark and the least-squares slope after the mark, MB per 100k steps."""
+    rows = [s for s in samples if s.get("python") is not None]
+    out: dict[str, Any] = {"total_timesteps": int(total_timesteps), "settled_from": int(settled_from),
+                           "mark_timestep": round(mark_fraction * total_timesteps),
+                           "max_growth_mb": float(max_growth_mb), "samples": len(rows)}
+    base = next((s for s in rows if s["timestep"] >= settled_from), None)
+    mark = next((s for s in rows if s["timestep"] >= out["mark_timestep"]), None)
+    if base is None or mark is None or len(rows) < 2:
+        return {**out, "passed": False, "reason": "too few samples after the mark"}
+    last = rows[-1]
+    interval = rows[-1]["timestep"] - rows[-2]["timestep"]
+    reached_end = last["timestep"] >= total_timesteps - max(interval, 1)
+    after = [s for s in rows if s["timestep"] >= mark["timestep"]]
+    t = [float(s["timestep"]) for s in after]
+    m = [float(s["python"]) for s in after]
+    slope = None
+    if len(after) >= 2 and max(t) > min(t):
+        mt, mm = sum(t) / len(t), sum(m) / len(m)
+        slope = (sum((a - mt) * (b - mm) for a, b in zip(t, m))
+                 / sum((a - mt) ** 2 for a in t)) * 1e5
+    growth_after = float(last["python"]) - float(mark["python"])
+    passed = bool(reached_end and growth_after <= max_growth_mb)
+    reason = ("levelled off" if passed else
+              "the samples stop before the run's end" if not reached_end else
+              f"grew {growth_after:.1f} MB after the mark (> {max_growth_mb:g} MB)")
+    return {**out, "passed": passed, "reason": reason,
+            "baseline": {"timestep": base["timestep"], "python_mb": base["python"]},
+            "at_mark": {"timestep": mark["timestep"], "python_mb": mark["python"]},
+            "last": {"timestep": last["timestep"], "python_mb": last["python"]},
+            "growth_baseline_to_mark_mb": float(mark["python"]) - float(base["python"]),
+            "growth_after_mark_mb": growth_after,
+            "slope_after_mark_mb_per_100k_steps": slope}
+
+
 class MemoryRecord:
     """Start-and-end memory of this Python process and of the simulator on `port`."""
 

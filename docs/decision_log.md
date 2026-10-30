@@ -10158,3 +10158,75 @@ measured +528 MB on the host; the first-update cost (cuBLAS/cuDNN) and the repla
 are further one-off costs. Inconclusive until the in-run trend is sampled during the next training
 run (a 5-minute sampler, issued). Not blocking at 300k steps (61.6 GB host); blocking for any longer
 run until resolved.
+
+## 2026-10-30 - Ruled: the learning setup restarted once (A30); diagnosis and memory check first
+
+**The ruling (supervisor, verbatim in substance):** option (b). Seed 9000000 is recorded as G4 FAIL
+at 300k; the pivot counter restarts under the new configuration. Declared: this is the only change
+to the learning setup before the pivot rule applies; if the restarted pilot fails G4 twice, the
+study pivots to the filter-only path. Identical for every learned method (L1, L2, L4, L5, A1 and the
+exploratory arms), recorded as an amendment before any restart:
+1. `total_timesteps` = 1,000,000.
+2. Training-only stall truncation: truncate after 30 s with less than 0.05 m of progress, as a
+   time-limit truncation (bootstrapped, not terminal). Evaluation keeps the 4,000-step horizon and
+   its outcome rules unchanged.
+Before restarting: diagnose the failed run offline (entropy coefficient over training, Q-value sign
+and scale, per-episode reward components -- is progress ever positive? -- action statistics,
+observation ranges against normalisation); report any defect before restarting. Memory: a ~100k-step
+check first, criterion "growth beyond the CUDA start-up cost levels off within the first 10 % of the
+run"; no run of 1M or more until it passes. Then L1's pilot at seed 9000001 at 1M steps, and B2, B7
+and alpha tuning on the training host in parallel at the instance count G2 approves.
+
+**Implemented** (A30 drafted: `docs/pending/A30_amendment.md`, `docs/pending/gates_A30.yaml`):
+- `configs/base.yaml`: `training.total_timesteps` 1,000,000; `training.stall_truncation`
+  (window_s 30.0, min_progress_m 0.05); `training.memory_sample_every` 1000;
+  `training.memory_check` (the declared criterion, below).
+- `pfbnav/training/stall.py`: `StallTruncation`, applied ONLY by `scripts/train.py`. Progress = the
+  route's arc length `s`, which the tracker keeps monotonic, over a sliding 600-step window from the
+  episode's start; the truncation returns `terminated=False, truncated=True`, outcome
+  `stall_truncated`, with the env's episode record and whether a stop was latched. Outside the
+  frozen environment's import closure: `env.frozen_code_sha256` does not move, and no re-freeze or
+  bit-identity test is needed. Tests (`tests/test_stall_truncation.py`): the configured rule; a dense
+  sweep of steady speeds 0.040-0.060 m per window (truncated below 0.05, never at or above); stops at
+  five onsets; the env's own ends pass through; and SB3 (2.7.1) stores the truncation as a timeout,
+  so the sampled `dones` is 0 -- the bootstrap, measured. Only `scripts/train.py` imports it.
+- `scripts/train.py`: `run()` shared with the memory check (sets verified before the run directory
+  exists); `memory_trend.jsonl` in every run (`MemoryTrend`); `--instance i` (port
+  23000 + 2 i); the summary carries the stall truncations, instance and port.
+- `scripts/tune_classical.py`: `--instance i`, refused unless i < `--instances`; recorded in
+  `candidates.json`.
+- **Memory criterion, operationalised** (`pfbnav.utils.memory.levels_off`): baseline the first sample
+  at step >= 3,000 (after `learning_starts` 2,000 and the first 1,000 updates); mark 10 % of the run;
+  PASS when the training process grows <= 100 MB from the mark to the last sample and the samples
+  reach the run's end. One column, one check; expected false alarms under the null ~0 (allocator
+  fluctuations of tens of MB). The 300k run's growth beyond the measured CUDA cost and a generous
+  first-update allowance, if linear, is ~180 MB per 90k steps, which fails it. Positive control: 256
+  MiB allocated in-process must read 230-290 MB (laptop: 256.6). Seeds: the pilot range, never a G4
+  pilot training seed (9200000 suggested). `scripts/check_training_memory.py`.
+- **Diagnosis** (`scripts/diag_training_run.py`, `pfbnav/eval/training_diag.py`, known-answer tests
+  in `tests/test_training_diag.py`). The run's logs hold the entropy coefficient, the losses and
+  per-episode return, length, outcome, stops, distance and latched steps; they hold NO Q-value,
+  action or observation, and the return sums progress and proximity. So: from the logs, the entropy
+  trajectory and each episode's return split into time, stops, goal, contact and a residual
+  (progress - proximity), a lower bound on the progress term; with `--replay` (a few minutes, one
+  instance), the first, middle and final checkpoints each drive two of the run's first training
+  scenarios (stochastic policy, dropout on, nothing learning, at most 1,200 steps), recording Q of
+  both critics, sampled and mean actions, observations against the space's bounds, and every reward
+  term per step.
+
+**Put to the supervisor (in A30):** (1) seed 9000002 as the restarted pilot's second seed; (2) L2's
+cost is stops per episode against d = 0.1, and truncated episodes are shorter -- d unchanged here;
+(3) the memory criterion's 100 MB operationalisation.
+
+## 2026-10-30 - Training can be stopped without losing the model (researcher's request)
+
+`scripts/train.py` (and so the memory check, which runs the same `run()`): a file named `STOP` in the
+run directory ends training at the next 100-step check (`StopFile`, `pfbnav/training/record.py`); the
+model is saved as `stopped_model.zip`. Ctrl+C saves `interrupted_model.zip` and still exits as
+interrupted (re-raised, hard rule 9). `summary.json["stopped"]` records how and at which step.
+Neither file is `final_model.zip`: a run stopped early has not reached `total_timesteps`, is not
+`completed`, and fails G4's integrity check, so a stopped PILOT uses up its seed (G4 `on_failure`:
+integrity -> a fresh pilot seed, the failed run kept). Checkpoints every 25k steps are unchanged.
+A leftover `STOP` file is refused before training. Tests: `tests/test_stop_training.py` (the file
+stops `learn()` at the next check; without it the run reaches the end; after a Ctrl+C mid-`learn()`
+the model saves and reloads with the same actions). No resume: a stopped run is not continued.

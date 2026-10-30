@@ -95,3 +95,64 @@ class EpisodeLog(BaseCallback):
             with self.path.open("a", encoding="utf-8") as f:
                 f.write(json.dumps(line) + "\n")
         return True
+
+
+class MemoryTrend(BaseCallback):
+    """Samples the training process's and the simulator's private memory every `every` steps into
+    a JSONL file (ruled 2026-10-30: the in-run trend, read by `pfbnav.utils.memory.levels_off`).
+    `memory` is the run's `MemoryRecord`; the first sample is taken at the first step."""
+
+    def __init__(self, path: str | Path, memory: Any, every: int):
+        super().__init__(verbose=0)
+        if every < 1:
+            raise ValueError("the memory sampling interval must be at least one step")
+        self.path = Path(path)
+        if self.path.exists():
+            raise FileExistsError(f"{self.path} exists; a run never appends to another's log")
+        self.memory = memory
+        self.every = int(every)
+        self.samples: list[dict[str, Any]] = []
+
+    def sample(self) -> dict[str, Any]:
+        snap = self.memory.snapshot()
+        row = {"timestep": int(self.num_timesteps), "python": snap.get("python"),
+               "sim": snap.get("sim"), "wall_s": time.perf_counter()}
+        self.samples.append(row)
+        with self.path.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(row) + "\n")
+        return row
+
+    def _on_step(self) -> bool:
+        if self.num_timesteps == 1 or self.num_timesteps % self.every == 0:
+            self.sample()
+        return True
+
+    def _on_training_end(self) -> None:
+        if not self.samples or self.samples[-1]["timestep"] != self.num_timesteps:
+            self.sample()
+
+
+#: A file of this name in the run directory ends training cleanly at the next check.
+STOP_FILE = "STOP"
+
+
+class StopFile(BaseCallback):
+    """Ends training when `<run_dir>/STOP` exists, checked every `every` steps: `learn()` returns
+    normally, so the caller saves the model (`stopped_model.zip`, never `final_model.zip`: a run
+    stopped early has not reached `total_timesteps` and fails G4's integrity check by design)."""
+
+    def __init__(self, run_dir: str | Path, every: int = 100):
+        super().__init__(verbose=0)
+        if every < 1:
+            raise ValueError("the stop-file interval must be at least one step")
+        self.path = Path(run_dir) / STOP_FILE
+        if self.path.exists():
+            raise FileExistsError(f"{self.path} exists before training started; remove it")
+        self.every = int(every)
+        self.stopped_at: int | None = None
+
+    def _on_step(self) -> bool:
+        if self.num_timesteps % self.every == 0 and self.path.exists():
+            self.stopped_at = int(self.num_timesteps)
+            return False
+        return True

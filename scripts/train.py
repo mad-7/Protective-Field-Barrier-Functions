@@ -13,6 +13,15 @@ retrained over (hard rule 10):
                                      for non-finite values) and for TensorBoard
     checkpoints/                     every `training.checkpoint_every` steps
     final_model.zip                  at `training.total_timesteps`
+    stopped_model.zip                if a file named STOP was created in the run directory: training
+                                     ends at the next 100-step check and the model is saved
+    interrupted_model.zip            on Ctrl+C, the model as it was (the run still exits as
+                                     interrupted). Neither is `final_model.zip`: a run stopped
+                                     early has not reached `total_timesteps`, so it is not complete
+                                     and fails G4's integrity check -- a stopped pilot uses up its
+                                     seed (G4 on_failure, integrity)
+    memory_trend.jsonl               private memory of this process and the simulator every
+                                     `training.memory_sample_every` steps (ruled 2026-10-30)
     summary.json                     steps, episodes, outcomes, wall time, steps per second;
                                      for L2 also the Lagrangian's settings and, per finished
                                      episode, its stop count and the multiplier then (it moves
@@ -35,6 +44,14 @@ retrained over (hard rule 10):
     exploratory sensitivity, ruled 2026-10-27), multiplier settings other than the declared ones, a
     stop or proximity term in the reward, or the filter on (`LagrangianSettings.from_config`).
 
+**Stall truncation (A30, ruled 2026-10-30).** The environment is wrapped in
+`StallTruncation` (`pfbnav/training/stall.py`): an episode with less than 0.05 m of route progress
+over 30 s is truncated as a time limit, outcome `stall_truncated`. Training only.
+
+**Parallel runs.** `--instance i` connects to `sim.port + sim.port_stride * i`, so a training run
+can share the host with a tuning run on another instance (each declares the host's total to G2's
+approval where its script asks; `scripts/tune_classical.py --instances`).
+
 **Order.** Training seed k visits the combined set in its own permutation, the same for every
 method's seed k (`pfbnav/training/order.py`; ruled 2026-10-03). No curriculum.
 """
@@ -56,7 +73,8 @@ from pfbnav.envs.freeze import environment_identity, freeze_problem
 from pfbnav.envs.nav_env import NavEnv
 from pfbnav.sim.client import SimClient, SimConnection
 from pfbnav.training.order import order_sha256, scenario_order
-from pfbnav.training.record import EpisodeLog, EpisodeRecorder
+from pfbnav.training.record import STOP_FILE, EpisodeLog, EpisodeRecorder, MemoryTrend, StopFile
+from pfbnav.training.stall import StallRule, StallTruncation
 from pfbnav.utils.cli import add_display_flag, apply_display
 from pfbnav.utils.hashing import text_sha256
 from pfbnav.utils.memory import MemoryRecord
@@ -102,18 +120,9 @@ def make_learner(env, cfg: dict[str, Any], seed: int):
     return make_sac(env, cfg, seed)
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--config", required=True)
-    parser.add_argument("--seed", type=int, required=True)
-    add_display_flag(parser)
-    args = parser.parse_args()
-
-    # Rendering changes no physics (scripts/regress_display_off.py: bit-identical trajectories)
-    # and is outside the frozen environment's identity; it costs ~7 ms a step, and the run
-    # records what was in force.
-    cfg = apply_display(load_config(args.config), args.display)
-    seed_everything(args.seed)
+def load_training_sets(cfg: dict[str, Any], seed: int) -> tuple[list[Path], list[dict[str, Any]],
+                                                                list[int]]:
+    """The training sets' paths, every scenario in the seed's order, and the order."""
     set_paths = preflight(cfg)
     scenarios: list[dict[str, Any]] = []
     for path in set_paths:
@@ -122,11 +131,18 @@ def main() -> int:
         if not checked["ok"]:
             raise SystemExit(f"{path.name} fails verification: {checked['problems'][:3]}")
         scenarios += manifest["scenarios"]
-    order = scenario_order(len(scenarios), args.seed)
-    ordered = [scenarios[i] for i in order]
+    order = scenario_order(len(scenarios), seed)
+    return set_paths, [scenarios[i] for i in order], order
 
+
+def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, sets: tuple,
+        instance: int = 0) -> dict[str, Any]:
+    """Train into `run_dir` (made by `create_run_dir`) for `total_timesteps` on `sets` (from
+    `load_training_sets`, verified BEFORE the run directory exists, so a refused set never leaves a
+    directory that blocks the seed); returns the summary, also written to `run_dir/summary.json`.
+    Shared by this script and the training memory check."""
+    set_paths, ordered, order = sets
     t = cfg["training"]
-    run_dir = create_run_dir(REPO_ROOT / "runs" / "train", str(cfg["experiment"]), args.seed, cfg)
     identity = environment_identity(cfg)
     (run_dir / "environment.json").write_text(json.dumps({
         "environment": identity, "scenario_order_sha256": order_sha256(order),
@@ -134,24 +150,44 @@ def main() -> int:
         "training_sets": {p.relative_to(REPO_ROOT).as_posix(): text_sha256(p) for p in set_paths},
     }, indent=2), encoding="utf-8")
     scene = REPO_ROOT / cfg["sim"]["scene"]
-    client = SimClient(SimConnection.from_config(cfg))
+    client = SimClient(SimConnection.from_config(cfg, instance_id=instance))
     client.connect()
     client.load_scene(str(scene))
-    env = NavEnv(client, cfg, ordered, training=True, seed=args.seed)
+    env = NavEnv(client, cfg, ordered, training=True, seed=seed)
+    stall = StallTruncation(env, StallRule.from_config(cfg))
     memory = MemoryRecord(client.connection.port)     # ruled 2026-10-19: in every run record
+    trend = MemoryTrend(run_dir / "memory_trend.jsonl", memory, int(t["memory_sample_every"]))
     log = EpisodeLog(run_dir / "episodes.jsonl")
     checkpoints = CheckpointCallback(save_freq=int(t["checkpoint_every"]),
                                      save_path=str(run_dir / "checkpoints"), name_prefix="sac")
+    stop = StopFile(run_dir)
     started = time.perf_counter()
     error: str | None = None
+    stopped: dict[str, Any] | None = None
     model = None
     try:
-        model = make_learner(EpisodeRecorder(env), cfg, args.seed)
+        model = make_learner(EpisodeRecorder(stall), cfg, seed)
         stamp_learner_device(run_dir, str(model.device))
         model.set_logger(configure(str(run_dir / "sb3"), ["csv", "tensorboard"]))
-        model.learn(total_timesteps=int(t["total_timesteps"]),
-                    callback=CallbackList([log, checkpoints]))
-        model.save(run_dir / "final_model.zip")
+        model.learn(total_timesteps=int(total_timesteps),
+                    callback=CallbackList([log, checkpoints, trend, stop]))
+        if model.num_timesteps >= int(total_timesteps):
+            model.save(run_dir / "final_model.zip")
+        else:                                         # the STOP file ended it
+            model.save(run_dir / "stopped_model.zip")
+            stopped = {"how": "stop_file", "at_timestep": int(model.num_timesteps),
+                       "model": "stopped_model.zip"}
+            print(f"stopped by {STOP_FILE} at {model.num_timesteps} steps; saved "
+                  "stopped_model.zip (not a G4-valid run)")
+    except KeyboardInterrupt:
+        # Ctrl+C: keep what was learned, record it, and still exit as interrupted.
+        if model is not None:
+            model.save(run_dir / "interrupted_model.zip")
+        stopped = {"how": "keyboard_interrupt",
+                   "at_timestep": int(model.num_timesteps) if model is not None else 0,
+                   "model": "interrupted_model.zip" if model is not None else None}
+        print(f"interrupted; saved {stopped['model']} (not a G4-valid run)")
+        raise
     except Exception as exc:
         # Recorded for G4's integrity check, then re-raised: a run that died says so loudly.
         error = f"{type(exc).__name__}: {exc}"
@@ -160,20 +196,28 @@ def main() -> int:
         wall = time.perf_counter() - started
         env.close()
         client.stop()
-        summary = {"experiment": cfg["experiment"], "seed": args.seed,
+        summary = {"experiment": cfg["experiment"], "seed": seed, "instance": instance,
+                   "port": client.connection.port,
                    "timesteps": int(getattr(log, "num_timesteps", 0)),
                    "episodes": log.episodes, "outcomes": log.outcomes,
                    # Ruled 2026-10-19: expected zero in a static world; any is a construction gap.
                    "at_rest_triggers": int(log.at_rest_triggers),
                    "stationary_triggers": int(log.stationary_triggers),
+                   "stall_truncation": {"window_s": stall.rule.window_s,
+                                        "min_progress_m": stall.rule.min_progress_m,
+                                        "truncations": stall.truncations},
                    "wall_seconds": wall,
                    "steps_per_second": (log.num_timesteps / wall) if wall > 0 else None,
                    "environment_sha256": identity["sha256"],
                    "scenario_order_sha256": order_sha256(order),
-                   "total_timesteps": int(t["total_timesteps"]),
+                   "total_timesteps": int(total_timesteps),
                    "error": error,
                    "completed": (run_dir / "final_model.zip").is_file(),
-                   "memory": memory.report(int(log.episodes))}
+                   # Stopped early by the STOP file or Ctrl+C: the model is kept, the run is not
+                   # complete (G4's integrity needs total_timesteps and final_model.zip).
+                   "stopped": stopped,
+                   "memory": memory.report(int(log.episodes)),
+                   "memory_samples": len(trend.samples)}
         if cfg.get("lagrangian") and model is not None:
             summary["lagrangian"] = {
                 "cost_limit": model.cost_limit, "pid_gains": list(model.pid_gains),
@@ -184,6 +228,28 @@ def main() -> int:
                 "counted_episodes": sum(e["counted"] for e in model.dual_history),
                 "episodes": model.dual_history}
         (run_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    return summary
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", required=True)
+    parser.add_argument("--seed", type=int, required=True)
+    parser.add_argument("--instance", type=int, default=0,
+                        help="simulator instance i: port sim.port + sim.port_stride * i")
+    add_display_flag(parser)
+    args = parser.parse_args()
+    if args.instance < 0:
+        raise SystemExit("--instance must be >= 0")
+
+    # Rendering changes no physics (scripts/regress_display_off.py: bit-identical trajectories)
+    # and is outside the frozen environment's identity; it costs ~7 ms a step, and the run
+    # records what was in force.
+    cfg = apply_display(load_config(args.config), args.display)
+    seed_everything(args.seed)
+    sets = load_training_sets(cfg, args.seed)        # every refusal before the run directory
+    run_dir = create_run_dir(REPO_ROOT / "runs" / "train", str(cfg["experiment"]), args.seed, cfg)
+    run(cfg, args.seed, run_dir, int(cfg["training"]["total_timesteps"]), sets, args.instance)
     print(f"-> {run_dir.relative_to(REPO_ROOT).as_posix()}")
     return 0
 

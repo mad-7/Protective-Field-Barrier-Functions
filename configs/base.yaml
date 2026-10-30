@@ -907,7 +907,26 @@ env:                       # the Gymnasium environment (WP1)
 
 training:
   algo: sac
-  total_timesteps: 300000  # fixed after gate G2
+  total_timesteps: 1000000 # RULED 2026-10-30 (A30), identical for every learned method: was 300000
+                           #   (fixed after G2); L1's pilot seed 9000000 failed G4 at 300k = 75
+                           #   episodes. G2's projection at N = 4 scales to 2.5 days (0.74 x 10/3)
+  stall_truncation:        # RULED 2026-10-30 (A30): TRAINING only (pfbnav/training/stall.py);
+                           #   evaluation keeps reward.max_steps and its outcome rules unchanged
+    window_s: 30.0         # s; the trailing window (600 steps at dt 0.05)
+    min_progress_m: 0.05   # m of route arc length; less over the window truncates the episode as a
+                           #   time limit (bootstrapped, not terminal), outcome `stall_truncated`
+  memory_sample_every: 1000  # steps between in-run memory samples (memory_trend.jsonl), ruled
+                             #   2026-10-30: the trend is in every training run
+  memory_check:            # the declared criterion for the ~100k-step check (ruled 2026-10-30);
+                           #   no run of 1M steps or more until it passes
+    total_timesteps: 100000
+    settled_from: 3000     # step; the baseline sample, after learning_starts (2000) and the first
+                           #   1000 updates: CUDA's context and the first update are one-off costs
+    mark_fraction: 0.10    # "levels off within the first 10 % of the run"
+    max_growth_mb: 100.0   # MB, the training process's growth from the mark to the end. Our
+                           #   operationalisation: the 300k run grew ~600 MB beyond the measured
+                           #   CUDA cost and a generous first-update allowance, ~180 MB per 90k
+                           #   steps if linear, which this fails; a flat process passes
   learning_rate: 3.0e-4
   buffer_size: 200000
   learning_starts: 2000

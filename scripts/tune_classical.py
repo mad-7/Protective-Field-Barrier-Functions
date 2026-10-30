@@ -3,7 +3,7 @@ runs this (hard rule 11: a tuning sweep is long-duration).
 
     python scripts/tune_classical.py --config configs/base.yaml --seed 0 \
         --space configs/tuning/b2_regulated_pure_pursuit.yaml \
-        --g2 runs/gates/G2_<stamp>_seed9000000/summary.json --instances <k>
+        --g2 runs/gates/G2_<stamp>_seed9000000/summary.json --instances <k> [--instance <i>]
 
 First use: B2, holonomic Regulated Pure Pursuit (ruled 2026-10-24: tuned under the equal-tuning-budget
 rule, with the route cap and the classical recovery; B7 = B2's tuned parameters plus the PFB).
@@ -236,6 +236,9 @@ def main() -> int:
     parser.add_argument("--g2", required=True, help="the G2 summary.json that approves --instances")
     parser.add_argument("--instances", type=int, required=True,
                         help="simulator instances running on this host while this runs")
+    parser.add_argument("--instance", type=int, default=0,
+                        help="the simulator instance this run uses: port sim.port + "
+                             "sim.port_stride * i, i < --instances")
     parser.add_argument("--sets", nargs="+", default=list(SETS))
     parser.add_argument("--workers", type=int, default=4, help="processes for the route profiles")
     add_display_flag(parser)
@@ -253,6 +256,8 @@ def main() -> int:
                or realtime_problem(yaml.safe_load(
                    (prereg / "gates.yaml").read_text(encoding="utf-8"))))
 
+    if not problem and not 0 <= args.instance < args.instances:
+        problem = f"--instance {args.instance} is not one of the {args.instances} declared instances"
     if problem:
         raise SystemExit(problem)
     space_doc = yaml.safe_load(space_path.read_text(encoding="utf-8"))
@@ -292,7 +297,8 @@ def main() -> int:
                                         encoding="utf-8")
     (run_dir / "candidates.json").write_text(json.dumps({
         "controller": controller, "budget": budget, "refused_redraws": refused,
-        "g2": {"summary": Path(args.g2).as_posix(), "instances": args.instances},
+        "g2": {"summary": Path(args.g2).as_posix(), "instances": args.instances,
+               "instance": args.instance},
         "environment": environment_identity(cfg)["sha256"],
         "sets": {p.relative_to(REPO_ROOT).as_posix(): text_sha256(p) for p in paths},
         "candidates": candidates}, indent=1), encoding="utf-8")
@@ -300,7 +306,7 @@ def main() -> int:
 
     evaluate = _evaluate_module()
     dt = float(cfg["sim"]["dt"])
-    client = SimClient(SimConnection.from_config(cfg))
+    client = SimClient(SimConnection.from_config(cfg, instance_id=args.instance))
     client.connect()
     client.load_scene(str(REPO_ROOT / cfg["sim"]["scene"]))       # ONE load for every candidate
     env = NavEnv(client, cfg, scenarios, training=False, seed=args.seed)

@@ -214,7 +214,11 @@ arithmetic error; see `docs/decision_log.md`.)
   privileged oracle schedule of every traversable built route x 1.3, checked over every built set
   by `tests/test_horizon.py`, the test sets too once built. Knock-on effects:
   - **Training:** fewer episodes per seed at 300k steps. If L1's pilot fails G4 on learning,
-    `total_timesteps` is the first lever, not the reward.
+    `total_timesteps` is the first lever, not the reward. **Applied 2026-10-30 (A30):** L1's seed
+    9000000 failed G4 at 300k (75 episodes); `total_timesteps` is 1,000,000 for every learned
+    method, with a training-only stall truncation (30 s, 0.05 m). The training term of the
+    derivation above becomes 25 runs x 1M = 25M steps; G2's measured 117 steps/s at N = 4
+    projects it at ~2.5 days (0.74 x 10/3), inside the six-week window.
   - **Evaluation:** a larger step budget per episode. It is re-costed in G2 (training-host
     throughput) and in the A14 test-set size decision.
 - **The oracle mission time is reported as a reference line in the results.** It is the
