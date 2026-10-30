@@ -10118,3 +10118,43 @@ bit-identical (max float difference 0.0), only the ten recorded set hashes chang
 - **Re-freeze 13 complete:** the filter-off bit-identity test
   (`tests/test_step_loop_sim.py -k filter_off`) PASSED on the training host, reported by the researcher
   on 2026-10-29 (output not pasted). L1's pilot is released.
+
+## 2026-10-30 - L1's first pilot seed: G4 FAIL (learning and checkpoint); controls sound
+
+**Training run** `runs/train/L1_sac_shaped_seed9000000` (host, commit `79e98f9`, clean; learner on
+`cuda`; environment `3757aeca`; 2,001 training scenarios in the seed's order; 8,867 s, 33.8 steps/s).
+300,000 steps = **75 episodes**, every one 4,000 steps: 51 `unrecoverable_stop`, 24 `timeout`,
+**0 successes**, 0 contacts. No non-finite loss; `ep_rew_mean` ~-1,090 throughout; `ent_coef` fell to
+~0.009. In the stuck episodes the robot spent 3,200-3,990 of 4,000 steps latched (by design, stuck
+episodes run to the horizon so a policy can learn the creep release).
+
+**G4** (`runs/gates/G4_20261030T110639Z_seed0`, tune set rate 0.25, 60 scenarios; the three
+evaluations run on the host after the re-freeze):
+- **Controls sound:** zero-action 0/60 success, no contact, behaved; privileged oracle tracker
+  43/60 = 0.717 success (>= 0.30), no contact -- the same 43/60 as A23's finding of 2026-10-20, now
+  under A29 and re-freeze 13.
+- **Integrity: passed** (all five checks).
+- **Learning: FAIL** -- 75 episodes, window 7 (the gate's rounding), first 0.00, last 0.00,
+  improvement 0.00 (needs last >= 0.20 and improvement >= 0.15).
+- **Checkpoint: FAIL** -- 0/60 success (needs >= 0.30), contact 0.
+- **Verdict: G4 FAIL** for seed 9000000.
+
+**The declared rules, as they stand** (`gates.yaml` G4 `on_failure`; plan of record 2026-10-26;
+A23):
+- G4: on a learning or checkpoint failure, one second pilot seed (9000001), unchanged; if it fails,
+  stop and report.
+- Plan of record: if L1's or L5's pilot fails G4 twice, stop and report; the study pivots to the
+  filter-only path (H1prime).
+- A23 (2026-10-20): fewer episodes per seed at 300k steps under the 200 s horizon; "if L1's pilot
+  fails G4 on learning, `total_timesteps` is the first lever, not the reward".
+- **Put to the supervisor before seed 9000001 runs:** whether a failure at 300k steps counts toward
+  the pivot, or the `total_timesteps` lever is applied first (identically to every learned method,
+  restarting the pilot, as G4 requires). G2 projects the full matrix at 300k at 0.11 of the six-week
+  budget at N = 4.
+
+**Memory, open:** the training process's private memory grew 1,971 -> 3,562 MB over the run (the A20
+reference: Python flat). The start reading is taken before the learner exists; CUDA's context alone
+measured +528 MB on the host; the first-update cost (cuBLAS/cuDNN) and the replay buffer (~140 MB)
+are further one-off costs. Inconclusive until the in-run trend is sampled during the next training
+run (a 5-minute sampler, issued). Not blocking at 300k steps (61.6 GB host); blocking for any longer
+run until resolved.

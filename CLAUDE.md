@@ -230,6 +230,10 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
 - **2026-10-29: G2 PASS** (`G2_20261029T171718Z`, commit 79e98f9): 4 instances approved, SAC 117 steps/s
   at N = 4 on the GPU, over budget 0. Route schedules recomputed (rows identical). Next: the
   filter-off bit-identity test, then L1's pilot (seed 9000000), the G4 controls, B2 tuning.
+- **2026-10-30: L1 pilot seed 9000000 G4 FAIL** (0/75 training successes; checkpoint 0/60; controls
+  sound, oracle 43/60). 300k steps = 75 episodes under the 200 s horizon. AWAITING RULING before seed
+  9000001: does it count toward the pivot, or is A23's `total_timesteps` lever applied first? Memory
+  growth +1.6 GB in training: open (sample the trend in the next run).
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 
