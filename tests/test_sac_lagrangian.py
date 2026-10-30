@@ -41,6 +41,7 @@ from pfbnav.control.sac_lagrangian import (
     make_sac_lagrangian,
     pid_step,
     step_cost,
+    window_statistic,
 )
 from pfbnav.training.l2_toy import TOY_CFG, D, StopToy, T, mean_action, toy_cfg
 
@@ -213,7 +214,7 @@ def test_the_multiplier_is_held_until_the_window_fills_then_set_once_per_episode
     integral stay 0 for the first 19 episodes; the 20th sets lambda from the window mean (no
     derivative on the first update); the 21st also uses the rise of the mean."""
     cfg = {**toy_cfg(2), "lagrangian": {**toy_cfg(2)["lagrangian"], "cost_limit": 0.1}}
-    lag = make_sac_lagrangian(StopToy(), cfg, seed=0)
+    lag = make_sac_lagrangian(StopToy(), cfg, seed=0, ruled=False)    # the per-episode statistic
     from stable_baselines3.common.logger import configure
     lag.set_logger(configure(None, []))                     # no learn() here: records go nowhere
     k_p, k_i, k_d = PID_CANDIDATES[2]
@@ -256,9 +257,10 @@ def _cfg(name):
                        / f"{name}.yaml")
 
 
-# Ruled 2026-10-27: L2 is d = 0.1 a priori; 0.05 and 0.2 are the exploratory sensitivity.
-CONFIGS = {"L2_sac_lagrangian": ("L2_sac_lagrangian", 0.1),
-           "L2_sac_lagrangian_d005": ("L2-d005", 0.05), "L2_sac_lagrangian_d020": ("L2-d020", 0.2)}
+# Ruled 2026-10-27: L2 is d = 0.1 a priori; 0.05 and 0.2 are the exploratory sensitivity. A30 (ruled
+# 2026-10-30): restated per 100 m driven, 1.0; the sensitivity in proportion, 0.5 and 2.0.
+CONFIGS = {"L2_sac_lagrangian": ("L2_sac_lagrangian", 1.0),
+           "L2_sac_lagrangian_d005": ("L2-d005", 0.5), "L2_sac_lagrangian_d020": ("L2-d020", 2.0)}
 
 
 def _selected(cfg, candidate=1):
@@ -300,6 +302,9 @@ def test_each_l2_config_is_one_ruled_limit_and_shares_every_sac_hyperparameter()
 
 @pytest.mark.parametrize("change, match", [
     ({"lagrangian": {"cost_limit": 0.15}}, "not ruled"),
+    ({"lagrangian": {"cost_limit": 0.1}}, "not ruled"),
+    ({"lagrangian": {"cost_unit": "stops_per_episode"}}, "stops_per_100m for L2"),
+    ({"lagrangian": {"reference_length_m": None}}, "reference_length_m"),
     ({"lagrangian": {"cost_limit": "OPEN"}}, "not set"),
     ({"lagrangian": {"multiplier_lr": 3e-4}}, "retired"),
     ({"lagrangian": {"multiplier_max": 10.0}}, "declared"),
@@ -333,7 +338,8 @@ def test_training_preflight_accepts_l2_only_with_a_ruled_limit():
     with pytest.raises(SystemExit, match="pid_candidate is not selected"):
         script.preflight(_selected(_cfg("L2_sac_lagrangian"), "OPEN"))
     # The learner the script builds follows the config (a ruled limit: the script builds no toy).
-    ruled = {**TOY_CFG, "lagrangian": {**TOY_CFG["lagrangian"], "cost_limit": 0.1}}
+    ruled = {**TOY_CFG, "lagrangian": {**TOY_CFG["lagrangian"], "cost_limit": 1.0,
+                                       "cost_unit": "stops_per_100m", "reference_length_m": 10.0}}
     assert isinstance(script.make_learner(StopToy(), ruled, 0), SACLagrangian)
 
     plain = {k: v for k, v in TOY_CFG.items() if k != "lagrangian"}
@@ -343,3 +349,100 @@ def test_training_preflight_accepts_l2_only_with_a_ruled_limit():
 def test_the_dual_history_is_json_serialisable(runs):
     _, _, lag, _ = runs
     json.dumps(lag.dual_history)
+
+
+# ------------------------------------------------ A30 (ruled 2026-10-30): the limit per 100 m driven
+def test_window_statistic_known_answers():
+    """20 episodes, 2 stops over 400 m: rate 0.5 per 100 m. With L_ref 10 m the PID sees
+    0.05 against d = 1.0 x 0.1 = 0.1, so e = (0.5 - 1.0) x 0.1 = -0.05."""
+    costs, dists = [0.0] * 18 + [1.0, 1.0], [20.0] * 20
+    mean, limit = window_statistic(costs, dists, "stops_per_100m", 1.0, 10.0)
+    assert mean == pytest.approx(0.05) and limit == pytest.approx(0.1)
+    assert mean - limit == pytest.approx((0.5 - 1.0) * 10.0 / 100.0)
+    assert window_statistic(costs, [0.0] * 20, "stops_per_100m", 1.0, 10.0) is None
+    assert window_statistic(costs, dists, "stops_per_episode", 0.1, None) == (0.1, 0.1)
+    with pytest.raises(ValueError):
+        window_statistic(costs, dists[:5], "stops_per_100m", 1.0, 10.0)
+
+
+def test_at_the_reference_length_per_100m_reproduces_the_per_episode_pid_exactly():
+    """Every episode driving exactly L_ref: the rate's scaled statistic equals the stops per
+    episode and d x L_ref / 100 = the per-episode limit, so lambda and the integral are the toy-
+    validated controller's, step for step (the reason for the scaling)."""
+    from stable_baselines3.common.logger import configure
+    L = 10.0
+    per_ep = make_sac_lagrangian(StopToy(), {**toy_cfg(2), "lagrangian": {
+        **toy_cfg(2)["lagrangian"], "cost_limit": 0.1}}, seed=0, ruled=False)
+    per_m = make_sac_lagrangian(StopToy(), {**toy_cfg(2), "lagrangian": {
+        **toy_cfg(2)["lagrangian"], "cost_limit": 1.0, "cost_unit": "stops_per_100m",
+        "reference_length_m": L}}, seed=0, ruled=False)
+    for m in (per_ep, per_m):
+        m.set_logger(configure(None, []))
+    costs = np.random.default_rng(3).integers(0, 4, 60).astype(float)
+    for c in costs:
+        per_ep._end_episode(float(c))
+        per_m._end_episode(float(c), L)
+        assert per_m.lagrange_multiplier == pytest.approx(per_ep.lagrange_multiplier, abs=1e-12)
+        assert per_m.pid_integral == pytest.approx(per_ep.pid_integral, abs=1e-12)
+    assert per_m.dual_history[-1]["window_rate_per_100m"] == pytest.approx(
+        100.0 * costs[-20:].sum() / (20 * L))
+
+
+def test_short_episodes_no_longer_dilute_the_constraint():
+    """The point of the restatement: the same stops per metre in shorter (truncated) episodes give
+    the same rate, where the per-episode mean would have fallen."""
+    long_ = window_statistic([1.0] * 20, [10.0] * 20, "stops_per_100m", 1.0, 10.0)
+    short = window_statistic([0.5] * 20, [5.0] * 20, "stops_per_100m", 1.0, 10.0)
+    assert long_ == pytest.approx(short)
+    assert window_statistic([0.5] * 20, [5.0] * 20, "stops_per_episode", 0.1, None)[0] == 0.5
+
+
+def test_a_window_with_no_distance_makes_no_update_and_says_so():
+    from stable_baselines3.common.logger import configure
+    m = make_sac_lagrangian(StopToy(), {**toy_cfg(2), "lagrangian": {
+        **toy_cfg(2)["lagrangian"], "cost_limit": 1.0, "cost_unit": "stops_per_100m",
+        "reference_length_m": 10.0}}, seed=0, ruled=False)
+    m.set_logger(configure(None, []))
+    for _ in range(20):
+        m._end_episode(1.0, 0.0)
+    assert m.lagrange_multiplier == 0.0 and m.pid_integral == 0.0
+    assert m.dual_history[-1]["status"] == "no_distance"
+    with pytest.raises(ValueError, match="distance"):
+        m._end_episode(1.0, None)
+
+
+def test_l_ref_is_the_measured_mean_planned_route_length_of_the_training_set():
+    """Hard rule 15: the parameter is the measurement, asserted against it."""
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    cfg = _cfg("L2_sac_lagrangian")
+    lengths = [s["path_length_m"] for p in cfg["training"]["scenarios"]
+               for s in json.loads((root / p).read_text(encoding="utf-8"))["scenarios"]]
+    assert len(lengths) == 2001
+    assert cfg["lagrangian"]["reference_length_m"] == pytest.approx(np.mean(lengths), abs=1e-6)
+    for name in CONFIGS:
+        settings = LagrangianSettings.from_config(_cfg(name))
+        assert settings.cost_unit == "stops_per_100m"
+        assert settings.reference_length_m == cfg["lagrangian"]["reference_length_m"]
+
+
+def test_per_100m_reads_the_distance_from_the_episode_record_during_learn():
+    """Wiring, end to end: through EpisodeRecorder (as scripts/train.py builds it) each finished
+    episode's `distance_m` reaches the multiplier; without it, learning fails loudly."""
+    from pfbnav.training.record import EpisodeRecorder
+
+    class Driven(StopToy):
+        def step(self, action):
+            obs, r, done, trunc, info = super().step(action)
+            if done:
+                info = {**info, "episode": {"distance_m": 2.5}}
+            return obs, r, done, trunc, info
+
+    cfg = {**toy_cfg(1), "lagrangian": {**toy_cfg(1)["lagrangian"], "cost_limit": 1.0,
+                                        "cost_unit": "stops_per_100m", "reference_length_m": 10.0}}
+    m = make_sac_lagrangian(EpisodeRecorder(Driven()), cfg, seed=0, ruled=False)
+    m.learn(total_timesteps=T * 3)
+    assert [e["distance_m"] for e in m.dual_history] == [2.5] * 3
+    bare = make_sac_lagrangian(EpisodeRecorder(StopToy()), cfg, seed=0, ruled=False)
+    with pytest.raises(KeyError):
+        bare.learn(total_timesteps=T)

@@ -48,6 +48,18 @@ retrained over (hard rule 10):
 `StallTruncation` (`pfbnav/training/stall.py`): an episode with less than 0.05 m of route progress
 over 30 s is truncated as a time limit, outcome `stall_truncated`. Training only.
 
+**Curriculum (A30, ruled 2026-10-30).** `Curriculum` (`pfbnav/training/curriculum.py`) picks each
+episode's scenario by stage: 0-20 % wide and medium, no unmapped obstacle; 20-40 % all strata, no
+unmapped obstacle; 40-100 % the full set. Each episode's record carries `curriculum_stage`.
+
+**Diagnostics.** A config with a `diagnostic:` block (`configs/experiments/diag/`) trains the same
+way, labelled, never cited, at a pilot-range seed that is not a G4 pilot seed; `unicycle: true`
+zeroes the lateral command (`pfbnav/training/diagnostic.py`).
+
+**Memory.** `memory_trend.jsonl` samples this process, the simulator and the GPU every
+`training.memory_sample_every` steps; growth beyond `training.memory_alarm_mb` past the settled
+baseline prints a MEMORY ALARM and is recorded in the summary (ruled 2026-10-30).
+
 **Parallel runs.** `--instance i` connects to `sim.port + sim.port_stride * i`, so a training run
 can share the host with a tuning run on another instance (each declares the host's total to G2's
 approval where its script asks; `scripts/tune_classical.py --instances`).
@@ -63,6 +75,7 @@ import time
 from pathlib import Path
 from typing import Any
 
+import yaml
 from stable_baselines3.common.callbacks import CallbackList, CheckpointCallback
 from stable_baselines3.common.logger import configure
 
@@ -72,6 +85,8 @@ from pfbnav.control.sac_lagrangian import LagrangianSettings, make_sac_lagrangia
 from pfbnav.envs.freeze import environment_identity, freeze_problem
 from pfbnav.envs.nav_env import NavEnv
 from pfbnav.sim.client import SimClient, SimConnection
+from pfbnav.training.curriculum import Curriculum, stages_from_config
+from pfbnav.training.diagnostic import UnicycleAction, diagnostic_problem
 from pfbnav.training.order import order_sha256, scenario_order
 from pfbnav.training.record import STOP_FILE, EpisodeLog, EpisodeRecorder, MemoryTrend, StopFile
 from pfbnav.training.stall import StallRule, StallTruncation
@@ -124,6 +139,12 @@ def load_training_sets(cfg: dict[str, Any], seed: int) -> tuple[list[Path], list
                                                                 list[int]]:
     """The training sets' paths, every scenario in the seed's order, and the order."""
     set_paths = preflight(cfg)
+    gates = yaml.safe_load((REPO_ROOT / "preregistration" / "gates.yaml").read_text(encoding="utf-8"))
+    problem = diagnostic_problem(cfg, seed, gates)
+    if problem:
+        raise SystemExit(problem)
+    if not cfg.get("diagnostic") and str(cfg.get("experiment", "")).startswith("DIAG_"):
+        raise SystemExit("a DIAG_ experiment carries a `diagnostic:` block")
     scenarios: list[dict[str, Any]] = []
     for path in set_paths:
         manifest = load_set(path)
@@ -131,6 +152,13 @@ def load_training_sets(cfg: dict[str, Any], seed: int) -> tuple[list[Path], list
         if not checked["ok"]:
             raise SystemExit(f"{path.name} fails verification: {checked['problems'][:3]}")
         scenarios += manifest["scenarios"]
+    lag = cfg.get("lagrangian") or {}
+    if lag.get("cost_unit") == "stops_per_100m":
+        # Hard rule 15: L_ref is the measurement -- the mean planned route length of THESE sets.
+        measured = sum(float(s["path_length_m"]) for s in scenarios) / len(scenarios)
+        if abs(measured - float(lag["reference_length_m"])) > 1e-6:
+            raise SystemExit(f"lagrangian.reference_length_m {lag['reference_length_m']} is not the "
+                             f"training set's mean planned route length {measured:.6f} m")
     order = scenario_order(len(scenarios), seed)
     return set_paths, [scenarios[i] for i in order], order
 
@@ -155,8 +183,14 @@ def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, set
     client.load_scene(str(scene))
     env = NavEnv(client, cfg, ordered, training=True, seed=seed)
     stall = StallTruncation(env, StallRule.from_config(cfg))
+    curriculum = Curriculum(stall, stages_from_config(cfg), ordered, int(total_timesteps))
+    learner_env = curriculum
+    if (cfg.get("diagnostic") or {}).get("unicycle"):
+        learner_env = UnicycleAction(curriculum)       # DIAGNOSTIC only (A30 ruling 6)
     memory = MemoryRecord(client.connection.port)     # ruled 2026-10-19: in every run record
-    trend = MemoryTrend(run_dir / "memory_trend.jsonl", memory, int(t["memory_sample_every"]))
+    trend = MemoryTrend(run_dir / "memory_trend.jsonl", memory, int(t["memory_sample_every"]),
+                        alarm_mb=float(t["memory_alarm_mb"]),
+                        settled_from=int(t["memory_check"]["settled_from"]))
     log = EpisodeLog(run_dir / "episodes.jsonl")
     checkpoints = CheckpointCallback(save_freq=int(t["checkpoint_every"]),
                                      save_path=str(run_dir / "checkpoints"), name_prefix="sac")
@@ -166,7 +200,7 @@ def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, set
     stopped: dict[str, Any] | None = None
     model = None
     try:
-        model = make_learner(EpisodeRecorder(stall), cfg, seed)
+        model = make_learner(EpisodeRecorder(learner_env), cfg, seed)
         stamp_learner_device(run_dir, str(model.device))
         model.set_logger(configure(str(run_dir / "sb3"), ["csv", "tensorboard"]))
         model.learn(total_timesteps=int(total_timesteps),
@@ -217,10 +251,14 @@ def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, set
                    # complete (G4's integrity needs total_timesteps and final_model.zip).
                    "stopped": stopped,
                    "memory": memory.report(int(log.episodes)),
-                   "memory_samples": len(trend.samples)}
+                   "memory_trend": trend.report(),
+                   "curriculum": curriculum.report(),
+                   "diagnostic": cfg.get("diagnostic")}
         if cfg.get("lagrangian") and model is not None:
             summary["lagrangian"] = {
-                "cost_limit": model.cost_limit, "pid_gains": list(model.pid_gains),
+                "cost_limit": model.cost_limit, "cost_unit": model.cost_unit,
+                "reference_length_m": model.reference_length_m,
+                "pid_gains": list(model.pid_gains),
                 "pid_candidate": cfg["lagrangian"]["pid_candidate"],
                 "multiplier_max": model.multiplier_max, "cost_window": model.cost_window,
                 "final_multiplier": model.lagrange_multiplier,

@@ -234,12 +234,15 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   sound, oracle 43/60). 300k steps = 75 episodes under the 200 s horizon. AWAITING RULING before seed
   9000001: does it count toward the pivot, or is A23's `total_timesteps` lever applied first? Memory
   growth +1.6 GB in training: open (sample the trend in the next run).
-- **RULED 2026-10-30 (A30, drafted):** option (b): 9000000 recorded as G4 FAIL at 300k; the pivot counter
-  restarts. Every learned method: `total_timesteps` 1M and a TRAINING-only stall truncation (30 s,
-  < 0.05 m route progress, bootstrapped; `pfbnav/training/stall.py`); evaluation unchanged. Before the
-  restart: the offline diagnosis (`scripts/diag_training_run.py`) and the 100k memory check
-  (`scripts/check_training_memory.py`, criterion in `training.memory_check`); then L1 at 9000001 (1M)
-  with B2/B7/alpha tuning in parallel (`--instance`). The researcher applies A30 and relocks.
+- **RULED 2026-10-30 (A30, drafted, rulings on the draft applied):** option (b): 9000000 recorded as
+  G4 FAIL at 300k; the pivot counter restarts (second seed 9000002, then H1prime). Every learned method:
+  `total_timesteps` 2M (seed count capped by G2's budget); a TRAINING curriculum (0-20 % wide/medium
+  mapped-only, 20-40 % all strata mapped-only, then full; `pfbnav/training/curriculum.py`); a
+  TRAINING-only stall truncation (30 s, < 0.05 m, bootstrapped); G4 learning = last-10 % success
+  >= 0.20 on full-distribution episodes, no improvement clause. L2: d = 1.0 stops per 100 m, error
+  scaled by L_ref 10.6716 m. Memory: GPU logged, 1 GB alarm, the 100k check first. Optional diagnostic
+  DIAG_L1_unicycle (seed 9000100). Order: apply + relock A30; diagnosis; memory check; L1 at 9000001
+  with B2 tuning in parallel (`--instance`).
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 

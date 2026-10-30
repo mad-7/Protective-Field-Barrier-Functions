@@ -1,6 +1,6 @@
-# L2-d005: L2 at d = 0.05 protective stops per episode, the EXPLORATORY sensitivity (ruled 2026-10-27;
+# L2-d005: L2 at d = 0.5 stops per 100 m (A30; was 0.05 per episode), the EXPLORATORY sensitivity (ruled 2026-10-27;
 # configs/methods.yaml). Outside every confirmatory family; first in the cut order.
 defaults: L2_sac_lagrangian.yaml
 experiment: L2-d005
 lagrangian:
-  cost_limit: 0.05       # d, protective stops triggered per episode
+  cost_limit: 0.5       # d, stops per 100 m driven (A30: was 0.05 per episode, restated in proportion)

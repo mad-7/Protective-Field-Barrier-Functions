@@ -97,30 +97,76 @@ class EpisodeLog(BaseCallback):
         return True
 
 
-class MemoryTrend(BaseCallback):
-    """Samples the training process's and the simulator's private memory every `every` steps into
-    a JSONL file (ruled 2026-10-30: the in-run trend, read by `pfbnav.utils.memory.levels_off`).
-    `memory` is the run's `MemoryRecord`; the first sample is taken at the first step."""
+def gpu_memory_mb() -> dict[str, float | None]:
+    """The CUDA caching allocator's allocated and reserved memory on the current device, MB; None
+    for both without CUDA (a CPU learner)."""
+    import torch
+    if not torch.cuda.is_available():
+        return {"gpu_allocated": None, "gpu_reserved": None}
+    return {"gpu_allocated": torch.cuda.memory_allocated() / 2 ** 20,
+            "gpu_reserved": torch.cuda.memory_reserved() / 2 ** 20}
 
-    def __init__(self, path: str | Path, memory: Any, every: int):
+
+class MemoryTrend(BaseCallback):
+    """Samples the training process's and the simulator's private memory, and the GPU's, every
+    `every` steps into a JSONL file (ruled 2026-10-30: in every training run, GPU memory reported;
+    read by `pfbnav.utils.memory.levels_off`). `memory` is the run's `MemoryRecord`; the first
+    sample is taken at the first step.
+
+    **The alarm** (ruled 2026-10-30): once the training process has grown more than `alarm_mb` beyond
+    its settled baseline -- the first sample at or after step `settled_from`, past CUDA's start-up
+    and the first updates -- it prints a MEMORY ALARM line and records it (`self.alarm`, in the
+    run's summary). It does not stop the run: the alarm is for the researcher to act on."""
+
+    def __init__(self, path: str | Path, memory: Any, every: int, *, alarm_mb: float,
+                 settled_from: int):
         super().__init__(verbose=0)
         if every < 1:
             raise ValueError("the memory sampling interval must be at least one step")
+        if alarm_mb <= 0.0:
+            raise ValueError("the memory alarm must be a positive growth")
         self.path = Path(path)
         if self.path.exists():
             raise FileExistsError(f"{self.path} exists; a run never appends to another's log")
         self.memory = memory
         self.every = int(every)
+        self.alarm_mb = float(alarm_mb)
+        self.settled_from = int(settled_from)
+        self.baseline: dict[str, Any] | None = None
+        self.alarm: dict[str, Any] | None = None
         self.samples: list[dict[str, Any]] = []
 
     def sample(self) -> dict[str, Any]:
         snap = self.memory.snapshot()
         row = {"timestep": int(self.num_timesteps), "python": snap.get("python"),
-               "sim": snap.get("sim"), "wall_s": time.perf_counter()}
+               "sim": snap.get("sim"), **gpu_memory_mb(), "wall_s": time.perf_counter()}
         self.samples.append(row)
         with self.path.open("a", encoding="utf-8") as f:
             f.write(json.dumps(row) + "\n")
+        self._check_alarm(row)
         return row
+
+    def _check_alarm(self, row: dict[str, Any]) -> None:
+        if row["python"] is None:
+            return
+        if self.baseline is None:
+            if row["timestep"] >= self.settled_from:
+                self.baseline = {"timestep": row["timestep"], "python_mb": row["python"]}
+            return
+        grown = row["python"] - self.baseline["python_mb"]
+        if self.alarm is None and grown > self.alarm_mb:
+            self.alarm = {"timestep": row["timestep"], "grown_mb": grown,
+                          "baseline": dict(self.baseline), "alarm_mb": self.alarm_mb}
+            print(f"MEMORY ALARM at step {row['timestep']}: the training process grew {grown:.0f} MB "
+                  f"beyond its baseline at step {self.baseline['timestep']} "
+                  f"(alarm at {self.alarm_mb:.0f} MB)", flush=True)
+
+    def report(self) -> dict[str, Any]:
+        gpu = [r["gpu_reserved"] for r in self.samples if r.get("gpu_reserved") is not None]
+        return {"samples": len(self.samples), "baseline": self.baseline, "alarm": self.alarm,
+                "alarm_mb": self.alarm_mb,
+                "gpu_reserved_max_mb": max(gpu) if gpu else None,
+                "gpu_reserved_last_mb": gpu[-1] if gpu else None}
 
     def _on_step(self) -> bool:
         if self.num_timesteps == 1 or self.num_timesteps % self.every == 0:

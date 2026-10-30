@@ -907,24 +907,36 @@ env:                       # the Gymnasium environment (WP1)
 
 training:
   algo: sac
-  total_timesteps: 1000000 # RULED 2026-10-30 (A30), identical for every learned method: was 300000
-                           #   (fixed after G2); L1's pilot seed 9000000 failed G4 at 300k = 75
-                           #   episodes. G2's projection at N = 4 scales to 2.5 days (0.74 x 10/3)
+  total_timesteps: 2000000 # RULED 2026-10-30 (A30), identical for every learned method: was 300000
+                           #   (fixed after G2; L1's pilot seed 9000000 failed G4 at 300k = 75
+                           #   episodes), then 1M, then 2M on the A30 rulings. G2 at N = 4 (117 steps/s):
+                           #   25 runs = 4.9 days; the decision tree's seed count is capped by G2's
+                           #   budget (docs/decision_log.md, 2026-10-30)
+  curriculum:              # RULED 2026-10-30 (A30), identical for every learned arm; TRAINING only
+                           #   (pfbnav/training/curriculum.py). A stage starts at its fraction of
+                           #   total_timesteps; each walks the seed's permutation restricted to its
+                           #   eligible scenarios. unmapped false = only scenarios built with no
+                           #   unmapped obstacle (rate 0); true = the set as built (rate 0.25)
+    - {name: wide_medium_mapped, from_fraction: 0.0, strata: [wide, medium], unmapped: false}
+    - {name: all_strata_mapped, from_fraction: 0.2, strata: [narrow, medium, wide], unmapped: false}
+    - {name: full, from_fraction: 0.4, strata: [narrow, medium, wide], unmapped: true}
   stall_truncation:        # RULED 2026-10-30 (A30): TRAINING only (pfbnav/training/stall.py);
                            #   evaluation keeps reward.max_steps and its outcome rules unchanged
     window_s: 30.0         # s; the trailing window (600 steps at dt 0.05)
     min_progress_m: 0.05   # m of route arc length; less over the window truncates the episode as a
                            #   time limit (bootstrapped, not terminal), outcome `stall_truncated`
   memory_sample_every: 1000  # steps between in-run memory samples (memory_trend.jsonl), ruled
-                             #   2026-10-30: the trend is in every training run
+                             #   2026-10-30: the trend is in every training run, GPU memory included
+  memory_alarm_mb: 1024.0  # MB; RULED 2026-10-30: alarm when the training process grows more than
+                           #   this beyond its settled baseline (memory_check.settled_from), in any run
   memory_check:            # the declared criterion for the ~100k-step check (ruled 2026-10-30);
                            #   no run of 1M steps or more until it passes
     total_timesteps: 100000
     settled_from: 3000     # step; the baseline sample, after learning_starts (2000) and the first
                            #   1000 updates: CUDA's context and the first update are one-off costs
     mark_fraction: 0.10    # "levels off within the first 10 % of the run"
-    max_growth_mb: 100.0   # MB, the training process's growth from the mark to the end. Our
-                           #   operationalisation: the 300k run grew ~600 MB beyond the measured
+    max_growth_mb: 100.0   # MB, the training process's growth from the mark to the end. APPROVED
+                           #   2026-10-30 as proposed: the 300k run grew ~600 MB beyond the measured
                            #   CUDA cost and a generous first-update allowance, ~180 MB per 90k
                            #   steps if linear, which this fails; a flat process passes
   learning_rate: 3.0e-4

@@ -19,19 +19,41 @@ from typing import Any
 
 
 def learning_criterion(episodes: Sequence[dict[str, Any]], *, window_fraction: float,
-                       min_last_success: float, min_improvement: float) -> dict[str, Any]:
-    """Success over the first and last `window_fraction` of training episodes, in episode order."""
+                       min_last_success: float, stage: str | None = None,
+                       min_improvement: float | None = None) -> dict[str, Any]:
+    """Success over the last `window_fraction` of training episodes, in episode order.
+
+    **A30 (ruled 2026-10-30):** the curriculum confounds a first-versus-last comparison, so the
+    improvement clause is dropped and the criterion is the last window's success, on
+    full-distribution episodes: with `stage` given, every episode in the last window must carry
+    `curriculum_stage == stage` (the curriculum's last stage covers the last 60 % of steps, so it
+    does unless the run is broken; if not, the criterion fails and says why).
+    **Before A30** (`min_improvement` given, `stage` None): the first and last windows, with
+    last - first >= `min_improvement` as well -- kept to reproduce the verdicts of runs made under it
+    (seed 9000000)."""
     n = len(episodes)
     k = max(1, math.floor(window_fraction * n)) if n else 0
-    if n < 2 * k or k == 0:
-        return {"episodes": n, "window": k, "first": None, "last": None, "improvement": None,
-                "passed": False, "reason": "too few episodes for two disjoint windows"}
     ordered = sorted(episodes, key=lambda e: e["episode"])
-    first = sum(e["outcome"] == "success" for e in ordered[:k]) / k
-    last = sum(e["outcome"] == "success" for e in ordered[-k:]) / k
-    passed = last >= min_last_success and (last - first) >= min_improvement
-    return {"episodes": n, "window": k, "first": first, "last": last,
-            "improvement": last - first, "passed": bool(passed)}
+    out: dict[str, Any] = {"episodes": n, "window": k, "stage": stage}
+    if min_improvement is not None:
+        if n < 2 * k or k == 0:
+            return {**out, "first": None, "last": None, "improvement": None, "passed": False,
+                    "reason": "too few episodes for two disjoint windows"}
+        first = sum(e["outcome"] == "success" for e in ordered[:k]) / k
+        last = sum(e["outcome"] == "success" for e in ordered[-k:]) / k
+        passed = last >= min_last_success and (last - first) >= min_improvement
+        return {**out, "first": first, "last": last, "improvement": last - first,
+                "passed": bool(passed)}
+    if k == 0:
+        return {**out, "last": None, "passed": False, "reason": "no training episodes"}
+    window = ordered[-k:]
+    if stage is not None:
+        off = sum(e.get("curriculum_stage") != stage for e in window)
+        if off:
+            return {**out, "last": None, "passed": False,
+                    "reason": f"{off} of the last {k} episodes are not `{stage}` episodes"}
+    last = sum(e["outcome"] == "success" for e in window) / k
+    return {**out, "last": last, "passed": bool(last >= min_last_success)}
 
 
 def checkpoint_criterion(summary: dict[str, Any], *, min_success: float,

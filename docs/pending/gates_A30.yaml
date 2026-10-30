@@ -115,8 +115,8 @@ G4_learned_pilot:
   pilot_training_seeds: [9000000, 9000001, 9000002]   # from the pilot range only. Pilot seeds
                                              #   never enter H1 or H2. A30 (2026-10-30): 9000000
                                              #   FAILED at 300k steps and is recorded; the pilot
-                                             #   restarts under A30's configuration (1M steps, the
-                                             #   training stall truncation) at 9000001; the second
+                                             #   restarts under A30's configuration (2M steps, the
+                                             #   curriculum, the stall truncation) at 9000001; the second
                                              #   (only on its learning/checkpoint failure) is
                                              #   9000002. The pivot counts the restarted pilot only.
   integrity:                                 # every one must hold
@@ -126,9 +126,12 @@ G4_learned_pilot:
     - episodes.jsonl has one line per episode, each with an outcome, timesteps strictly increasing
     - no environment exception ended or skipped an episode
   learning:                                  # on the training episode log, in episode order
-    window_fraction: 0.10                    # first and last 10 % of training episodes
+    window_fraction: 0.10                    # the last 10 % of training episodes
     min_last_success: 0.20                   # success rate over the last 10 %
-    min_improvement: 0.15                    # last 10 % minus first 10 %
+    stage: full                              # A30 (ruled 2026-10-30): the improvement clause is
+                                             #   dropped (a curriculum confounds first vs last);
+                                             #   every episode in the window is a full-distribution
+                                             #   one (curriculum stage `full`)
   checkpoint:                                # deterministic policy, each scenario once
     sets: [scenarios/tune/tune_narrow.json, scenarios/tune/tune_medium.json,
            scenarios/tune/tune_wide.json]    # the tune set at rate 0.25, 60 scenarios

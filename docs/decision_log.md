@@ -10230,3 +10230,66 @@ integrity -> a fresh pilot seed, the failed run kept). Checkpoints every 25k ste
 A leftover `STOP` file is refused before training. Tests: `tests/test_stop_training.py` (the file
 stops `learn()` at the next check; without it the run reaches the end; after a Ctrl+C mid-`learn()`
 the model saves and reloads with the same actions). No resume: a stopped run is not continued.
+
+## 2026-10-30 - Rulings on A30 before it is applied (six points); implemented
+
+**The rulings (supervisor), in substance:**
+1. `total_timesteps` = 2,000,000, identical for every learned method; record that the seed count from
+   the decision tree is then capped by G2's budget.
+2. A training curriculum, identical for every learned arm: 0-20 % wide and medium strata only,
+   unmapped rate 0; 20-40 % all strata, unmapped rate 0; 40-100 % the full training distribution.
+   Each seed's permutation applies within each stage. Test distribution and evaluation unchanged.
+   G4 criterion 2 amended: drop the improvement clause (a curriculum confounds first-vs-last); keep
+   last-10 % success >= 0.20 on full-distribution episodes. Criterion 3 unchanged.
+3. Second pilot seed 9000002, added to `pilot_training_seeds`; a second failure triggers the pivot
+   to H1prime.
+4. L2: d = 1.0 stops per 100 m driven (0.1 per episode at the training set's mean route length); the
+   window rate = total stops / total distance x 100; e = (rate - d) x (L_ref / 100), L_ref the mean
+   planned route length of the training set, so the toy-validated gains keep their dynamics.
+   Reason: unit consistency with H1; independence from episode length under truncation.
+5. The memory criterion approved as proposed. Also report GPU memory, log memory in every training
+   run, and alarm if any run grows more than 1 GB.
+6. Optional, only if G2's instance count allows: one L1 pilot in unicycle mode (vy = 0), seed
+   9000100, 2M steps, labelled diagnostic, never cited.
+Order: apply and relock A30; offline diagnosis of seed 9000000; memory check; L1's pilot at
+9000001, with B2 tuning in parallel.
+
+**Implemented** (A30 redrafted: `docs/pending/A30_amendment.md`, `docs/pending/gates_A30.yaml`):
+1. `training.total_timesteps` 2,000,000. **Budget:** G2's 117.3 steps/s at N = 4 -> the declared
+   matrix (25 runs) in 25 x 2M / 117.3 s = 4.9 days; six weeks hold at most 212 runs of 2M with
+   nothing else running. The decision tree's seed count is capped at what fits the budget left after
+   evaluation and tuning, by G2's projection recomputed for that count before the confirmatory seeds.
+2. `pfbnav/training/curriculum.py` (`Curriculum`, `training.curriculum`), applied only by
+   `scripts/train.py`, outside the frozen environment's closure (identity unchanged). Each stage
+   walks the seed's order restricted to the scenarios it admits, from its start, cycling; the
+   scenario is passed to `NavEnv.reset(options={"index": i})`; stages switch between episodes only;
+   each episode's record carries `curriculum_stage`. **"Unmapped rate 0" = only scenarios built with
+   no unmapped obstacle** (`unmapped_count == 0`): the obstacle was drawn independently of the
+   layout, so the layouts' distribution is kept and no scenario is altered (each still verifies).
+   Pools on the training set: stage 1 ~1,000 scenarios (wide + medium, none unmapped), stage 2
+   ~1,500 (none unmapped), full 2,001. G4: `learning_criterion` takes `stage`; with it, the last 10 %
+   window must be all `full` episodes and the criterion is last >= 0.20 (the pre-A30 form, with
+   `min_improvement`, is kept to reproduce seed 9000000's verdict). `gate_g4.py` passes `stage`.
+3. `gates_A30.yaml`: `pilot_training_seeds: [9000000, 9000001, 9000002]`.
+4. `pfbnav/control/sac_lagrangian.py`: `cost_unit` (`stops_per_episode` for the toy, as validated;
+   `stops_per_100m` required for L2 and its children), `reference_length_m`, `window_statistic`. The
+   PID runs on rate x L_ref / 100 against d x L_ref / 100: the same error, integral and derivative as
+   the formula ruled. Each episode's distance is read from its record (`distance_m`), never defaulted;
+   a window with zero distance makes no update, recorded `no_distance`. **L_ref = 10.671616 m**, the
+   mean `path_length_m` of the 2,001 training scenarios, measured; `train.py` refuses a config whose
+   L_ref differs from the sets' by > 1e-6 m and the test asserts it (hard rule 15). Note: d = 1.0 per
+   100 m is 0.107 per episode at L_ref, not exactly 0.1; the ruling sets 1.0. **The exploratory
+   sensitivity is restated in proportion (0.5 and 2.0 per 100 m for L2-d005, L2-d020): not named by
+   the ruling, flagged.** Tests: known answers; per 100 m reproduces the per-episode PID step for
+   step when every episode drives L_ref; shorter episodes no longer dilute the rate; end to end
+   through `EpisodeRecorder`.
+5. `MemoryTrend` adds the GPU's allocated and reserved memory to every sample, and a MEMORY ALARM
+   (printed, recorded in `summary.json["memory_trend"]["alarm"]`, not stopping the run) when the
+   training process grows more than `training.memory_alarm_mb` (1,024 MB) beyond its settled
+   baseline (the first sample at or after step 3,000). The memory check reports GPU memory too.
+6. `configs/experiments/diag/L1_unicycle.yaml` (`DIAG_L1_unicycle`, `diagnostic:` block, no method
+   ID); `pfbnav/training/diagnostic.py`: `UnicycleAction` zeroes the lateral command; a diagnostic
+   must be `DIAG_`-named, labelled, at a pilot-range seed that is not a G4 pilot seed (so G4 refuses
+   it). **Found:** `actuation.mode: holonomic | unicycle` exists in `configs/base.yaml` but nothing
+   reads it -- A1's unicycle mode is not implemented yet; this wrapper is the first implementation,
+   and A1 should share it when A1 is built (reported, not changed).

@@ -266,3 +266,42 @@ def test_a_not_released_attempt_is_a_suspected_defect_and_stops_the_gate(tmp_pat
     assert report["verdict"] == "STOP: SUSPECTED RECOVERY DEFECT"
     assert report["suspected_recovery_defects"][0]["scenario_seed"] == 7
 
+
+
+# ------------------------------------------- A30 (ruled 2026-10-30): last window, full-distribution only
+LEARN_A30 = {"window_fraction": 0.10, "min_last_success": 0.20, "stage": "full"}
+
+
+def staged(outcomes, full_from):
+    return [{**e, "curriculum_stage": "full" if i >= full_from else "wide_medium_mapped"}
+            for i, e in enumerate(log(outcomes))]
+
+
+def test_a30_learning_reads_only_the_last_window_without_improvement():
+    """100 episodes, window 10. Two successes in the last 10: 0.20 passes with no improvement
+    clause, even with 10 successes early on; one success fails."""
+    a = ["success"] * 10 + ["timeout"] * 90
+    a[95] = a[99] = "success"
+    got = learning_criterion(staged(a, 40), **LEARN_A30)
+    assert got["window"] == 10 and math.isclose(got["last"], 0.2) and got["passed"]
+    assert "improvement" not in got and "first" not in got
+    a[99] = "timeout"
+    assert learning_criterion(staged(a, 40), **LEARN_A30)["passed"] is False
+
+
+def test_a30_learning_refuses_a_window_with_curriculum_episodes_or_untagged_ones():
+    outcomes = ["success"] * 100
+    got = learning_criterion(staged(outcomes, 95), **LEARN_A30)
+    assert not got["passed"] and "5 of the last 10" in got["reason"]
+    assert not learning_criterion(log(outcomes), **LEARN_A30)["passed"]   # no stage recorded
+    assert learning_criterion([], **LEARN_A30)["passed"] is False
+
+
+def test_the_a30_draft_states_the_amended_criterion():
+    from pathlib import Path
+
+    import yaml
+    draft = yaml.safe_load((Path(__file__).resolve().parents[1] / "docs" / "pending"
+                            / "gates_A30.yaml").read_text(encoding="utf-8"))["G4_learned_pilot"]
+    assert draft["learning"] == LEARN_A30
+    assert draft["pilot_training_seeds"] == [9000000, 9000001, 9000002]

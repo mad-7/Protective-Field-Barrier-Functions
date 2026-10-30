@@ -147,7 +147,8 @@ def assess(g4: dict[str, Any], frozen: str, train: Path, pilot_eval: Path, zero:
         environment_sha256=environment, frozen_sha256=frozen,
         losses=_losses(train / "sb3" / "progress.csv"), episodes=episodes,
         error=train_summary.get("error"))
-    learning = learning_criterion(episodes, **{k: float(v) for k, v in g4["learning"].items()})
+    learning = learning_criterion(episodes, **{k: (str(v) if k == "stage" else float(v))
+                                               for k, v in g4["learning"].items()})
     checkpoint = checkpoint_criterion(summaries["pilot"]["overall"], **ckpt)
     pilot = summaries["pilot"]
     resets = [float(e["reset_seconds"]) for e in episodes if "reset_seconds" in e]

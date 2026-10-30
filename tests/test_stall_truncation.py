@@ -18,7 +18,7 @@ RULE = StallRule(window_s=30.0, min_progress_m=0.05, window_steps=600)
 def test_the_rule_is_the_ruled_one_in_the_config():
     cfg = load_config(REPO_ROOT / "configs" / "base.yaml")
     assert StallRule.from_config(cfg) == RULE
-    assert cfg["training"]["total_timesteps"] == 1_000_000
+    assert cfg["training"]["total_timesteps"] == 2_000_000
     assert cfg["reward"]["max_steps"] == 4000              # evaluation's horizon unchanged
 
 

@@ -1,0 +1,8 @@
+# DIAGNOSTIC, never cited (ruled 2026-10-30, A30 ruling 6): L1 in unicycle mode (vy = 0), seed
+# 9000100, 2M steps; run only if G2's approved instance count allows. Everything else is L1's.
+# Not a method: no ID in configs/methods.yaml (pfbnav/training/diagnostic.py).
+defaults: ../L1_sac_shaped.yaml
+experiment: DIAG_L1_unicycle
+diagnostic:
+  label: "L1 in unicycle mode (vy = 0); diagnostic, never cited"
+  unicycle: true

@@ -115,7 +115,12 @@ def main() -> int:
                          mark_fraction=float(check["mark_fraction"]),
                          max_growth_mb=float(check["max_growth_mb"]))
     sims = [s for s in samples if s.get("sim") is not None]
+    gpu = [s["gpu_reserved"] for s in samples if s.get("gpu_reserved") is not None]
     out = {"criterion": dict(check), "positive_control": control, "verdict": verdict,
+           "gpu": {"reserved_first_mb": gpu[0] if gpu else None,
+                   "reserved_last_mb": gpu[-1] if gpu else None,
+                   "reserved_max_mb": max(gpu) if gpu else None},
+           "alarm": summary["memory_trend"]["alarm"],
            "sim": {"first_mb": sims[0]["sim"] if sims else None,
                    "last_mb": sims[-1]["sim"] if sims else None,
                    "episodes": summary["episodes"],
