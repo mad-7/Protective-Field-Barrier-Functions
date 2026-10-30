@@ -111,6 +111,9 @@ def main() -> int:
     parser.add_argument("--b2-tuning", required=True, help="B2's tuning summary.json")
     parser.add_argument("--g2", required=True, help="the G2 summary.json that approves --instances")
     parser.add_argument("--instances", type=int, required=True)
+    parser.add_argument("--instance", type=int, default=0,
+                        help="the simulator instance this run uses: port sim.port + "
+                             "sim.port_stride * i, i < --instances")
     parser.add_argument("--workers", type=int, default=4, help="processes for the route profiles")
     add_display_flag(parser)
     args = parser.parse_args()
@@ -119,6 +122,8 @@ def main() -> int:
 
     problem = (tc.committed_problem(tc.BUDGET)
                or tc.g2_problem(Path(args.g2), args.instances, platform.node()))
+    if not problem and not 0 <= args.instance < args.instances:
+        problem = f"--instance {args.instance} is not one of the {args.instances} declared instances"
     if problem:
         raise SystemExit(problem)
     b2_path = Path(args.b2_tuning)
@@ -160,13 +165,14 @@ def main() -> int:
         "b2_parameters": b2["selected_parameters"],
         "environment": environment_identity(on)["sha256"],
         "sets": {p.relative_to(REPO_ROOT).as_posix(): text_sha256(p) for p in paths},
-        "g2": {"summary": Path(args.g2).as_posix(), "instances": args.instances}},
+        "g2": {"summary": Path(args.g2).as_posix(), "instances": args.instances,
+               "instance": args.instance}},
         indent=1), encoding="utf-8")
     write_profiles(run_dir / "route_profiles.json", profiles)
 
     evaluate = _module("evaluate")
     dt = float(cfg["sim"]["dt"])
-    client = SimClient(SimConnection.from_config(on))
+    client = SimClient(SimConnection.from_config(on, instance_id=args.instance))
     client.connect()
     client.load_scene(str(REPO_ROOT / cfg["sim"]["scene"]))       # ONE load for every alpha
     env = NavEnv(client, on, scenarios, training=False, seed=args.seed)
