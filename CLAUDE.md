@@ -243,6 +243,11 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   scaled by L_ref 10.6716 m. Memory: GPU logged, 1 GB alarm, the 100k check first. Optional diagnostic
   DIAG_L1_unicycle (seed 9000100). Order: apply + relock A30; diagnosis; memory check; L1 at 9000001
   with B2 tuning in parallel (`--instance`).
+- **2026-11-01:** A30 applied and relocked on the host. **B2 TUNED: candidate 23** (25 % success, 86.1
+  stops/100 m; written into `baselines.regulated_pure_pursuit`); every B2 candidate fails >= 75 % of tune
+  routes by the stop-recovery-restop cycle. L1 seed 9000000 diagnosis: no code defect; finding: the
+  proximity shaping dominates L1's return (residual > 0 in 8/75 episodes) -- put to the supervisor, L1
+  waits. Memory check PASS (the 300k growth was start-up). Next: alpha tuning with B7.
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 

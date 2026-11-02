@@ -10293,3 +10293,56 @@ Order: apply and relock A30; offline diagnosis of seed 9000000; memory check; L1
    it). **Found:** `actuation.mode: holonomic | unicycle` exists in `configs/base.yaml` but nothing
    reads it -- A1's unicycle mode is not implemented yet; this wrapper is the first implementation,
    and A1 should share it when A1 is built (reported, not changed).
+
+## 2026-11-01 - B2 tuned (candidate 23); L1 seed 9000000 diagnosed (no code defect); memory check PASS
+
+**B2 tuning** (`runs/tuning/B2_regulated_pure_pursuit_20261030T111716Z_seed0`; provenance: host
+DESKTOP-55VR508, commit `0fbbfa9`, dirty false, scene `537f1bbb`, display off; 24 candidates x the 60
+tune scenarios, one scene load, route cap and the classical recovery; ~33-36 h).
+- **Selected: candidate 23**, by the declared rule (ruled 2026-10-26): best success 0.250 (15/60); the
+  5-point window admits >= 0.20, and only candidate 23 qualifies (runner-up candidate 14 at 0.183).
+  86.1 stops/100 m, mission time 153.2 s on its successes, contact 0. Outcomes: 15 success, 36
+  unrecoverable_stop, 9 timeout.
+- **No range boundary** (the declared 1 % test). Near an end, reported: min_lookahead 0.207 (1.8 % of
+  its range from 0.20), proximity_distance 1.176 (2.4 % from 1.2), lookahead_time 0.570 (7 %, log).
+- **Across the 24:** success 0-25 %; stops 86-201 per 100 m; 0 contacts in 1,440 episodes; no suspected
+  recovery defect. Candidate 0 (the defaults) 3/60, 182.6 stops/100 m. The four best (23, 14, 1, 22)
+  all have min_lookahead <= 0.255 m (observed, not tested).
+- **Failure mode, as for B1 + recovery (2026-10-23):** the stop -> recovery ("cleared" after < 1 mm to a
+  few cm) -> re-stop cycle until the 5-attempt cap, then held to the horizon. Even the best B2 fails 75 %
+  of tune routes, against the privileged oracle's 72 % success: B7 is compared with a weak classical
+  baseline, to be stated with the oracle line. Recovery decisions take 2.7-4.3 s (the 72-direction
+  clearance search), ~5 per failed episode: within the p95 real-time criterion, reported as maxima.
+- **Written into `configs/base.yaml`** (`baselines.regulated_pure_pursuit`), copied exactly (checked
+  with `tune_alpha.b2_problem`: None); VERIFY removed; the initial values kept in the comment.
+
+**L1 seed 9000000, offline diagnosis** (ruled 2026-10-30; `runs/diag/TRAINDIAG_20261101T173640Z_seed0`
+logs, `..._173659Z_seed0` replay; the tree was dirty only in the uncommitted A30 relock of LOCK.json --
+diagnostics, not citable):
+- **Entropy coefficient:** 0.018 (16k) -> 0.007 (48k) -> 0.013-0.014 (mid) -> 0.009 (end). Low, not
+  collapsed, not diverging. No defect.
+- **Q-values** (both critics, replayed checkpoints): median +9.7 at 25k (all positive, untrained), -11.4
+  at 175k (99 % negative), -20.2 at the end (all negative). Consistent with the returns (~-0.27 per step,
+  -27 at gamma 0.99). No defect.
+- **Reward components:** the residual (progress - proximity) is positive in 8 of 75 episodes (max
+  +10.4, min -2,329). Progress occurs but the proximity penalty (k_proximity 2.0) outweighs it in 89 %
+  of episodes. Replay progress: 25k 0.30 / 2.19 m; 175k 0.12 / 2.04 m; final 0.38 / 0.0 m (<= 1,200
+  steps each). **Finding (not a code defect): L1's proximity shaping dominates its return.**
+- **Actions:** never near zero; the final policy saturates the forward command 48 % of the time
+  (lateral 45 % at 25k), which selects the largest speed band and field.
+- **Observations:** every block within its declared bounds at every checkpoint (0 values outside). One
+  lookahead channel is constant at 175k and at the end: the lookahead distance channel at 1.0 while the
+  robot never nears the route's end -- expected, not a defect.
+- **Verdict:** no code defect. The proximity-scale finding is put to the supervisor before L1's pilot
+  restarts (the ruling: report before restarting); L1 waits for the answer.
+
+**Training memory check: PASS** (`runs/diag/MEMTRAIN_20261101T174017Z_seed9200000`, criterion approved
+2026-10-30). Positive control 256.6 MB for 256 MiB. Baseline (step 3,000) 3,555.3 MB; at the mark
+(10k) 3,557.9; at 100k 3,558.2: growth after the mark 0.37 MB (<= 100). Least-squares slope after the
+mark 40.7 MB/100k (fluctuation; the endpoints agree). No alarm. GPU reserved 2 -> 28 MB. Simulator
+1,612.7 -> 1,594.5 MB over 110 episodes. **The open memory point of 2026-10-30 is resolved:** the
+300k run's 1,971 -> 3,562 MB was start-up (CUDA context, first updates, replay buffer), reached by step
+3,000; the trend after it is flat.
+
+**Git on the host:** A30 applied (`00468dc`), merged with `6a49ccc` (`514927b`, whose message carries
+Git's template text; pushed, left as is), relock committed separately.

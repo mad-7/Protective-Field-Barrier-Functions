@@ -542,22 +542,29 @@ baselines:                 # the classical comparators (WP3). Not part of the en
     k_omega: 1.5           # 1/s, yaw rate per radian of lookahead bearing               VERIFY
     goal_slowdown: 0.5     # m, within this distance of the goal the speed falls linearly VERIFY
   regulated_pure_pursuit:  # B2, holonomic Regulated Pure Pursuit (pfbnav/control/regulated_pure_
-                           #   pursuit.py; ruled 2026-10-24). INITIAL values, Nav2's defaults where
-                           #   Nav2 has one; every one is tuned under the equal-tuning-budget rule on
-                           #   the tune set only. B7 = B2's tuned values plus the PFB.
-    desired_speed: 0.5     # m/s, the box ceiling (the route cap and regulation slow it)    VERIFY
-    lookahead_time: 1.5    # s, lookahead = |v_hat| x this, clipped (Nav2 default)          VERIFY
-    min_lookahead: 0.3     # m (Nav2 default)                                               VERIFY
-    max_lookahead: 0.9     # m (Nav2 default)                                               VERIFY
-    min_radius: 0.9        # m, curvature regulation below this radius (Nav2 default)       VERIFY
-    proximity_distance: 0.6  # m of clearance to the footprint below which it slows (Nav2's
-                           #   cost scaling distance)                                       VERIFY
-    approach_distance: 0.6 # m of route remaining at which the goal slow-down starts (Nav2) VERIFY
-    min_speed: 0.05        # m/s, floor of the curvature and proximity regulation           VERIFY
-    min_approach_speed: 0.05  # m/s, floor of the goal slow-down (Nav2 default)            VERIFY
-    k_omega: 1.5           # 1/s, yaw rate per radian of the lookahead bearing (as B1)      VERIFY
-    proximity_gain: 1.0    # 1, Nav2's cost_scaling_gain (default 1.0, <= 1): speed x gain x d/D
-                           #   below proximity_distance (added 2026-10-26, ruled)          VERIFY
+                           #   pursuit.py; ruled 2026-10-24). TUNED 2026-11-01: candidate 23 of 24 of
+                           #   runs/tuning/B2_regulated_pure_pursuit_20261030T111716Z_seed0 (host
+                           #   DESKTOP-55VR508, commit 0fbbfa9, clean; equal-tuning-budget rule, tune
+                           #   set only), selected by the declared rule: success 0.250 (15/60), the
+                           #   only candidate within 5 points of the best; 86.1 stops/100 m. Values
+                           #   copied EXACTLY (scripts/tune_alpha.py checks them to 1e-9). B7 = these
+                           #   plus the PFB. The INITIAL values (candidate 0, Nav2's defaults where Nav2
+                           #   has one: 0.5, 1.5, 0.3, 0.9, 0.9, 0.6, 0.6, 0.05, 0.05, 1.5, 1.0 in this
+                           #   order) scored 3/60, 182.6 stops/100 m.
+    desired_speed: 0.27684500642836773       # m/s (range 0.20-0.50)
+    lookahead_time: 0.5695202744151207       # s, lookahead = |v_hat| x this, clipped (0.5-3.0, log)
+    min_lookahead: 0.20715656835879012       # m (0.20-0.60; 1.8 % of the range from its low end)
+    max_lookahead: 1.1219731625076852        # m (0.60-1.50)
+    min_radius: 0.4311006518242212           # m, curvature regulation below this radius (0.3-2.0)
+    proximity_distance: 1.1755329784268205   # m of clearance to the footprint below which it slows
+                                             #   (0.2-1.2; 2.4 % of the range from its high end)
+    approach_distance: 0.7068799094943975    # m of route remaining at which the goal slow-down
+                                             #   starts (0.3-1.2)
+    min_speed: 0.0713057736192248            # m/s, floor of the curvature and proximity regulation
+    min_approach_speed: 0.03858491802284248  # m/s, floor of the goal slow-down (0.02-0.10)
+    k_omega: 1.9125606140831566              # 1/s, yaw rate per radian of the lookahead bearing
+    proximity_gain: 0.3306079212896105       # 1, Nav2's cost_scaling_gain (<= 1): speed x gain x
+                                             #   d/D below proximity_distance (0.25-1.0)
   dwa:                     # B3, holonomic DWA over (vx, vy, wz) (pfbnav/control/dwa.py; ruled
                            #   2026-10-26: code-only in parallel with Stage 1). INITIAL values,
                            #   DWB's where DWB has one; every one is tuned under the equal-tuning-
