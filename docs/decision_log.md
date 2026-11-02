@@ -10346,3 +10346,56 @@ mark 40.7 MB/100k (fluctuation; the endpoints agree). No alarm. GPU reserved 2 -
 
 **Git on the host:** A30 applied (`00468dc`), merged with `6a49ccc` (`514927b`, whose message carries
 Git's template text; pushed, left as is), relock committed separately.
+
+## 2026-11-01 - Ruled: k_proximity derived (rule-7 reward change); B2 uses the scan; B6 guards the baseline
+
+**The rulings (supervisor), in substance:**
+1. k_proximity = 2.0 is a comparator-specification defect (an underived value that makes the shaped
+   arms degenerate and would make H2 trivially won); fix it before L1's restart. A comparator
+   correction, not a learning-setup lever: L5 has no proximity term and is unaffected, and A30's restart
+   proceeds as ruled after the fix. Derive k_proximity so that on the centreline of the narrowest aisle
+   stratum at 0.3 m/s the proximity penalty per step equals 25 % of the progress reward per step; record
+   the derivation and that 25 % is a declared design choice. Identical for every shaped arm (L1, L4).
+   Record as a rule-7 reward change, made before any shaped arm's confirmatory run.
+2. B2: verify whether RPP's proximity speed regulation uses the 120-bin scan or only the static map. If
+   map only, a B2 defect: fix, re-tune B2 (N = 24), re-run alpha. Alpha tuning may continue meanwhile,
+   its result unused until this check is reported. If it uses the scan, proceed and record the
+   weak-baseline result as a finding, with the oracle's 72 % beside it.
+   Recorded: B6 is the comparator guarding against the weak-baseline objection; tune it with care. A B7
+   win over B1 and B2 alone would prove little; H1prime is meaningful because B6 is in it.
+Then L1's pilot at seed 9000001, 2M steps, with the corrected k_proximity.
+
+**1. Hard rule 7: a reward-term change, recorded here in the same change.** `reward.k_proximity` for the
+shaped arms: **2.0 -> 0.1011326860841424**, derived (`pfbnav/training/shaping.py`):
+- progress per step at v = 0.3 m/s: k_progress x v x dt = 5 x 0.3 x 0.05 = 0.075; 25 % = 0.01875;
+- proximity per step: k_proximity x (threshold - r) / threshold, r the nearest valid return from the
+  body origin (the reward's own definition, `NavEnv._proximity`); centred in the narrowest aisle (the
+  narrow stratum's floor, 0.1987 m per side) r = half_width + c = 0.2086 + 0.1987 = 0.4073 m, so the
+  cost is (0.5 - 0.4073) / 0.5 = 0.1854;
+- k_proximity = 0.01875 / 0.1854 = 0.10113 (about 1/20 of 2.0).
+- **25 % is a declared design choice** (`reward.shaping.proximity_share`), not a measurement. The real
+  scan's nearest return there is within ~1 mm of the geometric value (2026-09-27).
+- Every input is read from the config (`reward.shaping`: share 0.25, reference_speed 0.3,
+  reference_stratum narrow); `configs/experiments/L1_sac_shaped.yaml` carries the value (and so the
+  unicycle diagnostic, which inherits it). L4 has no config yet; when it is written it must carry the
+  same value. `scripts/train.py` refuses a config whose non-zero k_proximity is not the derived value
+  (`shaping_problem`); `tests/test_shaping.py` checks the known answer by hand, the ratio THROUGH the
+  environment's own `step_reward` and `proximity_cost` (exactly -25 % of the progress term), and every
+  experiment config. No shaped arm has a confirmatory run; L1's only run (seed 9000000, 300k, G4 FAIL)
+  stays recorded under the old value. Outside the frozen environment's closure (config and training
+  code only): env identity unchanged.
+
+**2. B2's proximity regulation uses the scan: no defect.** `RegulatedPurePursuit.clearance`
+(`pfbnav/control/regulated_pure_pursuit.py`) takes the smallest gap between a valid return and the
+footprint along its bearing from `ClassicalInput.scan`, which `NavEnv._controller_input` builds from the
+certified layer's live 120-bin filter stream (`state.scan.filter_ranges/bearings/valid`) -- every
+obstacle in the scene, unmapped ones included; an invalid bin counts as clearance 0 (the shared
+convention). That is Nav2's local-costmap behaviour. The controller sees no map (`ClassicalInput` has
+none). So B2 stands as tuned (candidate 23), the alpha tuning's result is usable, and **the
+weak-baseline result is recorded as a finding:** the best of 24 B2 candidates succeeds on 25 % of tune
+routes (86.1 stops/100 m), every candidate failing >= 75 % by the stop-recovery-restop cycle, beside the
+privileged oracle's 72 % on the same set.
+
+**3. Recorded for B6's tuning:** B6 (field-aware MPPI) is the comparator that guards against the
+weak-baseline objection; it is to be tuned with care. A B7 win over B1 and B2 alone would prove little;
+H1prime is meaningful because B6 is in it.

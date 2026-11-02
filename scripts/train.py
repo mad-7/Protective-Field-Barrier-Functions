@@ -89,6 +89,7 @@ from pfbnav.training.curriculum import Curriculum, stages_from_config
 from pfbnav.training.diagnostic import UnicycleAction, diagnostic_problem
 from pfbnav.training.order import order_sha256, scenario_order
 from pfbnav.training.record import STOP_FILE, EpisodeLog, EpisodeRecorder, MemoryTrend, StopFile
+from pfbnav.training.shaping import shaping_problem
 from pfbnav.training.stall import StallRule, StallTruncation
 from pfbnav.utils.cli import add_display_flag, apply_display
 from pfbnav.utils.hashing import text_sha256
@@ -108,7 +109,7 @@ def preflight(cfg: dict[str, Any]) -> list[Path]:
         raise SystemExit(
             "filter.enabled is true, but the PFB's alpha is not ruled yet (WP2 step 5, tuned with "
             "B7, Q4); L5's pilot is step 6.")
-    problem = freeze_problem(cfg)
+    problem = freeze_problem(cfg) or shaping_problem(cfg)
     if problem:
         raise SystemExit(problem)
     if cfg.get("lagrangian"):

@@ -4,4 +4,8 @@ experiment: L1_sac_shaped
 filter:
   enabled: false
 reward:
-  k_proximity: 2.0
+  k_proximity: 0.1011326860841424  # DERIVED (ruled 2026-11-01; was 2.0, underived): penalty = 25 % of
+                                   #   the progress reward per step on the narrow stratum's floor
+                                   #   (0.1987 m per side) centreline at 0.3 m/s:
+                                   #   0.25 x 5 x 0.3 x 0.05 x 0.5 / (0.5 - 0.2086 - 0.1987).
+                                   #   pfbnav/training/shaping.py; train.py refuses any other value

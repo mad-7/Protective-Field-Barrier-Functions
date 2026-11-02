@@ -363,7 +363,16 @@ reward:
   time_cost: 0.01
   k_stop: 5.0
   k_intervention: 0.1
-  k_proximity: 0.0         # > 0 only for the shaped variants
+  k_proximity: 0.0         # > 0 only for the shaped variants (L1, L4), and then EXACTLY the derived
+                           #   value of `shaping` below (pfbnav/training/shaping.py; train.py refuses
+                           #   any other). Was 2.0 in L1, underived (ruled 2026-11-01: a comparator-
+                           #   specification defect; a rule-7 reward change before any confirmatory run)
+  shaping:                 # RULED 2026-11-01: k_proximity such that, on the centreline of the
+                           #   narrowest aisle stratum at reference_speed, the proximity penalty per
+                           #   step = proximity_share x the progress reward per step
+    proximity_share: 0.25  # 1, a DECLARED DESIGN CHOICE (ruled), not a measurement
+    reference_speed: 0.3   # m/s
+    reference_stratum: narrow  # its min_clearance (world.aisle_strata) is the narrowest aisle
   goal_bonus: 200.0
   contact_penalty: 200.0
   goal_tolerance: 0.25     # m

@@ -248,6 +248,12 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   routes by the stop-recovery-restop cycle. L1 seed 9000000 diagnosis: no code defect; finding: the
   proximity shaping dominates L1's return (residual > 0 in 8/75 episodes) -- put to the supervisor, L1
   waits. Memory check PASS (the 300k growth was start-up). Next: alpha tuning with B7.
+- **RULED 2026-11-01:** k_proximity was a comparator-specification defect: now DERIVED (penalty = 25 % of
+  the progress reward per step on the narrow floor's centreline at 0.3 m/s) = 0.10113 for every shaped
+  arm (L1, L4; `pfbnav/training/shaping.py`, train.py refuses another value); rule-7 change recorded.
+  B2's proximity regulation uses the live scan: no defect, the weak baseline is a finding (25 % vs the
+  oracle's 72 %). B6 guards against the weak-baseline objection: tune it with care. Next: L1's pilot at
+  9000001 (2M steps), alpha tuning with B7 running.
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 
