@@ -10549,3 +10549,11 @@ wide 5: 2000008, 012, 014, 018, 019, 023, 024, 025, 028, 029, 033, 037, 043, 050
 - **No code defect is indicated** by these logs. Not yet checked: the critic/actor losses and Q around
   1.5M (`sb3/progress.csv`; a replay of checkpoints before and after), which would show a value
   divergence if there were one. Under the ruling, if none: 9000002 unchanged.
+
+**L1 seed 9000001, losses around the collapse (`sb3/progress.csv`, one row per ~100k steps): no value
+divergence.** Critic loss 0.14-0.71 throughout (one 2.0 at 601k, back to 0.27 by 604k), 0.14 at 1.50M,
+0.21 at 1.60M, 0.19-0.71 after; actor loss -11 to +2.6, no trend break at 1.5M; ent_coef 0.0025-0.0071,
+flat; every value finite. `ep_rew_mean` peaks +7.7 at 802k, +2 to +4 at 1.3-1.4M, then -14 at 1.60M and
+-19 at 1.8-1.9M: the collapse is in the policy's behaviour, with the value estimates bounded. **No defect
+found** (logs, buffer, losses). Under the ruling of 2026-11-03 (option b): L1's second pilot seed
+9000002 runs UNCHANGED; the pilot counter is untouched.
