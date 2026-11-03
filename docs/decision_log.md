@@ -10399,3 +10399,45 @@ privileged oracle's 72 % on the same set.
 **3. Recorded for B6's tuning:** B6 (field-aware MPPI) is the comparator that guards against the
 weak-baseline objection; it is to be tuned with care. A B7 win over B1 and B2 alone would prove little;
 H1prime is meaningful because B6 is in it.
+
+## 2026-11-03 - REVIEWED: alpha tuning with B7 -> alpha 1.0 FROZEN (grid low edge); L1 seed 9000001 run read
+
+**Alpha (`runs/tuning/B7_alpha_20261102T195759Z_seed0`).** Provenance: commit e78fa3a, clean, scene
+537f1bbb, DESKTOP-55VR508, seed 0. Grid {1, 2, 5, 10, 20} /s, 60 tune scenarios each:
+
+| alpha | success | stops/100 m | time s | infeasible = fallback steps |
+|---|---|---|---|---|
+| 1 | 0.500 | 0.59 | 155.8 | 332 |
+| 2 | 0.500 | 2.94 | 155.4 | 125 |
+| 5 | 0.517 | 9.63 | 157.1 | 74 |
+| 10 | 0.500 | 11.98 | 156.7 | 2,807 |
+| 20 | 0.517 | 12.93 | 158.1 | 8,142 |
+
+The declared rule (A14a: within 5 pp of the best success, fewest stops; ties by time) admits every
+alpha and selects **alpha = 1.0, on the grid's LOW EDGE: reported, never extended.** Frozen by hand
+for L3, L4, L5 and B7 (`filter.alpha` in `configs/base.yaml`, was 2.0 provisional). No contact at any
+alpha; one unrecoverable stop (alpha 5, wide 2000053, deadlock inside_min_margin).
+
+Recorded for the supervisor (no change made):
+- **B7's failures are timeouts, not stops, and the classical recovery never engaged** (0 attempts in
+  300 episodes). About half the routes time out at every alpha, and largely the SAME routes (narrow
+  11-12/20, medium 12-13/20, wide 5-6/20): the outcome is set by the scenario, not by alpha. The filter
+  holds the robot short of the field without a latched stop, so the recovery (triggered by a stop)
+  never runs. On the primary metric this reads as near-zero stops; the cost is in success. Before H1prime
+  the timeouts' cause (filter hold at an unmapped obstacle, goal inside the field, or slow progress)
+  should be read from the candidates' episode logs, offline.
+- Simulator memory grew 32 MB/100 episodes (Python 14.5), against A20's reference 1.7; no alarm. Not a
+  concern for 300 episodes; to watch in L5 training (PFB in the loop).
+- The run declared `--instances 1` while two instances ran (G2 approved 4: within budget). An earlier
+  alpha run was stopped by the researcher; it is not used and not deleted.
+- Monitoring only (ruled 2026-10-26): B2 86.1 stops/100 m at 0.25 success, B7 0.59 at 0.50.
+
+**L1 seed 9000001 (`runs/train/L1_sac_shaped_seed9000001`), training read; G4 pending the checkpoint
+evaluation.** Provenance: commit e78fa3a, clean, cuda, environment 3757aeca, instance 1 (port 23002).
+Completed 2,000,000 steps, 1,839 episodes (60,242 s, 33.2 steps/s): **103 success, 1,735
+stall_truncated, 1 unrecoverable_stop, no collision, no timeout.** Curriculum episodes 365 / 374 / 1,101.
+The derived k_proximity works as intended: progress minus proximity is positive in 1,175 of 1,839
+episodes (8 of 75 under k = 2.0). ent_coef settled at ~0.003-0.005. Memory: Python 3,557 MB at step
+3,000 and 3,563 at the end (start-up allocation, flat after), simulator +6.3 MB/100 episodes, GPU 28 MB
+reserved, no alarm. The success share per stage and the last-10 % window are read with
+`scripts/peek_training.py` (added, read-only).

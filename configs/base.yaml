@@ -238,8 +238,11 @@ filter:                    # the PFB (WP2, ruled 2026-10-23). Its FIELD reads th
                            #   filter's own settings are here. Was t_react / a_brake / margin (v1),
                            #   removed: restated constants.
   enabled: false
-  alpha: 2.0               # 1/s, class-K gain. PROVISIONAL: tuned with B7 on the tune layouts over
-                           #   {1, 2, 5, 10, 20}, before L5's pilot (Q4)                   VERIFY
+  alpha: 1.0               # 1/s, class-K gain. FROZEN 2026-11-03 for L3, L4, L5, B7: tuned with B7
+                           #   on the tune layouts over {1, 2, 5, 10, 20} (Q4; A14a rule: within
+                           #   5 pp of the best success, fewest stops/100 m). Selected on the grid's
+                           #   LOW EDGE, reported, never extended (runs/tuning/
+                           #   B7_alpha_20261102T195759Z_seed0, commit e78fa3a)
   lag_allowance_s: 0.05    # s, added to one control step to make the prediction horizon (Q2); the
                            #   noise/latency sensitivity check covers it                   VERIFY
   motion_fractions: [0.0, 0.25, 0.5, 0.75, 1.0]  # the realised fraction lambda of the predicted

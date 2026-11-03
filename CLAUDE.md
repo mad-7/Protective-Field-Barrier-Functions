@@ -254,6 +254,10 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   B2's proximity regulation uses the live scan: no defect, the weak baseline is a finding (25 % vs the
   oracle's 72 %). B6 guards against the weak-baseline objection: tune it with care. Next: L1's pilot at
   9000001 (2M steps), alpha tuning with B7 running.
+- **2026-11-03: alpha FROZEN at 1.0** (grid low edge, reported, never extended; A14a rule) for L3, L4,
+  L5, B7. B7's failures are timeouts with no recovery engaged (same routes at every alpha): flagged.
+  L1 seed 9000001 completed 2M steps: 103/1,839 success, 1,735 stall-truncated; G4 awaits the checkpoint
+  evaluation.
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 
