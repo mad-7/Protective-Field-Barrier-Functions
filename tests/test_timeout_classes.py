@@ -47,3 +47,19 @@ def test_refuses_an_oracle_run_on_another_set():
         classify_timeouts(B7, ORACLE[:3], dt=0.05)
     with pytest.raises(ValueError, match="one per scenario"):
         classify_timeouts(B7, ORACLE + [_ep(4, "timeout")], dt=0.05)
+
+
+def test_route_speeds_separate_latched_time_from_driving_speed():
+    from pfbnav.eval.timeout_classes import route_speeds
+    eps = [{"scenario_seed": 7, "outcome": "unrecoverable_stop", "distance_m": 6.0, "steps": 4000,
+            "stopped_steps": 2000, "protective_stops": 3},
+           {"scenario_seed": 8, "outcome": "timeout", "distance_m": 10.0, "steps": 4000},
+           {"scenario_seed": 9, "outcome": "success", "distance_m": 1.0, "steps": 10}]
+    rows = route_speeds(eps, [8, 7], dt=0.05)
+    assert [r["scenario_seed"] for r in rows] == [8, 7]
+    assert rows[0]["mean_speed_mps"] == 0.05 and rows[0]["moving_speed_mps"] == 0.05
+    assert rows[1]["mean_speed_mps"] == 0.03 and rows[1]["moving_speed_mps"] == 0.06
+    with pytest.raises(ValueError, match="without an episode"):
+        route_speeds(eps, [8, 1], dt=0.05)
+    with pytest.raises(ValueError, match="twice"):
+        route_speeds(eps + [eps[1]], [8], dt=0.05)

@@ -10589,3 +10589,35 @@ found, unaffected: filter off) and the two G4 controls ran under 3757aeca, so th
 evaluations and gates run on the host's checkout BEFORE it pulls this re-freeze. Then: pull, the
 filter-off bit-identity test, the two G4 controls rerun under 6ad7f6af (L5's gate needs them), and L5
 at the ruled seed. No code is checked out under a running job (lazy imports).
+
+## 2026-11-03 - RULED: L5's seeds after the integrity failure; B7 classification accepted; L1 explanation recorded; A31's scope (A32)
+
+**The rulings (supervisor), in substance:**
+1. The PFB release-check fix is accepted as a bug fix (A29's defect). Amend: 9000003 added to
+   `pilot_training_seeds`; L5's pilot at 9000002, its second seed 9000003. The crashed run
+   (`runs/train/L5_sac_pfb_unshaped_seed9000001`) is kept and recorded as an INTEGRITY FAILURE of L5,
+   not counted toward the pivot. **Freeze mapping:** L1's seeds 9000001 and 9000002 are gated under
+   3757aeca (filter off, unaffected by the fix), with the G4 controls run under it; L5's gate uses
+   controls rerun under 6ad7f6af.
+2. B7's classification accepted: 17 blocked (= the oracle's failures), 13 horizon timeouts of a slow
+   controller, not deadlocks; 70 % success on the 43 traversable routes. Run now, offline: B2's mean
+   speed on the same 13 routes, to separate RPP's regulation from the filter. alpha stays 1.0.
+   **Recorded: why the rule selected it** -- success was nearly flat across alpha (0.50-0.52) because
+   the 200 s horizon capped it, so stops decided. **Declared now, before any test result:** an
+   exploratory alpha-sensitivity analysis of B7 on the test set at alpha in {1, 2, 5}, reporting stops,
+   success and mission time, outside the confirmatory family.
+3. L1's diagnosis accepted: no defect; 9000002 unchanged. **Recorded for the methods and discussion as a
+   candidate explanation:** a self-reinforcing collapse -- the replay buffer stall-dominated throughout
+   (0.89-0.95 of transitions), and after ~1.5M steps its successes drained (goal rewards in it 15 -> 9
+   -> 4 -> 1) as the policy's success fell, with the value estimates bounded. No change to the setup.
+4. A31's scope: L1, L2 and L4 all train their confirmatory seeds regardless of G4, failures disclosed;
+   only L5 triggers the pivot. Exploratory arms that fail G4 twice are dropped and the failure reported.
+   Amend and relock.
+
+**Implemented.** A32 drafted (`docs/pending/A32_amendment.md`, all four points' prereg content: the
+seed, the integrity record, the freeze mapping, A31's scope with the exploratory arms named -- A1,
+L5-nowp, L2-d005, L2-d020 -- and `exploratory.B7_alpha_sensitivity`), applied by the researcher with
+`docs/pending/apply_A32.py` after A31 (dry-run on copies: refuses before A31 and a second time; both
+YAML files parse). The B2 speed check: `pfbnav/eval/timeout_classes.route_speeds` (tested) and
+`scripts/compare_route_speeds.py` (read-only), giving per route each controller's mean speed and its
+speed over the steps not latched by the certified layer, since B2's failures are stop-restop cycles.

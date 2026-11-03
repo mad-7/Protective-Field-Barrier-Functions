@@ -63,3 +63,32 @@ def class_counts(rows: Sequence[dict[str, Any]]) -> dict[str, dict[str, Any]]:
                         "ids": [r["scenario_seed"] for r in mine if r["class"] == c]}
                     for c in (BLOCKED, DEADLOCK, UNCLASSIFIED)}
     return out
+
+
+def route_speeds(episodes: Sequence[dict[str, Any]], seeds: Sequence[int], dt: float
+                 ) -> list[dict[str, Any]]:
+    """One controller's episodes on the given scenarios (ruled 2026-11-03: B2 against B7 on B7's 13
+    horizon timeouts): outcome, distance, the mean speed over the episode, and the mean speed over the
+    steps NOT latched by the certified layer (`stopped_steps` excluded), which separates time spent
+    stopped from how fast the controller drives. Raises if a scenario is missing or repeated."""
+    by_seed: dict[int, dict[str, Any]] = {}
+    for e in episodes:
+        s = int(e["scenario_seed"])
+        if s in seeds:
+            if s in by_seed:
+                raise ValueError(f"scenario {s} appears twice")
+            by_seed[s] = e
+    missing = [s for s in seeds if s not in by_seed]
+    if missing:
+        raise ValueError(f"scenarios without an episode: {missing}")
+    rows = []
+    for s in seeds:
+        e = by_seed[s]
+        steps, stopped = int(e["steps"]), int(e.get("stopped_steps", 0))
+        moving = steps - stopped
+        rows.append({"scenario_seed": s, "outcome": e["outcome"], "distance_m": float(e["distance_m"]),
+                     "steps": steps, "stopped_steps": stopped,
+                     "protective_stops": int(e.get("protective_stops", 0)),
+                     "mean_speed_mps": float(e["distance_m"]) / (steps * dt),
+                     "moving_speed_mps": float(e["distance_m"]) / (moving * dt) if moving else None})
+    return rows
