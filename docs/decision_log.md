@@ -10557,3 +10557,35 @@ flat; every value finite. `ep_rew_mean` peaks +7.7 at 802k, +2 to +4 at 1.3-1.4M
 -19 at 1.8-1.9M: the collapse is in the policy's behaviour, with the value estimates bounded. **No defect
 found** (logs, buffer, losses). Under the ruling of 2026-11-03 (option b): L1's second pilot seed
 9000002 runs UNCHANGED; the pilot counter is untouched.
+
+## 2026-11-03 - L5's first pilot crashed: a blocking PFB defect (A29's, in the filter); fixed; re-freeze 14
+
+**What happened.** `train.py --config configs/experiments/L5_sac_pfb_unshaped.yaml --seed 9000001
+--instance 1` raised in its first episodes: `pfb_field.band_of`: "reachable speed 0.688 m/s exceeds the
+top band (0.51 m/s)", from `PFB.releasable` (the release check under the latch). It sized the band from
+the RAW request; a learned policy's request may exceed the action box and wheel budget (a corner of the
+box is 0.71 m/s), which the base clamps to at most speed_cap. The same defect A29 fixed in the
+certified layer's restart check (2026-10-29). B7 never reached it: RPP's requests stay within the cap.
+
+**Fix (blocking defect, freeze discipline).** `releasable` judges the band at min(|request|, speed_cap),
+as A29. Within the cap nothing changes, so B7's alpha tuning stands. Test:
+`tests/test_pfb.py::test_a_request_above_the_speed_cap_is_judged_at_the_executable_speed` (the raw
+request still raises in `band_of`; every speed from the cap to 0.71 m/s gives the cap's answer, open
+floor releases, a wall ahead does not; below the cap unchanged). No other `band_of` call takes a raw
+request: `_regimes` takes the velocity ESTIMATE, which G2's 131,527 saturated random steps never took
+above the top band (2026-10-29). Fast suite 1,610 passed, 1 skipped.
+
+**Re-freeze 14:** `env.frozen_code_sha256` 3757aeca -> 6ad7f6af (pfb.py is in the closure since WP2
+step 4). The PFB runs only with the filter on: filter-off behaviour is unchanged; the filter-off
+bit-identity test reruns on the host. The scenario identity (A18) is unaffected (test_preregistration
+passes). The crashed run `runs/train/L5_sac_pfb_unshaped_seed9000001` is kept (hard rule 10); G4's
+integrity rule asks for a fresh pilot seed, and only 9000002 remains in `pilot_training_seeds`: put to
+the supervisor ((a) add 9000003 by amendment, recommended; (b) 9000000, unused by L5; (c) 9000002 with
+no second seed).
+
+**Ordering on the host (gate consistency).** `gate_g4.py` compares every run's environment hash with
+the config's at gate time. L1's seeds 9000001 and 9000002 (the latter already training when this was
+found, unaffected: filter off) and the two G4 controls ran under 3757aeca, so their checkpoint
+evaluations and gates run on the host's checkout BEFORE it pulls this re-freeze. Then: pull, the
+filter-off bit-identity test, the two G4 controls rerun under 6ad7f6af (L5's gate needs them), and L5
+at the ruled seed. No code is checked out under a running job (lazy imports).

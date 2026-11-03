@@ -587,7 +587,12 @@ class PFB:
                 return True
             return self._recedes(vx, vy, w, r[inside], b[inside], field[inside])
         heading = math.atan2(vy, vx) if speed > 1e-9 else self._heading
-        band = band_of(speed, p)
+        # The band of the speed the base can execute, as the certified layer's restart check (A29):
+        # a learned policy's request may exceed the box and the wheel budget (a corner of the action
+        # box is 0.71 m/s), which the base clamps to at most speed_cap -- the top band covers it.
+        # Sizing from the raw request raised above the top band (L5's first pilot, 2026-11-03, a
+        # request at 0.688 m/s under the latch). Within the cap nothing changes.
+        band = band_of(min(speed, p.speed_cap), p)
         return not bool(np.any(r < self.field.band_extent(b, band, heading, abs(w))))
 
     def _recedes(self, vx, vy, w, r, b, field) -> bool:
