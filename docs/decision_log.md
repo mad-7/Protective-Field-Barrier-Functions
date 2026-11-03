@@ -10441,3 +10441,13 @@ episodes (8 of 75 under k = 2.0). ent_coef settled at ~0.003-0.005. Memory: Pyth
 3,000 and 3,563 at the end (start-up allocation, flat after), simulator +6.3 MB/100 episodes, GPU 28 MB
 reserved, no alarm. The success share per stage and the last-10 % window are read with
 `scripts/peek_training.py` (added, read-only).
+
+**L1 seed 9000001, G4 learning criterion (2026-11-03, `scripts/peek_training.py`): FAIL.** Last 10 %
+(183 episodes, all `full`): success **0.0055** (1/183), needs >= 0.20. Success by stage: wide_medium_mapped
+20/365 (0.055), all_strata_mapped 33/374 (0.088), full 50/1,100 (0.045). Ten blocks in episode order:
+0.033, 0.077, 0.060, 0.115, 0.044, 0.071, 0.087, 0.055, 0.016, 0.005 -- a peak at 0.115 in block 4 (the
+second stage), then DECLINING through the full stage to near zero: not a slow learner, a policy that
+gets worse late. 1,735 of 1,839 episodes end by the stall truncation. Under `on_failure` a learning
+failure alone fails G4; the checkpoint evaluation still runs for the record (gate_g4.py). Under A30
+this is the first failure of the restarted counter; the declared next step is seed 9000002 unchanged,
+then H1prime on a second failure. Put to the supervisor with the declining trend before 9000002 starts.
