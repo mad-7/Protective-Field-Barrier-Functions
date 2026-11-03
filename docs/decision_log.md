@@ -10512,3 +10512,40 @@ with a wall 0.95 m ahead no command within the limits meets the row and the filt
 mechanism behind B7's 332 fallback steps at alpha 1, and it is consistent with the classification's
 working hypothesis that B7's timeouts are slowness on long routes. Put to the supervisor with the
 classification. Fast suite otherwise: 1,604 passed, 1 skipped, 4 failed (these four), 37:54.
+
+## 2026-11-03 - REVIEWED: B7's timeouts classified; L1 seed 9000001's decline diagnosed (both offline)
+
+**B7 at alpha 1.0 (`runs/diag/B7TIMEOUTS_20261103T174622Z_seed0`; oracle
+`oracle_tracker_privileged_20261030T001836Z`).** 30 timeouts: **17 blocked route** (narrow 5, medium 7,
+wide 5: 2000008, 012, 014, 018, 019, 023, 024, 025, 028, 029, 033, 037, 043, 050, 051, 053, 055), **13
+"filter deadlock" by the ruled rule** (narrow 7, medium 5, wide 1: 2000001, 005, 007, 009, 010, 016, 017,
+021, 027, 030, 032, 036, 042), 0 unclassified.
+- The 17 blocked routes are exactly the oracle's 17 failures on the tune set (16 unrecoverable_stop, 1
+  timeout); every one has an unmapped obstacle 0.008-0.228 m from the route. So on the 43 routes a
+  route tracker can traverse, B7 succeeds on 30 (70 %).
+- **The 13 in class (ii) are not deadlocks.** None has an unmapped obstacle; B7 was still moving when
+  the horizon ended: it covered 68-97 % of the planned length (9.5-12.6 m) at a mean 0.047-0.063 m/s,
+  with the PFB modifying only 9-37 % of steps and no stop. At ~0.055 m/s the 200 s horizon covers about
+  11 m, and these are the routes longer than that (11.4-17.0 m). They are **horizon timeouts of a slow
+  controller**. The class name is the ruled one; the record says what the rows show.
+- Open: whether the slowness is RPP's own regulation (B2's tuned candidate 23, shared with B2) or the
+  PFB (the frozen alpha brakes where 2.0 filtered; tests/test_pfb.py). Separable offline: B2's mean
+  speed on the same 13 routes from its tuning episodes. Nothing changed in the recovery or the filter.
+
+**L1 seed 9000001 (`runs/diag/DECLINE_20261103T174429Z_seed9000001`).** Success per 100k steps:
+0.045, 0.022, 0.065, 0.089 | 0.057, 0.065, 0.103, 0.125 | 0.051, 0.022, 0.074, 0.079, 0.089, 0.085,
+0.091, **0.012, 0.011, 0.033, 0.011, 0.000** (bars at the switches, 400k and 800k).
+- **The switch to the full distribution (800k) costs a dip, not the decline:** 0.125 before, 0.051 and
+  0.022 after, recovered to 0.074-0.091 by 1.1-1.5M. **The collapse comes at ~1.5-1.6M, inside the full
+  stage**, on an unchanged distribution: not at a stage boundary.
+- Unmapped obstacles do not explain it: full-stage success 0.040 with, 0.047 without. Narrow is
+  worst throughout (0.016 mapped, 0.011 full); wide best (0.171 / 0.093).
+- **Replay buffer (reconstructed, FIFO 200k):** stall-truncated transitions 0.89-0.95 of the buffer at
+  every snapshot to 1.4M, successes 0.05-0.11 (7-22 goal rewards in it). After the collapse the
+  successes drain: 0.053 (9 goal rewards) at 1.6M, 0.026 (4) at 1.8M, 0.006 (1) at 2M, stall 0.994.
+  The one unrecoverable_stop (a 4,000-step episode) sits in the 1.6M buffer at 0.020. This is the
+  signature of a self-reinforcing collapse (fewer successes, fewer goal rewards to learn from), not of
+  the curriculum.
+- **No code defect is indicated** by these logs. Not yet checked: the critic/actor losses and Q around
+  1.5M (`sb3/progress.csv`; a replay of checkpoints before and after), which would show a value
+  divergence if there were one. Under the ruling, if none: 9000002 unchanged.
