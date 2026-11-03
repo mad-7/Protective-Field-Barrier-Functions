@@ -149,7 +149,9 @@ G4_learned_pilot:
     integrity: fix; a fresh pilot seed; the failed run is kept
     learning_or_checkpoint: >-
       one second pilot seed, unchanged; if it passes, G4 passes and the first failure is recorded
-      for the seed-CV discussion; if it fails, stop and report
+      for the seed-CV discussion; if it fails, stop and report. A31 (2026-11-03): for L5 a
+      second failure triggers the pivot (endpoints.yaml); for L1 a second failure is
+      disclosed and L1 still trains its confirmatory seeds unconditionally as a comparator.
     hyperparameter_change_after_failure: applies identically to every learned method; restarts the pilot
   standing_rule: >-
     after G4 passes, every confirmatory seed trains unconditionally and stays in the analysis

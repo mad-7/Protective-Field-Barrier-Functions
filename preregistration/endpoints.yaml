@@ -11,7 +11,7 @@ confirmatory_family:
   members: [H1, H2]
   conditional_members: [H1N]      # added only if narrow_rule triggers
   pivot:                          # A27 (ruled 2026-10-26): the filter-only path
-    trigger: L1's or L5's pilot fails G4 twice (both pilot seeds of G4_learned_pilot)
+    trigger: L5's pilot fails G4 twice (both pilot seeds of G4_learned_pilot); L1's G4 outcome does not trigger it (A31)
     members: [H1prime]            # then the confirmatory family is H1prime alone, at alpha 0.05; H1, H2 and H1N are not tested confirmatorily
     otherwise: H1prime is exploratory and this family stands unchanged
 
