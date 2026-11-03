@@ -31,9 +31,9 @@ retrained over (hard rule 10):
 `lagrangian:` block (L2, `pfbnav/control/sac_lagrangian.py`), with the same `training:` block.
 
 **What it refuses, before touching the simulator:**
-  * **`filter.enabled: true`**, until WP2 rules alpha. The PFB is in the step loop (WP2 step 4,
-    2026-10-24), but its alpha is provisional until the tuning with B7 (step 5, ruled Q4); L5's
-    pilot follows that (step 6).
+  * **`filter.enabled: true` at any alpha but the frozen one** (frozen 2026-11-03 after the tuning
+    with B7; `pfbnav/utils/filter_ruling.py`). The PFB is in the step loop (WP2 step 4, 2026-10-24)
+    and inside the frozen environment's closure, so L5 trains on the same frozen environment.
   * **An environment that is not frozen, or not the frozen one** (ruled 2026-10-03): L1 trains
     while WP2 builds the PFB only on an environment whose code identity (`pfbnav/envs/freeze.py`)
     equals `env.frozen_code_sha256`.
@@ -92,9 +92,10 @@ from pfbnav.training.record import STOP_FILE, EpisodeLog, EpisodeRecorder, Memor
 from pfbnav.training.shaping import shaping_problem
 from pfbnav.training.stall import StallRule, StallTruncation
 from pfbnav.utils.cli import add_display_flag, apply_display
+from pfbnav.utils.filter_ruling import filter_problem
 from pfbnav.utils.hashing import text_sha256
 from pfbnav.utils.memory import MemoryRecord
-from pfbnav.utils.runio import create_run_dir, stamp_learner_device
+from pfbnav.utils.runio import create_run_dir, stamp_instances, stamp_learner_device
 from pfbnav.utils.seeding import seed_everything
 from pfbnav.world.scenarios import load_set, verify
 
@@ -105,11 +106,7 @@ def preflight(cfg: dict[str, Any]) -> list[Path]:
     """Every refusal that needs no simulator. Returns the training sets' paths."""
     if not cfg.get("experiment"):
         raise SystemExit("the config names no `experiment`; train from configs/experiments/")
-    if cfg["filter"]["enabled"]:
-        raise SystemExit(
-            "filter.enabled is true, but the PFB's alpha is not ruled yet (WP2 step 5, tuned with "
-            "B7, Q4); L5's pilot is step 6.")
-    problem = freeze_problem(cfg) or shaping_problem(cfg)
+    problem = filter_problem(cfg) or freeze_problem(cfg) or shaping_problem(cfg)
     if problem:
         raise SystemExit(problem)
     if cfg.get("lagrangian"):
@@ -267,6 +264,7 @@ def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, set
                 "counted_episodes": sum(e["counted"] for e in model.dual_history),
                 "episodes": model.dual_history}
         (run_dir / "summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+        stamp_instances(run_dir, cfg)    # measured again at the end (ruled 2026-11-03)
     return summary
 
 

@@ -83,6 +83,43 @@ def host_identity(cfg: dict | None = None) -> dict:
     return info
 
 
+def count_instances(process_names: list[str], listening_ports: list[int], *, base_port: int,
+                    stride: int, slots: int) -> dict:
+    """The simulator instances running, from what the OS shows: processes whose name contains
+    'coppelia', and the instance ports (`base_port + stride * i`, i < `slots`) being listened on."""
+    ports = sorted({p for p in listening_ports
+                    if base_port <= p < base_port + stride * slots and (p - base_port) % stride == 0})
+    return {"coppelia_processes": sum("coppelia" in (n or "").lower() for n in process_names),
+            "listening_instance_ports": ports}
+
+
+def concurrent_instances(cfg: dict | None = None) -> dict:
+    """The MEASURED number of concurrent CoppeliaSim instances on this host (ruled 2026-11-03:
+    recorded in every run's provenance instead of the declared one). A value that cannot be read
+    says why, as a status (hard rule 9)."""
+    sim = (cfg or {}).get("sim", {})
+    base, stride = int(sim.get("port", 23000)), int(sim.get("port_stride", 2))
+    if importlib.util.find_spec("psutil") is None:
+        return {"status": "psutil not installed"}
+    import psutil
+    names = [p.info["name"] for p in psutil.process_iter(["name"])]
+    out: dict = {}
+    try:
+        ports = [c.laddr.port for c in psutil.net_connections(kind="tcp")
+                 if c.laddr and c.status == psutil.CONN_LISTEN]
+    except psutil.AccessDenied:
+        ports, out["status"] = [], "listening ports not readable (access denied)"
+    return {**count_instances(names, ports, base_port=base, stride=stride, slots=16), **out}
+
+
+def stamp_instances(run_dir: str | Path, cfg: dict, key: str = "concurrent_instances_end") -> None:
+    """Merge a second instance measurement (e.g. at a run's end) into its `provenance.json`."""
+    path = Path(run_dir) / "provenance.json"
+    meta = json.loads(path.read_text())
+    meta[key] = concurrent_instances(cfg)
+    path.write_text(json.dumps(meta, indent=2))
+
+
 def parse_driver_version(stdout: str) -> str | None:
     """The first GPU's driver version from `nvidia-smi --query-gpu=driver_version
     --format=csv,noheader` output, or None if it printed nothing."""
@@ -163,6 +200,6 @@ def create_run_dir(root: str | Path, experiment: str, seed: int, cfg: dict) -> P
     meta = {"seed": seed, "experiment": experiment,
             "created_utc": datetime.now(timezone.utc).isoformat(), **git_state(), **scene,
             "display_enabled": cfg.get("sim", {}).get("display_enabled"),
-            "host": host_identity(cfg)}
+            "host": host_identity(cfg), "concurrent_instances": concurrent_instances(cfg)}
     (run_dir / "provenance.json").write_text(json.dumps(meta, indent=2))
     return run_dir

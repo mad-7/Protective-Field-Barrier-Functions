@@ -18,6 +18,7 @@ progress and proximity terms are summed into the return. So:
 """
 from __future__ import annotations
 
+import itertools
 import math
 from collections.abc import Sequence
 from typing import Any
@@ -119,3 +120,46 @@ def observation_ranges(obs: np.ndarray, low: np.ndarray, high: np.ndarray,
                      "channels": width}
         start += width
     return out
+
+
+# --- L1 seed 9000001's decline (ruled 2026-11-03, option b) ---------------------------------------
+# The replay buffer is not saved with a run, but it is FIFO of the last `buffer_size` transitions and
+# each logged episode occupies the steps (timestep - episode_length, timestep], so its composition at
+# any step is reconstructed exactly from `episodes.jsonl` -- except the episode still running at that
+# step, whose transitions are counted as `unfinished`.
+
+def success_by_timestep(episodes: Sequence[dict[str, Any]], edges: Sequence[int]
+                        ) -> list[dict[str, Any]]:
+    """Episodes binned by the step they ENDED at, (edges[i], edges[i+1]]; per bin the episode
+    count, the success share (None if empty) and the curriculum stages seen."""
+    out = []
+    for lo, hi in itertools.pairwise(edges):
+        part = [e for e in episodes if lo < int(e["timestep"]) <= hi]
+        out.append({"from": int(lo), "to": int(hi), "episodes": len(part),
+                    "success": (sum(e["outcome"] == "success" for e in part) / len(part))
+                    if part else None,
+                    "stages": sorted({str(e.get("curriculum_stage")) for e in part})})
+    return out
+
+
+def buffer_composition(episodes: Sequence[dict[str, Any]], at: int, buffer_size: int
+                       ) -> dict[str, Any]:
+    """The replay buffer at step `at`: the transitions of steps (at - buffer_size, at], split by the
+    outcome of the episode each belongs to (shares of the window), and the number of successful
+    terminal transitions (an episode's last step is in the window when it ended inside it)."""
+    lo = max(0, at - buffer_size)
+    window = at - lo
+    by: dict[str, int] = {}
+    terminals = 0
+    for e in episodes:
+        end, start = int(e["timestep"]), int(e["timestep"]) - int(e["episode_length"])
+        n = max(0, min(end, at) - max(start, lo))
+        if n:
+            by[e["outcome"]] = by.get(e["outcome"], 0) + n
+        if e["outcome"] == "success" and lo < end <= at:
+            terminals += 1
+    counted = sum(by.values())
+    return {"at": int(at), "window": int(window),
+            "shares": {k: v / window for k, v in sorted(by.items())} if window else {},
+            "unfinished": (window - counted) / window if window else 0.0,
+            "success_terminals": terminals}

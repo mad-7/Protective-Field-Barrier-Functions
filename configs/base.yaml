@@ -243,6 +243,9 @@ filter:                    # the PFB (WP2, ruled 2026-10-23). Its FIELD reads th
                            #   5 pp of the best success, fewest stops/100 m). Selected on the grid's
                            #   LOW EDGE, reported, never extended (runs/tuning/
                            #   B7_alpha_20261102T195759Z_seed0, commit e78fa3a)
+  alpha_frozen: "2026-11-03"  # the freeze's ruling; training/evaluation with the filter on refuse
+                           #   until it is set, and any alpha other than the one above
+                           #   (pfbnav/utils/filter_ruling.py)
   lag_allowance_s: 0.05    # s, added to one control step to make the prediction horizon (Q2); the
                            #   noise/latency sensitivity check covers it                   VERIFY
   motion_fractions: [0.0, 0.25, 0.5, 0.75, 1.0]  # the realised fraction lambda of the predicted

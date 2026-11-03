@@ -35,8 +35,8 @@ experiment for `sac` and the controller's name otherwise:
   * **Test layouts** (`scenarios/test/`): never used during development (hard rule 2); the
     confirmatory evaluation is designed with A14, not here.
   * **An environment that is not the frozen one** (`pfbnav/envs/freeze.py`).
-  * **`filter.enabled`** until WP2 step 5 declares the alpha grid and its runner (Q4); the PFB is
-    in the step loop from step 4.
+  * **`filter.enabled` at any alpha but the frozen one** (frozen 2026-11-03;
+    `pfbnav/utils/filter_ruling.py`).
   * **A set that fails `verify()`.**
 """
 from __future__ import annotations
@@ -63,6 +63,7 @@ from pfbnav.eval.route_profiles import build_profiles, lookup, write_profiles
 from pfbnav.eval.runner import outcome_summary, run_episodes
 from pfbnav.sim.client import SimClient, SimConnection
 from pfbnav.utils.cli import add_display_flag, apply_display
+from pfbnav.utils.filter_ruling import filter_problem
 from pfbnav.utils.hashing import text_sha256
 from pfbnav.utils.memory import MemoryRecord
 from pfbnav.utils.runio import create_run_dir
@@ -89,10 +90,7 @@ def preflight(cfg: dict[str, Any], sets: list[str], checkpoint: str | None,
         raise SystemExit(f"unknown controller {controller!r}; one of {CONTROLLERS}")
     if controller == "sac" and not cfg.get("experiment"):
         raise SystemExit("the config names no `experiment`; evaluate SAC from configs/experiments/")
-    if cfg["filter"]["enabled"]:
-        raise SystemExit("filter.enabled is true; filtered evaluation starts with WP2 step 5 (the "
-                         "alpha grid with B7, Q4)")
-    problem = freeze_problem(cfg)
+    problem = filter_problem(cfg) or freeze_problem(cfg)
     if problem:
         raise SystemExit(problem)
     paths = [(REPO_ROOT / s).resolve() for s in sets]

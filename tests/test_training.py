@@ -168,9 +168,18 @@ def _cfg(experiment):
                        / f"{experiment}.yaml")
 
 
-def test_training_refuses_a_filtered_method_until_alpha_is_ruled():
-    with pytest.raises(SystemExit, match="alpha is not ruled"):
-        _train_script().preflight(_cfg("L5_sac_pfb_unshaped"))
+def test_training_runs_a_filtered_method_only_at_the_frozen_alpha():
+    """Alpha frozen 2026-11-03 (1.0): L5 passes; another alpha, or no freeze, is refused."""
+    from pfbnav.utils.filter_ruling import filter_problem
+    script = _train_script()
+    l5 = _cfg("L5_sac_pfb_unshaped")
+    assert l5["filter"]["alpha"] == 1.0 and len(script.preflight(l5)) == 3
+    l5["filter"]["alpha"] = 2.0
+    with pytest.raises(SystemExit, match="not the frozen alpha"):
+        script.preflight(l5)
+    unfrozen = {"filter": {"alpha": 1.0, "alpha_frozen": None}}
+    assert "not frozen yet" in filter_problem(_cfg("L5_sac_pfb_unshaped"), unfrozen)
+    assert filter_problem(_cfg("L1_sac_shaped"), unfrozen) is None      # filter off: no question
 
 
 def test_training_refuses_an_open_or_unbuilt_training_set():

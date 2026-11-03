@@ -73,3 +73,25 @@ def test_provenance_carries_the_host(tmp_path):
     meta = json.loads((run / "provenance.json").read_text())
     assert set(REQUIRED) <= set(meta["host"])
     assert meta["host"]["shared"] is False        # configs/base.yaml declares it
+
+
+def test_instance_count_reads_processes_and_only_the_instance_ports():
+    """Ruled 2026-11-03: the MEASURED instance count. Ports 23000/23002 are instances; 23001 (off
+    the stride), 22998 (below) and 6006 (TensorBoard) are not."""
+    from pfbnav.utils.runio import count_instances
+    got = count_instances(["coppeliaSim.exe", "CoppeliaSim.exe", "python.exe", None],
+                          [23000, 23001, 23002, 22998, 6006, 23002],
+                          base_port=23000, stride=2, slots=16)
+    assert got == {"coppelia_processes": 2, "listening_instance_ports": [23000, 23002]}
+    assert count_instances([], [], base_port=23000, stride=2, slots=16) == {
+        "coppelia_processes": 0, "listening_instance_ports": []}
+
+
+def test_every_run_records_the_measured_instances(tmp_path):
+    import json
+
+    from pfbnav.utils.runio import create_run_dir
+    run = create_run_dir(tmp_path, "x", 0, {"sim": {"port": 23000, "port_stride": 2}})
+    meta = json.loads((run / "provenance.json").read_text())
+    assert "coppelia_processes" in meta["concurrent_instances"] \
+        or "status" in meta["concurrent_instances"]

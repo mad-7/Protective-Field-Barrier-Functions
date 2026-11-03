@@ -12,7 +12,11 @@ from pfbnav.safety.footprint_table import FootprintTable
 from pfbnav.safety.pfb import PFB, REST, PFBConfig
 
 REPO = Path(__file__).resolve().parents[1]
-CFG = load_config(REPO / "configs" / "base.yaml")
+FROZEN = load_config(REPO / "configs" / "base.yaml")
+# The QP's mechanics cases were constructed at alpha 2.0 (the provisional value, 2026-10-23); they test
+# the solver, the rows and the limits, not the tuned gain, so they keep it. At the FROZEN alpha 1.0
+# (2026-11-03) four of them fall back to braking instead: test_the_frozen_alpha_brakes_at_a_wall_ahead.
+CFG = {**FROZEN, "filter": {**FROZEN["filter"], "alpha": 2.0}}
 FIELD = pf.PFBField(FootprintTable.from_csv(REPO / CFG["robot"]["footprint_table"]).extent,
                     pf.field_params_from_config(CFG))
 CONF = PFBConfig.from_config(CFG, FIELD)
@@ -87,6 +91,23 @@ def test_a_wall_ahead_slows_the_robot_and_every_true_row_holds():
     g, _ = pfb._rows(res.u, pts, res.regime, 0.3, 0.0, 0.0)
     rhs = (1 - CONF.alpha * CONF.dt) * pfb._now(pts, res.regime, 0.0, 0.0)
     assert np.all(g >= rhs - 1e-6)
+
+
+def test_the_frozen_alpha_brakes_at_a_wall_ahead():
+    """Recorded 2026-11-03, not a design target: at the frozen alpha 1.0 the barrier may shrink only
+    1 - alpha dt = 5 % a step, and at 0.3 m/s with a wall 0.95 m ahead no command within the limits
+    meets that, so the filter takes the fallback (braking at the limiter's bound) and flags it
+    infeasible. At 2.0 (10 % a step) the same case is filtered. B7's 332 fallback steps at alpha 1
+    in its tuning are this kind of event."""
+    conf = PFBConfig.from_config(FROZEN, FIELD)
+    assert conf.alpha == 1.0
+    pfb = PFB(FIELD, conf)
+    u_prev = np.array([0.3, 0.0, 0.0])
+    res = pfb.filter([0.35, 0.0, 0.0], u_prev, u_prev, _wall_ahead(0.95), BEARINGS, OK)
+    assert res.mode == "fallback" and res.infeasible
+    assert np.array_equal(res.u, pfb.fallback(u_prev))
+    assert _pfb().filter([0.35, 0.0, 0.0], u_prev, u_prev, _wall_ahead(0.95), BEARINGS,
+                         OK).mode == "filtered"
 
 
 def test_sliding_past_is_preferred_to_stopping():

@@ -64,3 +64,28 @@ def test_column_trajectory_skips_blanks_and_reads_fractions():
     assert out["rows"] == 10 and out["at"]["0"]["value"] == 1.0
     assert out["at"]["1"] == {"timestep": 10.0, "value": 0.1}
     assert d.column_trajectory(rows, "missing")["rows"] == 0
+
+
+def test_success_by_timestep_bins_on_the_end_step():
+    eps = [{"timestep": 100, "outcome": "success", "curriculum_stage": "a"},
+           {"timestep": 200, "outcome": "stall_truncated", "curriculum_stage": "a"},
+           {"timestep": 201, "outcome": "success", "curriculum_stage": "full"}]
+    got = d.success_by_timestep(eps, [0, 200, 400, 600])
+    assert [b["episodes"] for b in got] == [2, 1, 0]
+    assert got[0]["success"] == 0.5 and got[1]["success"] == 1.0 and got[2]["success"] is None
+    assert got[0]["stages"] == ["a"] and got[1]["stages"] == ["full"]
+
+
+def test_buffer_composition_reconstructs_a_fifo_window():
+    # Episodes: steps (0,600] stall, (600,700] success, (700,1000] stall; 50 steps of a running one.
+    eps = [{"timestep": 600, "episode_length": 600, "outcome": "stall_truncated"},
+           {"timestep": 700, "episode_length": 100, "outcome": "success"},
+           {"timestep": 1000, "episode_length": 300, "outcome": "stall_truncated"}]
+    got = d.buffer_composition(eps, at=1050, buffer_size=500)      # window (550, 1050]
+    assert got["window"] == 500
+    assert got["shares"] == {"stall_truncated": pytest.approx(350 / 500),
+                             "success": pytest.approx(100 / 500)}
+    assert got["unfinished"] == pytest.approx(50 / 500) and got["success_terminals"] == 1
+    early = d.buffer_composition(eps, at=300, buffer_size=500)     # not yet full: (0, 300]
+    assert early["window"] == 300 and early["unfinished"] == 0.0
+    assert early["shares"] == {"stall_truncated": 1.0} and early["success_terminals"] == 0

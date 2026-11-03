@@ -125,12 +125,15 @@ def test_evaluation_never_touches_test_layouts(tmp_path):
         _evaluate().preflight(_cfg("L1_sac_shaped"), ["scenarios/test/anything.json"], str(ckpt))
 
 
-def test_evaluation_refuses_the_filter_a_missing_checkpoint_and_a_missing_set(tmp_path):
+def test_evaluation_refuses_another_alpha_a_missing_checkpoint_and_a_missing_set(tmp_path):
     script = _evaluate()
     ckpt = tmp_path / "ckpt.zip"
     ckpt.write_bytes(b"x")
-    with pytest.raises(SystemExit, match="WP2"):
-        script.preflight(_cfg("L5_sac_pfb_unshaped"), TUNE, str(ckpt))
+    l5 = _cfg("L5_sac_pfb_unshaped")              # alpha frozen 2026-11-03: L5 evaluates at it only
+    assert [p.name for p in script.preflight(l5, TUNE, str(ckpt))] == ["tune_narrow.json"]
+    l5["filter"]["alpha"] = 5.0
+    with pytest.raises(SystemExit, match="not the frozen alpha"):
+        script.preflight(l5, TUNE, str(ckpt))
     with pytest.raises(SystemExit, match="no checkpoint"):
         script.preflight(_cfg("L1_sac_shaped"), TUNE, str(tmp_path / "missing.zip"))
     with pytest.raises(SystemExit, match="not found"):

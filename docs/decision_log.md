@@ -10451,3 +10451,64 @@ gets worse late. 1,735 of 1,839 episodes end by the stall truncation. Under `on_
 failure alone fails G4; the checkpoint evaluation still runs for the record (gate_g4.py). Under A30
 this is the first failure of the restarted counter; the declared next step is seed 9000002 unchanged,
 then H1prime on a second failure. Put to the supervisor with the declining trend before 9000002 starts.
+
+## 2026-11-03 - RULED: B7's timeouts classified offline; L1 option (b); L5's pilot now; the pivot by L5 alone (A31)
+
+**The rulings (supervisor, on the report of 2026-11-03), in substance:**
+1. alpha = 1.0 frozen for L3, L4, L5, B7; reported as on the grid's low edge; no extension. Offline
+   read of B7's timeouts approved: classify each as (i) blocked route (unmapped obstacle across the
+   mapped route, not passable by a non-replanning tracker) or (ii) filter deadlock on a route the
+   oracle traverses; counts per stratum and route IDs. Nothing changes in the recovery or the filter
+   now; decide after the classification.
+2. L1: option (b). Offline diagnosis of seed 9000001, no code or hyperparameter change, pilot counter
+   untouched: align the success blocks with the stage boundaries (does the decline start at the switch
+   to the full distribution at 40 %?) and the replay buffer's composition after that switch (share of
+   stall-truncated transitions, successes). A defect found is a bug fix, not a lever. If none, run
+   9000002 unchanged.
+3. Start L5's pilot now at seed 9000001, 2M steps, in parallel, within G2's four instances. Before any
+   result, an amendment: the pivot to H1prime is triggered by L5 failing G4 twice; if L1 fails G4 twice
+   while L5 passes, L1 still trains unconditionally as a confirmatory arm with its G4 failures
+   disclosed; H1 keeps its seven comparators. Recorded: a non-learning L1 is an easy comparator, so L2
+   and B6 carry H1's weight.
+Also: report the simulator-memory slope from L5's pilot (alarm stays 1 GB per run); record the MEASURED
+number of concurrent instances in every run's provenance instead of the declared one.
+
+**Implemented (no environment, reward, observation or filter change; env identity unchanged):**
+- **Point 1:** `pfbnav/eval/timeout_classes.py` (pure; tests/test_timeout_classes.py) and
+  `scripts/classify_b7_timeouts.py` (read-only). Each class is decided by the privileged oracle's
+  outcome on the SAME tune scenario (G4's positive control): oracle success -> (ii) filter deadlock;
+  oracle failure with an unmapped obstacle -> (i) blocked route; oracle failure without one ->
+  (iii) unclassified, reported rather than forced. Every row also carries the distance travelled against
+  the planned length, the mean speed, the nearest unmapped obstacle's offset from the route and the
+  PFB-modified share. **Already visible from the tune sets alone:** 13 of B7's 30 timeouts at alpha 1
+  are on routes with NO unmapped obstacle (narrow 7, medium 5, wide 1), so class (i) cannot hold for
+  them; they are the long routes (11.4-17.0 m, against <= 11.0 m for all but one mapped-only success),
+  which points to B7 being slow over the 200 s horizon rather than stuck. The classification reads that.
+- **Point 2:** `pfbnav/eval/training_diag.py` `success_by_timestep`, `buffer_composition` (tests in
+  tests/test_training_diag.py) and `scripts/diag_training_decline.py` (read-only). The replay buffer
+  is not saved with a run; it is FIFO over `training.buffer_size` (200,000), and each logged episode
+  occupies steps (timestep - episode_length, timestep], so its composition at any step is reconstructed
+  exactly from `episodes.jsonl` (the episode running at that step counted as `unfinished`).
+- **Point 3:** `pfbnav/utils/filter_ruling.py`: training and evaluation with the filter on now run,
+  only at the frozen alpha (`filter.alpha_frozen: "2026-11-03"` in configs/base.yaml; another alpha in
+  an overlay is refused). The PFB is in the step loop since WP2 step 4 and inside the frozen
+  environment's import closure, so L5 trains on environment 3757aeca like L1. A31 drafted
+  (`docs/pending/A31_amendment.md`), with one open point: L2 and L4 are not named in the ruling.
+- **Measured instances:** `pfbnav/utils/runio.py` `concurrent_instances` (processes named coppelia, and
+  the instance ports `sim.port + sim.port_stride * i` being listened on) in every run's
+  `provenance.json` at creation; training stamps it again at its end (`concurrent_instances_end`).
+  Tested on synthetic process/port lists (tests/test_host_provenance.py). The declared `--instances`
+  of the tuning scripts stays as their G2-approval check; the measured count is the record.
+- L5's simulator-memory slope is in its `summary.json` (`memory.sim.growth_mb_per_100_episodes`),
+  reported at its review.
+
+**Found while testing the freeze (2026-11-03): the frozen alpha brakes where 2.0 filtered.** Four QP
+mechanics tests in `tests/test_pfb.py` read alpha from configs/base.yaml and were built at the
+provisional 2.0; at the frozen 1.0 they failed (fallback instead of filtered). They test the solver,
+rows and limits, not the tuned gain, so they now pin alpha 2.0 explicitly, and a new test records the
+frozen behaviour: at alpha 1.0 the barrier may shrink only 1 - alpha dt = 5 % a step, so at 0.3 m/s
+with a wall 0.95 m ahead no command within the limits meets the row and the filter takes the fallback
+(braking at the limiter's bound), flagged infeasible; at 2.0 the same case is filtered. This is the
+mechanism behind B7's 332 fallback steps at alpha 1, and it is consistent with the classification's
+working hypothesis that B7's timeouts are slowness on long routes. Put to the supervisor with the
+classification. Fast suite otherwise: 1,604 passed, 1 skipped, 4 failed (these four), 37:54.

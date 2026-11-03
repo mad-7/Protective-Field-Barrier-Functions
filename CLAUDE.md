@@ -258,6 +258,11 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   L5, B7. B7's failures are timeouts with no recovery engaged (same routes at every alpha): flagged.
   L1 seed 9000001 completed 2M steps: 103/1,839 success, 1,735 stall-truncated; G4 awaits the checkpoint
   evaluation.
+- **RULED 2026-11-03:** B7's timeouts classified offline against the oracle (`classify_b7_timeouts.py`);
+  L1 option (b): offline decline diagnosis (`diag_training_decline.py`), then 9000002 unchanged if no
+  defect; **L5's pilot now at 9000001** (filter on at the frozen alpha only, `filter_ruling.py`); A31
+  drafted (pivot by L5 alone; L1 trains regardless, failures disclosed); measured instance counts in
+  every provenance.
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 
