@@ -11,7 +11,7 @@ confirmatory_family:
   members: [H1, H2]
   conditional_members: [H1N]      # added only if narrow_rule triggers
   pivot:                          # A27 (ruled 2026-10-26): the filter-only path
-    trigger: L1's or L5's pilot fails G4 twice (both pilot seeds of G4_learned_pilot)
+    trigger: L5's pilot fails G4 twice (both pilot seeds of G4_learned_pilot); no other arm's G4 outcome triggers it (A31, A32)
     members: [H1prime]            # then the confirmatory family is H1prime alone, at alpha 0.05; H1, H2 and H1N are not tested confirmatorily
     otherwise: H1prime is exploratory and this family stands unchanged
 
@@ -73,6 +73,7 @@ exploratory:                       # reported, labelled, outside the Holm family
   H1prime: B7 versus B1, B2 and B6 -- exploratory unless the pivot triggers (A27; see H1prime)
   H6: robust versus nominal PFB — ground-truth contacts under measured mismatch (A3)
   L2_sensitivity: L2 at d = 0.05 and d = 0.2 stops per episode (L2-d005, L2-d020) -- protective stops, success and mission time beside L2 at d = 0.1; outside the Holm family; first in the cut order (A28)
+  B7_alpha_sensitivity: B7 at alpha 1, 2 and 5 on the test set -- protective stops per 100 m, success and mission time; the frozen alpha 1.0 was selected on the tune set where success was nearly flat (0.50-0.52, the horizon capped it), so stops decided; outside the confirmatory family (A32)
   secondary:
     - Newton external-validity evaluation of final policies (A8)
     - stop_active ablation, one L5 seed

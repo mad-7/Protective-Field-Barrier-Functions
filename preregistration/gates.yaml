@@ -112,13 +112,17 @@ G4_learned_pilot:
   # decides whether the pipeline works well enough on the frozen environment to spend
   # confirmatory seeds on it.
   applies_to: [L1, L2, L4, L5, A1]
-  pilot_training_seeds: [9000000, 9000001, 9000002]   # from the pilot range only. Pilot seeds
+  pilot_training_seeds: [9000000, 9000001, 9000002, 9000003]   # from the pilot range only. Pilot seeds
                                              #   never enter H1 or H2. A30 (2026-10-30): 9000000
                                              #   FAILED at 300k steps and is recorded; the pilot
                                              #   restarts under A30's configuration (2M steps, the
                                              #   curriculum, the stall truncation) at 9000001; the second
                                              #   (only on its learning/checkpoint failure) is
                                              #   9000002. The pivot counts the restarted pilot only.
+                                             #   A32 (2026-11-03): 9000003 added. L5's first pilot
+                                             #   (9000001) crashed on a PFB defect: an integrity
+                                             #   failure, kept, not counted; L5 runs at 9000002,
+                                             #   its second seed 9000003.
   integrity:                                 # every one must hold
     - the run reached training.total_timesteps and wrote final_model.zip
     - environment.json records the frozen environment identity (env.frozen_code_sha256)
@@ -146,10 +150,15 @@ G4_learned_pilot:
     b1_with_recovery: recorded, not judged         # A23: under the declared route cap
     if_either_misbehaves: the gate is broken; report, read no verdict
   on_failure:
-    integrity: fix; a fresh pilot seed; the failed run is kept
+    integrity: fix; a fresh pilot seed; the failed run is kept; an integrity failure is not
+      counted toward the pivot (A32)
     learning_or_checkpoint: >-
       one second pilot seed, unchanged; if it passes, G4 passes and the first failure is recorded
-      for the seed-CV discussion; if it fails, stop and report
+      for the seed-CV discussion; if it fails, stop and report. A31 (2026-11-03): for L5 a
+      second failure triggers the pivot (endpoints.yaml); for L1 a second failure is
+      disclosed and L1 still trains its confirmatory seeds unconditionally as a comparator.
+      A32 (2026-11-03): the same for L2 and L4; only L5 triggers the pivot. An exploratory arm
+      (A1, L5-nowp, L2-d005, L2-d020) that fails G4 twice is dropped and its failure reported.
     hyperparameter_change_after_failure: applies identically to every learned method; restarts the pilot
   standing_rule: >-
     after G4 passes, every confirmatory seed trains unconditionally and stays in the analysis
