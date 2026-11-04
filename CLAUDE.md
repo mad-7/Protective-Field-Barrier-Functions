@@ -263,6 +263,12 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   defect; **L5's pilot now at 9000001** (filter on at the frozen alpha only, `filter_ruling.py`); A31
   drafted (pivot by L5 alone; L1 trains regardless, failures disclosed); measured instance counts in
   every provenance.
+- **2026-11-03:** L5's first pilot (9000001) CRASHED on a PFB defect (A29's, in the release check):
+  fixed, re-freeze 14 (6ad7f6af). **RULED:** A32 (drafted): 9000003 added; L5's pilot at 9000002, second
+  9000003; the crash is an integrity failure, not counted; L1 seeds gated under 3757aeca, L5's under
+  6ad7f6af with rerun controls; L1, L2, L4 train regardless of G4 (only L5 pivots), exploratory arms
+  dropped after two failures; B7 alpha sensitivity {1, 2, 5} on the test set declared (exploratory).
+  B7's 13 horizon timeouts: B2 speed check next (`compare_route_speeds.py`).
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 

@@ -1,0 +1,20 @@
+# The tuning space of B1, holonomic Pure Pursuit (scripts/tune_classical.py), under the equal-tuning-
+# budget rule (ruled 2026-10-26: N = 24, candidate 0 included, tune set only, the alpha selection rule).
+# APPROVED by the supervisor 2026-11-04 with a change (A33): B1 gets its own fixed lookahead distance
+# (fixed-distance pure pursuit; not speed-adaptive, which is B2's defining feature). The principle:
+# parameters native to the algorithm are tunable; environment and observation parameters stay shared
+# (planner.lookahead, 0.8 m, unchanged). Committed before the first candidate runs. A winner on a range
+# boundary is reported, never extended.
+# Candidate 0 is the configured block (configs/base.yaml, baselines.pure_pursuit: 0.25 / 1.5 / 0.5 /
+# lookahead 0.8), which every range brackets; at lookahead 0.8 B1 is bit-identical to B1 before
+# (tests/test_pure_pursuit.py).
+# cruise_speed's top: the ruling raises it to match B2's speed bracket if that reached v_max. It did:
+# B2's desired_speed reaches 0.50 m/s = v_max = vy_max (A20 limits), so the top is 0.50, B1's own
+# limit min(v_max, vy_max).
+controller: pure_pursuit
+config_block: baselines.pure_pursuit
+space:
+  lookahead:     {low: 0.3,  high: 1.5, scale: log}  # m of route arc, B1's own (A33)
+  cruise_speed:  {low: 0.15, high: 0.50}             # m/s; top = B2's = min(v_max, vy_max)
+  k_omega:       {low: 0.5,  high: 3.0, scale: log}  # 1/s, as B2's
+  goal_slowdown: {low: 0.25, high: 1.2}              # m; floor = reward.goal_tolerance (0.25), top as B2's approach_distance

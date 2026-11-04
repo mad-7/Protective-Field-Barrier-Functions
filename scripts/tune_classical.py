@@ -59,6 +59,7 @@ import yaml
 from pfbnav.config import load_config
 from pfbnav.control.dwa import DWAParams, HolonomicDWA
 from pfbnav.control.mppi import FieldAwareMPPI, MPPIParams
+from pfbnav.control.pure_pursuit import PPParams, PurePursuit
 from pfbnav.control.regulated_pure_pursuit import RegulatedPurePursuit, RPPParams
 from pfbnav.envs.freeze import environment_identity, freeze_problem
 from pfbnav.envs.nav_env import NavEnv
@@ -92,6 +93,8 @@ SETS = ("scenarios/tune/tune_narrow.json", "scenarios/tune/tune_medium.json",
 # controller's run name, a constructor of its parameters from the block's numeric leaves by their
 # dotted names (`pfbnav.eval.tuning.flatten_numeric`), whose own validation refuses a combination).
 TUNABLE = {
+    # B1: three own parameters; its lookahead is the environment's planner.lookahead (shared, frozen).
+    "pure_pursuit": ("baselines.pure_pursuit", PurePursuit.name, PPParams),
     "regulated_pure_pursuit": ("baselines.regulated_pure_pursuit", RegulatedPurePursuit.name,
                                RPPParams),
     # B3: a flat block whose sample counts every candidate carries as floats; read as the

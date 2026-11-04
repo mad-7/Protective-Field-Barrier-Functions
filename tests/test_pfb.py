@@ -340,6 +340,28 @@ def test_under_the_latch_only_releasable_commands_pass():
                                      latched=True).u, np.zeros(3))
 
 
+def test_a_request_above_the_speed_cap_is_judged_at_the_executable_speed():
+    """L5's first pilot (2026-11-03): under the latch a learned request at 0.688 m/s raised above the
+    top band. The base executes at most speed_cap, so the release is judged at it (as A29 in the
+    certified layer): every speed from the cap to the action box's corner (0.71 m/s) gives the same
+    answer as the cap itself, open floor releases, a wall ahead does not, and nothing raises. Below
+    the cap the answer is unchanged (sweep at and under it)."""
+    from pfbnav.safety.pfb_field import band_of
+    pfb = _pfb()
+    cap = pfb.p.speed_cap
+    with pytest.raises(ValueError, match="top band"):
+        band_of(0.6878205850820637, pfb.p)                     # the raw request, as it crashed
+    for r, expected in ((_open(), True), (_wall_ahead(0.6), False)):
+        at_cap = pfb.releasable(np.array([cap, 0.0, 0.0]), r, BEARINGS, OK)
+        assert at_cap is expected
+        for s in np.linspace(cap, 0.71, 12):
+            u = np.array([s * math.cos(0.3), s * math.sin(0.3), 0.2])
+            assert pfb.releasable(u, r, BEARINGS, OK) == pfb.releasable(
+                np.array([cap * math.cos(0.3), cap * math.sin(0.3), 0.2]), r, BEARINGS, OK)
+    for s in np.linspace(0.05, cap, 9):                        # within the cap: the band of s itself
+        assert band_of(min(s, cap), pfb.p) == band_of(s, pfb.p)
+
+
 def test_the_recoverys_creep_passes_unaltered_when_releasable():
     """Q7: B7's recovery commands pass unaltered when releasable. The recovery creeps at 0.018 m/s
     along a direction whose at-rest field is clear (`pfbnav/control/recovery.py`)."""

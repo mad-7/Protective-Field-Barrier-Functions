@@ -556,6 +556,10 @@ baselines:                 # the classical comparators (WP3). Not part of the en
     cruise_speed: 0.25     # m/s, translation toward the lookahead point                VERIFY
     k_omega: 1.5           # 1/s, yaw rate per radian of lookahead bearing               VERIFY
     goal_slowdown: 0.5     # m, within this distance of the goal the speed falls linearly VERIFY
+    lookahead: 0.8         # m of route arc, B1's OWN fixed lookahead (ruled 2026-11-04, A33): tuned
+                           #   0.3-1.5 m. Candidate 0 = planner.lookahead, at which B1 steers at the
+                           #   environment's own lookahead point (bit-identical to B1 before); the
+                           #   environment's planner.lookahead is unchanged and shared        VERIFY
   regulated_pure_pursuit:  # B2, holonomic Regulated Pure Pursuit (pfbnav/control/regulated_pure_
                            #   pursuit.py; ruled 2026-10-24). TUNED 2026-11-01: candidate 23 of 24 of
                            #   runs/tuning/B2_regulated_pure_pursuit_20261030T111716Z_seed0 (host
@@ -878,7 +882,14 @@ env:                       # the Gymnasium environment (WP1)
   # check sized the departure field from the raw request and raised above the top band (G2's first
   # run, a random action at 0.549 m/s); it now uses min(|request|, speed_cap) (certified.py). Within
   # the cap nothing changes. The filter-off bit-identity test reruns. No L1 run exists.
-  frozen_code_sha256: 3757aeca1753a015cc26bb106955d33d0dcf2a70af21425fcf435362b5294cb6
+  # RE-FROZEN 2026-11-03, fourteenth time (was 3757aeca...): a blocking defect of the same kind in
+  # the PFB -- its release check under the latch sized the band from the raw request and raised above
+  # the top band (L5's first pilot, a learned request at 0.688 m/s); it now uses
+  # min(|request|, speed_cap) (pfb.py, releasable). Within the cap nothing changes (B7's alpha tuning
+  # is unaffected: RPP's requests stay within it). The PFB runs only with the filter on, so filter-off
+  # behaviour is unchanged; the filter-off bit-identity test reruns. L1's seeds 9000000 and 9000001
+  # ran under 3757aeca and stay as recorded.
+  frozen_code_sha256: 6ad7f6afccf67a6b268b3d6eec653b85bce7d7c4ec77cac78438ba91f9a87ac5
 
   # The step-0 check (2026-10-10): at every reset the robot's measured pose, mapped into the
   # layout, must equal the scenario's start within these, or the reset raises. Settling moves the

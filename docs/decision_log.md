@@ -10512,3 +10512,187 @@ with a wall 0.95 m ahead no command within the limits meets the row and the filt
 mechanism behind B7's 332 fallback steps at alpha 1, and it is consistent with the classification's
 working hypothesis that B7's timeouts are slowness on long routes. Put to the supervisor with the
 classification. Fast suite otherwise: 1,604 passed, 1 skipped, 4 failed (these four), 37:54.
+
+## 2026-11-03 - REVIEWED: B7's timeouts classified; L1 seed 9000001's decline diagnosed (both offline)
+
+**B7 at alpha 1.0 (`runs/diag/B7TIMEOUTS_20261103T174622Z_seed0`; oracle
+`oracle_tracker_privileged_20261030T001836Z`).** 30 timeouts: **17 blocked route** (narrow 5, medium 7,
+wide 5: 2000008, 012, 014, 018, 019, 023, 024, 025, 028, 029, 033, 037, 043, 050, 051, 053, 055), **13
+"filter deadlock" by the ruled rule** (narrow 7, medium 5, wide 1: 2000001, 005, 007, 009, 010, 016, 017,
+021, 027, 030, 032, 036, 042), 0 unclassified.
+- The 17 blocked routes are exactly the oracle's 17 failures on the tune set (16 unrecoverable_stop, 1
+  timeout); every one has an unmapped obstacle 0.008-0.228 m from the route. So on the 43 routes a
+  route tracker can traverse, B7 succeeds on 30 (70 %).
+- **The 13 in class (ii) are not deadlocks.** None has an unmapped obstacle; B7 was still moving when
+  the horizon ended: it covered 68-97 % of the planned length (9.5-12.6 m) at a mean 0.047-0.063 m/s,
+  with the PFB modifying only 9-37 % of steps and no stop. At ~0.055 m/s the 200 s horizon covers about
+  11 m, and these are the routes longer than that (11.4-17.0 m). They are **horizon timeouts of a slow
+  controller**. The class name is the ruled one; the record says what the rows show.
+- Open: whether the slowness is RPP's own regulation (B2's tuned candidate 23, shared with B2) or the
+  PFB (the frozen alpha brakes where 2.0 filtered; tests/test_pfb.py). Separable offline: B2's mean
+  speed on the same 13 routes from its tuning episodes. Nothing changed in the recovery or the filter.
+
+**L1 seed 9000001 (`runs/diag/DECLINE_20261103T174429Z_seed9000001`).** Success per 100k steps:
+0.045, 0.022, 0.065, 0.089 | 0.057, 0.065, 0.103, 0.125 | 0.051, 0.022, 0.074, 0.079, 0.089, 0.085,
+0.091, **0.012, 0.011, 0.033, 0.011, 0.000** (bars at the switches, 400k and 800k).
+- **The switch to the full distribution (800k) costs a dip, not the decline:** 0.125 before, 0.051 and
+  0.022 after, recovered to 0.074-0.091 by 1.1-1.5M. **The collapse comes at ~1.5-1.6M, inside the full
+  stage**, on an unchanged distribution: not at a stage boundary.
+- Unmapped obstacles do not explain it: full-stage success 0.040 with, 0.047 without. Narrow is
+  worst throughout (0.016 mapped, 0.011 full); wide best (0.171 / 0.093).
+- **Replay buffer (reconstructed, FIFO 200k):** stall-truncated transitions 0.89-0.95 of the buffer at
+  every snapshot to 1.4M, successes 0.05-0.11 (7-22 goal rewards in it). After the collapse the
+  successes drain: 0.053 (9 goal rewards) at 1.6M, 0.026 (4) at 1.8M, 0.006 (1) at 2M, stall 0.994.
+  The one unrecoverable_stop (a 4,000-step episode) sits in the 1.6M buffer at 0.020. This is the
+  signature of a self-reinforcing collapse (fewer successes, fewer goal rewards to learn from), not of
+  the curriculum.
+- **No code defect is indicated** by these logs. Not yet checked: the critic/actor losses and Q around
+  1.5M (`sb3/progress.csv`; a replay of checkpoints before and after), which would show a value
+  divergence if there were one. Under the ruling, if none: 9000002 unchanged.
+
+**L1 seed 9000001, losses around the collapse (`sb3/progress.csv`, one row per ~100k steps): no value
+divergence.** Critic loss 0.14-0.71 throughout (one 2.0 at 601k, back to 0.27 by 604k), 0.14 at 1.50M,
+0.21 at 1.60M, 0.19-0.71 after; actor loss -11 to +2.6, no trend break at 1.5M; ent_coef 0.0025-0.0071,
+flat; every value finite. `ep_rew_mean` peaks +7.7 at 802k, +2 to +4 at 1.3-1.4M, then -14 at 1.60M and
+-19 at 1.8-1.9M: the collapse is in the policy's behaviour, with the value estimates bounded. **No defect
+found** (logs, buffer, losses). Under the ruling of 2026-11-03 (option b): L1's second pilot seed
+9000002 runs UNCHANGED; the pilot counter is untouched.
+
+## 2026-11-03 - L5's first pilot crashed: a blocking PFB defect (A29's, in the filter); fixed; re-freeze 14
+
+**What happened.** `train.py --config configs/experiments/L5_sac_pfb_unshaped.yaml --seed 9000001
+--instance 1` raised in its first episodes: `pfb_field.band_of`: "reachable speed 0.688 m/s exceeds the
+top band (0.51 m/s)", from `PFB.releasable` (the release check under the latch). It sized the band from
+the RAW request; a learned policy's request may exceed the action box and wheel budget (a corner of the
+box is 0.71 m/s), which the base clamps to at most speed_cap. The same defect A29 fixed in the
+certified layer's restart check (2026-10-29). B7 never reached it: RPP's requests stay within the cap.
+
+**Fix (blocking defect, freeze discipline).** `releasable` judges the band at min(|request|, speed_cap),
+as A29. Within the cap nothing changes, so B7's alpha tuning stands. Test:
+`tests/test_pfb.py::test_a_request_above_the_speed_cap_is_judged_at_the_executable_speed` (the raw
+request still raises in `band_of`; every speed from the cap to 0.71 m/s gives the cap's answer, open
+floor releases, a wall ahead does not; below the cap unchanged). No other `band_of` call takes a raw
+request: `_regimes` takes the velocity ESTIMATE, which G2's 131,527 saturated random steps never took
+above the top band (2026-10-29). Fast suite 1,610 passed, 1 skipped.
+
+**Re-freeze 14:** `env.frozen_code_sha256` 3757aeca -> 6ad7f6af (pfb.py is in the closure since WP2
+step 4). The PFB runs only with the filter on: filter-off behaviour is unchanged; the filter-off
+bit-identity test reruns on the host. The scenario identity (A18) is unaffected (test_preregistration
+passes). The crashed run `runs/train/L5_sac_pfb_unshaped_seed9000001` is kept (hard rule 10); G4's
+integrity rule asks for a fresh pilot seed, and only 9000002 remains in `pilot_training_seeds`: put to
+the supervisor ((a) add 9000003 by amendment, recommended; (b) 9000000, unused by L5; (c) 9000002 with
+no second seed).
+
+**Ordering on the host (gate consistency).** `gate_g4.py` compares every run's environment hash with
+the config's at gate time. L1's seeds 9000001 and 9000002 (the latter already training when this was
+found, unaffected: filter off) and the two G4 controls ran under 3757aeca, so their checkpoint
+evaluations and gates run on the host's checkout BEFORE it pulls this re-freeze. Then: pull, the
+filter-off bit-identity test, the two G4 controls rerun under 6ad7f6af (L5's gate needs them), and L5
+at the ruled seed. No code is checked out under a running job (lazy imports).
+
+## 2026-11-03 - RULED: L5's seeds after the integrity failure; B7 classification accepted; L1 explanation recorded; A31's scope (A32)
+
+**The rulings (supervisor), in substance:**
+1. The PFB release-check fix is accepted as a bug fix (A29's defect). Amend: 9000003 added to
+   `pilot_training_seeds`; L5's pilot at 9000002, its second seed 9000003. The crashed run
+   (`runs/train/L5_sac_pfb_unshaped_seed9000001`) is kept and recorded as an INTEGRITY FAILURE of L5,
+   not counted toward the pivot. **Freeze mapping:** L1's seeds 9000001 and 9000002 are gated under
+   3757aeca (filter off, unaffected by the fix), with the G4 controls run under it; L5's gate uses
+   controls rerun under 6ad7f6af.
+2. B7's classification accepted: 17 blocked (= the oracle's failures), 13 horizon timeouts of a slow
+   controller, not deadlocks; 70 % success on the 43 traversable routes. Run now, offline: B2's mean
+   speed on the same 13 routes, to separate RPP's regulation from the filter. alpha stays 1.0.
+   **Recorded: why the rule selected it** -- success was nearly flat across alpha (0.50-0.52) because
+   the 200 s horizon capped it, so stops decided. **Declared now, before any test result:** an
+   exploratory alpha-sensitivity analysis of B7 on the test set at alpha in {1, 2, 5}, reporting stops,
+   success and mission time, outside the confirmatory family.
+3. L1's diagnosis accepted: no defect; 9000002 unchanged. **Recorded for the methods and discussion as a
+   candidate explanation:** a self-reinforcing collapse -- the replay buffer stall-dominated throughout
+   (0.89-0.95 of transitions), and after ~1.5M steps its successes drained (goal rewards in it 15 -> 9
+   -> 4 -> 1) as the policy's success fell, with the value estimates bounded. No change to the setup.
+4. A31's scope: L1, L2 and L4 all train their confirmatory seeds regardless of G4, failures disclosed;
+   only L5 triggers the pivot. Exploratory arms that fail G4 twice are dropped and the failure reported.
+   Amend and relock.
+
+**Implemented.** A32 drafted (`docs/pending/A32_amendment.md`, all four points' prereg content: the
+seed, the integrity record, the freeze mapping, A31's scope with the exploratory arms named -- A1,
+L5-nowp, L2-d005, L2-d020 -- and `exploratory.B7_alpha_sensitivity`), applied by the researcher with
+`docs/pending/apply_A32.py` after A31 (dry-run on copies: refuses before A31 and a second time; both
+YAML files parse). The B2 speed check: `pfbnav/eval/timeout_classes.route_speeds` (tested) and
+`scripts/compare_route_speeds.py` (read-only), giving per route each controller's mean speed and its
+speed over the steps not latched by the certified layer, since B2's failures are stop-restop cycles.
+
+## 2026-11-04 - B1's tuning space DRAFTED (for the supervisor's approval)
+
+B1 (holonomic Pure Pursuit) is the one classical baseline of H1/H1prime with no tuning space: the
+equal-tuning-budget rule (2026-10-26) tunes B1, B2, B3 and B6 with N = 24. Drafted
+`configs/tuning/b1_pure_pursuit.yaml` and made B1 tunable (`scripts/tune_classical.py` TUNABLE
+`pure_pursuit`, validity hook `pfbnav.control.pure_pursuit.PPParams`; test in tests/test_tuning.py).
+The file carries a VERIFY line, so the runner refuses it until the ranges are approved and committed.
+Proposed (candidate 0 = the configured 0.25 / 1.5 / 0.5, bracketed by each range):
+- `cruise_speed` 0.15-0.40 m/s, linear: the top is min(v_max, vy_max), the controller's own limit;
+- `k_omega` 0.5-3.0 /s, log: as B2's;
+- `goal_slowdown` 0.25-1.2 m, linear: the floor is `reward.goal_tolerance`, the top as B2's
+  approach_distance.
+**Open for the supervisor:** B1 has three parameters against B2's eleven, because its lookahead is the
+environment's `planner.lookahead` (0.8 m), shared by every controller and part of the frozen
+observation. Pure Pursuit's canonical tuned parameter is its lookahead distance. Giving B1 its own
+(a point that distance along `RouteView.points`, as RPP does) is a controller change outside the
+environment's closure (identity unchanged) and would answer a weak-baseline objection against B1;
+not done without a ruling. The environment identity is unchanged by this change (6ad7f6af).
+
+## 2026-11-04 - A33 (decision-log amendment): B1's own lookahead; tunable vs shared parameters; B1's space APPROVED
+
+**Numbering.** The ruling named this "amendment A32"; A32 is already the drafted preregistration
+amendment of 2026-11-03 (L5's seeds, A31's scope, B7's alpha sensitivity), so this is **A33**. It
+changes no preregistered file: tuning spaces and controller parameters live in `configs/`. Recorded
+BEFORE any B1 tuning run.
+
+**The ruling (supervisor, 2026-11-04), in substance:**
+1. B1's space APPROVED with a change: B1 gets a controller-local lookahead distance (fixed-distance
+   pure pursuit; NOT speed-adaptive, which is B2/RPP's defining feature). The environment's
+   `planner.lookahead` (0.8 m) is unchanged; frozen environment code is not touched. Why: the
+   equal-budget rule equalises evaluations (N = 24), not parameter counts; lookahead is pure pursuit's
+   dominant parameter, and an untuned one invites a straw-man critique. A stronger B1 is conservative
+   for H1.
+2. Space, 4-D, N = 24, B2's sampler, candidate 0 included: lookahead 0.3-1.5 m (log); cruise_speed
+   0.15-0.40 m/s, raised to match B2's speed bracket if that reached v_max (0.50); k_omega 0.5-3.0 /s
+   (log); goal_slowdown 0.25-1.2 m.
+3. Candidate 0 (lookahead 0.8 m) must reproduce the current B1 step for step; a bit-identity test passes
+   before tuning starts.
+4. **The principle: "parameters native to the algorithm are tunable; environment and observation
+   parameters stay shared."**
+5. The same check for B3 and B6: does either read the shared planner.lookahead?
+6. Then the B1 tuning Run Request.
+
+**Implemented.**
+- `baselines.pure_pursuit.lookahead: 0.8` (m; candidate 0); `PurePursuit` takes `lookahead` and the
+  environment's `planner.lookahead`. At the shared distance it steers at the environment's own
+  lookahead point (`route.lookahead`), so candidate 0 is B1 as it was BY CONSTRUCTION; at any other
+  distance at the point that arc along `route.points` (clamped at the goal). `PPParams` gains
+  `lookahead` (the tuner's validity hook).
+- **Identity tests** (tests/test_pure_pursuit.py), on inputs built exactly as
+  `NavEnv._controller_input` builds them, offline (tune scenarios planned as the environment plans
+  them; a PathTracker at planner.lookahead; 240 poses along and off the routes, cross-track up to
+  0.15 m, any heading): the configured B1 and B1 without a lookahead of its own give **bit-identical
+  commands and actions on every input**. B1 is memoryless and the closed loop is deterministic within
+  one scene load, so its trajectories repeat bit for bit. And B1's own-point computation, forced at
+  0.8 m, lands on the environment's point within 1e-9 m on every input, so the switch at the shared
+  distance is not a discontinuity of substance. No simulator replay was needed for this; one can be
+  written if wanted.
+- **cruise_speed's top: 0.50 m/s.** B2's desired_speed bracket reaches 0.50 = v_max = vy_max (A20
+  limits; the draft's 0.40 had used the pre-A20 v_max), so per point 2 the top is raised to 0.50, which
+  is also B1's own limit min(v_max, vy_max).
+- `configs/tuning/b1_pure_pursuit.yaml` APPROVED, 4-D, VERIFY removed; its test checks every bound
+  against the config and B2's space and that every sampled candidate builds.
+- **Point 5, B3 and B6: neither reads the shared lookahead.** HolonomicDWA scores rollouts against
+  `route.points` cropped to 2 x max_speed x sim_time of arc (`dwa.py`); FieldAwareMPPI tracks
+  `route.points` cropped to 2 x its travel (`mppi.py`). Both crops are their own tuned parameters; no
+  `planner` key is read by either. Their spaces stand as approved on 2026-10-27; nothing to add.
+  Noted: the shared classical RECOVERY (`recovery.py`) reads `route.lookahead`; it is declared
+  identical for B1, B2, B3, B6, B7 and the zero-action control, so it stays on the shared point.
+- The environment identity is unchanged (6ad7f6af): `pure_pursuit.py` is outside its closure.
+- B1 walks its own arc with a local copy of the arithmetic (`_point_at_arc`), not the planner's
+  `point_at`: a classical controller imports nothing from the planner (tests/test_controller_inputs.py,
+  which the first draft failed). Fast suite: 1,613 passed, 1 skipped, that one failure, fixed and rerun
+  (the four affected test files, 51 passed).
