@@ -1,0 +1,17 @@
+# The tuning space of B1, holonomic Pure Pursuit (scripts/tune_classical.py), under the equal-tuning-
+# budget rule (ruled 2026-10-26: N = 24, candidate 0 included, tune set only, the alpha selection rule).
+# VERIFY: ranges PROPOSED 2026-11-04, awaiting the supervisor's approval. The runner refuses this file
+# while it says VERIFY; on approval the marker line is removed and the file committed before the first
+# candidate runs. A winner on a range boundary is reported, never extended.
+# Candidate 0 is the configured block (configs/base.yaml, baselines.pure_pursuit: 0.25 / 1.5 / 0.5),
+# which every range brackets. Ranges follow B2's for the shared quantities.
+# NOT tuned, and why: B1's lookahead distance is the environment's `planner.lookahead` (0.8 m), which
+# feeds the frozen observation and every controller's route view; it is not B1's to tune. Open for the
+# supervisor: whether B1 should carry its own lookahead distance (a controller change, outside the
+# environment), as Pure Pursuit's canonical parameter.
+controller: pure_pursuit
+config_block: baselines.pure_pursuit
+space:
+  cruise_speed:  {low: 0.15, high: 0.40}             # m/s; high = min(v_max, vy_max), the controller's limit
+  k_omega:       {low: 0.5,  high: 3.0, scale: log}  # 1/s, as B2's
+  goal_slowdown: {low: 0.25, high: 1.2}              # m; low = reward.goal_tolerance (0.25), high as B2's approach_distance

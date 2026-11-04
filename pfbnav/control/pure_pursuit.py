@@ -21,11 +21,27 @@ Both are wrapped by the declared recovery (`pfbnav/control/recovery.py`) when ev
 from __future__ import annotations
 
 import math
+from dataclasses import dataclass
 from typing import Any
 
 import numpy as np
 
 from pfbnav.envs.controller_input import ClassicalInput
+
+
+@dataclass(frozen=True)
+class PPParams:
+    """B1's own parameters, as `baselines.pure_pursuit` holds them: the tuner's validity hook
+    (scripts/tune_classical.py). The ceiling check needs the actuation block and stays in
+    `PurePursuit`; the tuning space keeps `cruise_speed` within both translation ceilings."""
+    cruise_speed: float   # m/s
+    k_omega: float        # 1/s
+    goal_slowdown: float  # m
+
+    def __post_init__(self) -> None:
+        for name in ("cruise_speed", "k_omega", "goal_slowdown"):
+            if not getattr(self, name) > 0.0:
+                raise ValueError(f"{name} must be positive")
 
 
 def _ceilings(cfg: dict[str, Any]) -> np.ndarray:

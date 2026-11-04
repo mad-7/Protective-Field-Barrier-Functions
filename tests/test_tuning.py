@@ -423,3 +423,35 @@ def test_tuning_waits_for_the_realtime_criterion_in_the_preregistration():
     mod = _script()
     assert "A28" in mod.realtime_problem({"G2_compute_budget": {}})
     assert mod.realtime_problem({"realtime_compute": {"p95_max_s": 0.05}}) is None
+
+
+def test_b1_space_is_drafted_brackets_candidate_0_and_samples_buildable_candidates():
+    """B1's space (PROPOSED 2026-11-04): each range brackets candidate 0; cruise_speed stays within
+    both translation ceilings and goal_slowdown above the goal tolerance (read from the config);
+    every sampled candidate passes the validity hook and builds the controller; and the runner
+    refuses the file while it says VERIFY (awaiting the supervisor's approval)."""
+    from pfbnav.control.pure_pursuit import PurePursuit
+    mod = _script()
+    cfg = load_config(REPO / "configs" / "base.yaml")
+    path = REPO / "configs" / "tuning" / "b1_pure_pursuit.yaml"
+    doc = yaml.safe_load(path.read_text(encoding="utf-8"))
+    block, label, params_cls = mod.TUNABLE["pure_pursuit"]
+    assert doc["controller"] == "pure_pursuit" and doc["config_block"] == block
+    assert label == PurePursuit.name == "B1_pure_pursuit"
+    defaults = {k: float(v) for k, v in cfg["baselines"]["pure_pursuit"].items()}
+    space = parse_space(doc["space"])
+    assert set(space) == set(defaults)
+    for name, r in space.items():
+        assert r.low <= defaults[name] <= r.high, name
+    a = cfg["actuation"]
+    assert space["cruise_speed"].high <= min(float(a["v_max"]), float(a["vy_max"]))
+    assert space["goal_slowdown"].low >= float(cfg["reward"]["goal_tolerance"])
+    cands, refused = sample_candidates(space, defaults, 24, np.random.default_rng(0),
+                                       lambda p: mod._valid(params_cls, p))
+    assert len(cands) == 24 and refused == 0
+    for c in cands:
+        PurePursuit.from_config(mod.with_block(cfg, block, c))
+    assert len(mod.preflight(cfg, doc, list(mod.SETS), 24)) == 3
+    assert "still says VERIFY" in mod.committed_problem(path)
+    with pytest.raises(ValueError, match="positive"):
+        params_cls(cruise_speed=0.0, k_omega=1.0, goal_slowdown=0.5)

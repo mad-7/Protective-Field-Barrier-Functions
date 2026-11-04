@@ -10621,3 +10621,22 @@ L5-nowp, L2-d005, L2-d020 -- and `exploratory.B7_alpha_sensitivity`), applied by
 YAML files parse). The B2 speed check: `pfbnav/eval/timeout_classes.route_speeds` (tested) and
 `scripts/compare_route_speeds.py` (read-only), giving per route each controller's mean speed and its
 speed over the steps not latched by the certified layer, since B2's failures are stop-restop cycles.
+
+## 2026-11-04 - B1's tuning space DRAFTED (for the supervisor's approval)
+
+B1 (holonomic Pure Pursuit) is the one classical baseline of H1/H1prime with no tuning space: the
+equal-tuning-budget rule (2026-10-26) tunes B1, B2, B3 and B6 with N = 24. Drafted
+`configs/tuning/b1_pure_pursuit.yaml` and made B1 tunable (`scripts/tune_classical.py` TUNABLE
+`pure_pursuit`, validity hook `pfbnav.control.pure_pursuit.PPParams`; test in tests/test_tuning.py).
+The file carries a VERIFY line, so the runner refuses it until the ranges are approved and committed.
+Proposed (candidate 0 = the configured 0.25 / 1.5 / 0.5, bracketed by each range):
+- `cruise_speed` 0.15-0.40 m/s, linear: the top is min(v_max, vy_max), the controller's own limit;
+- `k_omega` 0.5-3.0 /s, log: as B2's;
+- `goal_slowdown` 0.25-1.2 m, linear: the floor is `reward.goal_tolerance`, the top as B2's
+  approach_distance.
+**Open for the supervisor:** B1 has three parameters against B2's eleven, because its lookahead is the
+environment's `planner.lookahead` (0.8 m), shared by every controller and part of the frozen
+observation. Pure Pursuit's canonical tuned parameter is its lookahead distance. Giving B1 its own
+(a point that distance along `RouteView.points`, as RPP does) is a controller change outside the
+environment's closure (identity unchanged) and would answer a weak-baseline objection against B1;
+not done without a ruling. The environment identity is unchanged by this change (6ad7f6af).
