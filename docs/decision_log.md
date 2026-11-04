@@ -10696,3 +10696,32 @@ BEFORE any B1 tuning run.
   `point_at`: a classical controller imports nothing from the planner (tests/test_controller_inputs.py,
   which the first draft failed). Fast suite: 1,613 passed, 1 skipped, that one failure, fixed and rerun
   (the four affected test files, 51 passed).
+
+## 2026-11-04 - REVIEWED: L1's two pilot seeds under A30, G4 FAIL both (gated under 3757aeca)
+
+Both gated on the host's pre-re-freeze checkout (3757aeca), as the freeze mapping rules (A32), against
+the controls `zero_action_20261029T224057Z` and `oracle_tracker_privileged_20261030T001836Z`: **controls
+sound** (zero-action 0/60, behaved; oracle 43/60 = 0.717, no contact), **integrity passed** (all five).
+
+| seed | gate | learning (last 10 %, full) | checkpoint (60 tune) | stops/100 m (checkpoint) |
+|---|---|---|---|---|
+| 9000001 | `G4_20261104T124534Z` | 0.0055 (1/183) FAIL | 0.017 (1/60) FAIL | -- |
+| 9000002 | `G4_20261104T140257Z` | 0.061 (11/179) FAIL | 0.000 (0/60) FAIL | 23.3 |
+
+- **9000002's training** (1,795 episodes): success 0.083 / 0.100 / 0.070 by stage; ten blocks 0.084,
+  0.089, 0.106, 0.089, 0.084, 0.101, 0.089, 0.067, 0.017, 0.060. Per 100k steps it holds 0.06-0.14
+  to 1.5M, dips to 0.010-0.035 at 1.6-1.9M and returns to 0.087 at 2M: **the same late dip as
+  9000001, at the same place, partly recovered**. Unmapped obstacles matter here (full stage 0.033 with,
+  0.082 without); narrow stays near zero (0.000 mapped, 0.005 full). Buffer: stall-truncated
+  0.89-0.92 to 1.6M; goal rewards in it 14-19, then 11 -> 3 at 1.8M -> 11 at 2M.
+- **The deterministic checkpoint is worse than the training policy:** 0/60 against 6 % training
+  success (stochastic); 34 unrecoverable_stop and 26 timeout, no contact. 9000001: 1/60.
+- **Observed, not a claim:** in both seeds the buffer at 1.6M holds one `unrecoverable_stop` episode at
+  0.020 of its transitions (~4,000), just before both dips. With n = 2 it may be coincidence; how that
+  episode outlasted the stall truncation (it should cut a stall at 600 steps unless the robot kept
+  gaining >= 0.05 m per 30 s) is worth one look in its episode record.
+- 9000002 trained with `--display on` (instance 2); rendering changes no physics
+  (`scripts/regress_display_off.py`, bit-identical) and is recorded in its provenance.
+- **Under A31/A32:** L1's two G4 failures are DISCLOSED; L1 still trains its confirmatory seeds
+  unconditionally as a comparator; the pivot is L5's alone. Recorded with A31: a non-learning L1 is an
+  easy comparator, so L2 and B6 carry H1's weight.
