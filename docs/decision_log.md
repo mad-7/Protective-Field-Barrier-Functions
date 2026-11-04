@@ -10640,3 +10640,59 @@ observation. Pure Pursuit's canonical tuned parameter is its lookahead distance.
 (a point that distance along `RouteView.points`, as RPP does) is a controller change outside the
 environment's closure (identity unchanged) and would answer a weak-baseline objection against B1;
 not done without a ruling. The environment identity is unchanged by this change (6ad7f6af).
+
+## 2026-11-04 - A33 (decision-log amendment): B1's own lookahead; tunable vs shared parameters; B1's space APPROVED
+
+**Numbering.** The ruling named this "amendment A32"; A32 is already the drafted preregistration
+amendment of 2026-11-03 (L5's seeds, A31's scope, B7's alpha sensitivity), so this is **A33**. It
+changes no preregistered file: tuning spaces and controller parameters live in `configs/`. Recorded
+BEFORE any B1 tuning run.
+
+**The ruling (supervisor, 2026-11-04), in substance:**
+1. B1's space APPROVED with a change: B1 gets a controller-local lookahead distance (fixed-distance
+   pure pursuit; NOT speed-adaptive, which is B2/RPP's defining feature). The environment's
+   `planner.lookahead` (0.8 m) is unchanged; frozen environment code is not touched. Why: the
+   equal-budget rule equalises evaluations (N = 24), not parameter counts; lookahead is pure pursuit's
+   dominant parameter, and an untuned one invites a straw-man critique. A stronger B1 is conservative
+   for H1.
+2. Space, 4-D, N = 24, B2's sampler, candidate 0 included: lookahead 0.3-1.5 m (log); cruise_speed
+   0.15-0.40 m/s, raised to match B2's speed bracket if that reached v_max (0.50); k_omega 0.5-3.0 /s
+   (log); goal_slowdown 0.25-1.2 m.
+3. Candidate 0 (lookahead 0.8 m) must reproduce the current B1 step for step; a bit-identity test passes
+   before tuning starts.
+4. **The principle: "parameters native to the algorithm are tunable; environment and observation
+   parameters stay shared."**
+5. The same check for B3 and B6: does either read the shared planner.lookahead?
+6. Then the B1 tuning Run Request.
+
+**Implemented.**
+- `baselines.pure_pursuit.lookahead: 0.8` (m; candidate 0); `PurePursuit` takes `lookahead` and the
+  environment's `planner.lookahead`. At the shared distance it steers at the environment's own
+  lookahead point (`route.lookahead`), so candidate 0 is B1 as it was BY CONSTRUCTION; at any other
+  distance at the point that arc along `route.points` (clamped at the goal). `PPParams` gains
+  `lookahead` (the tuner's validity hook).
+- **Identity tests** (tests/test_pure_pursuit.py), on inputs built exactly as
+  `NavEnv._controller_input` builds them, offline (tune scenarios planned as the environment plans
+  them; a PathTracker at planner.lookahead; 240 poses along and off the routes, cross-track up to
+  0.15 m, any heading): the configured B1 and B1 without a lookahead of its own give **bit-identical
+  commands and actions on every input**. B1 is memoryless and the closed loop is deterministic within
+  one scene load, so its trajectories repeat bit for bit. And B1's own-point computation, forced at
+  0.8 m, lands on the environment's point within 1e-9 m on every input, so the switch at the shared
+  distance is not a discontinuity of substance. No simulator replay was needed for this; one can be
+  written if wanted.
+- **cruise_speed's top: 0.50 m/s.** B2's desired_speed bracket reaches 0.50 = v_max = vy_max (A20
+  limits; the draft's 0.40 had used the pre-A20 v_max), so per point 2 the top is raised to 0.50, which
+  is also B1's own limit min(v_max, vy_max).
+- `configs/tuning/b1_pure_pursuit.yaml` APPROVED, 4-D, VERIFY removed; its test checks every bound
+  against the config and B2's space and that every sampled candidate builds.
+- **Point 5, B3 and B6: neither reads the shared lookahead.** HolonomicDWA scores rollouts against
+  `route.points` cropped to 2 x max_speed x sim_time of arc (`dwa.py`); FieldAwareMPPI tracks
+  `route.points` cropped to 2 x its travel (`mppi.py`). Both crops are their own tuned parameters; no
+  `planner` key is read by either. Their spaces stand as approved on 2026-10-27; nothing to add.
+  Noted: the shared classical RECOVERY (`recovery.py`) reads `route.lookahead`; it is declared
+  identical for B1, B2, B3, B6, B7 and the zero-action control, so it stays on the shared point.
+- The environment identity is unchanged (6ad7f6af): `pure_pursuit.py` is outside its closure.
+- B1 walks its own arc with a local copy of the arithmetic (`_point_at_arc`), not the planner's
+  `point_at`: a classical controller imports nothing from the planner (tests/test_controller_inputs.py,
+  which the first draft failed). Fast suite: 1,613 passed, 1 skipped, that one failure, fixed and rerun
+  (the four affected test files, 51 passed).

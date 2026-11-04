@@ -29,6 +29,19 @@ import numpy as np
 from pfbnav.envs.controller_input import ClassicalInput
 
 
+def _point_at_arc(points: np.ndarray, arc: float) -> np.ndarray:
+    """The point `arc` metres along a body-frame polyline from its first point, clamped to its ends
+    (B1's own copy: a classical controller imports nothing from the planner, as RPP's
+    `_point_along`)."""
+    p = np.asarray(points, dtype=float)
+    cum = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(p, axis=0), axis=1))])
+    s = float(np.clip(arc, 0.0, cum[-1]))
+    i = min(max(int(np.searchsorted(cum, s, side="right") - 1), 0), len(p) - 2)
+    span = cum[i + 1] - cum[i]
+    t = 0.0 if span <= 0.0 else (s - cum[i]) / span
+    return p[i] + t * (p[i + 1] - p[i])
+
+
 @dataclass(frozen=True)
 class PPParams:
     """B1's own parameters, as `baselines.pure_pursuit` holds them: the tuner's validity hook
@@ -37,9 +50,10 @@ class PPParams:
     cruise_speed: float   # m/s
     k_omega: float        # 1/s
     goal_slowdown: float  # m
+    lookahead: float      # m of route arc, B1's own fixed lookahead distance (ruled 2026-11-04)
 
     def __post_init__(self) -> None:
-        for name in ("cruise_speed", "k_omega", "goal_slowdown"):
+        for name in ("cruise_speed", "k_omega", "goal_slowdown", "lookahead"):
             if not getattr(self, name) > 0.0:
                 raise ValueError(f"{name} must be positive")
 
@@ -56,12 +70,21 @@ class PurePursuit:
     input_kind = "classical"
 
     def __init__(self, *, cruise_speed: float, k_omega: float, goal_slowdown: float,
-                 v_max: float, vy_max: float, w_max: float):
+                 v_max: float, vy_max: float, w_max: float, lookahead: float | None = None,
+                 env_lookahead: float | None = None):
         if not 0.0 < cruise_speed <= min(v_max, vy_max):
             raise ValueError("cruise_speed must be positive and within both translation ceilings")
         if k_omega <= 0.0 or goal_slowdown <= 0.0:
             raise ValueError("k_omega and goal_slowdown must be positive")
+        if lookahead is not None and lookahead <= 0.0:
+            raise ValueError("lookahead must be positive")
         self.cruise_speed, self.k_omega, self.goal_slowdown = cruise_speed, k_omega, goal_slowdown
+        # B1's own fixed lookahead distance (ruled 2026-11-04; fixed-distance, not speed-adaptive,
+        # which is B2's defining feature). At the environment's planner.lookahead -- or with none
+        # given -- B1 steers at the environment's own lookahead point, so the configured candidate 0
+        # is B1 as it was, bit for bit; at any other distance, at that arc along the route ahead.
+        self.lookahead = lookahead
+        self.own_point = lookahead is not None and lookahead != env_lookahead
         self.ceilings = np.array([v_max, vy_max, w_max], dtype=float)
 
     @classmethod
@@ -70,7 +93,15 @@ class PurePursuit:
         v_max, vy_max, w_max = _ceilings(cfg)
         return cls(cruise_speed=float(p["cruise_speed"]), k_omega=float(p["k_omega"]),
                    goal_slowdown=float(p["goal_slowdown"]), v_max=v_max, vy_max=vy_max,
-                   w_max=w_max)
+                   w_max=w_max, lookahead=float(p["lookahead"]),
+                   env_lookahead=float(cfg["planner"]["lookahead"]))
+
+    def lookahead_point(self, inp: ClassicalInput) -> np.ndarray:
+        """The point B1 steers at, body frame, m: the environment's lookahead point at the shared
+        distance, else the point `lookahead` of arc along the route ahead (clamped to the goal)."""
+        if not self.own_point:
+            return np.asarray(inp.route.lookahead, dtype=float)
+        return _point_at_arc(inp.route.points, float(self.lookahead))
 
     def reset(self) -> None:
         """Memoryless."""
@@ -79,7 +110,7 @@ class PurePursuit:
         """The body-frame command (vx, vy, wz) in m/s and rad/s."""
         if not isinstance(inp, ClassicalInput):
             raise TypeError(f"Pure Pursuit takes a ClassicalInput, got {type(inp).__name__}")
-        lx, ly = (float(v) for v in inp.route.lookahead)
+        lx, ly = (float(v) for v in self.lookahead_point(inp))
         beta = math.atan2(ly, lx) if math.hypot(lx, ly) > 1e-12 else 0.0
         goal_m = float(np.hypot(*inp.route.goal))
         speed = self.cruise_speed * min(1.0, goal_m / self.goal_slowdown)

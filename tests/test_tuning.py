@@ -426,10 +426,11 @@ def test_tuning_waits_for_the_realtime_criterion_in_the_preregistration():
 
 
 def test_b1_space_is_drafted_brackets_candidate_0_and_samples_buildable_candidates():
-    """B1's space (PROPOSED 2026-11-04): each range brackets candidate 0; cruise_speed stays within
-    both translation ceilings and goal_slowdown above the goal tolerance (read from the config);
-    every sampled candidate passes the validity hook and builds the controller; and the runner
-    refuses the file while it says VERIFY (awaiting the supervisor's approval)."""
+    """B1's space (APPROVED 2026-11-04 with B1's own lookahead, A33): 4-D; each range brackets
+    candidate 0; cruise_speed's top equals B2's speed bracket and B1's own limit (both translation
+    ceilings, read from the config); goal_slowdown above the goal tolerance; every sampled candidate
+    passes the validity hook and builds the controller; candidates other than lookahead 0.8 use B1's
+    own point; no VERIFY left."""
     from pfbnav.control.pure_pursuit import PurePursuit
     mod = _script()
     cfg = load_config(REPO / "configs" / "base.yaml")
@@ -444,14 +445,18 @@ def test_b1_space_is_drafted_brackets_candidate_0_and_samples_buildable_candidat
     for name, r in space.items():
         assert r.low <= defaults[name] <= r.high, name
     a = cfg["actuation"]
-    assert space["cruise_speed"].high <= min(float(a["v_max"]), float(a["vy_max"]))
+    assert space["cruise_speed"].high == min(float(a["v_max"]), float(a["vy_max"])) == 0.5
+    b2 = parse_space(yaml.safe_load((REPO / "configs" / "tuning" / "b2_regulated_pure_pursuit.yaml")
+                                    .read_text(encoding="utf-8"))["space"])
+    assert space["cruise_speed"].high == b2["desired_speed"].high
+    assert (space["lookahead"].low, space["lookahead"].high, space["lookahead"].log) == (0.3, 1.5, True)
     assert space["goal_slowdown"].low >= float(cfg["reward"]["goal_tolerance"])
     cands, refused = sample_candidates(space, defaults, 24, np.random.default_rng(0),
                                        lambda p: mod._valid(params_cls, p))
     assert len(cands) == 24 and refused == 0
-    for c in cands:
-        PurePursuit.from_config(mod.with_block(cfg, block, c))
+    built = [PurePursuit.from_config(mod.with_block(cfg, block, c)) for c in cands]
+    assert not built[0].own_point and all(b.own_point for b in built[1:])
     assert len(mod.preflight(cfg, doc, list(mod.SETS), 24)) == 3
-    assert "still says VERIFY" in mod.committed_problem(path)
+    assert "VERIFY" not in path.read_text(encoding="utf-8")         # approved 2026-11-04
     with pytest.raises(ValueError, match="positive"):
-        params_cls(cruise_speed=0.0, k_omega=1.0, goal_slowdown=0.5)
+        params_cls(cruise_speed=0.0, k_omega=1.0, goal_slowdown=0.5, lookahead=0.8)

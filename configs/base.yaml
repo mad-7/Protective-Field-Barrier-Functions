@@ -556,6 +556,10 @@ baselines:                 # the classical comparators (WP3). Not part of the en
     cruise_speed: 0.25     # m/s, translation toward the lookahead point                VERIFY
     k_omega: 1.5           # 1/s, yaw rate per radian of lookahead bearing               VERIFY
     goal_slowdown: 0.5     # m, within this distance of the goal the speed falls linearly VERIFY
+    lookahead: 0.8         # m of route arc, B1's OWN fixed lookahead (ruled 2026-11-04, A33): tuned
+                           #   0.3-1.5 m. Candidate 0 = planner.lookahead, at which B1 steers at the
+                           #   environment's own lookahead point (bit-identical to B1 before); the
+                           #   environment's planner.lookahead is unchanged and shared        VERIFY
   regulated_pure_pursuit:  # B2, holonomic Regulated Pure Pursuit (pfbnav/control/regulated_pure_
                            #   pursuit.py; ruled 2026-10-24). TUNED 2026-11-01: candidate 23 of 24 of
                            #   runs/tuning/B2_regulated_pure_pursuit_20261030T111716Z_seed0 (host
