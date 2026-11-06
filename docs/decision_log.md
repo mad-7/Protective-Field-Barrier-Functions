@@ -10836,3 +10836,27 @@ empty for both (the declared 1 % test). The reviews of 2026-11-06 above stand.
   B1 explicitly (`tests/synthetic_inputs.py`, `pre_tuning_b1`). `scripts/control_recovery_synthetic.py`
   still builds B1 from the config: rerunning it now runs the tuned B1, which is not the recorded control.
   Fast suite: 1,614 passed, 1 skipped, 1 failed (that control), fixed and rerun.
+
+## 2026-11-06 - L5 pilot seed 9000002: G4 PASS (the first learned arm to pass); the pivot does not trigger
+
+`runs/gates/G4_20261106T145528Z_seed0`, training `runs/train/L5_sac_pfb_unshaped_seed9000002`, checkpoint
+evaluation `runs/eval/L5_sac_pfb_unshaped_20261106T130110Z_seed0`, against the controls rerun under
+6ad7f6af (A32's freeze mapping): `zero_action_20261104T141309Z` and
+`oracle_tracker_privileged_20261104T170113Z`.
+- **Controls sound:** zero-action 0/60, no contact, behaved; oracle 43/60 = 0.717, no contact (the same
+  43/60 as under 3757aeca).
+- **Integrity: passed** (all five checks). **Learning: PASS**, last-10 % success 0.463 (81/175, all
+  `full`) against 0.20. **Checkpoint: PASS**, 31/60 = 0.517 against 0.30, contact 0.
+- **Verdict: G4 PASS for L5** at its first counted pilot seed (9000001 was an integrity failure, not
+  counted, A32). Under A31 the pivot to H1prime is not triggered: the confirmatory family stands (H1, H2,
+  conditionally H1N); H1prime is exploratory. 9000002 is a PILOT seed and never enters H1 or H2 (rule 17).
+- **Checkpoint detail:** success narrow 6/20, medium 11/20, wide 14/20; 29 timeouts, 0
+  unrecoverable_stop, 0 contact; 6 protective stops, **0.59 per 100 m driven**.
+- **Anomaly, to report with the denominator analysis (A34, 3b):** several episodes drove far beyond
+  their route -- timeouts at 54.8, 57.2, 51.4 and 49.2 m and a narrow success at 42.0 m, on routes of
+  about 6-17 m. The policy wanders or oscillates on some routes. Pooled driven distance is about 1,010 m
+  against roughly 630 m planned (inferred from the rate), so L5's rate per 100 m DRIVEN is lowered by the
+  extra driving; the per-planned-length rate (A14) is about 0.95. The A34 secondary exists for exactly
+  this; the primary is unchanged.
+- Pending: L5's `summary.json`, `provenance.json` and `memory_trend.jsonl` (the supervisor's
+  simulator-memory slope).

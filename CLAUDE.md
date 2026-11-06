@@ -269,6 +269,11 @@ v1 (unicycle, single front scanner, 45-D observation) lives at git tag
   6ad7f6af with rerun controls; L1, L2, L4 train regardless of G4 (only L5 pivots), exploratory arms
   dropped after two failures; B7 alpha sensitivity {1, 2, 5} on the test set declared (exploratory).
   B7's 13 horizon timeouts: B2 speed check next (`compare_route_speeds.py`).
+- **2026-11-04/06:** L1 9000001 and 9000002 G4 FAIL (disclosed, L1 trains regardless). B3 TUNED
+  (candidate 11, 0.667), B1 TUNED (candidate 13; every candidate fails: non-functional, disclosed), both
+  written into baselines. B7's slowness is B2's regulation (A34 drafted: H1prime claims stop removal only;
+  two secondaries). **L5 G4 PASS (seed 9000002: learning 0.463, checkpoint 31/60, 0.59 stops/100 m): no
+  pivot.** Next: Step 0 (seed count), the L4 config, confirmatory seeds; B6 tuning running.
 WP1 — Environment. WP0 closed on 2026-09-18. **State as of 2026-09-28** (details and
 reasoning in `docs/decision_log.md`; the latest entries are at the end of the file).
 
