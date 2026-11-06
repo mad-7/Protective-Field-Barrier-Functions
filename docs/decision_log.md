@@ -10725,3 +10725,23 @@ sound** (zero-action 0/60, behaved; oracle 43/60 = 0.717, no contact), **integri
 - **Under A31/A32:** L1's two G4 failures are DISCLOSED; L1 still trains its confirmatory seeds
   unconditionally as a comparator; the pivot is L5's alone. Recorded with A31: a non-learning L1 is an
   easy comparator, so L2 and B6 carry H1's weight.
+
+## 2026-11-06 - REVIEWED: B2 vs B7 speed on B7's 13 horizon timeouts -- the slowness is RPP's, not the PFB's
+
+`runs/diag/ROUTESPEED_20261106T125720Z_seed0` (B7 alpha 1.0 candidate_0; B2 candidate 23, its tuning
+run). Speed over the steps NOT latched by the certified layer: **B7 0.057 m/s pooled, B2 0.057 m/s
+pooled** (per route B7 0.047-0.063, B2 0.029-0.062, within 0.01 of B7 on 12 of 13). Over the whole
+episode B7 0.057 (latched 0 %, 0 stops, 13 timeouts) against B2 0.042 (latched 27 %, 69 stops, 7
+timeouts and 6 unrecoverable_stop).
+- **Finding:** on these routes B7 drives at B2's own regulated speed. The PFB costs no driving speed
+  here; it removes B2's stops and latched time. B7's horizon timeouts are inherited from B2's tuned
+  regulation (candidate 23: desired_speed 0.277 m/s, regulated down by curvature/proximity in the
+  aisles), not caused by the filter's fallback braking.
+- **Consequence, for the supervisor:** B7 = B2's tuned parameters + alpha (ruled). B2 was tuned on
+  success under its stop-recovery cycle, where speed matters little; B7 inherits a speed that the 200 s
+  horizon caps. This bears on H1prime's framing and on the declared B7 alpha sensitivity (success flat
+  because the horizon caps it). Nothing changed.
+
+**The long unrecoverable_stop in L1 9000002's training:** episode 1377, ending at step 1,540,602
+(just before the 1.6M dip), narrow, no unmapped obstacle, plan 9.45 m. The printed line was cut before
+its length and stall fields; asked again with the fields selected.
