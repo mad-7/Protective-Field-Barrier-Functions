@@ -181,13 +181,18 @@ def test_b3_space_brackets_the_configured_values_and_every_candidate_builds_the_
         HolonomicDWA.from_config(mod.with_block(cfg, block, c))
     assert len(mod.preflight(cfg, doc, list(mod.SETS), 24)) == 3
     assert "VERIFY" not in path.read_text(encoding="utf-8")         # approved 2026-10-27
-    # Candidate 0, the Nav2 DWB defaults as converted in configs/base.yaml (ruled 2026-10-27).
-    d = cfg["baselines"]["dwa"]
-    assert (d["sim_time"], d["safety_margin"], d["clearance_cap"]) == (1.7, 0.0, 0.33)
-    assert (d["w_path"], d["w_progress"], d["w_heading"]) == (1.333, 1.0, 0.133)
-    # A28a: the two floors extended to DWB's own values, which are now the floors.
-    assert (d["window_time"], d["w_clearance"]) == (0.05, 0.020)
+    # A28a: the two floors extended to DWB's own values (candidate 0's), which are the floors.
     assert (space["window_time"].low, space["w_clearance"].low) == (0.05, 0.02)
+    # TUNED 2026-11-06 (candidate 11 of runs/tuning/B3_holonomic_dwa_20261104T141250Z_seed0), copied
+    # exactly; candidate 0 was the Nav2 DWB defaults as converted (ruled 2026-10-27): sim_time 1.7,
+    # safety_margin 0.0, clearance_cap 0.33, w_path 1.333, w_heading 0.133, window_time 0.05,
+    # w_clearance 0.020, max_speed 0.5 -- kept in configs/base.yaml's comments.
+    d = cfg["baselines"]["dwa"]
+    assert d == {**d, "max_speed": 0.42731865359248744, "window_time": 0.14066545649284481,
+                 "sim_time": 1.610392418667043, "safety_margin": 0.07857857007138075,
+                 "clearance_cap": 0.30732792467783543, "w_path": 2.1271296751068705,
+                 "w_heading": 0.6890703408239016, "w_clearance": 3.4360004233171026,
+                 "w_progress": 1.0, "vx_samples": 5, "vy_samples": 5, "wz_samples": 7}
 
 
 def test_with_block_replaces_only_named_keys():
@@ -455,7 +460,11 @@ def test_b1_space_is_drafted_brackets_candidate_0_and_samples_buildable_candidat
                                        lambda p: mod._valid(params_cls, p))
     assert len(cands) == 24 and refused == 0
     built = [PurePursuit.from_config(mod.with_block(cfg, block, c)) for c in cands]
-    assert not built[0].own_point and all(b.own_point for b in built[1:])
+    assert all(b.own_point for b in built)        # no draw lands on the shared 0.8 m
+    # TUNED 2026-11-06 (candidate 13 of runs/tuning/B1_pure_pursuit_20261104T183811Z_seed0), exactly;
+    # candidate 0 was 0.25 / 1.5 / 0.5 / lookahead 0.8.
+    assert defaults == {"cruise_speed": 0.4414254516786892, "k_omega": 2.048573434083108,
+                        "goal_slowdown": 0.4774009708433046, "lookahead": 0.343435717305025}
     assert len(mod.preflight(cfg, doc, list(mod.SETS), 24)) == 3
     assert "VERIFY" not in path.read_text(encoding="utf-8")         # approved 2026-11-04
     with pytest.raises(ValueError, match="positive"):

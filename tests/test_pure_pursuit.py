@@ -114,13 +114,14 @@ def test_candidate_0_is_b1_as_before_bit_for_bit_on_environment_built_inputs():
     B1 steers at the environment's own point. The closed loop then repeats bit for bit within one
     scene load (determinism per load)."""
     cfg, inputs = _env_inputs()
-    configured = PurePursuit.from_config(cfg)
+    # Candidate 0 as the tuning ran it (B1's block before tuning, A33), in the configured world.
+    cand0 = {"cruise_speed": 0.25, "k_omega": 1.5, "goal_slowdown": 0.5, "lookahead": 0.8}
+    configured = PurePursuit.from_config(
+        {**cfg, "baselines": {**cfg["baselines"], "pure_pursuit": cand0}})
     assert configured.lookahead == float(cfg["planner"]["lookahead"]) == 0.8
     assert not configured.own_point
-    p = cfg["baselines"]["pure_pursuit"]
     a = cfg["actuation"]
-    before = PurePursuit(cruise_speed=float(p["cruise_speed"]), k_omega=float(p["k_omega"]),
-                         goal_slowdown=float(p["goal_slowdown"]), v_max=float(a["v_max"]),
+    before = PurePursuit(cruise_speed=0.25, k_omega=1.5, goal_slowdown=0.5, v_max=float(a["v_max"]),
                          vy_max=float(a["vy_max"]), w_max=float(a["w_max"]))
     assert len(inputs) >= 200
     for x in inputs:

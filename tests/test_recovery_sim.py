@@ -29,8 +29,9 @@ import json
 from pathlib import Path
 
 import pytest
+from synthetic_inputs import pre_tuning_b1
 
-from pfbnav.control.pure_pursuit import PurePursuit, ZeroAction
+from pfbnav.control.pure_pursuit import ZeroAction
 from pfbnav.control.recovery import Recovery
 from pfbnav.envs.nav_env import NavEnv
 
@@ -73,8 +74,8 @@ def env(cfg, sim_client):
 
 def test_the_2026_10_13_corner_stop_recovers(env):
     environment, cfg = env
-    bare_stop_s, bare = _run(environment, PurePursuit.from_config(cfg), STEPS)
-    rec = Recovery.from_config(PurePursuit.from_config(cfg), cfg)
+    bare_stop_s, bare = _run(environment, pre_tuning_b1(cfg), STEPS)
+    rec = Recovery.from_config(pre_tuning_b1(cfg), cfg)
     rec_stop_s, _wrapped = _run(environment, rec, STEPS)
 
     # The control: bare B1 reproduces the deadlock near where it happened (s = 0.946 m).

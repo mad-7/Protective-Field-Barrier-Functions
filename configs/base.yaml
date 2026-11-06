@@ -550,16 +550,26 @@ evaluation:                # RULED 2026-10-23
 
 baselines:                 # the classical comparators (WP3). Not part of the environment's
                            #   identity: changing them does not move the freeze.
-  pure_pursuit:            # B1, holonomic Pure Pursuit on the observation (pfbnav/control/
-                           #   pure_pursuit.py); also G4's positive control (A15). UNTUNED until
-                           #   B1's tuning under the equal-tuning-budget rule.
-    cruise_speed: 0.25     # m/s, translation toward the lookahead point                VERIFY
-    k_omega: 1.5           # 1/s, yaw rate per radian of lookahead bearing               VERIFY
-    goal_slowdown: 0.5     # m, within this distance of the goal the speed falls linearly VERIFY
-    lookahead: 0.8         # m of route arc, B1's OWN fixed lookahead (ruled 2026-11-04, A33): tuned
-                           #   0.3-1.5 m. Candidate 0 = planner.lookahead, at which B1 steers at the
-                           #   environment's own lookahead point (bit-identical to B1 before); the
-                           #   environment's planner.lookahead is unchanged and shared        VERIFY
+  pure_pursuit:            # B1, holonomic Pure Pursuit (pfbnav/control/pure_pursuit.py), with its own
+                           #   fixed lookahead (A33). TUNED 2026-11-06: candidate 13 of 24 of
+                           #   runs/tuning/B1_pure_pursuit_20261104T183811Z_seed0 (host DESKTOP-55VR508,
+                           #   commit f33f418, clean, 4 instances measured; equal-tuning-budget rule,
+                           #   tune set only), selected by the declared rule: EVERY candidate within 5
+                           #   points of the best (0.017), so the fewest stops: 173.1 stops/100 m, 1/60
+                           #   success, 59 unrecoverable_stop. No candidate of the approved space
+                           #   completes routes under the certified fields with the declared recovery
+                           #   (the 2026-10-13 deadlock): B1 is non-functional, disclosed. No range
+                           #   boundary (1 % test). Values copied EXACTLY. Candidate 0 (0.25, 1.5, 0.5,
+                           #   lookahead 0.8 = planner.lookahead, bit-identical to B1 before A33): 0/60,
+                           #   194.1 stops/100 m.
+    cruise_speed: 0.4414254516786892     # m/s, translation toward the lookahead point (0.15-0.50)
+    k_omega: 2.048573434083108           # 1/s, yaw rate per radian of lookahead bearing (0.5-3.0, log)
+    goal_slowdown: 0.4774009708433046    # m, within this distance of the goal the speed falls linearly
+                                         #   (0.25-1.2)
+    lookahead: 0.343435717305025         # m of route arc, B1's OWN fixed lookahead (A33; 0.3-1.5,
+                                         #   log; 8.4 % of the range from its low end). Not
+                                         #   planner.lookahead (0.8, shared, unchanged), so B1 steers
+                                         #   at its own point along the route
   regulated_pure_pursuit:  # B2, holonomic Regulated Pure Pursuit (pfbnav/control/regulated_pure_
                            #   pursuit.py; ruled 2026-10-24). TUNED 2026-11-01: candidate 23 of 24 of
                            #   runs/tuning/B2_regulated_pure_pursuit_20261030T111716Z_seed0 (host
@@ -585,8 +595,15 @@ baselines:                 # the classical comparators (WP3). Not part of the en
     proximity_gain: 0.3306079212896105       # 1, Nav2's cost_scaling_gain (<= 1): speed x gain x
                                              #   d/D below proximity_distance (0.25-1.0)
   dwa:                     # B3, holonomic DWA over (vx, vy, wz) (pfbnav/control/dwa.py; ruled
-                           #   2026-10-26: code-only in parallel with Stage 1). INITIAL values,
-                           #   DWB's where DWB has one; every one is tuned under the equal-tuning-
+                           #   2026-10-26). TUNED 2026-11-06: candidate 11 of 24 of
+                           #   runs/tuning/B3_holonomic_dwa_20261104T141250Z_seed0 (host DESKTOP-55VR508,
+                           #   commit d924eca, clean, 4 instances measured), selected by the declared
+                           #   rule: best success 0.700 (candidate 8); within 5 points, 8 and 11; the
+                           #   fewest stops, 11: success 0.667 (40/60), 23.8 stops/100 m, mission time
+                           #   109.5 s, no contact. No range boundary (1 % test); w_clearance nearest
+                           #   (93.2 % of its log range). Tuned values copied EXACTLY; the comments on
+                           #   each line keep CANDIDATE 0's value and its derivation. Candidate 0
+                           #   scored 8/60, 769.3 stops/100 m. Tuned under the equal-tuning-
                            #   budget rule on the tune set only (configs/tuning/b3_dwa.yaml). The
                            #   window's accelerations are actuation.a_max / alpha_max, its ceilings
                            #   the actuation box and the enforced wheel budget: not repeated here.
@@ -601,14 +618,14 @@ baselines:                 # the classical comparators (WP3). Not part of the en
                            #   stated on its line. The ranges of window_time and w_clearance were
                            #   extended down to include DWB's values (ruled 2026-10-27, A28a: a
                            #   correction of the declaration before any run).
-    max_speed: 0.5         # m/s, translation speed ceiling of the samples. DWB sets max_speed_xy to
+    max_speed: 0.42731865359248744  # TUNED (0.20-0.50). Candidate 0: 0.5 m/s, translation speed ceiling of the samples. DWB sets max_speed_xy to
                            #   the robot's own limit (0.26 is the TurtleBot's): here the box ceiling
-    window_time: 0.05      # s, the window's reach a_max x this, alpha_max x this. DWB's window is
+    window_time: 0.14066545649284481  # TUNED (0.05-0.40, log). Candidate 0: 0.05 s, the window's reach a_max x this, alpha_max x this. DWB's window is
                            #   acc_lim x sim_period = 1 / controller_frequency (20 Hz) = 0.05 s
                            #   (range 0.05-0.40, A28a; B3's first 0.15 kept the estimate's lag,
                            #   filter_tau 0.10 + one step, from throttling acceleration below a_max:
                            #   the tuning covers it)
-    sim_time: 1.7          # s, rollout horizon: DWB sim_time 1.7. Must be >= the braking time
+    sim_time: 1.610392418667043  # TUNED (0.8-3.0, log). Candidate 0: 1.7 s, rollout horizon: DWB sim_time 1.7. Must be >= the braking time
                            #   max(max_speed / 2 a_decel_max, w_max / 2 alpha_max) = 0.536 s,
                            #   so a surviving sample is admissible in Fox's sense
     sim_granularity: 0.025 # m, most translation between rollout states (dwb_plugins'
@@ -622,19 +639,19 @@ baselines:                 # the classical comparators (WP3). Not part of the en
                            #   under the real-time criterion (p95 <= 50 ms, ruled 2026-10-27)
     vy_samples: 5          # likewise for vy (DWB 5)
     wz_samples: 7          # likewise for wz (DWB vtheta_samples 20)
-    safety_margin: 0.0     # m, a state collides when a scan point comes nearer the footprint than
+    safety_margin: 0.07857857007138075  # TUNED (0.0-0.10). Candidate 0: 0.0 m; a state collides when a scan point comes nearer the footprint than
                            #   min(this, the point's clearance now). DWB's BaseObstacle rejects
                            #   only a footprint in collision: 0 (the range's floor)
-    clearance_cap: 0.33    # m, the clearance at and beyond which the clearance cost is zero: the
+    clearance_cap: 0.30732792467783543  # TUNED (0.10-0.60). Candidate 0: 0.33 m, the clearance at and beyond which the clearance cost is zero: the
                            #   inflation band beyond the robot, inflation_radius 0.55 - robot_radius
                            #   0.22
-    w_path: 1.333          # 1/m, the end state's distance to the route: PathDist 32 / GoalDist 24
+    w_path: 2.1271296751068705  # TUNED (0.2-5.0, log). Candidate 0: 1.333 /m, the end state's distance to the route: PathDist 32 / GoalDist 24
     w_progress: 1.0        # 1/m, the route arc reached by the end state (a reward); the unit of the
                            #   weights (GoalDist 24 per cell), not tuned
-    w_heading: 0.133       # 1/rad, the end yaw's error to the route tangent there: PathAlign 32 per
+    w_heading: 0.6890703408239016  # TUNED (0.05-2.0, log). Candidate 0: 0.133 /rad, the end yaw's error to the route tangent there: PathAlign 32 per
                            #   cell of the point forward_point_distance 0.1 m ahead, 2 cells per rad
                            #   = 64 per rad, / 480 per m
-    w_clearance: 0.020     # 1/m, the trajectory's clearance shortfall below clearance_cap. DWB:
+    w_clearance: 3.4360004233171026  # TUNED (0.02-5.0, log). Candidate 0: 0.020 /m, the trajectory's clearance shortfall below clearance_cap. DWB:
                            #   BaseObstacle 0.02 x the inflation cost 252 exp(-3.0 d) (cost_scaling
                            #   _factor 3.0), its secant over the 0.33 m band 480 per m -> 9.6 per m,
                            #   / 480 = 0.020 (range 0.02-5, A28a)

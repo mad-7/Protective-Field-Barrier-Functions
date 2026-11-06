@@ -13,9 +13,9 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+from synthetic_inputs import pre_tuning_b1
 
 from pfbnav.config import load_config
-from pfbnav.control.pure_pursuit import PurePursuit
 from pfbnav.eval.recovery_control import (
     ControlSpec,
     emulate_layout,
@@ -64,7 +64,7 @@ def test_the_emulator_reproduces_the_simulators_2026_10_13_stop():
     # emulator is checked under that field too (the field is a parameter; the machinery is what
     # this control tests).
     records = emulate_layout(cfg, [o.polygon for o in world.mapped], path,
-                             fx["scenario"]["start"], PurePursuit.from_config(cfg), 0.95, 300,
+                             fx["scenario"]["start"], pre_tuning_b1(cfg), 0.95, 300,
                              rotation_blind=True)
     first = next(r for r in records if r["cert"]["stop_triggered"])
     assert abs(first["step"] - 126) <= 10 and first["s"] == pytest.approx(1.447, abs=0.03)
@@ -105,7 +105,7 @@ def test_the_emulator_reproduces_the_simulators_a22_corner_run():
     path = np.asarray(plan_from_config(baked, tuple(fx["scenario"]["start"][:2]),
                                        tuple(fx["scenario"]["goal"]), cfg).path_world)
     records = emulate_layout(cfg, [o.polygon for o in world.mapped], path,
-                             fx["scenario"]["start"], PurePursuit.from_config(cfg), 0.95,
+                             fx["scenario"]["start"], pre_tuning_b1(cfg), 0.95,
                              ref["steps"])
     stops = [r for r in records if r["cert"]["stop_triggered"]]
     assert abs(stops[0]["step"] - ref["stops"][0]["step"]) <= 10

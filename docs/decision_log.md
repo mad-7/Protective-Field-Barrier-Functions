@@ -10818,3 +10818,21 @@ B7-vs-B1 (H1prime) and L5-vs-B1 (H1) easy comparisons; B6 and B3 carry the class
 Pending before either selection is written into `configs/base.yaml`: both runs' `provenance.json`
 (commit, dirty, host; B3 may have started before the host pulled the re-freeze -- filter off, so
 unaffected, but recorded) and `summary.json` (`selected_on_boundary`, the recovery statistics).
+
+## 2026-11-06 - B3 and B1 TUNED: selections written into configs/base.yaml (provenance checked)
+
+Provenance: B3 `runs/tuning/B3_holonomic_dwa_20261104T141250Z_seed0` commit d924eca, B1
+`runs/tuning/B1_pure_pursuit_20261104T183811Z_seed0` commit f33f418, both clean, DESKTOP-55VR508, scene
+537f1bbb, display off, environment 6ad7f6af (both after the host's pull of re-freeze 14 and A32), and
+**4 concurrent instances measured** (ports 23000-23006; the new provenance field). `selected_on_boundary`
+empty for both (the declared 1 % test). The reviews of 2026-11-06 above stand.
+- `baselines.dwa` = B3's candidate 11 (8 tuned values copied exactly; sample counts and w_progress
+  unchanged); `baselines.pure_pursuit` = B1's candidate 13 (4 values exactly; VERIFY removed). Candidate
+  0's values and derivations are kept in the config's comments.
+- **Tests:** the tests that pinned candidate 0 now assert the tuned values (tests/test_tuning.py) and
+  build candidate 0 explicitly for the A33 identity (tests/test_pure_pursuit.py). The tests that replay
+  SIMULATOR RECORDS of 2026-10 made with the untuned B1 (tests/test_recovery_control.py, the A22
+  corner-run positive control, which failed on the tuned B1; tests/test_recovery_sim.py) now build that
+  B1 explicitly (`tests/synthetic_inputs.py`, `pre_tuning_b1`). `scripts/control_recovery_synthetic.py`
+  still builds B1 from the config: rerunning it now runs the tuned B1, which is not the recorded control.
+  Fast suite: 1,614 passed, 1 skipped, 1 failed (that control), fixed and rerun.

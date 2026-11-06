@@ -59,3 +59,16 @@ def make_input(*, stop: bool = False, velocity=(0.0, 0.0, 0.0), scan: ScanStream
                          float(np.hypot(*look) + np.hypot(*(g - look))))
     return ClassicalInput.of(stop_active=stop, velocity=velocity,
                              scan=scan if scan is not None else ray_scan(), route=route, dt=dt)
+
+
+# B1's block BEFORE its tuning (2026-11-06; candidate 0 of the tuning run): the B1 the recorded
+# simulator controls of 2026-10 ran. Tests that reproduce those records build B1 from this, not from
+# the tuned `baselines.pure_pursuit`.
+B1_PRE_TUNING = {"cruise_speed": 0.25, "k_omega": 1.5, "goal_slowdown": 0.5, "lookahead": 0.8}
+
+
+def pre_tuning_b1(cfg):
+    """B1 as the 2026-10 records ran it, in `cfg`'s world (lookahead = planner.lookahead, 0.8 m)."""
+    from pfbnav.control.pure_pursuit import PurePursuit
+    return PurePursuit.from_config({**cfg, "baselines": {**cfg["baselines"],
+                                                         "pure_pursuit": dict(B1_PRE_TUNING)}})
