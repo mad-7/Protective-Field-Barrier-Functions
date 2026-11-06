@@ -10790,3 +10790,31 @@ in [0.25, 1.0] 10.7 %; approach_distance 0.707 in [0.3, 1.2] 45.2 %; min_speed 0
 `candidate_score` reports moving speed and latched share beside the score (never in the selection);
 `peek_tuning.py` prints them. Known-answer test in tests/test_runner.py. Tuning runs already running
 read it offline from their episode logs (`peek_tuning.py`, after the pull).
+
+## 2026-11-06 - B3 and B1 tuning finished (console read; provenance pending, values NOT yet written)
+
+**B3, holonomic DWA** (`runs/tuning/B3_holonomic_dwa_20261104T141250Z_seed0`, started 2026-11-04 14:12Z).
+Best success 0.700 (candidate 8, 36.7 stops/100 m); the 5-point window admits candidates 8 (0.700) and
+11 (0.667); fewest stops: **candidate 11 selected by the declared rule** -- success 0.667 (40/60),
+23.8 stops/100 m, mission time 109.5 s, no contact; 40 success, 18 timeout, 2 unrecoverable_stop.
+Candidate 0 (Nav2 DWB defaults): 0.133, 769 stops/100 m. Two candidates reached near-zero stops at lower
+success (9: 0.550 at 0.77/100 m; 21: 0.433 at 0.23/100 m), outside the window.
+Positions in the brackets (log ranges on the log scale): max_speed 0.427 75.8 %, window_time 0.141
+49.7 %, sim_time 1.61 52.9 %, safety_margin 0.079 78.6 %, clearance_cap 0.307 41.5 %, w_path 2.13
+73.4 %, w_heading 0.689 71.1 %, w_clearance 3.44 **93.2 %**. No boundary by the 1 % test; w_clearance
+the nearest (6.8 % below its ceiling, log). B3 is the strongest classical baseline so far (0.667 against
+B2's 0.250 and the privileged oracle's 0.717); it is an H1 comparator, not in H1prime.
+
+**B1, holonomic Pure Pursuit with its own lookahead (A33)** (`runs/tuning/B1_pure_pursuit_20261104T183811Z_seed0`).
+**Every candidate fails:** 22 of 24 at 0/60, two at 1/60; 173-207 stops/100 m. Selected by the rule
+(every candidate within 5 points of the best 0.017): **candidate 13**, fewest stops, 173.1/100 m, 1/60
+success, 59 unrecoverable_stop; cruise_speed 0.441 (83 %), k_omega 2.05 (79 %, log), goal_slowdown 0.477
+(24 %), lookahead 0.343 (8.4 % above its floor, log). The selection is formally valid and substantively
+empty: no parameter in the approved space lets B1 complete routes under the certified fields with the
+declared recovery -- the deadlock found on 2026-10-13 (stops at shelf corners whose restart never
+clears), now across a tuned space including its lookahead. To report: a non-functional B1 makes
+B7-vs-B1 (H1prime) and L5-vs-B1 (H1) easy comparisons; B6 and B3 carry the classical weight.
+
+Pending before either selection is written into `configs/base.yaml`: both runs' `provenance.json`
+(commit, dirty, host; B3 may have started before the host pulled the re-freeze -- filter off, so
+unaffected, but recorded) and `summary.json` (`selected_on_boundary`, the recovery statistics).
