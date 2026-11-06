@@ -172,10 +172,12 @@ def sample_candidates(space: dict[str, ParamRange], defaults: dict[str, float], 
 def candidate_score(records: Sequence[dict[str, Any]], dt: float) -> dict[str, Any]:
     """Success rate, pooled protective stops per 100 m (scan-fault stops excluded) and mission time
     (mean duration of the successful episodes, s; None without a success)."""
-    s = outcome_summary(records)
+    s = outcome_summary(records, dt)
     times = [float(r["episode_steps"]) * dt for r in records if r["outcome"] == "success"]
     return {"episodes": s["episodes"], "success_rate": s["success_rate"],
             "stops_per_100m": s["stops_per_100m"],
+            # Read beside the score, never part of the selection (ruled 2026-11-06).
+            "moving_speed_mps": s["moving_speed_mps"], "latched_step_share": s["latched_step_share"],
             "mission_time_s": float(np.mean(times)) if times else None,
             "contact_rate": s["contact_rate"], "counts": s["counts"]}
 

@@ -22,6 +22,10 @@ from pfbnav.eval.tuning import candidate_score
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
+def _f(x) -> str:
+    return "-" if x is None else f"{x:.3f}"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", required=True)
@@ -55,7 +59,8 @@ def main() -> int:
         partial = "" if len(records) == full else f"  (partial: {len(records)}/{full})"
         print(f"{i:2d}  success {s['success_rate']:.3f} ({s['counts'].get('success', 0):2d}/"
               f"{len(records)})  stops/100m {stops}  mission {mission} s  "
-              f"contact {s['contact_rate']:.3f}{partial}")
+              f"contact {s['contact_rate']:.3f}  moving {_f(s['moving_speed_mps'])} m/s  "
+              f"latched {_f(s['latched_step_share'])}{partial}")
         print("    " + ", ".join(f"{k}={v:.3g}" for k, v in params.items()))
     return 0
 

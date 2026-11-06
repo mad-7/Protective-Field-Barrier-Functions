@@ -136,8 +136,19 @@ def run_controllers(env, controllers: Sequence[Any], indices: Iterable[int],
                                     ring=rings[controller.name])
     return records
 
-def outcome_summary(records: Sequence[dict[str, Any]]) -> dict[str, Any]:
-    """Counts and shares of each outcome, the contact share, and the pooled stop rate."""
+def moving_speed(record: dict[str, Any], dt: float) -> float | None:
+    """One episode's mean speed while NOT latched by the certified layer, m/s: the distance driven
+    over the steps without a latched stop (`stopped_steps` excluded) times `dt`, the control period.
+    None for an episode latched at every step. A standard per-episode metric for every arm (ruled
+    2026-11-06), so a slow controller and a stopped one are told apart."""
+    moving = int(record.get("steps", record.get("episode_steps", 0))) - int(
+        record.get("stopped_steps", 0))
+    return float(record.get("distance_m", 0.0)) / (moving * dt) if moving > 0 else None
+
+
+def outcome_summary(records: Sequence[dict[str, Any]], dt: float | None = None) -> dict[str, Any]:
+    """Counts and shares of each outcome, the contact share, and the pooled stop rate. With `dt`
+    (the control period, s), also the pooled moving speed (ruled 2026-11-06)."""
     n = len(records)
     counts = {o: sum(1 for r in records if r["outcome"] == o) for o in OUTCOMES}
     unknown = sorted({r["outcome"] for r in records} - set(OUTCOMES))
@@ -161,6 +172,14 @@ def outcome_summary(records: Sequence[dict[str, Any]]) -> dict[str, Any]:
     # any H1 comparison is reported prominently.
     recovery = float(sum(float(r.get("recovery_distance_m", 0.0)) for r in records))
     planned = float(sum(float(r.get("plan_length_m", 0.0)) for r in records))
+    # Ruled 2026-11-06 (A34, secondary): the stop rate on COMPLETED routes only, beside the primary,
+    # which pools every episode -- timeouts and stops included, none censored.
+    done = [r for r in records if r["outcome"] == "success"]
+    done_distance = float(sum(float(r.get("distance_m", 0.0)) for r in done))
+    done_stops = int(sum(int(r.get("protective_stops", 0)) - int(r.get("scan_fault_stops", 0))
+                         for r in done))
+    stopped_total = int(sum(int(r.get("stopped_steps", 0)) for r in records))
+    moving_steps = steps_total - stopped_total
     if recovery > distance + 1e-9:
         raise ValueError(f"recovery distance {recovery} exceeds the distance driven {distance}")
     return {
@@ -193,6 +212,12 @@ def outcome_summary(records: Sequence[dict[str, Any]]) -> dict[str, Any]:
                                               if distance - recovery > 0 else None),
         "planned_length_m": planned,
         "stops_per_100m_planned": 100.0 * stops / planned if planned > 0 else None,
+        "stops_per_100m_completed": (100.0 * done_stops / done_distance if done_distance > 0
+                                     else None),
+        "completed_distance_m": done_distance,
+        # Ruled 2026-11-06: latched time and the speed while not latched, for every arm.
+        "latched_step_share": stopped_total / steps_total if steps_total else None,
+        "moving_speed_mps": (distance / (moving_steps * dt) if dt and moving_steps > 0 else None),
         "mean_return": float(np.mean([r["episode_return"] for r in records])) if n else None,
         # Ruled 2026-10-27: the controllers' counted statuses, per method and stratum.
         **{k: int(sum(int(r.get(k, 0)) for r in records)) for k in STATUS_COUNTS},

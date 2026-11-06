@@ -320,3 +320,25 @@ def test_the_summary_reports_each_controllers_counted_statuses():
     assert (s["dwa_blocked_steps"], s["mppi_all_rejected"], s["pfb_infeasible"],
             s["invalid_bin_steps"]) == (7, 2, 5, 1)
     assert outcome_summary(recs[:1])["mppi_all_rejected"] == 0
+
+
+def test_moving_speed_latched_share_and_the_completed_route_rate():
+    """Ruled 2026-11-06. Two episodes at dt 0.05: a success, 4 m in 100 steps of which 20 latched,
+    1 stop; a timeout, 2 m in 200 steps of which 100 latched, 3 stops (1 on a scan fault). Pooled:
+    moving speed 6 m / (180 x 0.05 s) = 0.6667 m/s; latched 120 / 300 = 0.4. Primary: (4 - 1) stops
+    over 6 m, every episode pooled (the timeout is not censored) = 50 per 100 m; completed routes
+    only: 1 stop over 4 m = 25 per 100 m. Per episode: 4 / (80 x 0.05) = 1.0 m/s."""
+    from pfbnav.eval.runner import moving_speed
+    base = {"episode_return": 0.0, "plan_length_m": 5.0}
+    recs = [{**base, "outcome": "success", "distance_m": 4.0, "steps": 100, "stopped_steps": 20,
+             "protective_stops": 1},
+            {**base, "outcome": "timeout", "distance_m": 2.0, "steps": 200, "stopped_steps": 100,
+             "protective_stops": 3, "scan_fault_stops": 1}]
+    s = outcome_summary(recs, dt=0.05)
+    assert s["moving_speed_mps"] == pytest.approx(6.0 / 9.0)
+    assert s["latched_step_share"] == pytest.approx(0.4)
+    assert s["stops_per_100m"] == pytest.approx(50.0)
+    assert s["stops_per_100m_completed"] == pytest.approx(25.0) and s["completed_distance_m"] == 4.0
+    assert moving_speed(recs[0], 0.05) == pytest.approx(1.0)
+    assert moving_speed({**recs[0], "stopped_steps": 100}, 0.05) is None
+    assert outcome_summary(recs)["moving_speed_mps"] is None          # no dt given: not computed

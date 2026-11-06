@@ -208,10 +208,11 @@ def main() -> int:
         env.close()
         client.stop()
 
-    summary = {"overall": outcome_summary(records),
-               "per_set": {s: outcome_summary([r for r in records if r["set"] == s])
+    dt = float(cfg["sim"]["dt"])
+    summary = {"overall": outcome_summary(records, dt),
+               "per_set": {s: outcome_summary([r for r in records if r["set"] == s], dt)
                            for s in dict.fromkeys(set_of)},
-               "per_stratum": {s: outcome_summary([r for r in records if r.get("stratum") == s])
+               "per_stratum": {s: outcome_summary([r for r in records if r.get("stratum") == s], dt)
                                for s in sorted({r.get("stratum") for r in records} - {None})},
                # The classical recovery's statistics and any suspected defect (ruled 2026-10-16;
                # reported in every evaluation through WP3).

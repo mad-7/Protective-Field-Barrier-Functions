@@ -10745,3 +10745,48 @@ timeouts and 6 unrecoverable_stop).
 **The long unrecoverable_stop in L1 9000002's training:** episode 1377, ending at step 1,540,602
 (just before the 1.6M dip), narrow, no unmapped obstacle, plan 9.45 m. The printed line was cut before
 its length and stall fields; asked again with the fields selected.
+
+## 2026-11-06 - RULED: the B2 speed check; H1prime's claim; secondary analyses (A34 drafted); moving speed
+
+**The ruling (supervisor), in substance:** (1) accepted -- B7 and B2 move at the same speed on the 13
+horizon-timeout routes (0.057 m/s pooled); B7's slowness is inherited from B2's tuned regulation;
+recorded as a **tune-set, post-hoc observation (exploratory, not confirmatory)**; alpha stays 1.0, no
+frozen parameter changes. (2) H1prime framing, text only: primary stays stops per 100 m, B7 vs
+{B1, B2, B6}, intersection-union; the claim is "the filter removes protective stops from a classical
+planner", NOT a throughput or success improvement; success and mission time descriptive. (3) Declare
+before the test run, as SECONDARY: (a) B7 vs B2 paired within-planner contrast (stops/100 m,
+latched-time share, moving speed); (b) the denominator sensitivity (per 100 m driven; completed routes
+only); report the primary's denominator and whether timeouts are censored; primary unchanged. (4) Report
+whether B2's candidate 23 sits at a bracket edge; brackets not extended; an edge disclosed as a
+limitation. (5) Moving speed as a standard per-episode metric for every arm.
+
+**(2), (3): A34 drafted** (`docs/pending/A34_amendment.md`, applied by `docs/pending/apply_A34.py`
+after A32; dry-run on copies, both refusals checked): H1prime gains `claim:`, its `reporting:` becomes
+descriptive with no inference, and a `secondary:` list holds 3a and 3b.
+**The primary's denominator, as it stands:** each arm's pooled protective stops (scan-fault stops
+excluded) over its pooled DRIVEN distance, recovery motion included; every episode pooled, so
+**timeouts and unrecoverable stops are NOT censored** -- they contribute their stops and distance
+(`outcome_summary`). Already declared beside it (A14, 2026-10-16): excluding recovery distance, and per
+planned route length.
+
+**(4) B2's candidate 23 in its brackets** (position from the low end, log ranges on the log scale):
+desired_speed 0.277 in [0.20, 0.50] 25.6 %; lookahead_time 0.570 in [0.5, 3.0] log **7.3 %**;
+min_lookahead 0.207 in [0.20, 0.60] **1.8 %**; max_lookahead 1.122 in [0.6, 1.5] 58.0 %; min_radius
+0.431 in [0.3, 2.0] log 19.1 %; proximity_distance 1.176 in [0.2, 1.2] **97.6 %**; proximity_gain 0.331
+in [0.25, 1.0] 10.7 %; approach_distance 0.707 in [0.3, 1.2] 45.2 %; min_speed 0.071 in [0.02, 0.15]
+39.5 %; min_approach_speed 0.039 in [0.02, 0.10] 23.2 %; k_omega 1.913 in [0.5, 3.0] log 74.9 %.
+- **No parameter is on a boundary by the declared 1 % test** (`summary.json` `selected_on_boundary`
+  empty). **Near an edge, disclosed as limitations:** min_lookahead (1.8 % above its floor),
+  proximity_distance (2.4 % below its ceiling), lookahead_time (7.3 % above its floor, log).
+- **Bearing on the slowness (an observation):** proximity_distance 1.18 m is the clearance below which
+  RPP regulates speed down. In 0.7-0.9 m aisles the footprint's clearance is always far below it, so
+  B2 -- and B7 with B2's parameters -- regulate their speed throughout an aisle; with min_speed 0.071
+  and proximity_gain 0.33 this is consistent with the 0.057 m/s measured. The tuning chose it on
+  success under the stop-recovery cycle. Brackets are not extended.
+
+**(5) Moving speed, implemented** (no environment change; identity 6ad7f6af): `pfbnav.eval.runner`
+`moving_speed(record, dt)` per episode and, in `outcome_summary(records, dt)`, `moving_speed_mps`,
+`latched_step_share` and `stops_per_100m_completed` (3b); `evaluate.py` passes `sim.dt`;
+`candidate_score` reports moving speed and latched share beside the score (never in the selection);
+`peek_tuning.py` prints them. Known-answer test in tests/test_runner.py. Tuning runs already running
+read it offline from their episode logs (`peek_tuning.py`, after the pull).
