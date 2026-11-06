@@ -10860,3 +10860,14 @@ evaluation `runs/eval/L5_sac_pfb_unshaped_20261106T130110Z_seed0`, against the c
   this; the primary is unchanged.
 - Pending: L5's `summary.json`, `provenance.json` and `memory_trend.jsonl` (the supervisor's
   simulator-memory slope).
+
+**L5 9000002 provenance and memory (2026-11-06).** Commit d924eca, clean, DESKTOP-55VR508, cuda, scene
+537f1bbb, environment 6ad7f6af (matches the frozen one), display off; 4 instances measured at start and
+at end. Completed 2,000,000 steps, 1,754 episodes: 924 success, 814 stall_truncated, 16 timeout, **0
+unrecoverable_stop**, at-rest/stationary triggers 0.
+- **Throughput: 21.1 steps/s** (94,944 s, 26.4 h), against L1's 33.2 alone-ish runs: the PFB in the loop
+  plus four instances. Aggregate with four instances stays far above the 25 steps/s requirement, but
+  **each L5 run takes ~26 h, not ~17 h**: the confirmatory budget (Step 0, G2's projection) must use it.
+- **Memory (the supervisor's ask): simulator +4.7 MB per 100 episodes** (402 -> 484 MB over 1,754
+  episodes; A20's reference 1.7, B7's alpha tuning 32); Python 3,560 MB at step 3,000 and 3,568 at the
+  end (+7.5 MB after the start-up allocation); GPU 28 MB reserved; no alarm.
