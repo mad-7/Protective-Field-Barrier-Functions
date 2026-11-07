@@ -36,7 +36,7 @@ G2_compute_budget:
   measure_seconds: 300
   wallclock_budget_weeks: 6
   n_training_runs: 25
-  reduction_order: [L2-d005, L2-d020, L5-nowp, PFB-(a), stop_active, A1]  # A28, confirmed A28a
+  reduction_order: [L5-v2, L2-d005, L2-d020, L5-nowp, PFB-(a), stop_active, A1]  # A28, confirmed A28a; L5-v2 at the head (A35)
   never_cut: [L1, L2, L4, L5, B1, B2, B3, B6, B7]   # A28a (ruled 2026-10-27): no learned confirmatory arm and no classical comparator is ever cut
   min_steps_per_second: 25              # aggregate, on the TRAINING host
   max_rendered_episode_fraction: 0.10   # Q7: G2 FAILS above this
@@ -64,6 +64,8 @@ layout_sets:
     # Q2 ruling: development never consumes train seeds. Pilots, smoke tests and debugging
     # draw from here, and nothing drawn from here may appear in a reported result.
     pilot: [9000000, 9999999]
+    # A35 (2026-11-07): 9100000-9100999 is carved out -- CONFIRMATORY training seeds
+    # (G4_learned_pilot.confirmatory_training_seeds); no diagnostic, pilot or layout draws from it.
   # Identity of a layout set (ruled 2026-09-23). The generator's code hash is part of it: a
   # changed generator means a different set, even at the same seeds.
   identity: [seed, layout_sha256, generator_sha256]
@@ -123,6 +125,9 @@ G4_learned_pilot:
                                              #   (9000001) crashed on a PFB defect: an integrity
                                              #   failure, kept, not counted; L5 runs at 9000002,
                                              #   its second seed 9000003.
+  pilot_training_range: [9000000, 9000099]   # A35: pilot TRAINING seeds come from here only
+  confirmatory_training_seeds: [9100001, 9100002, 9100003, 9100004, 9100005, 9100006, 9100007,
+                                9100008, 9100009, 9100010]   # A35: K = 10, fixed, never changed
   integrity:                                 # every one must hold
     - the run reached training.total_timesteps and wrote final_model.zip
     - environment.json records the frozen environment identity (env.frozen_code_sha256)

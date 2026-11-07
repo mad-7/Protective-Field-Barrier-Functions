@@ -19,7 +19,7 @@ H1:
   statement: L5 triggers fewer protective stops than every comparator
   comparators: [B1, B2, B3, B6, L1, L2, L3]   # A16: B6 (field-aware MPPI) replaces retired B4
   logic: intersection_union       # all comparisons must reject at alpha; no within-H1 correction
-  endpoint: protective_stops_per_100m
+  endpoint: protective_stops_per_100m_planned   # A35 (2026-11-07): per 100 m of PLANNED route length; driven distance is secondary
   scan_faults: >-   # A25 (ruled 2026-10-23)
     stops decided on a scan-faulted packet are excluded from this count and reported
     alongside it per method; scan_faults reported prominently if they differ materially
@@ -33,7 +33,7 @@ H1prime:                           # A27 contingency hypothesis (ruled 2026-10-2
   claim: the filter removes protective stops from a classical planner -- not a throughput or success improvement (A34)
   comparators: [B1, B2, B6]
   logic: intersection_union       # all comparisons must reject at alpha; no within-H1prime correction
-  endpoint: protective_stops_per_100m
+  endpoint: protective_stops_per_100m_planned   # A35 (2026-11-07): per 100 m of PLANNED route length; driven distance is secondary
   scan_faults: as H1 (A25)
   population: test, condition unmapped_static, all clearance strata pooled
   analysis: >-
@@ -43,7 +43,7 @@ H1prime:                           # A27 contingency hypothesis (ruled 2026-10-2
   reporting: success rate and mission time reported descriptively beside it for every comparison in the same table; no inference on them (A34)
   secondary:                       # A34 (ruled 2026-11-06), declared before the test run; outside the confirmatory family
     - B7 vs B2, the paired within-planner contrast -- protective stops per 100 m, latched share of steps, moving speed (mean speed while not latched)
-    - the stops endpoint's denominator -- per 100 m of distance driven (the primary's own, recovery included; timeouts pooled, not censored) and per 100 m on completed routes only, beside the per-planned-length version (A14)
+    - the stops endpoint's denominator -- per 100 m of distance driven (recovery included; timeouts pooled, not censored; secondary since A35) and per 100 m on completed routes only, beside the primary per 100 m of planned route (A35)
   success: every comparison significant in the predicted direction
 
 H2:
@@ -85,7 +85,7 @@ exploratory:                       # reported, labelled, outside the Holm family
     - warning-field entries as a near-miss metric
 
 analysis:                          # A14a (rulings 2026-10-02, 2026-10-03, 2026-10-26)
-  H1_estimand: rate ratio of protective stops, total stops / total distance per arm, L5 over the comparator; scan-fault stops excluded (A25)
+  H1_estimand: rate ratio of protective stops, total stops / total PLANNED route length per arm (A35), L5 over the comparator; scan-fault stops excluded (A25)
   continuity: 0.5 added to each arm's total stops
   interval: >-
     two-level bootstrap of the log rate ratio -- scenarios resampled jointly across arms, a learned
