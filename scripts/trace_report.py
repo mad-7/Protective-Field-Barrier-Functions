@@ -49,7 +49,8 @@ def main() -> int:
               f"{w['cross_track_mean_m']:.2f}/{w['cross_track_p95_m']:.2f} | "
               f"{w['lateral_flips_per_s']:.2f}, {w['yaw_flips_per_s']:.2f} | "
               f"{_f(w['pfb_intervention_share'])}, {_f(w['pfb_fallback_share'], 3)} | "
-              f"{w['latched_share']:.3f} | {causes}")
+              f"{w['latched_share']:.3f} | {w['requested_speed_median_mps']:.2f}, "
+              f"{w['requested_fast_share']:.2f} | {causes}")
     return 0
 
 

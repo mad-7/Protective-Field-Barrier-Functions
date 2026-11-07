@@ -35,7 +35,7 @@ def _wrap(a: float) -> float:
 
 
 def wandering(rows: Sequence[dict[str, Any]], *, plan_length_m: float, dt: float,
-              near_goal_m: float = 1.0) -> dict[str, Any]:
+              near_goal_m: float = 1.0, fast_mps: float = 0.45) -> dict[str, Any]:
     """The anatomy of one episode's driving (module docstring). Distances in m, rates per s."""
     if len(rows) < 2:
         raise ValueError("a trace needs at least two steps")
@@ -75,7 +75,11 @@ def wandering(rows: Sequence[dict[str, Any]], *, plan_length_m: float, dt: float
             # of steps it changed the command (filtered, brake or fallback), and the latched share.
             "pfb_intervention_share": _share(rows, lambda m: m in ("filtered", "brake", "fallback")),
             "pfb_fallback_share": _share(rows, lambda m: m == "fallback"),
-            "latched_share": float(np.mean([bool(r["certified"].get("stop_active")) for r in rows]))}
+            "latched_share": float(np.mean([bool(r["certified"].get("stop_active")) for r in rows])),
+            # How fast the planner ASKS to go (before the filter): the median requested planar speed
+            # and the share of steps at or above `fast_mps` (does it lean on the filter for speed?).
+            "requested_speed_median_mps": float(np.median(np.hypot(req[:, 0], req[:, 1]))),
+            "requested_fast_share": float(np.mean(np.hypot(req[:, 0], req[:, 1]) >= fast_mps))}
 
 
 def _share(rows: Sequence[dict[str, Any]], pick) -> float | None:

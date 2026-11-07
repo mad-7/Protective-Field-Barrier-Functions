@@ -11122,3 +11122,14 @@ need not repeat its recorded episode).
   planner; in situ includes the route cap and the recovery). All within 50 ms. Descriptive only; no
   compute-advantage claim against B6 (ruled 2026-11-07).
 - The CoDIT draft's placeholders are filled from these (B1 64.0, B2 52.8 per planned; PFB 27.9 ms).
+
+**3a completed, L5's wandering anatomy (trace_report.py on the two wander traces):**
+- **No oscillation.** Deterministic (as evaluated): 0.20-0.41 sign flips per second of the lateral command
+  and 0.72-1.04 of the yaw command -- smooth detours. Stochastic: 2.6-7.6 and 6.4-9.3 flips/s, the
+  sampling noise. Latched share 0.00-0.01; fallback 0.7-1.7 % of steps (deterministic).
+- **The PFB changes the command on 99-100 % of steps in every wandering episode** (both modes). Open:
+  whether this is specific to the wandering episodes or general, and whether the policy simply asks for
+  more speed than the selected band allows (delegating speed regulation to the filter). Added to the
+  analysis (tested): the median requested planar speed and the share of steps asking >= 0.45 m/s; to be
+  read on the wander traces and on the non-wandering episodes of the stops trace (`T184534Z`: indices 11,
+  24 succeed on 9-14 m). Not a defect by itself: L5 is defined as the policy WITH the filter.

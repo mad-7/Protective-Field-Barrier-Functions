@@ -107,3 +107,13 @@ def test_filter_intervention_and_latched_shares():
     bare = wandering([_row(i, 0.1 * i, 0, 0, 0.1 * i, 1.0) for i in range(5)], plan_length_m=1.0,
                      dt=0.05)
     assert bare["pfb_intervention_share"] is None
+
+
+def test_requested_speed_median_and_fast_share():
+    """Requests: 4 steps at (0.3, 0.4) = 0.5 m/s, 6 at (0.1, 0) = 0.1 m/s -> median 0.1, fast share
+    (>= 0.45 m/s) 0.4."""
+    reqs = [(0.3, 0.4, 0.0)] * 4 + [(0.1, 0.0, 0.0)] * 6
+    rows = [_row(i, 0.1 * i, 0, 0, 0.1 * i, 1.0, req=r) for i, r in enumerate(reqs)]
+    w = wandering(rows, plan_length_m=1.0, dt=0.05)
+    assert w["requested_speed_median_mps"] == pytest.approx(0.1)
+    assert w["requested_fast_share"] == pytest.approx(0.4)
