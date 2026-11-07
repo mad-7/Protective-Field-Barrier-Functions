@@ -11100,3 +11100,25 @@ need not repeat its recorded episode).
   same places, the stop-recovery-restop pattern found 2026-10-13. Behavioural; the latch anatomy (releases,
   recovery modes) is in the traces' summary.json.
 - 3c/3d (both denominators, compute) await the re-summaries' output.
+
+**3c and 3d, every arm on both denominators, with moving speed and compute** (resummarize_eval.py, tune set,
+633 m planned; B-arms' selected candidates, L5's pilot checkpoint):
+
+| arm | success | per 100 m planned | per 100 m driven | completed only | driven m | moving m/s | latched | decision p95 ms |
+|---|---|---|---|---|---|---|---|---|
+| B1 | 0.017 | 64.0 | 173.1 | 66.0 | 234 | 0.158 | 0.875 | 2.2 |
+| B2 | 0.250 | 52.8 | 86.1 | 26.6 | 388 | 0.059 | 0.420 | 1.8 |
+| B3 | 0.667 | 20.5 | 23.8 | 0.47 | 547 | 0.070 | 0.064 | -- |
+| B6 | 0.833 | 0.47 | 0.44 | 0.34 | 687 | 0.091 | 0.0008 | 34.5 |
+| B7 | 0.500 | 0.47 | 0.59 | 0.00 | 509 | 0.048 | 0.0005 | 28.1 (PFB 27.9) |
+| L5 | 0.517 | 0.95 | 0.59 | 0.34 | 1,012 | 0.130 | 0.0015 | 28.4 (PFB 28.0) |
+
+- The planned-length rate reorders the arms that drive LESS than their routes (B1 234 m, B2 388 m of 633 m
+  driven: their driven rates are inflated 2.7x and 1.6x) and the one that drives MORE (L5 1.6x). B6 and B7
+  tie per planned length (3 stops each).
+- **Compute in situ** (during the runs, four instances on the host, per-step decision time): the PFB's QP
+  p95 27.9 ms in B7 and 28.0 ms in L5 (median 1.6 / 18.5 ms, max 49.5 / 44.5 ms), B6 34.5 ms (its
+  synthetic measurement 37.1 ms), B1 and B2 below 2.5 ms (the synthetic 0.02-0.03 ms measures the bare
+  planner; in situ includes the route cap and the recovery). All within 50 ms. Descriptive only; no
+  compute-advantage claim against B6 (ruled 2026-11-07).
+- The CoDIT draft's placeholders are filled from these (B1 64.0, B2 52.8 per planned; PFB 27.9 ms).
