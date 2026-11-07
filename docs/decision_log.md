@@ -10860,3 +10860,39 @@ evaluation `runs/eval/L5_sac_pfb_unshaped_20261106T130110Z_seed0`, against the c
   this; the primary is unchanged.
 - Pending: L5's `summary.json`, `provenance.json` and `memory_trend.jsonl` (the supervisor's
   simulator-memory slope).
+
+**L5 9000002 provenance and memory (2026-11-06).** Commit d924eca, clean, DESKTOP-55VR508, cuda, scene
+537f1bbb, environment 6ad7f6af (matches the frozen one), display off; 4 instances measured at start and
+at end. Completed 2,000,000 steps, 1,754 episodes: 924 success, 814 stall_truncated, 16 timeout, **0
+unrecoverable_stop**, at-rest/stationary triggers 0.
+- **Throughput: 21.1 steps/s** (94,944 s, 26.4 h), against L1's 33.2 alone-ish runs: the PFB in the loop
+  plus four instances. Aggregate with four instances stays far above the 25 steps/s requirement, but
+  **each L5 run takes ~26 h, not ~17 h**: the confirmatory budget (Step 0, G2's projection) must use it.
+- **Memory (the supervisor's ask): simulator +4.7 MB per 100 episodes** (402 -> 484 MB over 1,754
+  episodes; A20's reference 1.7, B7's alpha tuning 32); Python 3,560 MB at step 3,000 and 3,568 at the
+  end (+7.5 MB after the start-up allocation); GPU 28 MB reserved; no alarm.
+
+## 2026-11-07 - B6 TUNED: candidate 11 written into configs/base.yaml; B6 is the strongest arm on the tune set
+
+`runs/tuning/B6_field_aware_mppi_20261104T141227Z_seed0`: commit d924eca, clean, DESKTOP-55VR508, scene
+537f1bbb, environment 6ad7f6af, display off, **4 instances measured**; `selected_on_boundary` empty.
+- **Selected by the declared rule: candidate 11** -- best success 0.833 (50/60) and the only candidate
+  within 5 points (the next, 0 and 9, at 0.767); **0.44 stops/100 m**, mission time 110.9 s, no contact,
+  10 timeout, 0 unrecoverable_stop. Candidate 0 (the disclosed manual-check values): 0.767, 13.4/100 m.
+  Seven candidates reached <= 5 stops/100 m; four with success <= 0.12 sat near zero stops.
+- Positions (log ranges): temperature 0.0328 75.8 %, noise vx 0.0943 49.7 %, vy 0.101 52.9 %, wz 0.183
+  78.6 %, route_tracking 0.675 41.5 %, goal_progress 29.4 73.4 %, field_breach 26.4 71.1 %, smoothness
+  0.0731 **93.2 %** (nearest an edge, 6.8 % below its ceiling). No boundary by the 1 % test.
+- **Noted:** these unit positions equal B3's candidate 11 exactly. Both spaces are 8-D and sampled with
+  `--seed 0`, so candidate i is the same point of the unit cube mapped onto each space; both selections
+  happen to be index 11. Not a defect (the declared seeded sampler), but it means B3's and B6's
+  candidate sets are not independent draws; disclosed.
+- **Bearing on the hypotheses (tune set, monitoring only):** B6 (0.833, 0.44/100 m) is stronger than the
+  privileged oracle (0.717: a non-replanning route tracker, which fails the 17 blocked routes that MPPI
+  can sample around), than L5's pilot checkpoint (0.517, 0.59/100 m driven) and B7 (0.50, 0.59). On these
+  numbers neither H1 (L5 fewer stops than every comparator, B6 included) nor H1prime (B7 fewer than B6)
+  is favoured. Put to the supervisor with the option, raised by the researcher, of improving the
+  learning setup before confirmatory training (only identically for every learned arm, rule 17).
+- Values copied exactly; tests updated (tests/test_mppi.py pins the tuned values and builds candidate 0
+  explicitly for its drives-check; tests/test_tuning.py checks the ranges' centres against candidate 0).
+  Fast suite: 1,615 passed, 1 skipped.

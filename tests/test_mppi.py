@@ -211,15 +211,23 @@ def test_the_band_and_rest_rows_follow_the_layer(table):
     assert rows[2] >= table.rest_base and rows[3] < table.rest_base   # a spin is moving
 
 
+# B6's block before its tuning: candidate 0 of the tuning run (ruled 2026-10-27).
+CANDIDATE_0 = {**CFG["baselines"]["mppi"], "temperature": 0.01, "noise_std": [0.10, 0.10, 0.10],
+               "weights": {"route_tracking": 1.0, "goal_progress": 10.0, "field_breach": 10.0,
+                           "smoothness": 0.01}}
+
+
 def test_params_from_the_config_and_their_refusals():
     block = CFG["baselines"]["mppi"]
     p = MPPIParams.from_block(block)
     # samples x horizon fixed by the real-time measurement on the training host (2026-10-29).
     assert (p.horizon_steps, p.samples, p.iterations) == (20, 1024, 1)
-    # Candidate 0, ruled 2026-10-27.
-    assert p.noise_std == (0.10, 0.10, 0.10) and p.temperature == 0.01
-    assert (p.goal_progress, p.smoothness, p.field_breach, p.route_tracking) == (10.0, 0.01, 10.0,
-                                                                                 1.0)
+    # TUNED 2026-11-07 (candidate 11 of runs/tuning/B6_field_aware_mppi_20261104T141227Z_seed0),
+    # copied exactly; candidate 0 (ruled 2026-10-27) is CANDIDATE_0 below.
+    assert p.noise_std == (0.09430700444632568, 0.10149237487460293, 0.18319219038226955)
+    assert p.temperature == 0.032768585178131346
+    assert (p.goal_progress, p.smoothness, p.field_breach, p.route_tracking) == (
+        29.441988828637964, 0.07313400771209624, 26.44147974840966, 0.6750123188717693)
     assert block["compute_measurement"] == "runs/realtime/REALTIME_20261029T095844Z_seed0"
     assert MPPIParams.from_flat(**flatten_numeric(block)) == p
     with pytest.raises(ValueError, match="declared"):
@@ -393,7 +401,7 @@ def test_the_configured_candidate_0_drives(table):
     """Candidate 0 (ruled 2026-10-27; it replaced initial values that did not move the robot, the
     finding of that day) drives forward on an open, straight route at the configured 1024 x 20,
     under the acceleration limiter (0.4 m/s is 16 steps away at a_max)."""
-    c = FieldAwareMPPI.from_config(CFG)
+    c = FieldAwareMPPI.from_config({**CFG, "baselines": {**CFG["baselines"], "mppi": CANDIDATE_0}})
     c.begin_episode({"scenario_seed": 3})
     inp = route_input([[0.0, 0.0], [10.0, 0.0]], scan=ray_scan())
     cmds = np.array([c.command(inp) for _ in range(30)])
