@@ -18,7 +18,12 @@ unlocked, of the wrong size or failing `verify()`; and a SECOND attempt at a sha
 once. After a crash, `--rerun-after-crash <the crashed run dir>` runs it again and records the crashed run
 in `evaluated.json`; the rerun goes into the decision log.
 
-Writes `runs/test/CLASSICAL_shard<i>of<n>_<stamp>_seed<seed>/`: config.yaml, provenance.json,
+**`--condition`** (2026-11-08): `unmapped_static` (the default, HF-c's population) or `mapped_only`,
+the other half of the locked test set, run the same way (descriptive and per-condition reporting; HF-c
+and H1 do not use it). The two conditions are separate sealed evaluations, each shard once.
+
+Writes `runs/test/CLASSICAL_shard<i>of<n>_<stamp>_seed<seed>/` (unmapped_static; the name kept from the
+first run) or `runs/test/CLASSICAL_mapped_only_shard<i>of<n>_<stamp>_seed<seed>/`: config.yaml, provenance.json,
 evaluated.json, route_profiles.json, <arm>/episodes.jsonl (one line per episode, written as it ends),
 <arm>/ring/, and summary.json (per arm: outcome_summary and the recovery statistics). Nothing here
 analyses HF-c: `scripts/analyse_hfc.py` does, from all shards together.
@@ -57,7 +62,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 PREREG = REPO_ROOT / "preregistration"
 TEST_DIR = REPO_ROOT / "scenarios" / "test"
 STRATA = ("narrow", "medium", "wide")
-CONDITION = "unmapped_static"
+CONDITIONS = ("unmapped_static", "mapped_only")
 # arm -> (controller, filter on)
 ARMS = {"B1": ("pure_pursuit", False), "B2": ("regulated_pure_pursuit", False),
         "B3": ("dwa", False), "B6": ("field_aware_mppi", False),
@@ -73,8 +78,15 @@ def _module(name: str):
     return module
 
 
-def test_sets() -> list[Path]:
-    return [TEST_DIR / f"test_{CONDITION}_{s}.json" for s in STRATA]
+def test_sets(condition: str = "unmapped_static") -> list[Path]:
+    if condition not in CONDITIONS:
+        raise ValueError(f"unknown condition {condition!r}")
+    return [TEST_DIR / f"test_{condition}_{s}.json" for s in STRATA]
+
+
+def run_prefix(condition: str) -> str:
+    """The run-name prefix: unmapped_static keeps the first run's `CLASSICAL_` (2026-11-07)."""
+    return "CLASSICAL_" if condition == "unmapped_static" else f"CLASSICAL_{condition}_"
 
 
 def shard_indices(n: int, shard: int, shards: int) -> list[int]:
@@ -101,9 +113,11 @@ def preregistered_size() -> int:
     return int(test["per_cell"])
 
 
-def prior_attempts(shard: int, shards: int) -> list[Path]:
-    root = REPO_ROOT / "runs" / "test"
-    return sorted(root.glob(f"CLASSICAL_shard{shard}of{shards}_*")) if root.is_dir() else []
+def prior_attempts(shard: int, shards: int, condition: str = "unmapped_static",
+                   root: Path | None = None) -> list[Path]:
+    root = REPO_ROOT / "runs" / "test" if root is None else root
+    pattern = f"{run_prefix(condition)}shard{shard}of{shards}_*"
+    return sorted(root.glob(pattern)) if root.is_dir() else []
 
 
 def main() -> int:
@@ -116,6 +130,8 @@ def main() -> int:
     parser.add_argument("--instances", type=int, required=True)
     parser.add_argument("--g2", required=True, help="the G2 summary.json that approves --instances")
     parser.add_argument("--workers", type=int, default=4, help="processes for the route profiles")
+    parser.add_argument("--condition", choices=CONDITIONS, default="unmapped_static",
+                        help="which half of the locked test set (2026-11-08)")
     parser.add_argument("--rerun-after-crash", default=None,
                         help="the crashed run directory of this shard (recorded; decision log)")
     add_display_flag(parser, default="on")
@@ -140,7 +156,7 @@ def main() -> int:
     if dirty:      # the same test as provenance.json's `dirty`: a sealed run must record False
         raise SystemExit("the working tree is not clean (untracked files count); commit first")
     per_cell = preregistered_size()
-    prior = prior_attempts(args.shard, args.shards)
+    prior = prior_attempts(args.shard, args.shards, args.condition)
     if prior:
         named = Path(args.rerun_after_crash).resolve() if args.rerun_after_crash else None
         if named is None or named not in [p.resolve() for p in prior]:
@@ -152,7 +168,7 @@ def main() -> int:
 
     scenarios: list[dict[str, Any]] = []
     set_of: list[str] = []
-    for path in test_sets():
+    for path in test_sets(args.condition):
         if not path.is_file():
             raise SystemExit(f"test set not found: {path.relative_to(REPO_ROOT).as_posix()}")
         manifest = load_set(path)
@@ -174,16 +190,16 @@ def main() -> int:
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     run_dir = create_run_dir(REPO_ROOT / "runs" / "test",
-                             f"CLASSICAL_shard{args.shard}of{args.shards}_{stamp}", args.seed, cfg)
+                             f"{run_prefix(args.condition)}shard{args.shard}of{args.shards}_{stamp}", args.seed, cfg)
     (run_dir / "evaluated.json").write_text(json.dumps({
-        "amendments": ["A14b", "A36"], "arms": {a: {"controller": c, "filter": f}
+        "amendments": ["A14b", "A36"], "condition": args.condition, "arms": {a: {"controller": c, "filter": f}
                                                 for a, (c, f) in ARMS.items()},
         "order_within_scenario": list(ARMS), "shard": args.shard, "shards": args.shards,
         "instance": args.instance, "instances": args.instances, "positions": picked,
         "scenario_sha256": [s.get("scenario_sha256") for s in sub],
         "environment": environment_identity(on)["sha256"], "alpha": float(on["filter"]["alpha"]),
         "b2_parameters": cfg["baselines"]["regulated_pure_pursuit"],
-        "sets": {p.relative_to(REPO_ROOT).as_posix(): text_sha256(p) for p in test_sets()},
+        "sets": {p.relative_to(REPO_ROOT).as_posix(): text_sha256(p) for p in test_sets(args.condition)},
         "g2": Path(args.g2).as_posix(),
         "rerun_after_crash": Path(args.rerun_after_crash).as_posix() if args.rerun_after_crash
         else None}, indent=1, default=float), encoding="utf-8")

@@ -11298,3 +11298,15 @@ same day with B8 and the learned contrasts is superseded and not adopted):
 Implemented: `pfbnav/eval/hfc.py`, `scripts/calibrate_hfc.py`, `scripts/evaluate_test.py`,
 `scripts/analyse_hfc.py`, `docs/pending/A36_amendment.md`, `docs/pending/apply_A36.py`;
 tests `tests/test_hfc.py`, `tests/test_apply_A36.py` (on a copy of preregistration/).
+
+
+## 2026-11-08 - HF-c calibration PASSED on the host; the mapped_only half prepared
+
+- `runs/power/HFC_CAL_20261107T231644Z_seed0`: **GATE PASS** (bound 0.0297); all 10 gated cells pass, the highest
+  one-sided rejection 0.0274. Reported, not gated: rate 0.25 at CV 0.5 (0.0312) and 1.5 (0.0337), rate 5 at CV 1.5
+  (0.0307) exceed the bound -- slightly anti-conservative at ~4 expected events, as A36 disclosed; the 0.25 cells
+  differ from the laptop preview by Monte Carlo noise around the bound. B2 runs near 50 per 100 m, far from that region.
+- The researcher: run the mapped_only half (150 scenarios) after the unmapped_static run.
+  `scripts/evaluate_test.py --condition mapped_only` (runs `CLASSICAL_mapped_only_shard*`, sealed apart, each
+  shard once) and `scripts/analyse_hfc.py --condition mapped_only`: no HF-c verdict there (its population is
+  unmapped_static); the B7 comparisons are exploratory and the table descriptive, labelled with the condition.
