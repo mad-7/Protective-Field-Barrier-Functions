@@ -1,7 +1,8 @@
 % CoDIT regular paper (up to 6 pages, IEEE conference double-column). Build: pdflatex, bibtex, pdflatex x2.
 % Every number is traced in paper/codit2026/README.md; \tbd marks a value still to be filled in.
 % SCOPE (researcher, 2026-11-07): the PFB as a safety filter for classical local planners only.
-% PRELIMINARY: all results are tuning-set results; obtain the supervisor's approval before submission.
+% DRAFT (supervisor, 2026-11-07): all results are development-set (tuning-set) results; submission is the
+% authors' decision. The comparison with classical planners is a declared exploratory contingency hypothesis.
 % Figures: FIG_OUT=paper/codit2026/figures FIG_TEXT_WIDTH=7.16 FIG_SCOPE=classical
 %          python paper/figures/scripts/{fig1_architecture,fig2_field_geometry,fig5_pfb_step,fig_codit_results}.py
 \documentclass[conference]{IEEEtran}
@@ -45,10 +46,12 @@ safety function. The barrier is derived from the same configuration as the safet
 continuous, speed- and direction-dependent protective field; a quadratic program minimally modifies the
 command of an arbitrary local planner so that this field remains clear. The approach is evaluated in
 simulation on a holonomic platform in warehouse aisles of three widths, with four tuned classical
-planners as references. When the PFB is placed beneath a tuned Regulated Pure Pursuit planner, the rate
-of protective stops decreases from 86.1 to 0.59 per 100\,m and the fraction of time spent in a stop from
-42\,\% to 0.05\,\%, while the planner's driving speed is preserved. These preliminary results suggest
-that consistency between the barrier and the certified safety function is an effective means of
+planners as references. On the development (tuning) set, placing the PFB beneath a tuned Regulated Pure
+Pursuit planner reduces the rate of protective stops from 86.1 to 0.59 per 100\,m and the fraction of
+time spent in a stop from 42\,\% to 0.05\,\%, while the planner's driving speed is preserved; a
+field-aware MPPI planner is indistinguishable from it in terms of stops (three versus three events). The
+comparison with classical planners is a declared exploratory contingency hypothesis whose held-out
+evaluation is pending. These preliminary results suggest that consistency between the barrier and the certified safety function is an effective means of
 reconciling local planning with industrial safety equipment.
 \end{abstract}
 
@@ -111,7 +114,7 @@ scan, whose zero level set is a continuous protective field that depends on the 
 yaw rate of the robot and is constructed from the configuration of the safety function;
 \item a filtering scheme based on one QP per speed regime, which respects the actuation and acceleration
 limits of a holonomic platform;
-\item an experimental evaluation in which all planners operate above the same emulated safety function,
+\item an exploratory evaluation on a development set, in which all planners operate above the same emulated safety function,
 together with an analysis of the failures that persist when the filter is active.
 \end{itemize}
 
@@ -143,7 +146,7 @@ certified safety function, evaluated at the speed and direction that the robot w
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_codit_results.pdf}
-\caption{Results on the tuning set. (a) Protective stops per 100\,m driven (logarithmic scale).
+\caption{Results on the development (tuning) set. (a) Protective stops per 100\,m driven (logarithmic scale).
 (b) Fraction of time spent in a latched stop and success rate. (c) Protective stops of B7 and number
 of fallback steps of the PFB as functions of the gain $\alpha$.}
 \label{fig:results}
@@ -253,12 +256,13 @@ the route without replanning, serves as a positive control.
 
 The primary metric is the number of protective stops per 100\,m of planned route. The rate per 100\,m
 actually driven, the fraction of time spent in a latched stop and the mean speed outside stops are
-reported as secondary metrics. Episodes are limited to 200\,s. The results reported here were obtained
-on the tuning set, comprising 60 scenarios with a total planned length of 633\,m, and are therefore
-preliminary; a preregistered evaluation on held-out layouts is in progress.
+reported as secondary metrics. Episodes are limited to 200\,s. All results reported here are
+development-set results, obtained on the tuning set of 60 scenarios with a total planned length of
+633\,m, and are therefore preliminary. Within the wider study, the comparison of B7 with the classical
+planners is a declared exploratory contingency hypothesis; its evaluation on held-out layouts is pending.
 
 \subsection{Results}
-Table~\ref{tab:main} and Fig.~\ref{fig:results} summarise the performance of all planners. The
+Table~\ref{tab:main} and Fig.~\ref{fig:results} summarise the development-set performance of all planners. The
 introduction of the PFB beneath RPP reduces the rate of protective stops from 86.1 to 0.59 per 100\,m
 driven and the fraction of time spent in a stop from 42\,\% to 0.05\,\%, while the success rate doubles
 from 0.25 to 0.50. As shown in Table~\ref{tab:strata}, the reduction is observed in each class of aisle
@@ -266,7 +270,7 @@ width, with no stop recorded in the narrow and medium aisles.
 
 \begin{table}[t]
 \centering
-\caption{Performance on the tuning set (60 scenarios, preliminary).}
+\caption{Performance on the development (tuning) set (60 scenarios, preliminary).}
 \label{tab:main}
 \setlength{\tabcolsep}{3pt}
 \begin{tabular}{lccccc}
@@ -287,7 +291,7 @@ Privileged tracker & 0.717 & 49.0 & 59.1 & 0.377 & 0.110 \\
 
 \begin{table}[t]
 \centering
-\caption{RPP without (B2) and with (B7) the PFB, by aisle width (20 scenarios each).}
+\caption{RPP without (B2) and with (B7) the PFB, by aisle width (development set, 20 scenarios each).}
 \label{tab:strata}
 \setlength{\tabcolsep}{4pt}
 \begin{tabular}{lcccc}
@@ -335,13 +339,13 @@ after six to eight protective stops at the same locations, although the route is
 1--8\,cm (95th percentile of the cross-track error); the failure thus lies in the interaction with the
 field and its restart condition after stops at shelf corners, not in tracking. DWA achieves a higher success rate than B7 (0.667) at the cost of 23.8 stops per
 100\,m. The field-aware MPPI controller, which incorporates the certified field into its rollout cost,
-is the strongest reference: it succeeds on 50 of the 60 scenarios and records three stops, the same
-number as B7. Given the small number of events, the tuning set does not permit a statistical
-distinction between these two planners in terms of stops.
+is the strongest reference: it succeeds on 50 of the 60 scenarios and records three stops, against three
+for B7. At three versus three events the two planners are indistinguishable in terms of stops, and the
+development set cannot separate them.
 
 \emph{Computational cost.} On the evaluation host, the 95th percentile of the planner's decision time
 per control step, measured in synthetic aisles, is 0.02\,ms for B1, 0.03\,ms for B2, 4.4\,ms for B3
-and 37.1\,ms for B6 (1024 samples over 20 steps). Over the 60 tuning episodes of B7, the PFB's QP took
+and 37.1\,ms for B6 (1024 samples over 20 steps). Over the 60 development-set episodes of B7, the PFB's QP took
 27.9\,ms at the 95th percentile (median 1.6\,ms, maximum 49.5\,ms), and B7's complete decision
 28.1\,ms; all values lie within the control period of 50\,ms.
 
@@ -351,16 +355,18 @@ trigger set suffices to eliminate almost all protective stops of an existing cla
 class of aisle width, without reducing its driving speed and without modifying the planner. The failures
 that persist are attributable to the planner and to the task rather than to the filter: a conservative
 speed regulation that becomes apparent under the time limit, and obstacles that cannot be bypassed
-without replanning. A field-aware MPPI controller attains a comparable stop rate by incorporating the
-field into its cost function; the PFB, in contrast, achieves this rate as an additional layer beneath a
+without replanning. A field-aware MPPI controller, which incorporates the field into its cost function, is
+indistinguishable from B7 in terms of stops (three versus three events); the PFB, in contrast, achieves
+this result as an additional layer beneath a
 planner that has no knowledge of the field. The relative merits of the two approaches with respect to
-stops, success and computational cost cannot be established on the tuning set and are the subject of the
-evaluation on held-out layouts.
+stops, success and computational cost cannot be established on the development set and are the subject of
+the pending evaluation on held-out layouts.
 
 The present evidence is subject to several limitations: a single set of 60 scenarios with few events, a
-single platform and simulator, and an emulated rather than physical safety function. An evaluation
-on held-out layouts has been preregistered; it will be conducted with a sample size
-determined by a power analysis, and will report the rate ratio of protective stops per planned length
+single platform and simulator, and an emulated rather than physical safety function. For the comparison
+with classical planners, which the study declares as an exploratory contingency hypothesis, an evaluation
+on held-out layouts is pending; it will be conducted with a sample size determined by a power analysis,
+and will report the rate ratio of protective stops per planned length
 with respect to each reference planner. Future work will also consider planners tuned in the presence of
 the filter and the transfer of the approach to a physical robot equipped with certified scanners.
 

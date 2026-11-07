@@ -20,9 +20,13 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
 **Build** (needs `IEEEtran.cls`): `pdflatex pfb_codit && bibtex pfb_codit && pdflatex pfb_codit && pdflatex pfb_codit`.
 
 ## Before submitting
-1. **Supervisor approval.** Every result is TUNE-SET evidence ("monitoring and framing only" in the
-   preregistered study). Publishing it as preliminary is the supervisor's decision; no test layout may be
-   used for any number in the paper (hard rule 2).
+1. **This is a DRAFT; submission is the authors' decision** (the researcher, the supervisor and the
+   co-authors; supervisor ruling 2026-11-07). The preferred basis is held-out classical results, once a
+   sealed classical test evaluation exists. Any earlier version must: label every number as
+   development-set (tuning-set) results; state that B6 and B7 are indistinguishable at 3 versus 3 stops;
+   state that the comparison of B7 with the classical planners is a declared exploratory contingency
+   hypothesis (H1'), held-out evaluation pending. Every result here is tune-set evidence ("monitoring and
+   framing only" in the study); no test layout may be used for any number in the paper (hard rule 2).
 2. **Red `[...]` placeholders** (`	bd`): authors and affiliation; B1's and B2's per-planned-length stop
    rates (`scripts/resummarize_eval.py` on `runs/tuning/B1_pure_pursuit_20261104T183811Z_seed0/candidate_13`
    and `runs/tuning/B2_regulated_pure_pursuit_20261030T111716Z_seed0/candidate_23`); the PFB's p95 compute
