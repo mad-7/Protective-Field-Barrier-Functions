@@ -1,5 +1,6 @@
 """Re-read a finished evaluation with the current summary (read-only, seconds): the metrics added after it
-ran -- moving speed, latched share, the stop rate on completed routes (ruled 2026-11-06, A34) -- beside
+ran -- moving speed, latched share, the stop rate on completed routes (ruled 2026-11-06, A34), and
+the per-step compute -- beside
 the primary and the per-planned-length rate, overall and per stratum.
 
     python scripts/resummarize_eval.py --config configs/base.yaml --seed 0 --run runs/eval/<name>
@@ -39,7 +40,12 @@ def main() -> int:
     records = [json.loads(line) for line in
                (run / "episodes.jsonl").read_text(encoding="utf-8").splitlines() if line]
     print(f"{run.name}: {len(records)} episodes")
-    print(_line("overall", outcome_summary(records, dt)))
+    overall = outcome_summary(records, dt)
+    print(_line("overall", overall))
+    # Per-step compute (ruled 2026-10-27; descriptive, 2026-11-07): ms, pooled over the episodes.
+    for part, c in overall["compute"].items():
+        print(f"  compute {part}: " + ", ".join(f"{k} {v:.4g}" if isinstance(v, float) else f"{k} {v}"
+                                                for k, v in c.items()))
     for stratum in sorted({r.get("stratum") for r in records} - {None}):
         print(_line(stratum, outcome_summary([r for r in records if r.get("stratum") == stratum], dt)))
     return 0
