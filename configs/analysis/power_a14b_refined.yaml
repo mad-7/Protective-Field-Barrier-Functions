@@ -1,0 +1,51 @@
+# A14b refined (ruled 2026-11-07, item 2): measured per-comparator rates, B6 on a band, K in {10, 15, 20},
+# H1, H1prime and H2. Rates are protective stops per 100 m of PLANNED route (A35's primary), from the tune
+# set (decision log 2026-11-07, "All arms under the A34 denominators"). alpha, comparators and the Holm
+# family come from endpoints.yaml; route lengths from the pilot set (as power_corrected.yaml).
+defaults: ../base.yaml
+
+power_a14b_refined:
+  seed_counts: [10, 15, 20]           # K per learned arm (nested: the first K of 20 simulated seeds)
+  min_power: 0.80
+  classical: [B1, B2, B3, B6]
+  learned: [L1, L2, L3]
+  h1prime_comparators: [B1, B2, B6]
+  measured_rates_per_100m:            # tune set, per 100 m planned (633 m over 60 scenarios)
+    B1: 64.0                          #   candidate 13
+    B2: 52.8                          #   candidate 23
+    B3: 20.5                          #   candidate 11
+  b6_rates_per_100m: [0.25, 0.5, 1.0] # the ruled BAND (B6 measured 0.47 on 3 events)
+  learned_ratio_to_b6: 1.0            # L1-L3 have no tune-set rate: placed AT B6's rate, the binding
+                                      #   (conservative) choice; declared, flagged to the supervisor
+  rate_ratios: [0.5, 0.7, 1.0, 2.0]   # L5 / B6 (and B7 / B6 for H1prime); 1.0 = the null, 2.0 = worse
+  seed_cv: [0.15, 0.3, 0.5]           # PROVISIONAL band (ruled) until L5 9000002 + 9000003 give the CV
+  difficulty_cv: 1.0                  # the declared middle point (power_corrected.yaml)
+  sizes_per_cell: [25, 35, 50, 75, 100]   # scenarios per (stratum x condition): 150-600 evaluated
+  conditions_evaluated: 2             # mapped_only and unmapped_static (gates.yaml layout_sets.unmapped)
+  max_scenarios: 600                  # ruling 3: nothing above 600 (~14 days)
+  route_lengths_from: scenarios/pilot/pilot_narrow.json
+  reps: 2000                          # MC SE at power 0.8: 0.009
+  h2:
+    cells_pooled: 2                   # narrow stratum, mapped_only + unmapped_static (endpoints.yaml)
+    l4_success_ranges:                # per scenario, uniform (ruled 2026-10-03)
+      - [0.3, 0.8]
+      - [0.05, 0.40]
+    effects: [0.0, 0.15, 0.20, 0.25]  # L5 - L4; 0.0 gives the test's size
+    seed_logit_sd: [0.15, 0.3, 0.5, 1.0]   # per-seed logit shift (ruled 2026-10-03 grid)
+    min_difference: 0.15              # H2's success: difference >= +15 pp AND significant
+    reps: 4000
+  # Wall-clock: per-arm EPISODE costs, ESTIMATES from the tune runs (as power_a14b.yaml).
+  instances: 4
+  episode_wall_s:
+    B1: 121
+    B2: 114
+    B3: 85
+    B6: 169
+    B7: 169
+    L1: 121
+    L2: 121
+    L3: 190
+    L4: 150
+    L5: 150
+  learned_arms_evaluated: [L1, L2, L3, L4, L5]      # x K seeds each
+  classical_arms_evaluated: [B1, B2, B3, B6, B7]    # once each

@@ -268,11 +268,17 @@ def test_the_record_counts_the_pfbs_decision_modes(tmp_path):
         def step(self, action):
             obs, r, term, trunc, info = super().step(action)
             self.k = getattr(self, "k", 0) + 1
-            info["pfb"] = {"mode": "fallback" if self.k % 2 else "filtered"}
+            info["pfb"] = {"mode": "fallback" if self.k % 2 else "filtered",
+                           "u": [0.3, 0.4, 0.2], "nominal": [0.6, 0.0, 1.0]}
+            info["applied"] = [0.3, 0.4, 0.2]
             return obs, r, term, trunc, info
 
     rec = run_episodes(Filtered(**ENV), Counter(), [1], ring=StepRing(4, tmp_path / "a"))[0]
     assert rec["pfb_modes"] == {"fallback": 3, "filtered": 2} and rec["episode_steps"] == 5
+    # item 5 (2026-11-07): the correction measures ride along, 0.5 m/s on every one of five steps
+    assert rec["pfb_measures"]["correction_mps"] == {"100": 5}
+    assert "pfb_measures" not in run_episodes(ScriptedEnv(**ENV), Counter(), [1],
+                                              ring=StepRing(4, tmp_path / "c"))[0]
     plain = run_episodes(ScriptedEnv(**ENV), Counter(), [1], ring=StepRing(4, tmp_path / "b"))[0]
     assert "pfb_modes" not in plain
 

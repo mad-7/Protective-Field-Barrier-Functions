@@ -60,3 +60,42 @@ def success_outcomes(rng: np.random.Generator, base: np.ndarray, delta: float, s
              else np.zeros((base.shape[0], n_seeds, 1)))
     prob = expit(logit(p)[:, None, :] + shift)
     return (rng.random(prob.shape) < prob).astype(np.float64)
+
+
+# ---------------------------------------------------------------------------------------------
+# A14b refined (ruled 2026-11-07, item 2): measured per-comparator rates, B6 as a band.
+# ---------------------------------------------------------------------------------------------
+def h1_arms_measured(b6_rate: float, ratio: float, p: dict[str, Any]) -> tuple[Arm, list[Arm]]:
+    """L5 and H1's seven comparators: B1-B3 at their MEASURED tune-set rates per 100 m planned
+    (`measured_rates_per_100m`), B6 at `b6_rate` (the band), every learned comparator at
+    `learned_ratio_to_b6` x B6 (no tune-set rate exists for L1-L3; declared), L5 at `ratio` x B6."""
+    measured = {str(k): float(v) for k, v in p["measured_rates_per_100m"].items()}
+    learned = float(p["learned_ratio_to_b6"]) * b6_rate
+    comps = []
+    for n in p["classical"]:
+        if n == "B6":
+            comps.append(Arm(n, b6_rate, False))
+        elif n in measured:
+            comps.append(Arm(n, measured[n], False))
+        else:
+            raise ValueError(f"no measured rate for classical comparator {n}")
+    comps += [Arm(n, learned, True) for n in p["learned"]]
+    return Arm("L5", ratio * b6_rate, True), comps
+
+
+def h1prime_arms(b6_rate: float, ratio: float, p: dict[str, Any]) -> tuple[Arm, list[Arm]]:
+    """B7 (at `ratio` x B6) and H1prime's comparators B1, B2, B6, every arm classical (runs once)."""
+    measured = {str(k): float(v) for k, v in p["measured_rates_per_100m"].items()}
+    comps = [Arm(n, b6_rate if n == "B6" else measured[n], False) for n in p["h1prime_comparators"]]
+    return Arm("B7", ratio * b6_rate, False), comps
+
+
+def three_way(lower: np.ndarray, higher: np.ndarray) -> dict[str, float]:
+    """Shares of replications whose interval lies below 0 ('favours', the first arm lower), above 0
+    ('against') or covers 0 ('inconclusive', the decision tree's outcome; ruling 3, 2026-11-07)."""
+    lower, higher = np.asarray(lower, bool), np.asarray(higher, bool)
+    if (lower & higher).any():
+        raise ValueError("an interval cannot lie both below and above 0")
+    n = lower.size
+    return {"favours": float(lower.sum()) / n, "against": float(higher.sum()) / n,
+            "inconclusive": float((~lower & ~higher).sum()) / n}

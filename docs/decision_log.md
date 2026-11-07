@@ -11194,3 +11194,52 @@ reaching 80 % power** ("--" = none up to 1,600):
   B6 (and possibly L2), and a grid with the measured per-comparator rates would give higher power for the
   same size; (ii) the seed CV is still assumed: L5's two pilot seeds (9000002, 9000003) will give its upper
   80 % bound; (iii) the conservativeness at the null suggests power is being lost to the correction.
+
+
+## 2026-11-07 - RULED (on the diagnostics / A14b / A35 report): six points; implemented
+
+1. **Diagnostics accepted, no defect.** Recorded as FINDINGS: L5's filter alters its command on ~100 % of
+   steps; L5 requests 0.43-0.63 m/s while moving at 0.13 m/s -- the filter sets the speed and the policy the
+   direction; the narrow-aisle detours accrue near the route's end; no overshoot, no circling. Pilots
+   continue unchanged.
+2. **A14b refined (offline):** per-comparator measured tune-set rates, B6's rate a BAND {0.25, 0.5, 1.0}
+   /100 m planned; L5/B6 ratios {0.5, 0.7, 1.0, 2.0}; seed CV provisional {0.15, 0.3, 0.5} until L5
+   9000002 + 9000003 give it; K in {10, 15, 20}; H2 (narrow success, +15 pp, paired) as well as H1/H1prime.
+   Per size: power per hypothesis, the expected 95 % CI half-width of L5-vs-B6's log rate ratio, wall-clock.
+   Implemented: `scripts/power_a14b_refined.py`, `configs/analysis/power_a14b_refined.yaml`, helpers
+   `h1_arms_measured`, `h1prime_arms`, `three_way` in `pfbnav/eval/power_grid.py`
+   (`tests/test_power_a14b_refined.py`: arm rates, the two-classical interval = t(n-1) x the scenario part,
+   H1prime's null calibration at equal rates, the wall-clock). Choices declared:
+   - L1-L3 have no tune-set rate: placed AT B6's rate (`learned_ratio_to_b6` 1.0), the binding choice;
+   - B7 for H1prime at the same ratios x B6 (its tune rate tied B6's, 3 vs 3 events);
+   - K nested: 20 seeds simulated per learned arm, the first K used, so the K comparison is paired;
+   - L5-vs-B6 reported three ways (favours / against / inconclusive) at the Holm level, half-width at 95 %.
+   **Correction to the first A14b report:** sizes are now scenarios per CELL (stratum x condition). The
+   test set holds 3 strata x 2 conditions (mapped_only, unmapped_static), so size s = 6 s scenarios
+   evaluated; H1 sees 3 s pairs (unmapped_static), H2 2 s (narrow, both conditions). The first grid's
+   wall-clock counted 3 s: it UNDER-STATED the evaluation by half (its "200 per stratum, 13.9 days" is 27.7
+   days). Days per scenario were right: 300 scenarios = 6.9 days at K = 10, 10.1 at K = 15, 13.3 at K = 20.
+   The grid sizes are 25-100 per cell (150-600 scenarios), the cap of ruling 3.
+3. **Test-size rule:** the smallest size <= 300 scenarios (~7 days) giving 80 % power for H2 under pilot
+   variance; up to 600 (~14 days) only if 300 fails AND the schedule fits before week 17; nothing larger.
+   H1 vs B6 is analysed as a rate-ratio CI (secondary), the decision tree reporting "inconclusive" if that
+   is the outcome; H1 is not weakened. K and the test size are decided together before the first
+   confirmatory run. Note: "~7 days" at 300 holds for K = 10 only (above).
+4. **A35 carve-out confirmed** (9100000-9100999 confirmatory; 9000000-9000099 pilot training), recorded
+   before any confirmatory run; the earlier range check was the supervisor's error, no data dependence.
+   Implemented: `reported_training_seed_problem` and `confirmatory_seed_problem` in
+   `pfbnav/training/seeds.py`; `tests/test_training_seeds.py` checks that no training seed in
+   [9000000, 9999999] outside the two ranges is reportable, that only the ten confirmatory seeds enter
+   H1/H2, and that gates.yaml's seeds pass.
+5. **Filter measures for every filtered arm (B7, L3, L4, L5):** ||u_PFB - u_nom|| (median, p95, share of
+   steps above 0.05 / 0.10 / 0.20 m/s), the yaw correction, requested vs executed planar speed.
+   Implemented: `pfbnav/eval/filter_measures.py` (5 mm/s histograms per episode, pooled exactly to one
+   bin), recorded per episode by `pfbnav/eval/runner.py` (`pfb_measures`) and summarised in
+   `outcome_summary`; `tests/test_filter_measures.py`, `tests/test_runner.py`. Descriptive only:
+   k_intervention and the reward unchanged; "the policy leans on the filter" recorded as a finding.
+   Runs from before this change carry no `pfb_measures` (summary None).
+6. **Conference paper: draft only; submission is the authors' decision; do not submit.** Preferred: the
+   held-out classical results after the sealed classical test evaluation. An earlier version labels every
+   number development-set, says "indistinguishable at 3 vs 3 events" (not "B6 matches B7"), states
+   "H1prime is a declared exploratory contingency; held-out evaluation pending", and never uses
+   "preregistered but exploratory". Applied in the paper session (131a804).

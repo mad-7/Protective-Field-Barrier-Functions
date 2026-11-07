@@ -24,6 +24,9 @@ import numpy as np
 from pfbnav.control.base import input_kind
 from pfbnav.envs.controller_input import ClassicalInput
 from pfbnav.eval.compute import ComputeHistogram, summarise
+from pfbnav.eval.filter_measures import KEYS as FILTER_KEYS
+from pfbnav.eval.filter_measures import ValueHistogram, step_values
+from pfbnav.eval.filter_measures import summarise as filter_summary
 from pfbnav.eval.ring import StepRing
 
 OUTCOMES = ("success", "collision", "timeout", "unrecoverable_stop")
@@ -77,6 +80,7 @@ def run_episodes(env, controller, indices: Iterable[int],
         ring.begin(int(index))
         total, steps, done = 0.0, 0, False
         modes: dict[str, int] = {}
+        measures = {k: ValueHistogram() for k in FILTER_KEYS}
         # Per-step compute (ruled 2026-10-27): the controller's act, the PFB's slot, their sum.
         hist = {"controller": ComputeHistogram(), "pfb": ComputeHistogram(),
                 "decision": ComputeHistogram()}
@@ -99,6 +103,9 @@ def run_episodes(env, controller, indices: Iterable[int],
             pfb = info.get("pfb")
             if pfb is not None:                 # the PFB's decision mode, counted per episode
                 modes[pfb["mode"]] = modes.get(pfb["mode"], 0) + 1
+                # How much the PFB corrected the command (ruled 2026-11-07, item 5; descriptive).
+                for k, v in step_values(pfb, info["applied"]).items():
+                    measures[k].add(v)
         episode = dict(info.get("episode") or {})
         if "outcome" not in episode:
             raise RuntimeError(f"scenario index {index} ended without an outcome in info['episode']")
@@ -106,6 +113,7 @@ def run_episodes(env, controller, indices: Iterable[int],
                   "episode_return": total, "episode_steps": steps}
         if modes:
             record["pfb_modes"] = modes
+            record["pfb_measures"] = {k: h.to_record() for k, h in measures.items()}
         record["compute_hist"] = {k: h.to_record() for k, h in hist.items() if h.steps}
         report = getattr(controller, "episode_report", None)
         if report is not None:
@@ -223,6 +231,9 @@ def outcome_summary(records: Sequence[dict[str, Any]], dt: float | None = None) 
         **{k: int(sum(int(r.get(k, 0)) for r in records)) for k in STATUS_COUNTS},
         # Ruled 2026-10-27: per-step compute for every controller (pfbnav/eval/compute.py).
         "compute": compute_summary(records),
+        # Ruled 2026-11-07 (item 5): the PFB's correction and requested vs executed speed, for the
+        # filtered arms (None otherwise). Descriptive.
+        "pfb_measures": filter_summary(records),
     }
 
 
