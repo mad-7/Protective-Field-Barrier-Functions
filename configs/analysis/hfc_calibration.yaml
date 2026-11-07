@@ -1,0 +1,14 @@
+# HF-c's calibration gate (A36, 2026-11-07): two classical arms at EQUAL rates, the A14a gate (one-sided
+# rejection on each side <= nominal + 3 MC SE). Run before the test is read; a gated cell failing stops HF-c.
+defaults: ../base.yaml
+
+hfc_calibration:
+  level: 0.05                         # HF-c's two-sided level (filter_efficacy_family alpha)
+  n_pairs: 150                        # unmapped_static test scenarios: 50 per cell x 3 strata (A14b)
+  reps: 10000                         # as power_corrected.yaml calibration.reps
+  tolerance_mc_se: 3.0                # the A14a gate
+  gated_rates_per_100m: [0.5, 1, 2, 5, 52.8]
+  gated_difficulty_cv: [0.5, 1.0]
+  reported_rates_per_100m: [0.25]     # reported, not gated (A36)
+  reported_difficulty_cv: [1.5]
+  route_lengths_from: scenarios/pilot/pilot_narrow.json

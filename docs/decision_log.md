@@ -11273,3 +11273,28 @@ reaching 80 % power** ("--" = none up to 1,600):
   without a ruling. Options for the ruling: a minimum expected event count per comparator in the size rule, or
   a declared zero-event rule (e.g. a variance floor or an exact conditional test for the classical part).
 - **Wall-clock:** 300 scenarios 6.9 / 10.1 / 13.3 days at K 10 / 15 / 20; 150 scenarios 3.5 / 5.1 / 6.6.
+
+
+## 2026-11-07 - DECIDED (the researcher): the held-out PFB-efficacy test tonight; A14b test size; A36 HF-c
+
+The researcher's decisions of the evening (recorded as theirs; the supervisor's proposal draft of the
+same day with B8 and the learned contrasts is superseded and not adopted):
+1. **A14b: the test size is 50 scenarios per cell** (3 strata x 2 conditions, 300 in all). Deviation from
+   ruling 3 of 2026-11-07, disclosed: fixed BEFORE L5's second pilot seed gives the pilot variance, at the
+   rule's 300 cap; never enlarged later.
+2. **A36: HF-c, "B7 triggers fewer protective stops per 100 m planned than B2"**, a confirmatory family
+   of its own (alpha 0.05, one member), separate from {H1, H2, H1N}; claim stop removal only (as A34);
+   decided AFTER the development-set rates were seen (B2 52.8, B7 0.47), disclosed. Calibration gate at
+   equal rates before the test is read (`configs/analysis/hfc_calibration.yaml`): a laptop preview (not
+   citable) passed every gated cell (rates 0.5-52.8, CV 0.5-1.0) and failed at 0.25 / CV >= 1.0; those
+   cells are reported, not gated.
+3. **The sealed classical test evaluation now:** B1, B2, B3, B6, B7 on the 150 unmapped_static test
+   scenarios, paired within one scene load per shard, four shards (`scripts/evaluate_test.py`), analysed
+   once by `scripts/analyse_hfc.py` (HF-c confirmatory; H1prime exploratory, no pivot occurred).
+4. **No learned-arm comparison now** (the researcher: "focus on proving the efficacy of the PFB"). L5 is
+   NOT evaluated on the test set: its only checkpoint is a pilot seed (rule 17), and a go/no-go read off
+   the test set would be development use of it (rule 2). A go/no-go for L5, if wanted later, runs on
+   development sets under a rule declared first.
+Implemented: `pfbnav/eval/hfc.py`, `scripts/calibrate_hfc.py`, `scripts/evaluate_test.py`,
+`scripts/analyse_hfc.py`, `docs/pending/A36_amendment.md`, `docs/pending/apply_A36.py`;
+tests `tests/test_hfc.py`, `tests/test_apply_A36.py` (on a copy of preregistration/).
