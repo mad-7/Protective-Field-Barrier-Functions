@@ -11159,3 +11159,38 @@ oscillation except one episode, no goal overshoot or circling), with the filter 
 step; 3b L5's rare stops: filter active, no fallback (lag/estimate), B7's at blocked routes (fallback,
 unmapped obstacle); 3c every arm on both denominators (table above); 3d PFB p95 27.9-28.0 ms in situ, max
 49.5 ms, B6 34.5 ms; 3e B1 behavioural (stop-recovery-restop, route tracked to 1-8 cm).
+
+## 2026-11-07 - A14b power grid: no feasible test size reaches 80 % power at the plausible rates
+
+`runs/power/A14B_20261107T193014Z_seed0` (K = 10, all seven H1 comparators at the rate, Holm alpha/3,
+difficulty CV 1.0, 2,000 replications; sizes per stratum, scenarios = 3 x size). **Smallest size per stratum
+reaching 80 % power** ("--" = none up to 1,600):
+
+| comparator rate /100 m | ratio | seed CV 0.15 | 0.3 | 0.5 |
+|---|---|---|---|---|
+| 0.25 | 0.5 | 1,600 | 1,600 | -- (0.35) |
+| 0.5 | 0.5 | 800 | 800 | -- (0.39) |
+| 1.0 | 0.5 | 400 | 400 | -- (0.41) |
+| 2.0 | 0.5 | 200 | 200 | -- (0.44) |
+| 0.25 | 0.7 | -- (0.20) | -- | -- |
+| 0.5 | 0.7 | -- (0.65) | -- (0.16) | -- |
+| 1.0 | 0.7 | 1,600 | -- (0.20) | -- |
+| 2.0 | 0.7 | 800 | -- (0.25) | -- |
+
+- **Size of the test (ratio 1.0, the null):** rejection 0.000-0.001 in every cell, against a nominal one-sided
+  0.0083: the corrected two-level test with all seven comparisons is very conservative here.
+- **Seed CV caps the power whatever the size:** at seed CV 0.5 no cell exceeds 0.44; at 0.3 power plateaus
+  near 0.96 (ratio 0.5) or 0.25 (ratio 0.7) -- with K = 10 the seed level, not the scenarios, binds.
+- **Wall-clock** (5 classical arms once, 5 learned x 10 seeds, 4 instances): 150 scenarios 3.5 days, 300
+  6.9, 600 13.9, 1,200 27.7, 2,400 55.4, 4,800 110.8 days.
+- **At the plausible rates** (tune set, per planned length: B6 0.47, B7 0.47, L5 0.95, i.e. L5 currently
+  HIGHER than B6, ratio ~2), the comparison that binds H1 is L5 against B6 at about 0.5/100 m. Even a
+  halving (ratio 0.5) needs 800 per stratum = 2,400 scenarios (55 days) at seed CV <= 0.3, and is
+  unreachable at 0.5. **No feasible size reaches 80 % at plausible rates.** Under ruling 3 (2026-11-07):
+  H1 is NOT weakened; rate-ratio CIs for every comparator become a declared secondary, and the decision
+  tree reports "inconclusive" if that is the outcome.
+- **Caveats for the supervisor:** (i) the grid puts ALL seven comparators at the rate (the decisive
+  intersection-union case); in fact B1-B3 run at 20-64/100 m planned, so the comparisons that bind are
+  B6 (and possibly L2), and a grid with the measured per-comparator rates would give higher power for the
+  same size; (ii) the seed CV is still assumed: L5's two pilot seeds (9000002, 9000003) will give its upper
+  80 % bound; (iii) the conservativeness at the null suggests power is being lost to the correction.
