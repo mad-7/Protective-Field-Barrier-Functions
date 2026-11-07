@@ -11133,3 +11133,13 @@ need not repeat its recorded episode).
   analysis (tested): the median requested planar speed and the share of steps asking >= 0.45 m/s; to be
   read on the wander traces and on the non-wandering episodes of the stops trace (`T184534Z`: indices 11,
   24 succeed on 9-14 m). Not a defect by itself: L5 is defined as the policy WITH the filter.
+
+**3a, the intervention share is general, not a wandering effect** (trace_report.py on the stops trace
+`T184534Z`, deterministic): the PFB changes L5's command on **100 % of steps in every episode**, including
+the ones that follow the route closely and succeed (index 11: 9.2 m on a 9.0 m route, cross-track p95
+0.29 m; index 24: 13.6 m on 10.4 m). One episode oscillates (index 43, wide, timeout: 8.5 lateral and 8.1
+yaw sign flips per second, deterministic). For contrast, B7 (RPP + PFB) on its two blocked-route episodes:
+50 % and 89 % of steps changed, lateral and yaw flips ~0.01/s. Reading, to be confirmed by the requested-
+speed columns (the host's `trace_report.py` predates them): L5 issues commands the filter must correct on
+every step -- most simply, asking for more speed than the selected band allows -- so the filter, not the
+policy, sets the speed. Not a defect (L5 is defined with the filter); a finding for the discussion.
