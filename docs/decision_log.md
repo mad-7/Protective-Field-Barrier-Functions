@@ -10934,3 +10934,10 @@ Selected candidate, then the range over all 24 (moving = mean speed while not la
   4.7/100 m): a non-replanning tracker held at obstacles across its route.
 - For the comparison with B6 (0.44 driven) the same three rates are needed for B6's, B3's and B7's
   selected candidates (their tuning episode logs); asked.
+
+**Per-step compute of the TUNED classical arms** (`runs/realtime/REALTIME_20261107T080552Z_seed0`, training
+host, synthetic 0.7/0.8/0.9 m aisles, 200 steps each, no simulator): p95 B1 0.022 ms, B2 0.033 ms, B3
+4.43 ms (max 5.5 ms); all far within the 50 ms criterion (B6's 1024 x 20 was 37.1 ms p95, 2026-10-29).
+**Corroboration of the speed finding:** in the same 10 s per aisle, B1 travelled 4.34 m and B3 4.20 m, but
+the tuned B2 only **0.73 m (0.073 m/s)** -- its proximity regulation (proximity_distance 1.18 m) holds it
+at min_speed in every aisle, with no obstacle ahead and nothing latched.
