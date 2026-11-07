@@ -127,3 +127,26 @@ per_method_reporting:              # A28 (ruled 2026-10-27): per method and stra
   - mppi_all_rejected (B6: every rollout rejected)
   - invalid_bin_steps (steps with any invalid bin, the environment's count)
   - per-step compute of the controller, the PFB and their sum: p50, p95 and max, with the host
+
+filter_efficacy_family:            # A36 (2026-11-07, the researcher's decision); separate from confirmatory_family
+  members: [HFc]                   # one member: no correction
+  alpha: 0.05
+
+HFc:                               # A36: the PFB's efficacy on a classical planner
+  statement: B7 (RPP + PFB) triggers fewer protective stops than B2 (RPP alone)
+  claim: the filter removes protective stops from a classical planner -- stop removal only; success, mission time, latched share and moving speed reported descriptively beside it, no inference (as A34)
+  comparison: B7 vs B2
+  endpoint: protective_stops_per_100m_planned   # A35
+  scan_faults: as H1 (A25)
+  population: test, condition unmapped_static, all clearance strata pooled; B1, B2, B3, B6, B7 on each scenario within one scene load
+  analysis: >-
+    the A14a rate ratio, B7 over B2, continuity 0.5 on each arm's total; both arms run once, so the
+    interval has the scenario part only, t quantile with n - 1 df; two-sided 95 %; rejects in B7's
+    favour when the log-scale interval lies wholly below 0; reported as the rate ratio with its interval
+  calibration: >-
+    before the test is read: at equal rates, 150 pairs, pilot route lengths, 10,000 replications, the
+    one-sided rejection rate on each side at most 0.025 + 3 MC SE, at rates {0.5, 1, 2, 5, 52.8} per 100 m
+    and difficulty CV {0.5, 1.0} (configs/analysis/hfc_calibration.yaml); any gated cell failing -> stop and
+    report, HF-c not tested; 0.25 per 100 m and CV 1.5 reported, not gated (A36)
+  success: the comparison significant in the predicted direction
+  disclosure: decided after the development-set B2 and B7 rates were seen (B2 52.8, B7 0.47 per 100 m planned); the test set untouched (A36)
