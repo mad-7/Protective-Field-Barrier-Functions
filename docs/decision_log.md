@@ -10916,3 +10916,21 @@ Selected candidate, then the range over all 24 (moving = mean speed while not la
   stop-throughput trade-off H1's reporting leads with is visible inside every arm's tuning.
 - B6's selection is both the least latched and, among its successful candidates, the fastest moving
   (0.091 m/s; L5's and B7's moving speeds come from `resummarize_eval.py`).
+
+## 2026-11-07 - L5's checkpoint and the oracle under the A34 denominators (resummarize_eval.py, read-only)
+
+| run | success | stops/100 m driven (primary) | per 100 m planned | completed only | driven / planned m | moving m/s | latched |
+|---|---|---|---|---|---|---|---|
+| L5 pilot checkpoint | 0.517 | 0.59 | **0.95** | 0.34 | 1,012 / 633 (1.60x) | 0.130 | 0.15 % |
+| oracle (privileged) | 0.717 | 59.1 | 49.0 | 4.7 | 524 / 633 (0.83x) | 0.110 | 37.7 % |
+
+- **L5 drives 60 % more than its routes' planned length** (narrow 1.73x, medium 1.45x, wide 1.61x): the
+  wandering seen in single episodes is systematic. Its driven-distance rate (0.59) is therefore 38 %
+  below its per-planned rate (0.95); on completed routes only it is 0.34. The A34 secondary shows the
+  direction of the effect plainly: the primary's denominator favours a controller that drives extra.
+- L5 moves FAST when it moves (0.130 m/s, wide 0.158) and is almost never latched (0.15 %): its 29
+  timeouts are not stops or slowness but distance spent off the route.
+- The oracle's 59 stops/100 m come from its 17 blocked routes (latched 38 % of steps; on completed routes
+  4.7/100 m): a non-replanning tracker held at obstacles across its route.
+- For the comparison with B6 (0.44 driven) the same three rates are needed for B6's, B3's and B7's
+  selected candidates (their tuning episode logs); asked.
