@@ -10896,3 +10896,23 @@ unrecoverable_stop**, at-rest/stationary triggers 0.
 - Values copied exactly; tests updated (tests/test_mppi.py pins the tuned values and builds candidate 0
   explicitly for its drives-check; tests/test_tuning.py checks the ranges' centres against candidate 0).
   Fast suite: 1,615 passed, 1 skipped.
+
+## 2026-11-07 - Moving speed and latched share across the four classical tunings (read-only, peek_tuning)
+
+Selected candidate, then the range over all 24 (moving = mean speed while not latched):
+
+| arm | selected: success / stops per 100 m / moving m/s / latched share | all 24: moving, latched |
+|---|---|---|
+| B6 (cand. 11) | 0.833 / 0.4 / **0.091** / **0.001** | 0.033-0.092, 0.000-0.274 |
+| B3 (cand. 11) | 0.667 / 23.8 / 0.070 / 0.064 | 0.034-0.137, 0.000-0.828 |
+| B2 (cand. 23) | 0.250 / 86.1 / 0.059 / 0.420 | 0.059-0.167, 0.420-0.895 |
+| B1 (cand. 13) | 0.017 / 173.1 / 0.158 / 0.875 | 0.103-0.180, 0.825-0.904 |
+
+- **The failures are time spent latched, not slow driving.** B1 drives fastest when it moves (0.10-0.18
+  m/s) and is latched 83-90 % of every episode at every candidate; B2's selection is latched 42 %, and
+  B2's least-latched candidate is its selection. B3 and B6 succeed by not getting latched (6 % and 0.1 %).
+- **Near-zero stops come with slow driving** where success is low: B6's candidates 2, 22 and 23 (0-7/60,
+  0.2-4.3 stops/100 m) move at 0.033-0.048 m/s; B3's candidate 21 (0.2/100 m, 26/60) at 0.046. The
+  stop-throughput trade-off H1's reporting leads with is visible inside every arm's tuning.
+- B6's selection is both the least latched and, among its successful candidates, the fastest moving
+  (0.091 m/s; L5's and B7's moving speeds come from `resummarize_eval.py`).
