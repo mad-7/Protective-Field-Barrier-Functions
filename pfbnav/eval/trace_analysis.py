@@ -70,7 +70,18 @@ def wandering(rows: Sequence[dict[str, Any]], *, plan_length_m: float, dt: float
             "circling_near_goal": bool(turn[near].sum() > 2.0 * math.pi),
             "lateral_flips_per_s": flips(req[:, 1], 0.01),
             "yaw_flips_per_s": flips(req[:, 2], 0.02),
-            "mean_abs_command_change": float(np.abs(np.diff(req, axis=0)).sum(axis=1).mean())}
+            "mean_abs_command_change": float(np.abs(np.diff(req, axis=0)).sum(axis=1).mean()),
+            # The PFB's decisions over the episode (None for an arm without the filter): the share
+            # of steps it changed the command (filtered, brake or fallback), and the latched share.
+            "pfb_intervention_share": _share(rows, lambda m: m in ("filtered", "brake", "fallback")),
+            "pfb_fallback_share": _share(rows, lambda m: m == "fallback"),
+            "latched_share": float(np.mean([bool(r["certified"].get("stop_active")) for r in rows]))}
+
+
+def _share(rows: Sequence[dict[str, Any]], pick) -> float | None:
+    """The share of steps whose PFB mode satisfies `pick`; None if no step carries a PFB decision."""
+    modes = [r["pfb"]["mode"] for r in rows if r.get("pfb")]
+    return float(np.mean([bool(pick(m)) for m in modes])) if modes else None
 
 
 def stop_causes(rows: Sequence[dict[str, Any]], *, lookback: int = 3) -> list[dict[str, Any]]:

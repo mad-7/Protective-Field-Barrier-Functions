@@ -11073,3 +11073,30 @@ approved four instances and every wall-clock plan (the ~9-day confirmatory plan,
 evaluation) assumes UNRENDERED throughput; G2's own criterion caps rendered episodes at 10 % of ITS
 measurement. Long runs on rendering instances take longer than planned; the measured steps/s in each
 run's summary is the record.
+
+## 2026-11-07 - Offline diagnostics, first read (item 3): L5's wandering is a learned detour, not a defect
+
+Traces (`runs/diag/TRACE2_20261107T180011Z` deterministic wander, `T183415Z` stochastic wander,
+`T184534Z` L5 stops, `T190227Z` B7 stops, `T191325Z` B1 failures; each in its own scene load, so a trace
+need not repeat its recorded episode).
+- **3a, L5's wandering.** All six wandering episodes picked (driven > 1.5x planned) are NARROW-aisle
+  routes. The robot leaves the route by **4-6 m** (cross-track p95 4.0-6.2 m) and drives 2.3-5.7x the planned
+  length; the excess accrues while the route progress stalls, in the first third (6.4-13.9 m against ~3 m
+  planned per third) and above all the last third (11-38 m); no goal overshoot and no circling. **The
+  deterministic policy (as evaluated) and the stochastic policy wander alike** (index 10: 55.4 vs 53.9 m;
+  13: 35.1 vs 37.5; 14: 30.1 vs 26.1; 18: 25.9 vs 24.5; one exception, 15: 47.7 vs 8.3 m), so the
+  wandering is the policy's behaviour, not an artefact of stochastic actions at evaluation (which uses
+  the deterministic mean action). Reading: in narrow aisles the policy detours over open floor around the
+  racks instead of threading the aisle. **No defect is indicated.** The oscillation measures and the PFB
+  intervention share per episode come from `scripts/trace_report.py` (added; read-only) and complete 3a.
+- **3b, the causes of the remaining stops.** L5: in the six stop episodes retraced, one stop recurred
+  (index 10): `filter_active_no_fallback` -- the PFB filtered and the field was still breached (prediction
+  lag, the velocity estimate or the composition); the stochastic trace added one `pfb_fallback` (index 13).
+  B7: both stop episodes are routes classed BLOCKED (2000050, 2000053): `pfb_fallback` twice and
+  `unmapped_in_field` once -- the QP had no feasible command next to an unmapped obstacle across the route,
+  and maximal braking did not keep the field clear. Few events; retraced episodes need not repeat.
+- **3e, B1.** Five failures, all `unrecoverable_stop` at 4,000 steps after 6-8 stop triggers, with the
+  route tracked to 1-8 cm (cross-track p95): B1 follows the route exactly and is stopped repeatedly at the
+  same places, the stop-recovery-restop pattern found 2026-10-13. Behavioural; the latch anatomy (releases,
+  recovery modes) is in the traces' summary.json.
+- 3c/3d (both denominators, compute) await the re-summaries' output.

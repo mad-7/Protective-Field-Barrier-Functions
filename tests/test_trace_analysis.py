@@ -93,3 +93,17 @@ def test_latch_anatomy():
     assert a["triggers"] == 2 and a["releases"] == 1 and a["longest_latch_steps"] == 5
     assert a["latched_share"] == pytest.approx(9 / 12)
     assert a["recovery_mode_steps"] == {"track": 10, "recover": 2} and a["final"]["stop_active"]
+
+
+def test_filter_intervention_and_latched_shares():
+    """10 steps: modes 6 nominal, 2 filtered, 1 brake, 1 fallback -> intervention 0.4, fallback 0.1;
+    2 steps latched -> 0.2. Without any PFB decision both shares are None."""
+    modes = ["nominal"] * 6 + ["filtered", "filtered", "brake", "fallback"]
+    rows = [_row(i, 0.1 * i, 0, 0, 0.1 * i, 1.0 - 0.1 * i, pfb={"mode": m},
+                 cert={"stop_active": i in (3, 4)}) for i, m in enumerate(modes)]
+    w = wandering(rows, plan_length_m=1.0, dt=0.05)
+    assert w["pfb_intervention_share"] == pytest.approx(0.4)
+    assert w["pfb_fallback_share"] == pytest.approx(0.1) and w["latched_share"] == pytest.approx(0.2)
+    bare = wandering([_row(i, 0.1 * i, 0, 0, 0.1 * i, 1.0) for i in range(5)], plan_length_m=1.0,
+                     dt=0.05)
+    assert bare["pfb_intervention_share"] is None
