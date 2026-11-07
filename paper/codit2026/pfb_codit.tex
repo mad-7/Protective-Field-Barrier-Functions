@@ -111,10 +111,14 @@ check alone.
 For travel at speed $V$ in direction $\theta$ (body frame) with yaw rate $\omega$, the field's boundary
 distance along bearing $\psi$ is $\rho(\psi;V,\theta,\omega)$, obtained from a support function over
 normals $n$. With $c=\cos(n-\theta)$ and $\ell=\max(0,c)$, the support is
-\begin{multline}
-\sigma(n)=\max\Big(S(n;\pm(E(|\omega|)+E(0)))+\max(D(V)\,\ell,\ s(c,V))\\
-+K(V,\omega)+\max\big((m-m_\perp)\ell,R\big)+m_\perp,\ \ S(n;\pm E(|\omega|))+R+m_\perp\Big),
-\end{multline}
+\begin{equation}
+\begin{aligned}
+\sigma(n)=\max\Big(&S\big(n;\pm(E(|\omega|)+E(0))\big)\\
+&+\max\big(D(V)\,\ell,\,s(c,V)\big)\\
+&+K(V,\omega)+\max\big((m-m_\perp)\ell,R\big)+m_\perp,\\
+&S\big(n;\pm E(|\omega|)\big)+R+m_\perp\Big),
+\end{aligned}
+\end{equation}
 where $S(n;\pm e)$ is the footprint's support swept over headings in $[-e,e]$, $E(\omega)$ the heading
 change reachable within the reach time $T$ (the certified response time plus one control step,
 $T=0.15$\,s) and braking, $D(V)=VT+V^2/(2a_b)$ the travel over the reach time and braking, $s$ the
@@ -130,7 +134,10 @@ command $u$, the return is propagated in the body frame over the prediction hori
 $\tau=\Delta t+\tau_\ell$ (one step plus a declared lag allowance), and the discrete-time barrier
 condition is imposed:
 \begin{equation}
-g_i(u)=r_i(u)-\rho\big(\psi_i(u);\theta(u),W(u)\big)-\delta\ \ge\ (1-\alpha\Delta t)\max\big(h_i,0\big),
+\begin{aligned}
+g_i(u)&=r_i(u)-\rho\big(\psi_i(u);\theta(u),W(u)\big)-\delta\\
+&\ge(1-\alpha\Delta t)\max\big(h_i,0\big),
+\end{aligned}
 \label{eq:cbf}
 \end{equation}
 where $\theta(u)$ is the field's heading and $W(u)=\max(|\hat\omega|,|\omega|)$ composes the estimated
