@@ -1,0 +1,11 @@
+# L4: SAC trained with the PFB in the loop, WITH proximity shaping (H2's comparator; configs/methods.yaml).
+# Ruled 2026-11-07: L4 = L5 + k_proximity 0.10113, and nothing else -- tests/test_l4_config.py proves the
+# resolved configs differ only in `experiment` and `reward.k_proximity`. The shaping weight is the DERIVED
+# one shared with L1 (ruled 2026-11-01; pfbnav/training/shaping.py; train.py refuses any other value).
+defaults: ../base.yaml
+experiment: L4_sac_pfb_shaped
+filter:
+  enabled: true
+reward:
+  k_proximity: 0.1011326860841424  # DERIVED (ruled 2026-11-01), as L1: penalty = 25 % of the progress
+                                   #   reward per step on the narrow stratum's floor centreline at 0.3 m/s

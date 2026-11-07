@@ -83,12 +83,16 @@ class SACController:
     """A trained checkpoint as a `Controller`: deterministic (the mean action), no exploration.
     The actor alone acts; for L2 the cost critic and the multiplier are training-time only."""
 
-    def __init__(self, checkpoint: str | Path, name: str, device: str = "cpu"):
+    def __init__(self, checkpoint: str | Path, name: str, device: str = "cpu",
+                 deterministic: bool = True):
         path = Path(checkpoint)
         if not path.is_file():
             raise FileNotFoundError(f"no checkpoint at {path}")
         self.name = name
         self.checkpoint = path
+        # Every evaluation is deterministic (the mean action). `deterministic=False` samples the
+        # policy as in training: for DIAGNOSTICS only (ruled 2026-11-07, item 3a), never an evaluation.
+        self.deterministic = bool(deterministic)
         self.model = learner_class(path).load(str(path), device=device)
 
     def reset(self) -> None:
@@ -96,5 +100,5 @@ class SACController:
 
     def act(self, observation: np.ndarray) -> np.ndarray:
         action, _ = self.model.predict(np.asarray(observation, dtype=np.float32),
-                                       deterministic=True)
+                                       deterministic=self.deterministic)
         return np.clip(np.asarray(action, dtype=float).ravel(), -1.0, 1.0)

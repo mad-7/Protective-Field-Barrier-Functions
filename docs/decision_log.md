@@ -10959,3 +10959,64 @@ at min_speed in every aisle, with no obstacle ahead and nothing latched.
 - With counts this small (3-6 stops on 60 scenarios) the tune set cannot separate L5, B6 and B7; the test
   set's size (A14b) and its power at rates near 0.5/100 m become the decisive questions for H1 and
   H1prime.
+
+## 2026-11-07 - RULED (two messages): no improvement round; offline diagnostics; L4/L2/L5 pilots now; K = 10; primary per PLANNED length; L5-v2; A14b on a grid
+
+**The rulings (supervisor), in substance** -- first message:
+1. Accepted: L5 9000002 G4 PASS (pilot; outside H1/H2); L1 G4 FAIL on both seeds (trains regardless,
+   disclosed); classical tuning complete. Record: B1 non-functional; B3/B6 share the sampler seed; B6
+   smoothness and B3 w_clearance at 93 % of their log ranges (disclosed, not on a boundary).
+2. **NO learning-setup improvement round before confirmatory training; NO method change** (filter,
+   observation, reward, emulator): 60-episode pilots cannot resolve small differences; the classical arms
+   had a declared equal budget; the pilot passed G4. Exception: a DEFECT (e.g. stochastic actions at
+   evaluation) is fixed as a bug fix under an amendment, identically for L1, L2, L4, L5, pilots restarted.
+3. Offline diagnostics on existing checkpoints, no training, reported within 24 h: (a) L5's wandering
+   anatomy -- by stratum, deterministic vs stochastic action at evaluation (state which is used), relation
+   to filter interventions and latched stops, an oscillation measure; (b) the causes of B7's and L5's
+   residual stops (QP fallback, unmapped obstacle inside the field, lag, other); (c) every arm on both
+   denominators with moving speed; (d) p95 per-step compute for B6, B7, L5 (descriptive); (e) B1's failure
+   anatomy on ~5 episodes (behavioural, not a bug).
+4. Start now, unchanged: L4 pilot 9000002, L2 pilot 9000002, L5 pilot 9000003. L4 = L5 + k_proximity
+   0.10113 with a config-diff test proving it the only difference; L2 at d = 1.0 stops/100 m, unshaped.
+   A defect found by item 3 restarts per item 2.
+5. **K = 10 per learned arm**, fixed before the first confirmatory run, never changed. Confirmatory seeds
+   **9100001-9100010**, disjoint from the pilot range 9000000-9000099; seed k fixes the permutation shared
+   by all arms. A14b: achieved power at K = 10 from the pilot seed-to-seed variance (upper 80 % bound).
+   Recompute the wall-clock plan from per-arm steps/s (PFB vs filter-free) before the Run Request.
+6. Denominator: if the primary uses driven distance, amend it to PLANNED route length now (driven stays
+   secondary, A34).
+7. **L5-v2**, an exploratory arm (an improved learning setup, ONE shared change at most, pilot-range
+   seeds, tune set only), at the HEAD of the cut order; not confirmatory; configuration and seeds declared
+   (hash) before the confirmatory test evaluation.
+8. Apply A34 as drafted, then prepare the confirmatory Run Request.
+Second message:
+1. A34 accepted. The primary IS stops per 100 m DRIVEN: amend it to per 100 m of PLANNED route length now,
+   before any test data (wandering: L5 1.6x planned; the B6/B7 ranking flips with the denominator;
+   conservative for L5, 0.59 -> 0.95). Driven and completed-only stay secondary. Record with these data.
+2. A14b before fixing the test size, on a GRID: comparator rate {0.25, 0.5, 1, 2}/100 m x rate ratio
+   {0.5, 0.7, 1.0}; the existing scenario-difficulty and seed variance; Holm at alpha/3; K = 10. Classical
+   comparators run once (events scale with scenarios x route length, not seeds). Per cell: the test size
+   for 80 % power and the evaluation wall-clock (per-arm episode cost). State the current test size and
+   how it was built.
+3. If more is needed: extend by amendment with the same generator and unused seeds, before any test
+   episode, never modifying existing test scenarios. If no feasible size reaches 80 % at plausible rates,
+   do NOT weaken H1: add rate-ratio CIs for every comparator as a declared secondary and let the decision
+   tree report "inconclusive".
+4. Wandering (adds to 3a): where along the route the excess accumulates (first third / middle / goal
+   approach), lateral offset, goal overshoot or circling (tolerance 0.25 m). Diagnose only.
+5. Compute: B6 37.1 ms p95 within 50 ms, descriptive; no compute-advantage claim against B6 anywhere;
+   state the host.
+
+**Implemented so far:**
+- **Item 4:** `configs/experiments/L4_sac_pfb_shaped.yaml`; tests/test_l4_config.py proves the resolved
+  L4 and L5 differ ONLY in `experiment` and `reward.k_proximity` (= the derived value, = L1's). L2's
+  config already carries d = 1.0 per 100 m, unshaped. All three pass training's preflight.
+- **Items 3a/3b/3e and 4 (second):** `pfbnav/eval/trace_analysis.py` (pure; known-answer tests in
+  tests/test_trace_analysis.py): wandering anatomy (driven distance by route third, lateral offset, goal
+  overshoot, circling, flips per second of the lateral and yaw commands), the stop-cause labels in a
+  declared order, B1's latch anatomy. `scripts/trace_episodes.py` traces chosen episodes of existing
+  checkpoints and tuned controllers, picking them from a finished run's log (checked against its scenario
+  seeds), deterministic or `--stochastic` for SAC. **Which action evaluation uses:** DETERMINISTIC (the
+  mean action; `SACController`, `deterministic=True`, every evaluation incl. G4's checkpoint); the
+  stochastic mode is diagnostic only. A trace runs in its own scene load, so it need not repeat the
+  recorded episode; both are printed.
