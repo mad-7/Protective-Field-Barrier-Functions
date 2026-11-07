@@ -30,6 +30,7 @@ H1:
 
 H1prime:                           # A27 contingency hypothesis (ruled 2026-10-26); confirmatory only under the pivot
   statement: B7 triggers fewer protective stops than B1, B2 and B6
+  claim: the filter removes protective stops from a classical planner -- not a throughput or success improvement (A34)
   comparators: [B1, B2, B6]
   logic: intersection_union       # all comparisons must reject at alpha; no within-H1prime correction
   endpoint: protective_stops_per_100m
@@ -39,7 +40,10 @@ H1prime:                           # A27 contingency hypothesis (ruled 2026-10-2
     the A14a rate ratio, B7 over each comparator, continuity 0.5; every arm runs once, so the
     interval has the scenario part only (no seed part), t quantile with n - 1 df; this case must pass
     the A14a calibration gate at equal rates before H1prime is tested, else stop and report
-  reporting: success rate and mission time beside it for every comparison in the same table
+  reporting: success rate and mission time reported descriptively beside it for every comparison in the same table; no inference on them (A34)
+  secondary:                       # A34 (ruled 2026-11-06), declared before the test run; outside the confirmatory family
+    - B7 vs B2, the paired within-planner contrast -- protective stops per 100 m, latched share of steps, moving speed (mean speed while not latched)
+    - the stops endpoint's denominator -- per 100 m of distance driven (the primary's own, recovery included; timeouts pooled, not censored) and per 100 m on completed routes only, beside the per-planned-length version (A14)
   success: every comparison significant in the predicted direction
 
 H2:
