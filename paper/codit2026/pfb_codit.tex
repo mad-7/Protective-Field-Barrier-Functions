@@ -13,15 +13,24 @@
 \usepackage{cite}
 \usepackage{url}
 \graphicspath{{figures/}}
+% Float placement: wide figures (figure*) may only go at a page top, from the page after their
+% definition; these limits keep them from piling up on separate pages at the end.
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\dbltopfraction}{0.9}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.8}
+\renewcommand{\dblfloatpagefraction}{0.8}
+\setcounter{topnumber}{3}
+\setcounter{dbltopnumber}{3}
 \newcommand{\tbd}[1]{\textcolor{red}{[#1]}}
 
 \begin{document}
 
 \title{Protective-Field Barriers: A LiDAR Control Barrier Function Consistent with Industrial Safety Fields for Classical Local Planners}
 
-\author{\IEEEauthorblockN{\tbd{Author 1}, \tbd{Author 2}}
-\IEEEauthorblockA{\tbd{Affiliation, City, Country}\\
-\tbd{email}}}
+\author{\IEEEauthorblockN{Mahdi Kahoul and Firas Mohamed Elamine Kiram}
+\IEEEauthorblockA{AMCO Laboratory, Padua, Italy\\
+mahdi.kahoul@univ-biskra.dz}}
 
 \maketitle
 
@@ -46,6 +55,26 @@ reconciling local planning with industrial safety equipment.
 \begin{IEEEkeywords}
 control barrier functions, safety filters, local planning, protective stops, mobile robots
 \end{IEEEkeywords}
+
+\begin{figure*}[!t]
+\centering
+% fig1_architecture.pdf is drawn on an A4 page: the white margins above and below the drawing are
+% cropped here (trim = left bottom right top, in pt); the file itself is left as made.
+\includegraphics[width=0.84\textwidth,trim=0 230 0 215,clip]{fig1_architecture.pdf}
+\caption{System architecture. The local planner receives the global route and the scan; the PFB
+filters its command before the certified safety layer, which may impose a latched protective stop,
+and the base applies the actuation limits.}
+\label{fig:arch}
+\end{figure*}
+
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.9\textwidth]{fig2_field_geometry.pdf}
+\caption{Protective fields on the measured robot footprint (grey), computed from \eqref{eq:field}.
+(a) The field at rest and the fields of the three speed bands for forward travel. (b) The field of one
+band for forward, diagonal and lateral travel. (c) The same field for increasing yaw rates.}
+\label{fig:field}
+\end{figure*}
 
 \section{Introduction}
 The deployment of autonomous mobile robots in warehouses and factories is governed by safety standards
@@ -111,6 +140,15 @@ than a clearance selected by the designer, it is the exact region whose violatio
 certified safety function, evaluated at the speed and direction that the robot will attain.
 
 \section{Problem Formulation and System Design}
+\begin{figure*}[!t]
+\centering
+\includegraphics[width=0.92\textwidth]{fig_codit_results.pdf}
+\caption{Results on the tuning set. (a) Protective stops per 100\,m driven (logarithmic scale).
+(b) Fraction of time spent in a latched stop and success rate. (c) Protective stops of B7 and number
+of fallback steps of the PFB as functions of the gain $\alpha$.}
+\label{fig:results}
+\end{figure*}
+
 \subsection{System overview}
 The system architecture is shown in Fig.~\ref{fig:arch}. The robot is a holonomic platform with
 mecanum wheels, commanded by a body-frame twist $u=(v_x,v_y,\omega)$ at a control period
@@ -122,15 +160,6 @@ independently of the filter, with which it shares configuration parameters but n
 selects a protective field from a set of discrete speed bands, triggers a latched stop whenever a valid
 return lies inside the active field, and releases the latch only under a restart condition. Collisions
 are determined exclusively by the contact detection of the simulator.
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.86\textwidth]{fig1_architecture.pdf}
-\caption{System architecture. The local planner receives the global route and the scan; the PFB
-filters its command before the certified safety layer, which may impose a latched protective stop,
-and the base applies the actuation limits.}
-\label{fig:arch}
-\end{figure*}
 
 \subsection{The protective field}
 Consider a motion at speed $V$ in direction $\theta$, expressed in the body frame, with yaw rate
@@ -157,16 +186,17 @@ field of the speed band selected by the attainable speed, so that its trigger se
 the certified function in the same state. Fig.~\ref{fig:field} illustrates the resulting fields for
 several speeds, directions of travel and yaw rates.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.9\textwidth]{fig2_field_geometry.pdf}
-\caption{Protective fields on the measured robot footprint (grey), computed from \eqref{eq:field}.
-(a) The field at rest and the fields of the three speed bands for forward travel. (b) The field of one
-band for forward, diagonal and lateral travel. (c) The same field for increasing yaw rates.}
-\label{fig:field}
-\end{figure*}
-
 \subsection{Barrier condition and filter}
+\begin{figure}[!t]
+\centering
+\includegraphics[width=\columnwidth]{fig5_pfb_step.pdf}
+\caption{One PFB step in a narrow passage. (a) Scan returns, the field associated with the nominal
+command (dashed) with the returns predicted inside it, and the field of the filtered command (solid)
+with its active constraint. (b) The nominal and filtered commands in the translational plane, with the
+acceleration envelope and the speed limit of the selected band.}
+\label{fig:step}
+\end{figure}
+
 For each valid return $i$ within reach, the barrier value is the distance of the return outside the
 field, $h_i=r_i-\rho(\psi_i;\cdot)-\delta$, where $\delta$ accounts for the measured angular
 discretisation of the scan. For a candidate command $u$, the position of the return is predicted in the
@@ -200,16 +230,6 @@ Fig.~\ref{fig:step} illustrates one filtering step. The nominal command would ca
 configuration in which numerous returns lie inside the predicted field; the filter selects the nearest
 admissible command, which preserves most of the forward motion while removing the lateral and rotational
 components that cause the violation.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig5_pfb_step.pdf}
-\caption{One PFB step in a narrow passage. (a) Scan returns, the field associated with the nominal
-command (dashed) with the returns predicted inside it, and the field of the filtered command (solid)
-with its active constraint. (b) The nominal and filtered commands in the translational plane, with the
-acceleration envelope and the speed limit of the selected band.}
-\label{fig:step}
-\end{figure}
 
 The PFB requires only the nominal command of the planner, the scan and the velocity estimate; the
 planner itself remains unchanged. In the experiments it is placed beneath RPP, and the resulting
@@ -281,15 +301,6 @@ Wide & 0.30 & 0.70 & 118.7 & 1.76 \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.92\textwidth]{fig_codit_results.pdf}
-\caption{Results on the tuning set. (a) Protective stops per 100\,m driven (logarithmic scale).
-(b) Fraction of time spent in a latched stop and success rate. (c) Protective stops of B7 and number
-of fallback steps of the PFB as functions of the gain $\alpha$.}
-\label{fig:results}
-\end{figure*}
 
 \emph{Effect on driving speed.} A natural concern is that the filter might avoid stops merely by slowing
 the robot. On the 13 routes on which B7 exceeded the time limit without encountering an obstacle, B7 and
