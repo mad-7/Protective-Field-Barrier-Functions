@@ -11143,3 +11143,19 @@ yaw sign flips per second, deterministic). For contrast, B7 (RPP + PFB) on its t
 speed columns (the host's `trace_report.py` predates them): L5 issues commands the filter must correct on
 every step -- most simply, asking for more speed than the selected band allows -- so the filter, not the
 policy, sets the speed. Not a defect (L5 is defined with the filter); a finding for the discussion.
+
+**3a, confirmed: L5 asks for near-maximum speed and lets the filter set it** (trace_report.py with the
+requested-speed columns, deterministic): median requested planar speed 0.43-0.63 m/s in five of six
+episodes (the axis box is 0.5 m/s per axis; the top band 0.51 m/s), with 45-99 % of steps asking >= 0.45
+m/s (one exception, index 21: 0.30 m/s, 14 %). B7's RPP asks 0.07 m/s median and never >= 0.45. So the PFB
+alters L5's command on every step because the policy requests speeds above what the selected field
+admits: the speed is regulated by the filter, the direction largely by the policy. **No defect** (L5 is
+defined with the filter in the loop). A finding for the discussion, and the share-of-steps measure is the
+wrong one for it: the size of the correction (|u_PFB - u_nom|) would say how much the policy is overridden.
+
+**Diagnostics item 3 COMPLETE, verdict: no defect; the pilots continue unchanged (item 2).** Summary for
+the supervisor: 3a wandering = smooth, deterministic, narrow-aisle detours 4-6 m off the route (no
+oscillation except one episode, no goal overshoot or circling), with the filter regulating speed on every
+step; 3b L5's rare stops: filter active, no fallback (lag/estimate), B7's at blocked routes (fallback,
+unmapped obstacle); 3c every arm on both denominators (table above); 3d PFB p95 27.9-28.0 ms in situ, max
+49.5 ms, B6 34.5 ms; 3e B1 behavioural (stop-recovery-restop, route tracked to 1-8 cm).
