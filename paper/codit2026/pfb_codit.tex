@@ -315,7 +315,10 @@ DWA cover 4.3\,m and 4.2\,m, respectively.
 them without any protective stop. In 17 episodes, an unmapped obstacle lies across the route at a
 distance of 0.01--0.23\,m; the privileged tracker fails on exactly the same 17 routes, which indicates
 that these routes cannot be completed by any controller that follows the route without replanning. The
-remaining 13 failures occur on long routes (11.4--17.0\,m), of which B7 had completed 68--97\,\% when the
+three stops of B7 occur in two of these episodes; on retracing them, the stops are preceded by steps on
+which the QP admits no feasible command next to the obstacle and the filter applies maximal braking,
+which does not suffice to keep the field clear. The residual stops of the filter therefore arise only
+where no route-following controller can pass. The remaining 13 failures occur on long routes (11.4--17.0\,m), of which B7 had completed 68--97\,\% when the
 time limit was reached. On the 43 routes that can be traversed by a route follower, B7 succeeds in
 30 cases (70\,\%).
 
@@ -327,8 +330,10 @@ which the filter applies maximal braking; an approach towards a wall at 0.3\,m/s
 0.95\,m is an example of such a situation, which is handled without braking at $\alpha=2$\,s$^{-1}$.
 
 \emph{Comparison with other planners.} Pure Pursuit spends 83--90\,\% of each episode in a latched stop
-for every one of its 24 parameter candidates, because its restart condition is not satisfied after a
-stop at a shelf corner. DWA achieves a higher success rate than B7 (0.667) at the cost of 23.8 stops per
+for every one of its 24 parameter candidates. Five retraced failures each end in an unrecoverable stop
+after six to eight protective stops at the same locations, although the route is tracked to within
+1--8\,cm (95th percentile of the cross-track error); the failure thus lies in the interaction with the
+field and its restart condition after stops at shelf corners, not in tracking. DWA achieves a higher success rate than B7 (0.667) at the cost of 23.8 stops per
 100\,m. The field-aware MPPI controller, which incorporates the certified field into its rollout cost,
 is the strongest reference: it succeeds on 50 of the 60 scenarios and records three stops, the same
 number as B7. Given the small number of events, the tuning set does not permit a statistical

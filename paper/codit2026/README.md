@@ -42,6 +42,8 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
 | tuned B2 slows below 1.18 m clearance; 0.73 m in 10 s vs 4.34 / 4.20 m | 2026-11-06 bracket positions; 2026-11-07 compute entry |
 | alpha 1 brakes at a wall 0.95 m ahead at 0.3 m/s; filtered at alpha 2 | 2026-11-03 "the frozen alpha brakes where 2.0 filtered" (tests/test_pfb.py) |
 | B1 latched 83-90 % at every candidate | 2026-11-07 moving-speed table |
+| B7's three stops in two blocked episodes (2000050, 2000053); retraced: QP infeasible next to the obstacle, maximal braking, field not kept clear | 2026-11-07 "Offline diagnostics, first read (item 3)", 3b; "Diagnostics item 3 COMPLETE" (trace `runs/diag/TRACE2_20261107T190227Z`, training host) |
+| B1: five retraced failures, unrecoverable stop after 6-8 stops, cross-track p95 1-8 cm | same entries, 3e (trace `runs/diag/TRACE2_20261107T191325Z`, training host) |
 | B6 50/60, 3 stops; B7 3 | 2026-11-07 denominators table |
 | Compute p95 | 2026-11-07 compute entry; 2026-10-29 real-time measurement (B6) |
 | Field, barrier row, QP | `pfbnav/safety/pfb_field.py`, `pfbnav/safety/pfb.py` docstrings |
