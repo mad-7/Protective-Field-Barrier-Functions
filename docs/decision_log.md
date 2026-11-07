@@ -11243,3 +11243,33 @@ reaching 80 % power** ("--" = none up to 1,600):
    number development-set, says "indistinguishable at 3 vs 3 events" (not "B6 matches B7"), states
    "H1prime is a declared exploratory contingency; held-out evaluation pending", and never uses
    "preregistered but exploratory". Applied in the paper session (131a804).
+
+
+## 2026-11-07 - A14b refined grid: H1 unreachable, H2 reachable at +20 pp, a zero-event defect in the interval
+
+`runs/power/A14BR_20261107T205953Z_seed0` (commit c3c628b, clean, DESKTOP-55VR508; 2,000 replications H1/H1prime,
+4,000 H2; difficulty CV 1.0; sizes per stratum x condition, 6 cells; Holm alpha/3 for H1/H2, alpha for H1prime).
+
+- **H1: no cell reaches 80 %.** Best: B6 1.0, ratio 0.5, seed CV 0.15, K 20, 100/cell: 0.77. At B6 0.5 the maximum
+  is 0.48 (K 20, 600 scenarios); at ratio 0.7 nowhere above 0.21. Rejection under the null: 0 in every cell.
+  B6 and the learned comparators (placed at B6's rate) bind; B1-B3 at their measured rates never do.
+- **L5 vs B6, 95 % CI half-width of the log rate ratio** (seed CV 0.3, B6 0.5, ratio 0.5): K 10: 1.34 / 1.01 / 0.74
+  at 25 / 50 / 100 per cell; K 20: 1.10 / 0.83 / 0.60. At 300 scenarios and K 10 the interval spans a factor
+  exp(1.0) = 2.7 either side; even 600 scenarios at K 20 leaves a factor 1.8. Inconclusive share at that cell:
+  0.90 (K 10, 300 scenarios), 0.55 (K 20, 600).
+- **H2:** at a true +15 pp, power is ~0.5 at every size and K: the success criterion (estimate >= 15 pp AND
+  significant) halves it by construction, so no size gives 80 % for an effect of exactly 15 pp. At +20 pp:
+  seed logit SD <= 0.3 -> 25/cell (150 scenarios) suffices at every K; SD 0.5 -> K 10 needs 75/cell (450, above
+  the 300 rule), K 15 or 20 25/cell; SD 1.0 -> none (K 20 at 0.69). Both L4 baselines alike. Null rejection
+  <= 0.0095 against a nominal one-sided 0.0083 (within MC error).
+- **H1prime:** never reaches 80 % (max 0.64, B6 1.0, ratio 0.5, 100/cell); B7 vs B6 binds.
+- **DEFECT FOUND (small-count anti-calibration, for the supervisor):** under the null, "L5 worse than B6" is
+  declared in 9.6-14 % of replications at B6 0.25, 25/cell (nominal 0.83 %), and at ratio 2.0 the share is
+  0.1265 at EVERY K. 0.1265 = P(B6 records zero stops) = exp(-2.06) (expected 2.06 events: 0.25/100 m x 75
+  routes x 11 m). When the classical comparator records ZERO events its scenario variance is zero and the interval
+  rejects whatever the other arm does. The same mechanism makes H1prime's equal-rate calibration fail at low
+  counts (0.079 at B6 0.25, 25/cell; 0.045 at 35; nominal 0.025), and it is gone once B6's expected count is
+  about >= 8 (B6 0.5 at 50/cell: 0.0005). The frozen A14a interval (`confirmatory_interval`) is unchanged; no fix
+  without a ruling. Options for the ruling: a minimum expected event count per comparator in the size rule, or
+  a declared zero-event rule (e.g. a variance floor or an exact conditional test for the classical part).
+- **Wall-clock:** 300 scenarios 6.9 / 10.1 / 13.3 days at K 10 / 15 / 20; 150 scenarios 3.5 / 5.1 / 6.6.
