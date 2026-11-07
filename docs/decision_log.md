@@ -10941,3 +10941,21 @@ host, synthetic 0.7/0.8/0.9 m aisles, 200 steps each, no simulator): p95 B1 0.02
 **Corroboration of the speed finding:** in the same 10 s per aisle, B1 travelled 4.34 m and B3 4.20 m, but
 the tuned B2 only **0.73 m (0.073 m/s)** -- its proximity regulation (proximity_distance 1.18 m) holds it
 at min_speed in every aisle, with no obstacle ahead and nothing latched.
+
+**All arms under the A34 denominators (tune set, 60 scenarios, 633 m planned; monitoring only):**
+
+| arm | success | stops | per 100 m driven | per 100 m planned | completed only | driven / planned | moving m/s | latched |
+|---|---|---|---|---|---|---|---|---|
+| B6 (cand. 11) | 0.833 | 3 | 0.44 | 0.47 | 0.34 | 1.09x | 0.091 | 0.08 % |
+| L5 (pilot ckpt) | 0.517 | 6 | 0.59 | 0.95 | 0.34 | 1.60x | 0.130 | 0.15 % |
+| B7 (alpha 1) | 0.500 | 3 | 0.59 | 0.47 | 0.00 | 0.80x | 0.048 | 0.05 % |
+| B3 (cand. 11) | 0.667 | 130 | 23.8 | 20.5 | 0.47 | 0.86x | 0.070 | 6.4 % |
+| oracle (privileged) | 0.717 | 310 | 59.1 | 49.0 | 4.7 | 0.83x | 0.110 | 37.7 % |
+
+- **B6 and B7 each record 3 stops; L5 records 6.** Per planned length B6 and B7 tie (0.47); L5 is twice
+  that (0.95). The driven-distance primary narrows L5's gap only because L5 drives 1.6x its routes;
+  B7's primary is raised because it drives less than its routes (timeouts). The ranking of B7 against
+  B6 flips between denominators (0.59 vs 0.44 driven; 0.47 vs 0.47 planned).
+- With counts this small (3-6 stops on 60 scenarios) the tune set cannot separate L5, B6 and B7; the test
+  set's size (A14b) and its power at rates near 0.5/100 m become the decisive questions for H1 and
+  H1prime.
