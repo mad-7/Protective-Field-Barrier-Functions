@@ -11060,3 +11060,16 @@ Second message:
   16.7) = 860 instance-hours, **~9 days on four instances**, before the exploratory arms.
 - Fast suite: 1,626 passed, 1 skipped (a first run had 17 failures from the LAPTOP running out of memory --
   an array allocation of 437 MiB with 2.1 GB of 7.7 GB free -- and passed clean on rerun).
+
+## 2026-11-07 - train.py and evaluate.py render by default (the researcher's choice)
+
+`--display` now defaults to `on` in `scripts/train.py` and `scripts/evaluate.py` (`add_display_flag(parser,
+default="on")`; tests/test_cli_display.py); every other script keeps `config` (off). `--display off`
+restores the old behaviour per run. Rendering changes no physics (trajectories bit-identical,
+`scripts/regress_display_off.py`) and every run records what was in force (`provenance.json`
+`display_enabled`); a headless instance has no display and records false.
+**Cost, to keep in view:** rendering costs ~7 ms of a ~27 ms step (~25 % fewer steps per second). G2
+approved four instances and every wall-clock plan (the ~9-day confirmatory plan, A14b's test
+evaluation) assumes UNRENDERED throughput; G2's own criterion caps rendered episodes at 10 % of ITS
+measurement. Long runs on rendering instances take longer than planned; the measured steps/s in each
+run's summary is the record.

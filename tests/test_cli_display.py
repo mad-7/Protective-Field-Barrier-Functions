@@ -46,3 +46,17 @@ def test_the_flag_accepts_only_its_three_choices():
 def test_the_config_default_is_off_so_a_run_is_not_slowed_by_accident():
     """Rendering costs ~7 ms of a ~27 ms step; watching is opt-in, per run."""
     assert CFG["sim"]["display_enabled"] is False
+
+
+def test_train_and_evaluate_default_to_display_on_and_others_to_the_config():
+    """The researcher's choice (2026-11-07): train.py and evaluate.py render unless --display off."""
+    parser = argparse.ArgumentParser()
+    add_display_flag(parser, default="on")
+    assert parser.parse_args([]).display == "on"
+    assert parser.parse_args(["--display", "off"]).display == "off"
+    for script in ("train.py", "evaluate.py"):
+        text = (REPO / "scripts" / script).read_text(encoding="utf-8")
+        assert 'add_display_flag(parser, default="on")' in text, script
+    assert parse().display == "config"
+    with pytest.raises(ValueError):
+        add_display_flag(argparse.ArgumentParser(), default="maybe")

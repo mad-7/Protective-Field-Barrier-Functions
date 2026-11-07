@@ -14,12 +14,16 @@ from typing import Any
 CHOICES = ("config", "on", "off")
 
 
-def add_display_flag(parser) -> None:
-    """Add `--display {config,on,off}` to a script's parser."""
+def add_display_flag(parser, default: str = "config") -> None:
+    """Add `--display {config,on,off}` to a script's parser. `default` is the script's own default:
+    `train.py` and `evaluate.py` use "on" (the researcher's choice, 2026-11-07), every other script
+    "config"."""
+    if default not in CHOICES:
+        raise ValueError(f"display default must be one of {CHOICES}, got {default!r}")
     parser.add_argument(
-        "--display", choices=CHOICES, default="config",
-        help="rendering for this run: 'config' uses sim.display_enabled (off by default), "
-             "'on' shows the scene so you can watch, 'off' forces it off. Watching costs "
+        "--display", choices=CHOICES, default=default,
+        help=f"rendering for this run (default: {default}): 'config' uses sim.display_enabled "
+             "(off), 'on' shows the scene so you can watch, 'off' forces it off. Watching costs "
              "wall clock and changes no physics; the run records what was in force.")
 
 

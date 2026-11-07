@@ -138,7 +138,7 @@ def main() -> int:
     parser.add_argument("--sets", nargs="+", required=True)
     parser.add_argument("--workers", type=int, default=4,
                         help="processes for the offline route profiles (2026-10-20)")
-    add_display_flag(parser)
+    add_display_flag(parser, default="on")    # rendering on unless --display off (2026-11-07)
     args = parser.parse_args()
 
     # Rendering changes no physics (scripts/regress_display_off.py: bit-identical trajectories)

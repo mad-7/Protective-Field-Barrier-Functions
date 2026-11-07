@@ -276,7 +276,7 @@ def main() -> int:
     parser.add_argument("--seed", type=int, required=True)
     parser.add_argument("--instance", type=int, default=0,
                         help="simulator instance i: port sim.port + sim.port_stride * i")
-    add_display_flag(parser)
+    add_display_flag(parser, default="on")    # rendering on unless --display off (2026-11-07)
     args = parser.parse_args()
     if args.instance < 0:
         raise SystemExit("--instance must be >= 0")
