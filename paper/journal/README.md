@@ -31,13 +31,13 @@ pdflatex pfb_journal
 ## Figures
 Regenerated from the project's own geometry, configuration and runs (repository root):
 ```
-FIG_OUT=paper/journal/figures FIG_TEXT_WIDTH=6.3 python paper/figures/scripts/fig1_architecture.py
+python paper/journal/scripts/fig_architecture_journal.py   # Figure 1 (schematic, vector)
 FIG_OUT=paper/journal/figures FIG_TEXT_WIDTH=6.3 python paper/figures/scripts/fig2_field_geometry.py
 FIG_OUT=paper/journal/figures FIG_TEXT_WIDTH=6.3 python paper/figures/scripts/fig4_layout.py
 FIG_OUT=paper/journal/figures FIG_TEXT_WIDTH=6.3 python paper/figures/scripts/fig5_pfb_step.py
 python paper/journal/scripts/fig_journal_results.py
 ```
-`fig1` is drawn in full scope (learned and classical controllers). `fig3_coverage.pdf` is copied from
+Figure 1 (`fig_architecture.pdf`) is a schematic drawing in full scope (classical and learned planners); `fig1_architecture.pdf` (the shared script's version) is kept but unused. `fig3_coverage.pdf` is copied from
 `paper/MDPI_template/figures/`: its script reads a footprint table from a commit of the old repository
 (`git show ce2306d...`), which this repository does not have.
 
