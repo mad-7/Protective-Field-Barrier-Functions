@@ -740,6 +740,14 @@ baselines:                 # the classical comparators (WP3). Not part of the en
                            #   route along +x (nothing in the scan) and a straight 0.9 m aisle
                            #   (walls at y = +-0.45, tests/test_mppi.py). Recorded in the decision
                            #   log; the methods state it.
+                           # TUNED 2026-11-07: candidate 11 of 24 of
+                           #   runs/tuning/B6_field_aware_mppi_20261104T141227Z_seed0 (host
+                           #   DESKTOP-55VR508, commit d924eca, clean, 4 instances measured), selected
+                           #   by the declared rule: best success 0.833 (50/60), the only candidate
+                           #   within 5 points; 0.44 stops/100 m, mission time 110.9 s, no contact, 0
+                           #   unrecoverable_stop. No range boundary (1 % test); smoothness nearest
+                           #   (93.2 % of its log range). Tuned values copied EXACTLY; candidate 0's
+                           #   are kept in each line's comment (it scored 46/60, 13.4 stops/100 m).
     model: holonomic       # kinematic (vx, vy, wz) at sim.dt, box, wheel budget AND the
                            #   acceleration limiter, as the base applies a command (ruled
                            #   2026-10-27)
@@ -751,9 +759,9 @@ baselines:                 # the classical comparators (WP3). Not part of the en
                            #   2026-10-29 on DESKTOP-55VR508 (commit e0f426a): 1024 x 20 p95
                            #   37.1 ms; 1024 x 30 p95 56.5 ms fails
     samples: 1024          # rollouts per control step; NOT TUNED, as horizon_steps
-    temperature: 0.01      # lambda of the path-integral weighting, on per-step costs (the
+    temperature: 0.032768585178131346  # TUNED (0.001-0.1, log). Candidate 0: 0.01. Lambda of the path-integral weighting, on per-step costs (the
                            #   rollout cost / horizon_steps; confirmed 2026-10-27). Candidate 0
-    noise_std: [0.10, 0.10, 0.10]   # m/s, m/s, rad/s: sampling noise on (vx, vy, wz). Candidate 0
+    noise_std: [0.09430700444632568, 0.10149237487460293, 0.18319219038226955]   # TUNED (each 0.03-0.3, log). m/s, m/s, rad/s: sampling noise on (vx, vy, wz). Candidate 0: 0.10, 0.10, 0.10
     iterations: 1          # optimisation passes per control step, warm-started from the
                            #   previous step's sequence shifted by one. NOT TUNED (ruled
                            #   2026-10-27): fixed at 1
@@ -766,13 +774,13 @@ baselines:                 # the classical comparators (WP3). Not part of the en
                            #   pfbnav/safety/unobserved.py), never free space (hard rule 5)
     weights:               # the cost terms are DECLARED; their weights are tuned. No heading
                            #   term (confirmed 2026-10-27); smoothness within the rollout
-      route_tracking: 1.0  # squared distance of each rollout state to the planned route
-      goal_progress: 10.0  # minus the arc length gained along the route over the rollout.
+      route_tracking: 0.6750123188717693  # TUNED (0.1-10, log). Candidate 0: 1.0. Squared distance of each rollout state to the planned route
+      goal_progress: 29.441988828637964  # TUNED (1-100, log). Candidate 0: 10.0. Minus the arc length gained along the route over the rollout.
                            #   Candidate 0
-      field_breach: 10.0   # per scan point inside the certified field of each rollout state,
+      field_breach: 26.44147974840966  # TUNED (1-100, log). Candidate 0: 10.0. Per scan point inside the certified field of each rollout state,
                            #   sized by the certified composition max(estimate, rollout
                            #   command) with reach (ruled 2026-10-27)
-      smoothness: 0.01     # squared change of command between consecutive steps of the
+      smoothness: 0.07313400771209624  # TUNED (0.001-0.1, log). Candidate 0: 0.01. Squared change of command between consecutive steps of the
                            #   rollout. Candidate 0
 
     hard_rejection: footprint   # a rollout whose footprint (robot.footprint_table) contains

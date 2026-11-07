@@ -386,8 +386,13 @@ def test_b6_space_brackets_the_configured_values_and_samples_valid_candidates():
     # Ruled 2026-10-27: samples, horizon and iterations are fixed by measurement, not tuned; every
     # range is re-centred on candidate 0 (geometric centres within 6 %).
     assert not {"samples", "horizon_steps", "iterations"} & set(space)
+    # Candidate 0 (ruled 2026-10-27); the configured block is the TUNED one since 2026-11-07.
+    c0 = flatten_numeric({**cfg["baselines"]["mppi"], "temperature": 0.01,
+                          "noise_std": [0.10, 0.10, 0.10],
+                          "weights": {"route_tracking": 1.0, "goal_progress": 10.0,
+                                      "field_breach": 10.0, "smoothness": 0.01}})
     for name, r in space.items():
-        assert math.sqrt(r.low * r.high) == pytest.approx(defaults[name], rel=0.06), name
+        assert math.sqrt(r.low * r.high) == pytest.approx(c0[name], rel=0.06), name
     cands, _ = sample_candidates(space, defaults, 30, np.random.default_rng(0),
                                  lambda p: mod._valid(MPPIParams.from_flat, p))
     assert len(cands) == 30
