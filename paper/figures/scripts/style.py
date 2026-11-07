@@ -17,7 +17,13 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 REPO = Path(__file__).resolve().parents[3]
-OUT = REPO / "paper" / "MDPI_template" / "figures"
+# The output folder and the page width are the MDPI manuscript's unless overridden (the CoDIT paper,
+# 2026-11-07: FIG_OUT=paper/codit2026/figures FIG_TEXT_WIDTH=7.16 FIG_SCOPE=classical).
+OUT = Path(os.environ["FIG_OUT"]) if os.environ.get("FIG_OUT") else (
+    REPO / "paper" / "MDPI_template" / "figures")
+if not OUT.is_absolute():
+    OUT = REPO / OUT
+SCOPE = os.environ.get("FIG_SCOPE", "full")      # "classical": no learned controller is drawn
 CONFIG = REPO / "configs" / "base.yaml"
 
 # Okabe-Ito (Wong, Nature Methods 2011): distinguishable under the common colour-vision deficiencies.
@@ -32,7 +38,8 @@ PURPLE = "#CC79A7"
 GREY = "#999999"
 LIGHT = "#DDDDDD"
 
-TEXT_WIDTH_IN = 5.35     # the Sensors template's text width, about 13.6 cm
+TEXT_WIDTH_IN = float(os.environ.get("FIG_TEXT_WIDTH", "5.35"))   # Sensors 5.35 in; IEEE 7.16 in
+COLUMN_WIDTH_IN = 3.5    # an IEEE two-column column
 
 
 def apply() -> None:

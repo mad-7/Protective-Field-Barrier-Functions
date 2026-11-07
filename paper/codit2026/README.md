@@ -1,6 +1,19 @@
 # CoDIT regular paper draft: Protective-Field Barriers for classical local planners
 
-`pfb_codit.tex` (IEEE conference class, double column, <= 6 pages; compiles to 4) and `references.bib`.
+`pfb_codit.tex` (IEEE conference class, double column, <= 6 pages; compiles to 5 with four figures),
+`references.bib`, `figures/` and `results_tune.json` (the values behind Fig. 4, each with its run and
+decision-log source). Written in academic style (researcher, 2026-11-07).
+
+**Figures** (from the project's own geometry, configuration and runs; nothing typed by hand except
+`results_tune.json`, which the host can check with `--from-runs`):
+```
+FIG_OUT=paper/codit2026/figures FIG_TEXT_WIDTH=7.16 FIG_SCOPE=classical python paper/figures/scripts/fig1_architecture.py
+FIG_OUT=paper/codit2026/figures FIG_TEXT_WIDTH=7.16 python paper/figures/scripts/fig2_field_geometry.py
+FIG_OUT=paper/codit2026/figures FIG_TEXT_WIDTH=7.16 python paper/figures/scripts/fig5_pfb_step.py
+FIG_OUT=paper/codit2026/figures FIG_TEXT_WIDTH=7.16 python paper/figures/scripts/fig_codit_results.py [--from-runs]
+```
+Fig. 1 architecture (classical scope); Fig. 2 the fields from `pfb_field.py`; Fig. 3 one PFB step from the
+emulator on a tuning route; Fig. 4 the planners' stops, latched time and success, and B7 against alpha.
 **Scope (researcher, 2026-11-07):** the PFB as a safety filter for CLASSICAL local planners only (B1, B2,
 B3, B6, B7). Learned planners are deliberately left out until their results are reviewed.
 
@@ -13,8 +26,7 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
 2. **Red `[...]` placeholders** (`	bd`): authors and affiliation; B1's and B2's per-planned-length stop
    rates (`scripts/resummarize_eval.py` on `runs/tuning/B1_pure_pursuit_20261104T183811Z_seed0/candidate_13`
    and `runs/tuning/B2_regulated_pure_pursuit_20261030T111716Z_seed0/candidate_23`); the PFB's p95 compute
-   (`runs/realtime/REALTIME_20261029T095844Z_seed0`, pfb part). Optional: a figure (one narrow-aisle episode,
-   B2 against B7, with stop locations).
+   (`runs/realtime/REALTIME_20261029T095844Z_seed0`, pfb part). On the host, run Fig. 4 with `--from-runs` once to check it against the runs.
 3. **Four references marked VERIFY** at the end of `references.bib` (Coulter 1992, Macenski 2023, Williams
    2017, Macenski 2020). The rest are copied verbatim from `paper/MDPI_template/references.bib`.
 

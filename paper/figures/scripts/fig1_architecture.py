@@ -47,8 +47,10 @@ bands = ", ".join(f"{v:g}" for v in p.band_tops)
 box(0.1, 4.3, 2.1, 1.7, "Global planner",
     ["baked map", "(unmapped excluded)", "A*, two-tier inflation",
      f"lookahead {cfg['planner']['lookahead']:g} m"], tint["plan"])
-box(2.75, 4.3, 2.2, 1.7, "Controller",
-    ["learned policy (82-D)", "or classical baseline", "(route cap, recovery)"], tint["ctrl"])
+CLASSICAL = style.SCOPE == "classical"
+box(2.75, 4.3, 2.2, 1.7, "Local planner" if CLASSICAL else "Controller",
+    (["classical planner", "(Pure Pursuit, RPP,", "DWA, MPPI)", "route cap, recovery"] if CLASSICAL
+     else ["learned policy (82-D)", "or classical baseline", "(route cap, recovery)"]), tint["ctrl"])
 box(5.5, 4.3, 1.9, 1.7, "PFB", ["one QP per regime:", "rest and 3 bands", "identity when off"],
     tint["pfb"])
 box(7.95, 4.3, 2.15, 1.7, "Certified layer",
@@ -64,7 +66,7 @@ box(4.75, 2.0, 2.45, 1.6, "Simulator (ODE)",
     tint["base"])
 box(0.1, 1.55, 4.15, 2.05, "Sensing",
     ["two 270$^\\circ$ S300-type corner scanners",
-     f"policy stream: {sc['policy_bins']} sectors and validity",
+     *([] if CLASSICAL else [f"policy stream: {sc['policy_bins']} sectors and validity"]),
      f"filter stream: {sc['filter_bins']} sectors with measured",
      "bearing and validity",
      f"range {sc['range_min']:g}-{sc['range_max']:g} m; plausibility check, fail-safe",
@@ -77,7 +79,8 @@ arrow((7.4, 5.15), (7.95, 5.15), "$\\mathbf{u}^{\\mathrm{PFB}}$")
 arrow((9.0, 4.3), (9.0, 3.6), "zero while latched", offset=(0.62, -0.05), va="center")
 arrow((7.8, 2.8), (7.2, 2.8), "applied", offset=(0.0, 0.05))
 arrow((4.75, 2.8), (4.25, 2.8))
-arrow((2.6, 3.6), (3.6, 4.3), "36 sectors", offset=(-0.55, -0.02), va="center")
+arrow((2.6, 3.6), (3.6, 4.3), "120 sectors" if CLASSICAL else "36 sectors", offset=(-0.55, -0.02),
+      va="center")
 arrow((3.6, 3.6), (6.2, 4.3), "120 sectors", offset=(0.05, -0.2), va="center")
 arrow((4.0, 3.6), (8.4, 4.3), rad=-0.05)
 style.save(fig, "fig1_architecture.pdf")

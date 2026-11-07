@@ -1,0 +1,27 @@
+{
+  "note": "Tune-set results (60 scenarios, 633 m planned), as recorded in docs/decision_log.md. Regenerate from the run logs on the training host with: python paper/figures/scripts/fig_codit_results.py --from-runs. Preliminary, monitoring only.",
+  "planners": {
+    "B1": {"label": "B1 Pure Pursuit", "success": 0.017, "stops_driven": 173.1, "latched": 0.875, "moving": 0.158,
+           "run": "runs/tuning/B1_pure_pursuit_20261104T183811Z_seed0/candidate_13",
+           "source": "DL 2026-11-07 'Moving speed and latched share'"},
+    "B2": {"label": "B2 RPP", "success": 0.250, "stops_driven": 86.1, "latched": 0.420, "moving": 0.059,
+           "run": "runs/tuning/B2_regulated_pure_pursuit_20261030T111716Z_seed0/candidate_23",
+           "source": "DL 2026-11-07 'Moving speed and latched share'"},
+    "B3": {"label": "B3 DWA", "success": 0.667, "stops_driven": 23.78, "latched": 0.064, "moving": 0.070,
+           "run": "runs/tuning/B3_holonomic_dwa_20261104T141250Z_seed0/candidate_11",
+           "source": "DL 2026-11-07 'All arms under the A34 denominators'"},
+    "B6": {"label": "B6 MPPI", "success": 0.833, "stops_driven": 0.4365, "latched": 0.0008, "moving": 0.091,
+           "run": "runs/tuning/B6_field_aware_mppi_20261104T141227Z_seed0/candidate_11",
+           "source": "DL 2026-11-07 'All arms under the A34 denominators'"},
+    "B7": {"label": "B7 RPP+PFB", "success": 0.500, "stops_driven": 0.5896, "latched": 0.0005, "moving": 0.048,
+           "run": "runs/tuning/B7_alpha_20261102T195759Z_seed0/candidate_0",
+           "source": "DL 2026-11-07 'All arms under the A34 denominators'"}
+  },
+  "alpha": {
+    "values": [1, 2, 5, 10, 20],
+    "success": [0.500, 0.500, 0.517, 0.500, 0.517],
+    "stops_driven": [0.5896, 2.9448, 9.6313, 11.9761, 12.9311],
+    "fallback_steps": [332, 125, 74, 2807, 8142],
+    "source": "runs/tuning/B7_alpha_20261102T195759Z_seed0/summary.json; DL 2026-11-03 'alpha 1.0 FROZEN'"
+  }
+}
