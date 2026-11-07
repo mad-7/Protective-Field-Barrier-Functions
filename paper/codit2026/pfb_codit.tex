@@ -274,8 +274,8 @@ width, with no stop recorded in the narrow and medium aisles.
 Planner & Success & \multicolumn{2}{c}{Stops per 100\,m} & Time in & Speed \\
  & rate & planned & driven & stop & (m/s) \\
 \midrule
-B1 Pure Pursuit & 0.017 & \tbd{} & 173.1 & 0.875 & 0.158 \\
-B2 RPP & 0.250 & \tbd{} & 86.1 & 0.420 & 0.059 \\
+B1 Pure Pursuit & 0.017 & 64.0 & 173.1 & 0.875 & 0.158 \\
+B2 RPP & 0.250 & 52.8 & 86.1 & 0.420 & 0.059 \\
 B3 DWA & 0.667 & 20.5 & 23.8 & 0.064 & 0.070 \\
 B6 Field-aware MPPI & 0.833 & 0.47 & 0.44 & 0.001 & 0.091 \\
 \textbf{B7 RPP + PFB} & 0.500 & 0.47 & 0.59 & 0.001 & 0.048 \\
@@ -334,9 +334,11 @@ is the strongest reference: it succeeds on 50 of the 60 scenarios and records th
 number as B7. Given the small number of events, the tuning set does not permit a statistical
 distinction between these two planners in terms of stops.
 
-\emph{Computational cost.} The 95th percentile of the decision time per control step on the evaluation
-host is 0.02\,ms for B1, 0.03\,ms for B2, 4.4\,ms for B3, 37.1\,ms for B6 (1024 samples over 20 steps)
-and \tbd{ms} for the PFB, all within the control period of 50\,ms.
+\emph{Computational cost.} On the evaluation host, the 95th percentile of the planner's decision time
+per control step, measured in synthetic aisles, is 0.02\,ms for B1, 0.03\,ms for B2, 4.4\,ms for B3
+and 37.1\,ms for B6 (1024 samples over 20 steps). Over the 60 tuning episodes of B7, the PFB's QP took
+27.9\,ms at the 95th percentile (median 1.6\,ms, maximum 49.5\,ms), and B7's complete decision
+28.1\,ms; all values lie within the control period of 50\,ms.
 
 \section{Discussion and Conclusion}
 The results indicate that defining the safe set of the barrier as the complement of the certified
