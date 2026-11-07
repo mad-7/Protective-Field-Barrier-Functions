@@ -97,6 +97,13 @@ methods:
     status: active
     role: [H4]
     what: "Unicycle ablation of L5 (exploratory)"
+  L5-v2:
+    status: active
+    role: [exploratory]
+    what: "L5 with an improved learning setup (ruled 2026-11-07, A35): at most ONE shared change to the
+      learning setup, pilot-range seeds, tune set only; not in the confirmatory family. Its
+      configuration and seeds are declared (hash) before the confirmatory test evaluation runs. At
+      the HEAD of the cut order (gates.yaml G2_compute_budget.reduction_order)"
   L5-nowp:
     status: active
     role: [exploratory]

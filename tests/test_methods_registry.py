@@ -52,6 +52,9 @@ def test_the_a28_cut_order_names_only_active_methods_or_declared_analyses():
         order = g2["reduction_order"]
         if path.parent.name == "preregistration" and "L2-d005" not in order:
             continue                            # A28 not applied yet: the frozen file is older
+        if order[0] == "L5-v2":                 # A35 (ruled 2026-11-07): L5-v2 heads the cut order
+            assert REGISTRY["L5-v2"]["role"] == ["exploratory"]
+            order = order[1:]
         assert order[:2] == ["L2-d005", "L2-d020"]
         assert set(order) - {"PFB-(a)", "stop_active"} <= ACTIVE
         assert not {"L1", "L2", "L4", "L5"} & set(order)

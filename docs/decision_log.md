@@ -11020,3 +11020,43 @@ Second message:
   mean action; `SACController`, `deterministic=True`, every evaluation incl. G4's checkpoint); the
   stochastic mode is diagnostic only. A trace runs in its own scene load, so it need not repeat the
   recorded episode; both are printed.
+
+**Implemented, continued (2026-11-07):**
+- **The primary's denominator (first message item 6; second message item 1).** As it stands the primary
+  divides by distance DRIVEN (recovery included, every episode pooled, none censored); **A35 drafted**
+  (`docs/pending/A35_amendment.md`, `apply_A35.py`, dry-run after A34 on copies: both refusals checked,
+  both YAML files parse): H1's and H1prime's endpoint -> per 100 m of PLANNED route length, with the data
+  above; driven and completed-only stay secondary. The tuning selections already made keep the rule
+  declared at the time (driven distance); they are not re-selected.
+- **Seeds (item 5).** A conflict with the frozen text, resolved in A35 for the supervisor to confirm:
+  `layout_sets.seed_ranges.pilot` is [9000000, 9999999], "nothing drawn from here may appear in a
+  reported result", and the ruled confirmatory seeds 9100001-9100010 lie inside it (the pilot LAYOUT set
+  uses 9000000-9000149; diagnostics used 9000100 and 9200000). A35 carves the block 9100000-9100999 out
+  as confirmatory, declares `pilot_training_range` [9000000, 9000099] and the ten seeds.
+  `pfbnav/training/seeds.py` (tests/test_training_seeds.py) makes training refuse, once A35 is applied,
+  any seed that is neither confirmatory nor in the pilot training range, and any diagnostic in the
+  confirmatory block; before A35 nothing changes.
+- **L5-v2 (item 7):** registered in `configs/methods.yaml` (new ID, exploratory); A35 puts it at the head
+  of `reduction_order`. Its one shared change, config and seeds are declared later, before the test
+  evaluation.
+- **No improvement round (item 2)** is recorded in A35's text.
+- **A14b (second message item 2):** `scripts/power_a14b.py`, `configs/analysis/power_a14b.yaml`: the
+  grid rate {0.25, 0.5, 1, 2}/100 m x ratio {0.5, 0.7, 1.0} x seed CV {0.15, 0.3, 0.5} (the declared
+  values until the pilot seed CV exists; difficulty CV at the declared middle 1.0) x sizes 50-1,600 per
+  stratum, K = 10, all seven comparators at the rate, Holm alpha/3, 2,000 replications; per cell the
+  smallest size reaching 80 % power, and the evaluation wall-clock per size from per-arm episode costs
+  (estimates, test in tests/test_power_a14b.py). **Smoke, for orientation only:** rate 2, ratio 0.5,
+  300 scenarios: power 0.59 -- far from 80 % even at the highest rate. **Wall-clock of the test
+  evaluation** (5 classical arms once, 5 learned arms x 10 seeds, 4 instances): ~2.2 h of instance time
+  per scenario, i.e. 150 scenarios 3.5 days, 300 7 days, 600 14 days, 1,200 28 days.
+- **The current test set (second message item 2):** none exists. `scenario_sets.yaml` leaves its size
+  absent by design (`test: pending_A14`); it will be built on the host after A14b, with the same generator
+  and validity rules, from the test seed range 3000000-3999999.
+- **Compute (second message item 5):** B6's 37.1 ms p95 (DESKTOP-55VR508, 2026-10-29) is recorded as
+  descriptive, within the 50 ms criterion; no document claims a compute advantage against B6.
+- **The confirmatory wall-clock plan (item 5),** from measured per-arm training throughput with four
+  instances: PFB arms (L4, L5) 21.1 steps/s -> 26.3 h per 2M-step run; filter-free arms (L1, L2) 33.2 ->
+  16.7 h (measured with fewer concurrent instances: may be slower at four). K = 10: 10 x (2 x 26.3 + 2 x
+  16.7) = 860 instance-hours, **~9 days on four instances**, before the exploratory arms.
+- Fast suite: 1,626 passed, 1 skipped (a first run had 17 failures from the LAPTOP running out of memory --
+  an array allocation of 437 MiB with 2.1 GB of 7.7 GB free -- and passed clean on rerun).

@@ -89,6 +89,7 @@ from pfbnav.training.curriculum import Curriculum, stages_from_config
 from pfbnav.training.diagnostic import UnicycleAction, diagnostic_problem
 from pfbnav.training.order import order_sha256, scenario_order
 from pfbnav.training.record import STOP_FILE, EpisodeLog, EpisodeRecorder, MemoryTrend, StopFile
+from pfbnav.training.seeds import training_seed_problem
 from pfbnav.training.shaping import shaping_problem
 from pfbnav.training.stall import StallRule, StallTruncation
 from pfbnav.utils.cli import add_display_flag, apply_display
@@ -138,7 +139,8 @@ def load_training_sets(cfg: dict[str, Any], seed: int) -> tuple[list[Path], list
     """The training sets' paths, every scenario in the seed's order, and the order."""
     set_paths = preflight(cfg)
     gates = yaml.safe_load((REPO_ROOT / "preregistration" / "gates.yaml").read_text(encoding="utf-8"))
-    problem = diagnostic_problem(cfg, seed, gates)
+    problem = (diagnostic_problem(cfg, seed, gates)
+               or training_seed_problem(seed, gates, diagnostic=bool(cfg.get("diagnostic"))))
     if problem:
         raise SystemExit(problem)
     if not cfg.get("diagnostic") and str(cfg.get("experiment", "")).startswith("DIAG_"):

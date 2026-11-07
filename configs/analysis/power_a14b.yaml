@@ -1,0 +1,38 @@
+# A14b: H1's power on a GRID (ruled 2026-11-07, additional ruling 2), before the test-set size is fixed.
+# The tune set's 3-6 events cannot support point rates, so rates and ratios are swept. Stops are counted
+# per 100 m of PLANNED route (the primary as amended by A35); the simulation's Poisson means are rate x
+# planned length, so they are in that unit already. Nothing measured is restated: alpha, comparators and
+# the Holm family come from endpoints.yaml; route lengths from the pilot set (as power_corrected.yaml).
+defaults: ../base.yaml
+
+power_a14b:
+  seeds_per_learned_arm: 10           # K, ruled 2026-11-07 (item 5); classical arms run ONCE
+  classical_df: flat_k_minus_1        # as power_corrected.yaml (WS failed calibration, 2026-10-03)
+  min_power: 0.80
+  comparator_rates_per_100m: [0.25, 0.5, 1.0, 2.0]   # every comparator at this rate (all at margin)
+  rate_ratios: [0.5, 0.7, 1.0]        # L5 / comparator; 1.0 = the null (its rejection rate is the size)
+  sizes_per_cell: [50, 100, 200, 400, 800, 1600]     # scenarios per stratum; pairs = size x 3 strata
+  difficulty_cv: [1.0]                # the declared middle point (power_corrected.yaml h1.middle_point)
+  seed_cv: [0.15, 0.3, 0.5]           # the declared grid, until the pilot seed CV (L5 9000002/9000003)
+                                      #   gives its upper 80 % bound; then rerun at that value
+  classical: [B1, B2, B3, B6]
+  learned: [L1, L2, L3]
+  route_lengths_from: scenarios/pilot/pilot_narrow.json
+  reps: 2000                          # MC SE at power 0.8: 0.009
+  # Per-arm EPISODE cost on the test set, for the wall-clock (ESTIMATES from the tune runs: mean
+  # simulated seconds per episode from each arm's outcomes and mission time, over its measured or
+  # proxy steps/s; recomputed from the episode logs before the test Run Request).
+  instances: 4
+  episode_wall_s:
+    B1: 121      # ~4,000 steps (latched to the horizon) / 33 steps/s
+    B2: 114      # 15 x 153 s + 45 x 200 s per 60 -> 3,770 steps / 33
+    B3: 85       # 40 x 110 s + 20 x 200 s -> 2,790 steps / 33
+    B6: 169      # 50 x 111 s + 10 x 200 s -> 2,520 steps / 14.9 (37 ms compute + the step)
+    B7: 169      # 30 x 156 s + 30 x 200 s -> 3,560 steps / 21.1 (PFB arm)
+    L1: 121      # ~4,000 steps / 33.2 (L1's training throughput)
+    L2: 121      # as L1 (filter-free)
+    L3: 190      # L1's checkpoint under the PFB: ~4,000 steps / 21.1
+    L4: 150      # as L5
+    L5: 150      # 31 successes ~120 s + 29 x 200 s -> 3,170 steps / 21.1
+  learned_arms_evaluated: [L1, L2, L3, L4, L5]      # x K seeds each
+  classical_arms_evaluated: [B1, B2, B3, B6, B7]    # once each
