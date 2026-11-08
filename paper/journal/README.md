@@ -50,7 +50,7 @@ Figure 1 (`fig_architecture.pdf`) is a schematic drawing in full scope (classica
 ## Where each number comes from (docs/decision_log.md, entries of the dates given)
 | Claim | Source |
 |---|---|
-| Tables 2-4, Fig. 5 (HELD-OUT, both halves; rate ratios; PFB corrections; declared control) | 2026-11-08 "The sealed classical test (unmapped_static)" and "(mapped_only)"; `runs/test/HFC_ANALYSIS_20261108T171312Z_seed0`, `runs/test/HFC_ANALYSIS_mapped_only_20261108T223147Z_seed0` (training host, not read directly from this laptop) |
+| Tables 2-4, Fig. 5 (HELD-OUT, both halves; rate ratios; PFB corrections; declared control) | 2026-11-08 "The sealed classical test (unmapped_static)" and "(mapped_only)"; `runs/test/HFC_ANALYSIS_20261108T171312Z_seed0`, `runs/test/HFC_ANALYSIS_mapped_only_20261108T223147Z_seed0` (training host). Checked 2026-11-08 by the host session against the researcher's printouts of both `report.json` files: every printed value matches; the run files themselves were not read from the laptop. Driven and planned metres and the fractions are derived as stops / rate (half 2's B6 driven +-2 m) |
 | Half 1 mission times (B3 131.2, B6 129.6, B7 169.0 s) | relayed 2026-11-08; `paper/codit2026/results_test.json` (not in the log's table) |
 | Tune split, 17 obstacle / 43 clear routes | 2026-11-08 "The success collapse is the population" |
 | Calibration gate (0.0297; highest 0.0274; ungated cells) | 2026-11-08 "HF-c calibration PASSED" |

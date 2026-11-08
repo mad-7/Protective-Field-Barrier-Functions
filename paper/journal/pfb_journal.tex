@@ -758,7 +758,8 @@ Figure~\ref{fig:heldout} a summary. Success, mission time and speed are descript
 \centering
 \caption{\textbf{Held-out test set}, unmapped-static condition: an unmapped obstacle on every route (150
 scenarios, 50 per stratum, 1{,}624\,m planned). T/U: timeouts and unrecoverable stops. Driven: distance in m, and
-as a fraction of the planned length. Moving: mean speed in m/s while not latched. Latched: share of time in a
+as a fraction of the planned length, both derived from stops and rate and so rounded. Moving: mean speed in m/s
+while not latched. Latched: share of time in a
 latched stop. Time: mean mission time of successful episodes in s.}
 \label{tab:heldout-obstacle}
 \footnotesize
@@ -840,7 +841,9 @@ stops fall from 146 of 150 episodes to none.
 \paragraph{The reduction is not bought by standing still.} B7 drove 880\,m against B2's 696\,m, so the effect holds
 per distance driven as well (2.04 against 158.9 per 100\,m), and its latched share falls from 0.597 to 0.001. While
 moving, however, B7 is slower here, at 0.029 against 0.058\,m/s: it drives further because it is almost never
-latched. Distance driven is not route progress, and the analysis does not report progress along the route.
+latched. Distance driven is not route progress, which the analysis does not report, and it includes recovery
+motion, which B2 uses after its many stops; part of B2's distance is therefore motion of that kind. The argument rests
+on distance driven and on the latched share, and on nothing stronger.
 
 \paragraph{B7 does not complete routes with an unmapped obstacle.} It times out on 147 of 150 episodes, covering
 5.9\,m per 200\,s episode on routes that average 10.8\,m. The tuned RPP's request does not exceed 0.075\,m/s at the 95th

@@ -1,5 +1,5 @@
 {
-  "note": "HELD-OUT test set, classical planners only, each run once per scenario within one scene load. Values as recorded in docs/decision_log.md, 2026-11-08 ('The sealed classical test (unmapped_static)', 'The sealed classical test (mapped_only)'); half 1's mission times from the host's analysis as relayed 2026-11-08 and paper/codit2026/results_test.json. Success, time and speed are descriptive (A34). No learned arm has run on the test set. No contact and no scan-fault stop in any arm.",
+  "note": "HELD-OUT test set, classical planners only, each run once per scenario within one scene load. Values as recorded in docs/decision_log.md, 2026-11-08 ('The sealed classical test (unmapped_static)', 'The sealed classical test (mapped_only)'); half 1's mission times from the host's analysis as relayed 2026-11-08 and paper/codit2026/results_test.json. planned_m, driven_m and fraction are derived as stops / rate, not printed by the analysis; half 2's B6 driven_m is good to about +-2 m. Success, time and speed are descriptive (A34). No learned arm has run on the test set. No contact and no scan-fault stop in any arm.",
   "unmapped_static": {
     "run": "runs/test/HFC_ANALYSIS_20261108T171312Z_seed0",
     "commit": "6afb838",
