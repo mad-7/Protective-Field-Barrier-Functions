@@ -1,8 +1,8 @@
 % CoDIT regular paper (up to 6 pages, IEEE conference double-column). Build: pdflatex, bibtex, pdflatex x2.
 % Every number is traced in paper/codit2026/README.md; \tbd marks a value still to be filled in.
 % SCOPE (researcher, 2026-11-07): the PFB as a safety filter for classical local planners only.
-% DRAFT (supervisor, 2026-11-07): all results are development-set (tuning-set) results; submission is the
-% authors' decision. The comparison with classical planners is a declared exploratory contingency hypothesis.
+% DRAFT: submission is the authors' decision (supervisor, 2026-11-07). Held-out results as labelled; anything
+% still from the tuning set is labelled development-set. B7 vs B2 confirmatory; B7 vs B1/B6 exploratory.
 % Figures: FIG_OUT=paper/codit2026/figures FIG_TEXT_WIDTH=7.16 FIG_SCOPE=classical
 %          python paper/figures/scripts/{fig1_architecture,fig2_field_geometry,fig5_pfb_step,fig_codit_results}.py
 \documentclass[conference]{IEEEtran}
@@ -46,13 +46,15 @@ safety function. The barrier is derived from the same configuration as the safet
 continuous, speed- and direction-dependent protective field; a quadratic program minimally modifies the
 command of an arbitrary local planner so that this field remains clear. The approach is evaluated in
 simulation on a holonomic platform in warehouse aisles of three widths, with four tuned classical
-planners as references. On the development (tuning) set, placing the PFB beneath a tuned Regulated Pure
-Pursuit planner reduces the rate of protective stops from 86.1 to 0.59 per 100\,m and the fraction of
-time spent in a stop from 42\,\% to 0.05\,\%, while the planner's driving speed is preserved; a
-field-aware MPPI planner is indistinguishable from it in terms of stops (three versus three events). The
-comparison with classical planners is a declared exploratory contingency hypothesis whose held-out
-evaluation is pending. These preliminary results suggest that consistency between the barrier and the certified safety function is an effective means of
-reconciling local planning with industrial safety equipment.
+planners as references. On a held-out test set of 150 scenarios with an unmapped obstacle on every route,
+placing the PFB beneath a tuned Regulated Pure Pursuit planner reduces protective stops from 68.1 to 1.11
+per 100\,m of planned route (rate ratio 0.0167, 95\,\% CI [0.0090, 0.0311]) and unrecoverable stops from
+146 episodes to none, while the distance driven increases by 26\,\%. The filtered planner nevertheless
+does not complete these missions: it times out in 147 of the 150 episodes, at a speed near 0.03\,m/s. It
+also does not outperform a field-aware MPPI planner, from which it is indistinguishable in terms of stops
+(18 versus 10 events) and which has a far higher success rate (0.553 against 0.020). Consistency between
+the barrier and the certified safety function thus removes protective stops without a loss of progress,
+whereas mission completion remains limited by the planner beneath the filter.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -114,8 +116,8 @@ scan, whose zero level set is a continuous protective field that depends on the 
 yaw rate of the robot and is constructed from the configuration of the safety function;
 \item a filtering scheme based on one QP per speed regime, which respects the actuation and acceleration
 limits of a holonomic platform;
-\item an exploratory evaluation on a development set, in which all planners operate above the same emulated safety function,
-together with an analysis of the failures that persist when the filter is active.
+\item an evaluation on a held-out test set, with one confirmatory comparison, in which all planners operate
+above the same emulated safety function, together with an analysis of the failures that persist when the filter is active.
 \end{itemize}
 
 \section{Related Work}
@@ -146,9 +148,9 @@ certified safety function, evaluated at the speed and direction that the robot w
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_codit_results.pdf}
-\caption{Results on the development (tuning) set. (a) Protective stops per 100\,m driven (logarithmic scale).
-(b) Fraction of time spent in a latched stop and success rate. (c) Protective stops of B7 and number
-of fallback steps of the PFB as functions of the gain $\alpha$.}
+\caption{(a, b) Held-out test set: protective stops per 100\,m of planned route (logarithmic scale);
+fraction of time spent in a latched stop and success rate. (c) Development (tuning) set: protective stops
+of B7 per 100\,m driven and number of fallback steps of the PFB as functions of the gain $\alpha$.}
 \label{fig:results}
 \end{figure*}
 
@@ -242,49 +244,54 @@ combination is denoted B7.
 \subsection{Setup}
 The experiments are conducted in CoppeliaSim \cite{rohmer2013vrep} with a model of the KUKA youBot
 in procedurally generated warehouse halls comprising three classes of aisle width (narrow, medium and
-wide). Each scenario contains one or two obstacles placed close to the route that are absent from the
-map, so that the global planner neither represents nor avoids them. All planners receive the same A*
-route, operate above the same safety function and share the same recovery behaviour after a protective
-stop. Four classical planners serve as references: Pure Pursuit with its own lookahead distance (B1),
-RPP (B2), DWA (B3) and an MPPI controller whose rollout cost penalises scan returns inside the certified
-field (B6). The proposed configuration (B7) applies the PFB to the tuned parameters of B2. Planners B1,
-B2, B3 and B6 were each tuned with an identical budget of 24 parameter candidates, retaining the
-candidate with the fewest protective stops among those within five percentage points of the highest
+wide). Unmapped obstacles, one or two per scenario, are placed close to the route and are absent from the
+map, so that the global planner neither represents nor avoids them; they are present on every route of the
+held-out population analysed here and on 17 of the 60 routes of the tuning set. All planners receive the
+same A* route, operate above the same safety function and share the same recovery behaviour after a
+protective stop. Four classical planners serve as references: Pure Pursuit with its own lookahead distance
+(B1), RPP (B2), DWA (B3) and an MPPI controller whose rollout cost penalises scan returns inside the
+certified field (B6). The proposed configuration (B7) applies the PFB to the tuned parameters of B2.
+Planners B1, B2, B3 and B6 were each tuned with an identical budget of 24 parameter candidates, retaining
+the candidate with the fewest protective stops among those within five percentage points of the highest
 success rate. The gain of the PFB was selected by the same rule over $\alpha\in\{1,2,5,10,20\}$\,s$^{-1}$,
-which yielded $\alpha=1$\,s$^{-1}$. A privileged tracker, which is informed of every obstacle but follows
-the route without replanning, serves as a positive control.
+which yielded $\alpha=1$\,s$^{-1}$. All tuning used sets separate from the test set. On the tuning set, a
+privileged tracker, which is informed of every obstacle but follows the route without replanning, serves
+as a positive control.
 
 The primary metric is the number of protective stops per 100\,m of planned route. The rate per 100\,m
-actually driven, the fraction of time spent in a latched stop and the mean speed outside stops are
-reported as secondary metrics. Episodes are limited to 200\,s. All results reported here are
-development-set results, obtained on the tuning set of 60 scenarios with a total planned length of
-633\,m, and are therefore preliminary. Within the wider study, the comparison of B7 with the classical
-planners is a declared exploratory contingency hypothesis; its evaluation on held-out layouts is pending.
+actually driven, the fraction of time spent in a latched stop, the mean speed outside stops, the success
+rate and the mission time are reported descriptively, without inference. Episodes are limited to 200\,s.
+The held-out test set comprises 150 scenarios (50 per class of aisle width) with a total planned length of
+1624\,m; each planner is run once per scenario, within one load of the simulation scene. The single
+confirmatory comparison is B7 against B2 on the primary metric, at a significance level of 0.05, by a rate
+ratio with a scenario-level 95\,\% confidence interval (Student's $t$ with 149 degrees of freedom,
+continuity correction 0.5), whose calibration at equal rates was checked before the test set was read. The
+comparisons of B7 with B1 and B6 belong to a declared exploratory contingency hypothesis of the study. The
+test size and the choice of B7 against B2 as the confirmatory comparison were fixed before the test set was
+built or read, but after the development-set rates had been seen (52.8 for B2 and 0.47 for B7 per 100\,m
+planned). Results labelled development-set were obtained on the tuning set of 60 scenarios (633\,m planned)
+and are preliminary.
 
 \subsection{Results}
-Table~\ref{tab:main} and Fig.~\ref{fig:results} summarise the development-set performance of all planners. The
-introduction of the PFB beneath RPP reduces the rate of protective stops from 86.1 to 0.59 per 100\,m
-driven and the fraction of time spent in a stop from 42\,\% to 0.05\,\%, while the success rate doubles
-from 0.25 to 0.50. As shown in Table~\ref{tab:strata}, the reduction is observed in each class of aisle
-width, with no stop recorded in the narrow and medium aisles.
+Table~\ref{tab:main} and Fig.~\ref{fig:results}(a,b) summarise the held-out results. No contact and no
+stop caused by a scan fault occurred in any configuration.
 
 \begin{table}[t]
 \centering
-\caption{Performance on the development (tuning) set (60 scenarios, preliminary).}
+\caption{Held-out test set (150 scenarios, an unmapped obstacle on every route, 1624\,m planned).}
 \label{tab:main}
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{lccccc}
+\footnotesize
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{lccccccccc}
 \toprule
-Planner & Success & \multicolumn{2}{c}{Stops per 100\,m} & Time in & Speed \\
- & rate & planned & driven & stop & (m/s) \\
+ & Suc- & Time- & Unre- & & \multicolumn{2}{c}{Stops/100\,m} & Driven & Speed & Time \\
+Planner & cess & out & cov. & Stops & plan. & driv. & (m) & (m/s) & latched \\
 \midrule
-B1 Pure Pursuit & 0.017 & 64.0 & 173.1 & 0.875 & 0.158 \\
-B2 RPP & 0.250 & 52.8 & 86.1 & 0.420 & 0.059 \\
-B3 DWA & 0.667 & 20.5 & 23.8 & 0.064 & 0.070 \\
-B6 Field-aware MPPI & 0.833 & 0.47 & 0.44 & 0.001 & 0.091 \\
-\textbf{B7 RPP + PFB} & 0.500 & 0.47 & 0.59 & 0.001 & 0.048 \\
-\midrule
-Privileged tracker & 0.717 & 49.0 & 59.1 & 0.377 & 0.110 \\
+B1 PP & 0.000 & 1 & 149 & 1033 & 63.6 & 176.6 & 585 & 0.144 & 0.864 \\
+B2 RPP & 0.000 & 4 & 146 & 1106 & 68.1 & 158.9 & 696 & 0.058 & 0.597 \\
+B3 DWA & 0.013 & 134 & 14 & 815 & 50.2 & 92.1 & 885 & 0.033 & 0.100 \\
+B6 MPPI & 0.553 & 67 & 0 & 10 & 0.62 & 0.57 & 1769 & 0.073 & 0.001 \\
+\textbf{B7} & 0.020 & 147 & 0 & 18 & 1.11 & 2.04 & 880 & 0.029 & 0.001 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -306,69 +313,91 @@ Wide & 0.30 & 0.70 & 118.7 & 1.76 \\
 \end{tabular}
 \end{table}
 
-\emph{Effect on driving speed.} A natural concern is that the filter might avoid stops merely by slowing
-the robot. On the 13 routes on which B7 exceeded the time limit without encountering an obstacle, B7 and
-B2 travel at the same mean speed outside stops (0.057\,m/s in both cases); B2, however, spends 27\,\% of
-these episodes in a latched stop and records 69 stops, whereas B7 records none. The low speed of both
-configurations is inherited from the tuned speed regulation of RPP, which begins to reduce the speed at
-a clearance of 1.18\,m and therefore operates close to its minimum speed throughout aisles of
-0.7--0.9\,m. In an empty synthetic aisle, the tuned RPP covers 0.73\,m in 10\,s, whereas Pure Pursuit and
-DWA cover 4.3\,m and 4.2\,m, respectively.
+\emph{Confirmatory comparison.} B7 records 18 protective stops against 1106 for B2, that is, 1.11 against
+68.1 per 100\,m of planned route: a rate ratio of 0.0167, 95\,\% CI [0.0090, 0.0311], a reduction of
+98\,\%. Unrecoverable stops fall from 146 of the 150 episodes to none. The reduction is not obtained by
+standing still: B7 drives 880\,m against 696\,m for B2, that is, 26\,\% further, so that the effect also
+holds per distance driven (2.04 against 158.9 per 100\,m), and the fraction of time spent in a latched stop
+falls from 0.597 to 0.001.
 
-\emph{Analysis of the remaining failures.} All 30 unsuccessful episodes of B7 end at the time limit, 28 of
-them without any protective stop. In 17 episodes, an unmapped obstacle lies across the route at a
-distance of 0.01--0.23\,m; the privileged tracker fails on exactly the same 17 routes, which indicates
-that these routes cannot be completed by any controller that follows the route without replanning. The
-three stops of B7 occur in two of these episodes; on retracing them, the stops are preceded by steps on
-which the QP admits no feasible command next to the obstacle and the filter applies maximal braking,
-which does not suffice to keep the field clear. The residual stops of the filter therefore arise only
-where no route-following controller can pass. The remaining 13 failures occur on long routes (11.4--17.0\,m), of which B7 had completed 68--97\,\% when the
-time limit was reached. On the 43 routes that can be traversed by a route follower, B7 succeeds in
-30 cases (70\,\%).
+\emph{Mission completion.} B7 does not complete these missions. It reaches the time limit in 147 of the
+150 episodes, with a success rate of 0.020. Its mean speed outside stops is 0.029\,m/s, half that of B2
+(0.058\,m/s), which corresponds to 5.9\,m per episode on routes of 10.8\,m on average. The tuned RPP
+requests about 0.075\,m/s at the 95th percentile, and the PFB modifies this request further (median
+correction 0.025\,m/s, above 0.05\,m/s on 37.6\,\% of the steps); the QP has no feasible solution on
+0.3\,\% of the steps (1815 of 598\,139).
 
-\emph{Influence of the gain.} Fig.~\ref{fig:results}(c) shows that the success rate is nearly constant
-with respect to $\alpha$ (between 0.50 and 0.52), whereas the stop rate increases monotonically from
-0.59 to 12.9 per 100\,m. A smaller gain allows the barrier to decrease more slowly at each step and thus
+\emph{Comparison with other planners.} The field-aware MPPI controller, which incorporates the certified
+field into its rollout cost, is the strongest reference: it succeeds in 83 of the 150 episodes (0.553, against
+0.020 for B7), records 10 stops and drives 1769\,m, 1.09 times the planned length. The exploratory rate ratio
+of B7 to B6 is 1.76, 95\,\% CI [0.71, 4.37]: the two planners are indistinguishable at 18 versus 10 events,
+and the contingency hypothesis is therefore not supported as a whole. The exploratory rate ratio of B7 to B1
+is 0.0179, 95\,\% CI [0.0096, 0.0333]. Pure Pursuit ends 149 of its episodes in an unrecoverable stop. DWA
+reaches the time limit in 134 episodes, with a success rate of 0.013 at 50.2 stops per 100\,m planned. The
+mean mission time of the successful episodes is 129.6\,s for B6 (83 episodes), 131.2\,s for B3 (2) and
+169.0\,s for B7 (3).
+
+\emph{Scenarios without unmapped obstacles.} \tbd{Placeholder: descriptive held-out results on the other 150
+scenarios of the test set, which contain no unmapped obstacles. Pending; numbers to be supplied after
+review.}
+
+\emph{Consistency with the development set.} The low success rates on the test set reflect its population:
+a tracker that does not replan rarely passes an unmapped obstacle near its route. On the development set, the
+17 routes with an unmapped obstacle yield success rates of 0.000 for B1, B2, B3 and B7 and 0.706 for B6, whereas
+the 43 routes without one yield 0.023 for B1, 0.349 for B2, 0.930 for B3, 0.884 for B6 and 0.698 for B7, with
+the stops of RPP falling from 224 to none under the PFB (Table~\ref{tab:strata} gives the whole set by aisle
+width). The loss of speed likewise arises near obstacles: on the routes without one, B2 and B7 both move at
+0.058\,m/s, whereas on the obstacle routes they move at 0.063 and 0.026\,m/s. The low speed on clear routes is
+inherited from the tuned speed regulation of RPP, which begins to reduce the speed at a clearance of 1.18\,m
+and therefore operates close to its minimum speed throughout aisles of 0.7--0.9\,m. In an empty synthetic
+aisle, the tuned RPP covers 0.73\,m in 10\,s, whereas Pure Pursuit and DWA cover 4.3\,m and 4.2\,m,
+respectively.
+
+\emph{Analysis of failures on the development set.} All 30 unsuccessful episodes of B7 on this set end at the
+time limit, 28 of them without any protective stop. In 17 episodes, an unmapped obstacle lies across the route
+at a distance of 0.01--0.23\,m; the privileged tracker fails on exactly the same 17 routes, which indicates
+that these routes cannot be completed by a controller that follows the route without replanning. The three
+stops of B7 occur in two of these episodes; on retracing them, the stops are preceded by steps on which the QP
+admits no feasible command next to the obstacle and the filter applies maximal braking, which does not suffice
+to keep the field clear. The 18 stops of the held-out set have not been retraced in this way. The remaining 13
+failures occur on long routes (11.4--17.0\,m), of which B7 had completed 68--97\,\% when the time limit was
+reached. For Pure Pursuit, the latched fraction lies between 83 and 90\,\% for every one of its 24 parameter
+candidates; five retraced failures each end in an unrecoverable stop after six to eight protective stops at the
+same locations, although the route is tracked to within 1--8\,cm (95th percentile of the cross-track error), so
+that the failure lies in the interaction with the field and its restart condition after stops at shelf corners,
+not in tracking.
+
+\emph{Influence of the gain (development set).} Fig.~\ref{fig:results}(c) shows that the success rate is nearly
+constant with respect to $\alpha$ (between 0.50 and 0.52), whereas the stop rate increases monotonically from
+0.59 to 12.9 per 100\,m driven. A smaller gain allows the barrier to decrease more slowly at each step and thus
 keeps the robot further from the field. At $\alpha=1$\,s$^{-1}$, the QP is infeasible on 332 steps, at
 which the filter applies maximal braking; an approach towards a wall at 0.3\,m/s with a clearance of
 0.95\,m is an example of such a situation, which is handled without braking at $\alpha=2$\,s$^{-1}$.
 
-\emph{Comparison with other planners.} Pure Pursuit spends 83--90\,\% of each episode in a latched stop
-for every one of its 24 parameter candidates. Five retraced failures each end in an unrecoverable stop
-after six to eight protective stops at the same locations, although the route is tracked to within
-1--8\,cm (95th percentile of the cross-track error); the failure thus lies in the interaction with the
-field and its restart condition after stops at shelf corners, not in tracking. DWA achieves a higher success rate than B7 (0.667) at the cost of 23.8 stops per
-100\,m. The field-aware MPPI controller, which incorporates the certified field into its rollout cost,
-is the strongest reference: it succeeds on 50 of the 60 scenarios and records three stops, against three
-for B7. At three versus three events the two planners are indistinguishable in terms of stops, and the
-development set cannot separate them.
-
 \emph{Computational cost.} On the evaluation host, the 95th percentile of the planner's decision time
 per control step, measured in synthetic aisles, is 0.02\,ms for B1, 0.03\,ms for B2, 4.4\,ms for B3
-and 37.1\,ms for B6 (1024 samples over 20 steps). Over the 60 development-set episodes of B7, the PFB's QP took
-27.9\,ms at the 95th percentile (median 1.6\,ms, maximum 49.5\,ms), and B7's complete decision
+and 37.1\,ms for B6 (1024 samples over 20 steps). Over the 60 development-set episodes of B7, the PFB's QP
+took 27.9\,ms at the 95th percentile (median 1.6\,ms, maximum 49.5\,ms), and B7's complete decision
 28.1\,ms; all values lie within the control period of 50\,ms.
 
 \section{Discussion and Conclusion}
-The results indicate that defining the safe set of the barrier as the complement of the certified
-trigger set suffices to eliminate almost all protective stops of an existing classical planner, in every
-class of aisle width, without reducing its driving speed and without modifying the planner. The failures
-that persist are attributable to the planner and to the task rather than to the filter: a conservative
-speed regulation that becomes apparent under the time limit, and obstacles that cannot be bypassed
-without replanning. A field-aware MPPI controller, which incorporates the field into its cost function, is
-indistinguishable from B7 in terms of stops (three versus three events); the PFB, in contrast, achieves
-this result as an additional layer beneath a
-planner that has no knowledge of the field. The relative merits of the two approaches with respect to
-stops, success and computational cost cannot be established on the development set and are the subject of
-the pending evaluation on held-out layouts.
+The held-out results exhibit a clear trade-off between protective stops and throughput. Defining the safe set
+of the barrier as the complement of the certified trigger set removes 98\,\% of the protective stops and all
+unrecoverable stops of an existing classical planner, without modifying the planner and without a loss of
+progress: B7 drives further than B2 and spends a negligible fraction of time in a latched stop. It does not,
+however, enable that planner to complete these missions. B7 times out on 147 of 150 scenarios, because the
+filter further reduces the speed of a planner tuned to a low speed, within a horizon of 200\,s, on routes on
+which a tracker that does not replan rarely passes the obstacle. Success and mission time are descriptive
+here; no inference is drawn from them.
 
-The present evidence is subject to several limitations: a single set of 60 scenarios with few events, a
-single platform and simulator, and an emulated rather than physical safety function. For the comparison
-with classical planners, which the study declares as an exploratory contingency hypothesis, an evaluation
-on held-out layouts is pending; it will be conducted with a sample size determined by a power analysis,
-and will report the rate ratio of protective stops per planned length
-with respect to each reference planner. Future work will also consider planners tuned in the presence of
-the filter and the transfer of the approach to a physical robot equipped with certified scanners.
+The PFB does not outperform the field-aware MPPI controller. The two are indistinguishable in terms of stops at
+18 versus 10 events, and B6 has a far higher success rate. B6 achieves its result by incorporating the field
+into its cost function; the PFB, in contrast, acts as an additional layer beneath a planner that has no
+knowledge of the field. The present evidence is subject to several limitations: few events for the comparison
+with B6, a confirmatory comparison chosen after development-set rates had been seen, a host planner tuned
+without the filter, a single platform and simulator, and an emulated rather than physical safety function.
+Future work will consider planners tuned in the presence of the filter, the PFB beneath planners that can pass
+unmapped obstacles, and the transfer of the approach to a physical robot equipped with certified scanners.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

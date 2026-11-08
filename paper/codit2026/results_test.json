@@ -1,0 +1,19 @@
+{
+  "note": "Held-out test set, unmapped_static half (150 scenarios, 50 per stratum, an unmapped obstacle on every route, 1,624 m planned). Run on the training host; values as recorded in docs/decision_log.md, 2026-11-08 'The sealed classical test (unmapped_static): HF-c PASS'. Success, time and speed are descriptive.",
+  "run": "runs/test/HFC_ANALYSIS_20261108T171312Z_seed0",
+  "commit": "6afb838",
+  "planned_m": 1624,
+  "planners": {
+    "B1": {"label": "B1 Pure Pursuit", "success": 0.000, "timeout": 1, "unrecoverable": 149, "stops": 1033, "stops_planned": 63.6, "stops_driven": 176.6, "driven_m": 585, "driven_fraction": 0.36, "moving": 0.144, "latched": 0.864, "mission_time_s": null},
+    "B2": {"label": "B2 RPP", "success": 0.000, "timeout": 4, "unrecoverable": 146, "stops": 1106, "stops_planned": 68.1, "stops_driven": 158.9, "driven_m": 696, "driven_fraction": 0.43, "moving": 0.058, "latched": 0.597, "mission_time_s": null},
+    "B3": {"label": "B3 DWA", "success": 0.013, "timeout": 134, "unrecoverable": 14, "stops": 815, "stops_planned": 50.2, "stops_driven": 92.1, "driven_m": 885, "driven_fraction": 0.54, "moving": 0.033, "latched": 0.100, "mission_time_s": 131.2},
+    "B6": {"label": "B6 MPPI", "success": 0.553, "timeout": 67, "unrecoverable": 0, "stops": 10, "stops_planned": 0.62, "stops_driven": 0.57, "driven_m": 1769, "driven_fraction": 1.09, "moving": 0.073, "latched": 0.001, "mission_time_s": 129.6},
+    "B7": {"label": "B7 RPP+PFB", "success": 0.020, "timeout": 147, "unrecoverable": 0, "stops": 18, "stops_planned": 1.11, "stops_driven": 2.04, "driven_m": 880, "driven_fraction": 0.54, "moving": 0.029, "latched": 0.001, "mission_time_s": 169.0}
+  },
+  "rate_ratios_per_planned": {
+    "B7_vs_B2": {"ratio": 0.0167, "ci95": [0.0090, 0.0311], "status": "confirmatory, alpha 0.05"},
+    "B7_vs_B1": {"ratio": 0.0179, "ci95": [0.0096, 0.0333], "status": "exploratory"},
+    "B7_vs_B6": {"ratio": 1.76, "ci95": [0.71, 4.37], "status": "exploratory; indistinguishable at 18 vs 10 events"}
+  },
+  "pfb_on_B7": {"median_correction_mps": 0.025, "share_steps_above_0p05": 0.376, "infeasible_steps": 1815, "total_steps": 598139}
+}
