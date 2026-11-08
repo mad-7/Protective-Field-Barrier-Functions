@@ -27,10 +27,10 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
    still from the tuning set says development-set; B7 vs B2 is confirmatory; B7 vs B1 and B6 are exploratory; B7
    vs B6 reads "indistinguishable at 18 vs 10 events", never "matches"; the phrase "preregistered but exploratory"
    is not used. Success and time are descriptive. No tuning used a test layout (hard rule 2).
-2. **Some values in the obstacle half's text are not in the decision log** and came only in the handover from
-   the main session: the mean mission times (B3 131.2, B6 129.6, B7 169.0 s) and the step count 1,815 of 598,139.
-   Check them against the analysis run's summary on the host. The handover's p95 correction (0.075 m/s) is NOT
-   used: the log gives 0.075 m/s as the p95 of RPP's request, which is what the paper states.
+2. **Values not in the decision log, confirmed 2026-11-08** by the main session from the printout of the run's
+   `report.json` on the host (`descriptive.<arm>.pooled`): the mean mission times (B3 131.2 on 2 successes, B6 129.6,
+   B7 169.0 on 3) and the step count 1,815 of 598,139. RPP's request and the PFB's correction both have p95 0.075
+   m/s on the obstacle half; these are 5 mm/s histogram bins reported at the upper edge. The paper states the request's.
 3. **Everything on the half without obstacles is exploratory or descriptive;** the confirmatory comparison is the
    obstacle half's B7 vs B2 only. B7 vs B3 was not declared: counts only.
 4. **References marked VERIFY** in `references.bib` (Coulter 1992, Macenski 2023, Williams 2017, Macenski 2020,
@@ -42,7 +42,7 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
 |---|---|
 | Table I, Fig. 3a-b, rate ratios (B7/B2, B7/B1, B7/B6), 98 %, 26 % further, 146 to 0 unrecoverable, 5.9 m per episode on 10.8 m routes, request p95 0.075, median correction 0.025, 37.6 %, infeasible 0.3 % | 2026-11-08 "The sealed classical test (unmapped_static): HF-c PASS"; `results_test.json`; run `runs/test/HFC_ANALYSIS_20261108T171312Z_seed0` (host) |
 | Table II (half without obstacles), its rate ratios, median correction 0.005, 0.4 %, mission times, the declared positive control | 2026-11-08 "The sealed classical test (mapped_only)"; `results_test.json`; run `runs/test/HFC_ANALYSIS_mapped_only_20261108T223147Z_seed0` (host) |
-| Mean mission times of successes; 1,815 of 598,139 steps | handover from the main session, 2026-11-08 (same run); see "Before submitting" item 2 |
+| Mean mission times of successes; 1,815 of 598,139 steps | `report.json` of the same run, read from the host printout; see "Before submitting" item 2 |
 | Disclosures: test size and B7 vs B2 fixed before the test set was built or read, after development rates seen (52.8, 0.47); calibration before the read | 2026-11-07 "DECIDED (the researcher)", `docs/pending/A36_amendment.md`; 2026-11-08 "HF-c calibration PASSED" |
 | Development set by obstacle presence: success on 17 obstacle / 43 clear routes, moving speeds, RPP stops 224 to 0 | 2026-11-08 "The success collapse is the population" |
 | Development-set rates 52.8 and 0.47; 633 m; 17 of 60 routes with obstacles | 2026-11-07 "All arms under the A34 denominators"; `scripts/split_tune_by_obstacles.py` docstring |

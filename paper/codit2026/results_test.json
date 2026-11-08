@@ -105,7 +105,13 @@
     "median_correction_mps": 0.025,
     "share_steps_above_0p05": 0.376,
     "infeasible_steps": 1815,
-    "total_steps": 598139
+    "total_steps": 598139,
+    "requested_median_mps": 0.075,
+    "requested_p95_mps": 0.075,
+    "correction_p95_mps": 0.075,
+    "executed_median_mps": 0.02,
+    "executed_p95_mps": 0.075,
+    "note": "Histogram values: 5 mm/s bins, reported at the bin's upper edge."
   },
   "mapped_only": {
     "run": "runs/test/HFC_ANALYSIS_mapped_only_20261108T223147Z_seed0",
@@ -208,7 +214,15 @@
     "pfb_on_B7": {
       "median_correction_mps": 0.005,
       "share_steps_above_0p05": 0.004,
-      "infeasible_share": 0.0015
+      "infeasible_share": 0.0015,
+      "requested_median_mps": 0.075,
+      "requested_p95_mps": 0.075,
+      "correction_p95_mps": 0.01,
+      "executed_median_mps": 0.075,
+      "executed_p95_mps": 0.075,
+      "infeasible_steps": 777,
+      "total_steps": 514175,
+      "note": "Histogram values: 5 mm/s bins, reported at the bin's upper edge."
     }
   }
 }
