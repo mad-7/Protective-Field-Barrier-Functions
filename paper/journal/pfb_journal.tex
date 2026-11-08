@@ -1,10 +1,11 @@
 % Journal-length draft on the Protective-Field Barrier (PFB). Generic single-column preprint layout
 % (article class, natbib, no publisher template). Build: pdflatex, bibtex, pdflatex x2 (README.md).
 % SCOPE (researcher, 2026-11-07): the full study -- classical planners and the learned (SAC) arms.
-% BINDING RULES (supervisor, 2026-11-07): draft only, never submitted by anyone but the authors; every
-% number is DEVELOPMENT-SET (tune set); held-out results are placeholders (\pending); learned arms are
-% PILOT results; "B6 and B7 are indistinguishable at 3 vs 3 events"; "H1prime is a declared exploratory
-% contingency; held-out evaluation pending". Every number is traced in README.md.
+% BINDING RULES (supervisor, 2026-11-07; held-out classical results added 2026-11-08): draft only, never
+% submitted by anyone but the authors; numbers are labelled HELD-OUT (classical planners only),
+% DEVELOPMENT-SET (tune set) or PILOT (learned arms; no learned arm has run on the test set); H1 and H2
+% remain placeholders (\pending). "indistinguishable at n vs m events"; H1prime is a declared exploratory
+% contingency. Every number is traced in README.md.
 \documentclass[11pt]{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[T1]{fontenc}
@@ -35,7 +36,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 \renewcommand{\headrulewidth}{0.4pt}
-\fancyhead[L]{\small\textsc{Draft preprint} --- not submitted; development-set results only}
+\fancyhead[L]{\small\textsc{Draft preprint} --- not submitted}
 \fancyhead[R]{\small Kahoul and Kiram}
 \fancyfoot[C]{\small\thepage}
 
@@ -43,7 +44,7 @@
 \author{Mahdi Kahoul \qquad Firas Mohamed Elamine Kiram\\[2pt]
 \small AMCO Laboratory, Padua, Italy\\
 \small \texttt{mahdi.kahoul@univ-biskra.dz}}
-\date{\small Draft of 7 November 2026. Not submitted; submission is the authors' decision.}
+\date{\small Draft of 8 November 2026. Not submitted; submission is the authors' decision.}
 
 \begin{document}
 \maketitle
@@ -61,16 +62,20 @@ depends on the robot's footprint, speed, direction of travel and yaw rate, built
 configuration as the safety function. One quadratic program per speed regime minimally modifies the
 command of an arbitrary planner, within the wheel-speed and acceleration limits of a holonomic base, and
 falls back to maximal braking when no regime is feasible. We describe a study in which an emulated
-certified layer runs beneath every controller, protective stops per 100\,m of planned route are the
-primary endpoint, and hypotheses, comparators and analysis were preregistered. On the development
-(tuning) set of 60 warehouse scenarios, placing the PFB beneath a tuned Regulated Pure Pursuit planner
-reduces protective stops from 52.8 to 0.47 per 100\,m planned and the time spent latched from 42\,\% to
-0.05\,\%, without reducing the planner's driving speed; a field-aware MPPI planner and the filtered planner
-are indistinguishable at 3 versus 3 events. A Soft Actor-Critic planner trained with the PFB in the loop
-passed its pilot gate on one pilot seed (0.95 stops per 100\,m planned, success 0.52), whereas a planner
-trained with proximity shaping and no filter failed the gate on three pilot seeds. The comparison of the
-filtered classical planner with the classical references is a declared exploratory contingency
-hypothesis; the confirmatory comparisons and every held-out result are pending.
+certified layer runs beneath every controller and protective stops per 100\,m of planned route are the
+primary endpoint. On a held-out test set of 300 warehouse scenarios, each classical planner run once per
+scenario, placing the PFB beneath a tuned Regulated Pure Pursuit planner reduced protective stops on routes
+with an unmapped obstacle from 1{,}106 to 18 (rate ratio 0.0167, 95\,\% CI [0.0090, 0.0311]; the confirmatory
+comparison, declared after development-set rates were seen and before the test set was built) and on routes
+without one from 907 to 2 (exploratory). It removed every unrecoverable stop, and the robot drove further
+with the filter than without it. The filter does not make this planner complete routes with an unmapped
+obstacle: 147 of 150 such episodes time out, because a tracker that does not replan rarely passes the
+obstacle. On clear routes completion rises from 0.347 to 0.733 (descriptive). A field-aware MPPI planner
+completes more routes than the filtered planner in both conditions and is indistinguishable from it in stops
+(18 versus 10 and 2 versus 9 events). No learned planner has run on the test set. As pilot results only, a
+Soft Actor-Critic planner trained with the PFB in the loop passed its pilot gate on one seed, and a planner
+trained with proximity shaping and no filter failed on three; the hypotheses on the learned planner remain
+untested.
 \end{abstract}
 
 \noindent\textbf{Keywords:} control barrier functions; safety filters; safety laser scanners; protective
@@ -78,11 +83,11 @@ fields; local planning; safe reinforcement learning; autonomous mobile robots.
 
 \vspace{4pt}
 \noindent\fbox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\small\textbf{Status of the evidence.}
-Every number in this draft is a \emph{development-set} result, obtained on the tuning set used to select
-parameters, and is marked as such. Learned-planner results are \emph{pilot} results from pilot-range seeds
-that never enter the confirmatory analysis. The held-out test evaluation has not been run; its tables
-carry \pending\ placeholders. The comparison of the filtered classical planner with the classical
-references (\Hprime) is a declared exploratory contingency; held-out evaluation pending.}}
+This draft carries three kinds of number, each labelled where it appears. \emph{Held-out} results come from
+one evaluation of the classical planners on the sealed test set. \emph{Development-set} results come from the
+tuning set used to select parameters. \emph{Pilot} results come from learned planners' pilot-range seeds, which
+never enter a confirmatory analysis. No learned planner has run on the test set: H1 and H2 are untested, and
+their tables carry \pending\ placeholders. \Hprime\ is a declared exploratory contingency; no pivot occurred.}}
 
 %=====================================================================================================
 \section{Introduction}\label{sec:intro}
@@ -140,14 +145,14 @@ speed-banded fields and latched stops, implemented independently of the filter, 
 controller, classical and learned; the primary endpoint is protective stops per 100\,m of planned route;
 hypotheses, comparators, gates and the analysis (a two-level interval on the rate ratio) were
 preregistered, and every later change was recorded by dated amendment (Section~\ref{sec:design}).
-\item \textbf{Development-set and pilot evidence}, reported with its limits: the filter beneath a
-classical planner, five tuned classical references, the pilot gates of the learned planners and
-diagnostics of their behaviour (Section~\ref{sec:results}).
+\item \textbf{Held-out evidence for the filter beneath a classical planner}, on both halves of a sealed test
+set and reported with what it does not show, together with development-set results for five tuned classical
+planners and the pilot gates and diagnostics of the learned planners (Section~\ref{sec:results}).
 \end{itemize}
 
 Section~\ref{sec:related} reviews related work, Section~\ref{sec:problem} formulates the problem,
 Section~\ref{sec:pfb} derives the barrier and the filter, Section~\ref{sec:design} describes the system
-and the experimental design, Section~\ref{sec:results} reports the development-set and pilot results,
+and the experimental design, Section~\ref{sec:results} reports the held-out, development-set and pilot results,
 Section~\ref{sec:discussion} discusses them with their limitations, and Section~\ref{sec:conclusion}
 concludes.
 
@@ -586,9 +591,12 @@ drawn from disjoint seed ranges for training, tuning, testing and piloting. The 
 in its own permutation shared by every method's seed of the same index. The \emph{tuning set}, the
 development set of this article, holds 20 scenarios per stratum (60 in all, 633\,m planned) at an
 unmapped-obstacle rate of 0.25; 17 of its 60 scenarios contain one or two unmapped obstacles. The
-\emph{test set} has a mapped-only and an unmapped-static condition in each stratum; its size is fixed by
-the power analysis below and it has not yet been built. Test layouts are never used for tuning,
-debugging, reward design or plots.
+\emph{test set} crosses the three strata with two conditions, mapped-only (no unmapped obstacle) and
+unmapped-static (an unmapped obstacle on every route), with 50 scenarios per cell: 300 in all, 1{,}606\,m and
+1{,}624\,m planned respectively. It was built by the frozen generator and locked after its size and the
+confirmatory comparison had been declared. The two populations differ from the tuning set, which mixes the
+two kinds of route. Test layouts are never used for tuning, debugging, reward design or plots during
+development.
 
 \subsection{Methods}\label{sec:methods}
 Table~\ref{tab:methods} lists the methods. Every method runs above the same certified layer, on the same
@@ -606,10 +614,10 @@ L5-nowp, L2-d005, L2-d020, A1) are omitted.}
 ID & Method & PFB & Role\\
 \midrule
 B1 & Holonomic Pure Pursuit with its own lookahead; the status quo of a tracker relying on the scanners & no & H1, \Hprime\\
-B2 & Regulated Pure Pursuit (Nav2-style regulation on curvature and proximity) & no & H1, \Hprime\\
+B2 & Regulated Pure Pursuit (Nav2-style regulation on curvature and proximity) & no & HF-c, H1, \Hprime\\
 B3 & Holonomic DWA over $(v_x,v_y,\omega)$; initial candidate the Nav2 DWB defaults & no & H1\\
 B6 & Holonomic MPPI with a cost on the certified layer's own band fields & no & H1, \Hprime\\
-B7 & B2's tuned parameters with the PFB beneath, no learning & yes & \Hprime, H5\\
+B7 & B2's tuned parameters with the PFB beneath, no learning & yes & HF-c, \Hprime, H5\\
 L1 & SAC with proximity shaping, no filter & no & H1\\
 L2 & SAC-Lagrangian: protective stops constrained, PID multiplier, unshaped & no & H1\\
 L3 & A policy trained without the filter, wrapped by it after training (post-hoc) & yes & H1\\
@@ -663,8 +671,9 @@ the filter is not the proposed method.
 
 \subsection{Preregistration, gates and seeds}
 The hypotheses, comparators, endpoints, gates and scenario-set construction were fixed before any method
-was trained, and every later change was made by a dated amendment recorded before its effect could be
-known; the files are locked by hash and a test fails if they change without an amendment. Four gates
+was trained. Every later change was made by a dated amendment recorded before any test data existed; an
+amendment made after development-set results were seen says so (below). The files are locked by hash and a
+test fails if they change without an amendment. Four gates
 protect the evaluation: contact validation (G0), closed-loop tracking (G1b), a compute budget on the
 training host (G2, at least 25 steps/s; measured 117 steps/s with four instances), and a pilot gate for
 every learned method (G4). G4 requires, on a pilot-range seed, integrity of the run, a learning criterion
@@ -682,13 +691,22 @@ narrow-stratum success, L5 against L4, by at least 15 percentage points. A condi
 \textbf{H1N} on narrow-stratum completion is added if a pilot rule on unrecoverable stops triggers. H1, H2
 (and H1N) form one family under Holm's correction at $\alpha=0.05$.
 
-\textbf{\Hprime} (contingency): B7 triggers fewer protective stops than B1, B2 and B6. Its claim is that
-the filter removes protective stops from a classical planner, not that it improves throughput or success,
-which are reported descriptively. It would have become the sole confirmatory hypothesis had L5 failed G4
-on two pilot seeds; L5 passed (Section~\ref{sec:res-learned}), so \Hprime\ is a declared exploratory
-contingency; held-out evaluation pending. Further exploratory analyses include L5 against B7 (H5:
-learning against filtering alone), the banded against a continuous PFB (H3), a unicycle ablation (H4), and
-the sensitivity of B7 to $\alpha\in\{1,2,5\}$.
+\textbf{HF-c} (confirmatory, a family of its own): B7 triggers fewer protective stops per 100\,m planned than
+B2, on the unmapped-static test condition with strata pooled, each arm once per scenario. The family has one
+member at $\alpha=0.05$ and is separate from the family above, whose Holm level is unchanged. The claim is
+stop removal only: success, mission time, latched share and moving speed are reported beside it,
+descriptively and without inference.
+
+\textbf{\Hprime} (contingency): B7 triggers fewer protective stops than B1, B2 and B6. It would have become the
+sole member of the first family had L5 failed G4 on two pilot seeds. L5 passed
+(Section~\ref{sec:res-learned}), so no pivot occurred and \Hprime\ is a declared exploratory contingency. Further
+exploratory analyses include L5 against B7 (H5: learning against filtering alone), the banded against a
+continuous PFB (H3), a unicycle ablation (H4), and the sensitivity of B7 to $\alpha\in\{1,2,5\}$.
+
+\paragraph{Disclosures.} The test size and HF-c as a confirmatory comparison were fixed before the test set was
+built or read, but after the development-set rates had been seen (B2 52.8 and B7 0.47 stops per 100\,m
+planned). The size was also fixed before the learned planner's second pilot seed gave its variance; if that
+variance shows the size to be short for H2, this will be reported and the locked set will not be enlarged.
 
 \subsection{Analysis}
 The estimand is the rate ratio of protective stops, total stops over total planned route length per arm,
@@ -704,32 +722,156 @@ learned arm's seed part is scaled by $K/(K-1)$, and the interval uses a $t$ quan
 freedom against a classical comparator (Welch-Satterthwaite between learned arms). A comparison rejects
 when the two-sided interval at its Holm level lies wholly below zero. The claim is method-level: seeds are
 treated as draws from the training procedure, and the interval with seeds fixed is reported only as a
-secondary. A classical arm runs once, so \Hprime's interval has the scenario part alone. The analysis was
-calibrated by simulation at equal rates before adoption.
+secondary. A classical arm runs once, so the interval of HF-c and \Hprime\ has the scenario part alone, with a
+$t$ quantile on $n-1$ degrees of freedom. HF-c also had to pass a calibration gate before the test was read: at
+equal rates, with 150 pairs and $10^4$ replications, the one-sided rejection rate on each side had to stay
+at or below 0.0297 at rates $\{0.5,1,2,5,52.8\}$ per 100\,m and difficulty coefficients of variation
+$\{0.5,1.0\}$. All ten cells passed (highest 0.0274). Three cells reported but not gated exceeded the bound
+(rate 0.25 at coefficients 0.5 and 1.5, 0.0312 and 0.0337; rate 5 at 1.5, 0.0307): the interval is slightly
+anti-conservative at about four expected events.
 
-\paragraph{Power.} A grid over comparator rates $\{0.25,0.5,1,2\}$ per 100\,m and rate ratios
-$\{0.5,0.7,1.0\}$, with $K=10$, found that at the rates measured on the development set (about 0.5 stops
-per 100\,m for the strongest comparators) no test size that can be evaluated within the schedule reaches
-80\,\% power for H1: even a halving of the rate would need thousands of test scenarios and months of
-evaluation at a seed coefficient of variation of 0.3, and is out of reach at 0.5, where the seed level
-rather than the number of scenarios caps the power. H1 is not weakened. The test size is the smallest of
-at most 300 scenarios (600 only if 300 fails and the schedule allows) that gives 80\,\% power for H2 under
-the pilot variance; rate-ratio
-intervals against every comparator are a declared secondary, and the decision tree reports
-``inconclusive'' if that is the outcome.
+\paragraph{Power and test size.} A grid over the measured comparator rates found that no feasible test size
+reaches 80\,\% power for H1: at B6's development-set rate of about 0.5 per 100\,m and a true halving, power is
+at most 0.48 even with 20 seeds and 600 scenarios. H1 is not weakened; rate-ratio intervals against every
+comparator are a declared secondary, and the decision tree reports ``inconclusive'' if that is the outcome.
+For H2, 50 scenarios per cell reach 80\,\% power at a true difference of 20 percentage points if the seed logit
+standard deviation is at most 0.3; at exactly 15 points no size does, because the criterion (an estimate of at
+least 15 points that is also significant) halves the power by construction. The size was fixed at 50 per cell,
+300 scenarios. At the development-set rates, power for HF-c is close to one at 150 scenarios.
 
 %=====================================================================================================
 \section{Results}\label{sec:results}
 
 \subsection{What exists}
-At the time of writing, the classical references are tuned, the PFB's gain is frozen, the L1 and L5 pilots
-have been gated, and the L2, L4 and second L5 pilots are training. No confirmatory seed has been trained
-and no test layout has been generated. Every number below is a development-set result on the 60 tuning
-scenarios, on which the classical parameters and $\alpha$ were selected; the learned results come from
-pilot checkpoints. With three to six stop events per arm for the strongest arms, the development set
-cannot separate them, and nothing below is a test of a hypothesis.
+The classical planners have been evaluated once on both halves of the test set. No learned planner has run on
+it: no confirmatory seed has been trained, H1 and H2 are untested, and the learned results below come from
+pilot checkpoints evaluated on the tuning set. The results open with the held-out evaluation and then give the
+development-set and pilot evidence, each labelled as such.
 
-\subsection{Classical planners with and without the PFB}
+\subsection{Held-out evaluation of the classical planners}\label{sec:res-heldout}
+B1, B2, B3, B6 and B7 each ran once per scenario, paired within one scene load per shard, with no rerun, and
+each half was analysed once. No arm recorded a contact or a scan-fault stop. Tables~\ref{tab:heldout-obstacle}
+and~\ref{tab:heldout-clear} give the two halves, Table~\ref{tab:rr} the rate ratios and
+Figure~\ref{fig:heldout} a summary. Success, mission time and speed are descriptive throughout.
+
+\begin{table}[!htbp]
+\centering
+\caption{\textbf{Held-out test set}, unmapped-static condition: an unmapped obstacle on every route (150
+scenarios, 50 per stratum, 1{,}624\,m planned). T/U: timeouts and unrecoverable stops. Driven: distance in m, and
+as a fraction of the planned length. Moving: mean speed in m/s while not latched. Latched: share of time in a
+latched stop. Time: mean mission time of successful episodes in s.}
+\label{tab:heldout-obstacle}
+\footnotesize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{lccrrrrcccc}
+\toprule
+& & & & \multicolumn{2}{c}{Stops per 100\,m} & & & & &\\
+\cmidrule(lr){5-6}
+Arm & Success & T/U & Stops & planned & driven & Driven & Fraction & Moving & Latched & Time\\
+\midrule
+B1 PP & 0.000 & 1/149 & 1{,}033 & 63.6 & 176.6 & 585 & 0.36 & 0.144 & 0.864 & ---\\
+B2 RPP & 0.000 & 4/146 & 1{,}106 & 68.1 & 158.9 & 696 & 0.43 & 0.058 & 0.597 & ---\\
+B3 DWA & 0.013 & 134/14 & 815 & 50.2 & 92.1 & 885 & 0.54 & 0.033 & 0.100 & 131.2\\
+B6 MPPI & 0.553 & 67/0 & 10 & 0.62 & 0.57 & 1{,}769 & 1.09 & 0.073 & 0.001 & 129.6\\
+\textbf{B7 RPP+PFB} & 0.020 & 147/0 & 18 & 1.11 & 2.04 & 880 & 0.54 & 0.029 & 0.001 & 169.0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{\textbf{Held-out test set}, mapped-only condition: no unmapped obstacle (150 scenarios, 1{,}606\,m
+planned). Exploratory and descriptive. Columns as in Table~\ref{tab:heldout-obstacle}.}
+\label{tab:heldout-clear}
+\footnotesize
+\setlength{\tabcolsep}{3.2pt}
+\begin{tabular}{lccrrrrcccc}
+\toprule
+& & & & \multicolumn{2}{c}{Stops per 100\,m} & & & & &\\
+\cmidrule(lr){5-6}
+Arm & Success & T/U & Stops & planned & driven & Driven & Fraction & Moving & Latched & Time\\
+\midrule
+B1 PP & 0.000 & 1/149 & 1{,}117 & 69.5 & 176.9 & 631 & 0.39 & 0.173 & 0.878 & ---\\
+B2 RPP & 0.347 & 28/70 & 907 & 56.5 & 80.4 & 1{,}128 & 0.70 & 0.059 & 0.313 & 161.6\\
+B3 DWA & 0.920 & 7/5 & 108 & 6.72 & 6.86 & 1{,}575 & 0.98 & 0.098 & 0.054 & 105.4\\
+B6 MPPI & 0.833 & 25/0 & 9 & 0.56 & 0.52 & 1{,}741 & 1.08 & 0.097 & 0.001 & 104.3\\
+\textbf{B7 RPP+PFB} & 0.733 & 40/0 & 2 & 0.12 & 0.13 & 1{,}500 & 0.93 & 0.058 & 0.0002 & 161.0\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{\textbf{Held-out} rate ratios of protective stops per 100\,m planned, B7 over each comparator, with
+95\,\% intervals (scenario part only, $t$ with 149 degrees of freedom, continuity 0.5). B7 against B3 was not a
+declared comparison.}
+\label{tab:rr}
+\small
+\begin{tabular}{llcl}
+\toprule
+Condition & Comparison & Rate ratio [95\,\% CI] & Status\\
+\midrule
+Unmapped-static & B7 vs B2 (HF-c) & 0.0167 [0.0090, 0.0311] & \textbf{confirmatory; rejects}\\
+& B7 vs B1 (\Hprime) & 0.0179 [0.0096, 0.0333] & exploratory\\
+& B7 vs B6 (\Hprime) & 1.76 [0.71, 4.37] & exploratory; 18 vs 10 events\\
+\midrule
+Mapped-only & B7 vs B2 & 0.0028 [0.0006, 0.0133] & exploratory\\
+& B7 vs B1 & 0.0022 [0.0005, 0.0108] & exploratory\\
+& B7 vs B6 & 0.263 [0.047, 1.476] & exploratory; 2 vs 9 events\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_journal_heldout.pdf}
+\caption{\textbf{Held-out test set}, classical planners, both conditions. (a) Protective stops per 100\,m
+planned, logarithmic scale. (b) Success rate, descriptive. (c) Distance driven as a fraction of the planned
+length, with 1 marked. Values are those of Tables~\ref{tab:heldout-obstacle} and~\ref{tab:heldout-clear}; B1 and
+B2 have zero success on obstacle routes and B1 on clear routes.}
+\label{fig:heldout}
+\end{figure}
+
+\paragraph{Confirmatory comparison.} The equal-rate calibration gate passed before the test was read, and HF-c
+rejects in B7's favour. On routes with an unmapped obstacle B7 records 18 protective stops against 1{,}106 for
+B2, or 1.11 against 68.1 per 100\,m planned: a rate ratio of 0.0167, 95\,\% CI [0.0090, 0.0311]. Unrecoverable
+stops fall from 146 of 150 episodes to none.
+
+\paragraph{The reduction is not bought by standing still.} B7 drove 880\,m against B2's 696\,m, so the effect holds
+per distance driven as well (2.04 against 158.9 per 100\,m), and its latched share falls from 0.597 to 0.001. While
+moving, however, B7 is slower here, at 0.029 against 0.058\,m/s: it drives further because it is almost never
+latched. Distance driven is not route progress, and the analysis does not report progress along the route.
+
+\paragraph{B7 does not complete routes with an unmapped obstacle.} It times out on 147 of 150 episodes, covering
+5.9\,m per 200\,s episode on routes that average 10.8\,m. The tuned RPP's request does not exceed 0.075\,m/s at the 95th
+percentile, and the filter corrects it further here (median correction 0.025\,m/s, 37.6\,\% of steps above
+0.05\,m/s, no feasible QP on 0.3\,\% of steps). A non-replanning tracker does not get past the obstacle. B6, whose
+rollouts can sample around it, succeeds on 83 of 150 at 0.62 stops per 100\,m planned, a rate B7 does not improve on.
+
+\paragraph{Routes without an unmapped obstacle.} This half is exploratory; HF-c's population is the other one.
+A positive control of the sealed runner was declared before the run, predicting success from the tuning set's
+clear routes, and it passed (predicted, then measured: B1 about 0, 0.000; B2 0.35, 0.347; B3 0.93, 0.920; B6
+0.88, 0.833; B7 0.70, 0.733). The PFB reduces RPP's stops from 907 to 2 (rate ratio 0.0028, 95\,\% CI [0.0006,
+0.0133]) and its unrecoverable stops from 70 to none. B7 drove further than B2 (1{,}500 against 1{,}128\,m) at the
+same moving speed (0.058 against 0.059\,m/s), and RPP's completion doubles from 0.347 to 0.733 (no inference). B3 and
+B6 still complete more routes than B7 (0.920 and 0.833), B3 at 108 stops against B7's 2, a comparison that was not
+declared. B7's 40 timeouts come from RPP's tuned speed and not from the filter: the median correction is 0.005\,m/s,
+0.4\,\% of steps are corrected by more than 0.05\,m/s, no QP is feasible on 0.15\,\% of steps, and requested and
+executed speed are both 0.075\,m/s at the median. Successful routes take 161\,s of the 200\,s horizon, against
+about 105\,s for B3 and B6.
+
+\paragraph{Against the field-aware planner.} The PFB does not beat MPPI in either condition. B7 and B6 are
+indistinguishable at 18 versus 10 events (rate ratio 1.76, 95\,\% CI [0.71, 4.37]) and at 2 versus 9 events (0.263,
+[0.047, 1.476]), and B6 completes more routes in both. \Hprime\ therefore does not reject as a whole, despite B7's
+large ratio against B1 (0.0179, [0.0096, 0.0333]).
+
+\subsection{Development set: classical planners with and without the PFB}
+On the 60 tuning scenarios the classical parameters and $\alpha$ were selected, so the results of this subsection
+are development-set results. They are kept for the diagnostics they allow, which the test evaluation did not
+record. With three stop events each for the strongest arms, this set cannot separate them. Its routes mix the two
+test populations: on its 17 obstacle routes success is 0.000 for B2, 0.000 for B3, 0.706 for B6 and 0.000 for B7;
+on its 43 clear routes it is 0.023 for B1, 0.349 for B2, 0.930 for B3, 0.884 for B6 and 0.698 for B7. These splits
+account for the difference in success between this set and the test set.
 
 \begin{table}[!htbp]
 \centering
@@ -762,12 +904,12 @@ Privileged tracker (control) & 0.717 & 49.0 & 59.1 & 4.7 & 0.377 & 0.110\\
 \includegraphics[width=\textwidth]{fig_journal_results.pdf}
 \caption{Development-set (tuning-set) results. (a) Protective stops per 100\,m planned (solid) and driven
 (pale), logarithmic scale. (b) Success rate (filled) and share of time latched (dotted). (c) B7's stops
-per 100\,m driven and the PFB's fallback steps against the gain $\alpha$. L5$^*$ is the pilot checkpoint of
+per 100\,m driven against the gain $\alpha$. L5$^*$ is the pilot checkpoint of
 seed 9000002 (hatched); PT is the privileged tracker (control).}
 \label{fig:results}
 \end{figure}
 
-Table~\ref{tab:main} and Figure~\ref{fig:results} summarise the development set. Placing the PFB beneath
+Table~\ref{tab:main} and Figure~\ref{fig:results} summarise the development set. On it, placing the PFB beneath
 the tuned RPP planner reduces its protective stops from 52.8 to 0.47 per 100\,m planned (86.1 to 0.59 per
 100\,m driven) and the time spent latched from 42\,\% to 0.05\,\%, while the success rate rises from 0.25
 to 0.50. The reduction holds in every stratum, with no stop in the narrow and medium aisles
@@ -792,7 +934,7 @@ Wide & 0.30 & 0.70 & 118.7 & 1.76\\
 \end{tabular}
 \end{table}
 
-\paragraph{Driving speed.} A filter could avoid stops simply by slowing the robot. On the 13 routes on
+\paragraph{Driving speed.} A filter could avoid stops simply by slowing the robot. On the 13 development-set routes on
 which B7 reached the horizon without meeting an obstacle, B7 and B2 move at the same speed outside stops,
 0.057\,m/s pooled for both; B2 spends 27\,\% of these episodes latched and records 69 stops, B7 none. The
 low speed of both is RPP's own: the tuned planner begins to regulate its speed at a clearance of 1.18\,m,
@@ -828,6 +970,7 @@ sampler seed, so their candidate sets are not independent draws, and B6's smooth
 clearance weight lie at 93\,\% of their logarithmic ranges; both are disclosed.
 
 \subsection{Learned planners: pilot results}\label{sec:res-learned}
+These results come from pilot-range seeds on the tuning set. None is a held-out result, and none enters H1 or H2.
 
 \begin{table}[!htbp]
 \centering
@@ -846,9 +989,9 @@ L1 & 9000001 & $2\times10^6$ & 0.006 & 1/60 & fail\\
 L1 & 9000002 & $2\times10^6$ & 0.061 & 0/60 & fail\\
 L5 & 9000001 & --- & --- & --- & integrity failure, not counted\\
 L5 & 9000002 & $2\times10^6$ & 0.463 & 31/60 & \textbf{pass}\\
-L5 & 9000003 & $2\times10^6$ & \pending[running] & \pending[running] & \pending[running]\\
-L2 & 9000002 & $2\times10^6$ & \pending[running] & \pending[running] & \pending[running]\\
-L4 & 9000002 & $2\times10^6$ & \pending[running] & \pending[running] & \pending[running]\\
+L5 & 9000003 & $2\times10^6$ & \pending[pending] & \pending[pending] & \pending[pending]\\
+L2 & 9000002 & $2\times10^6$ & \pending[pending] & \pending[pending] & \pending[pending]\\
+L4 & 9000002 & $2\times10^6$ & \pending[pending] & \pending[pending] & \pending[pending]\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -894,18 +1037,17 @@ and B2 including their route cap and recovery. All lie within the 50\,ms control
 descriptive; no compute advantage over B6 is claimed. Training L5 with the filter in the loop ran at 21.1
 steps/s per instance, against about 33 steps/s for the unfiltered L1.
 
-\subsection{Held-out evaluation}
-Tables~\ref{tab:h1} and~\ref{tab:h2} are reserved for the preregistered evaluation on the test set. They
-will be filled from a single test evaluation after the confirmatory seeds are trained.
+\subsection{Hypotheses on the learned planner: not yet tested}
+Tables~\ref{tab:h1} and~\ref{tab:h2} are reserved for H1 and H2. No learned planner has run on the test set, and they
+will be filled from a single evaluation after the confirmatory seeds are trained.
 
 \begin{table}[!htbp]
 \centering
-\caption{Reserved: H1 and \Hprime\ on the unmapped-static test condition, strata pooled. Rate ratio of
-protective stops per 100\,m planned with its two-level interval at the Holm level; success and mission time
-descriptive. \textbf{Held-out evaluation pending.}}
+\caption{Reserved: H1 on the unmapped-static test condition, strata pooled. Rate ratio of protective stops per
+100\,m planned with its two-level interval at the Holm level; success and mission time descriptive. \textbf{Not
+tested: no learned planner has run on the test set.}}
 \label{tab:h1}
-\small
-\renewcommand{\pending}{\textcolor{red}{[pending]}}
+\small\renewcommand{\pending}{\textcolor{red}{[pending]}}
 \begin{tabular}{lcccc}
 \toprule
 Comparison & SP100 (comparator) & Rate ratio [CI] & Success & Mission time (s)\\
@@ -917,10 +1059,6 @@ L5 vs B6 & \pending & \pending & \pending & \pending\\
 L5 vs L1 & \pending & \pending & \pending & \pending\\
 L5 vs L2 & \pending & \pending & \pending & \pending\\
 L5 vs L3 & \pending & \pending & \pending & \pending\\
-\midrule
-B7 vs B1 (\Hprime) & \pending & \pending & \pending & \pending\\
-B7 vs B2 (\Hprime) & \pending & \pending & \pending & \pending\\
-B7 vs B6 (\Hprime) & \pending & \pending & \pending & \pending\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -928,7 +1066,7 @@ B7 vs B6 (\Hprime) & \pending & \pending & \pending & \pending\\
 \begin{table}[!htbp]
 \centering
 \caption{Reserved: H2, narrow-stratum success of L5 and L4, both test conditions pooled and each separately.
-\textbf{Held-out evaluation pending.}}
+\textbf{Not tested: no learned planner has run on the test set.}}
 \label{tab:h2}
 \small
 \renewcommand{\pending}{\textcolor{red}{[pending]}}
@@ -946,72 +1084,79 @@ Unmapped-static & \pending & \pending & \pending\\
 %=====================================================================================================
 \section{Discussion}\label{sec:discussion}
 
-\paragraph{Consistency with the certified field.} On the development set, a barrier whose safe set is the
-complement of the certified trigger set removed almost all protective stops of an unmodified classical
-planner, in every stratum, without slowing it. The point of the construction is that the filter need not
-be tuned against the safety equipment: it is as conservative as the equipment, by sharing its field, and
-any residual stop has a nameable cause (infeasibility next to an obstacle across the route, prediction
-error). The gain $\alpha$ then trades stops against braking, not against throughput, within the range
-tested.
+\paragraph{What the held-out evidence supports.} On the test set the PFB removes nearly all protective stops from
+RPP (1{,}106 to 18 with an unmapped obstacle; 907 to 2 without) and every unrecoverable stop (146 to 0; 70 to 0), and
+the robot drives further with it than without it, so the effect is not obtained by standing still. A barrier whose
+safe set is the complement of the certified trigger set need not be tuned against the safety equipment: it is
+as conservative as the equipment by sharing its field. Without an unmapped obstacle, removing the
+stop--recovery--restop cycle also doubles RPP's completion, although that is a descriptive result without inference.
 
-\paragraph{A filter beneath a planner, or a planner that knows the field.} The field-aware MPPI planner B6
-reached as few stops as B7, with a higher success rate, by carrying the same kind of field in its cost. The
-two approaches are indistinguishable at 3 versus 3 events, and their relative merit for stops, success and
-compute is the subject of the held-out evaluation. They differ in what they require: B6 replaces the
-planner and spends most of a control period sampling, whereas the PFB is a layer beneath a planner that has
-no knowledge of the field. The approaches are complementary rather than exclusive; a field-aware planner
-above the PFB is a natural next step.
+\paragraph{What it does not support.} The filter does not make RPP complete routes with an unmapped obstacle: 147 of
+150 episodes time out, and on those routes B7 moves at half of B2's speed. The PFB does not beat MPPI in either
+condition. On clear routes B3 and B6 complete more routes than B7, whose timeouts there come from RPP's tuned speed.
+The confirmatory claim is stop removal, and it should not be read as a claim about throughput. HF-c also measures the
+filter on a host planner whose failure mode is precisely the stop cycle, so its rate ratio should not be carried over
+to planners that already avoid stops.
 
-\paragraph{The learned planner leans on the filter.} L5 is defined as the policy with the filter in the
-loop, and it has learned to use it: it asks for the maximum speed and lets the filter regulate speed,
-keeping the direction. This is not a defect of the method, but it bears on what the method is. The
+\paragraph{A filter beneath a planner, or a planner that knows the field.} B6 reached a stop rate indistinguishable
+from B7's by carrying a field in its cost, and it completed more routes, since its sampled rollouts can leave the
+route where a tracker cannot. The two approaches differ in what they require: B6 replaces the planner, whereas the PFB
+is a layer beneath a planner that has no knowledge of the field. We make no claim of a compute advantage over B6. On
+this evidence the useful planner on obstacle routes is B6, and the filter's contribution is to a tracker that
+would otherwise be stopped repeatedly. A planner that can leave the route with the PFB beneath it is a natural next
+step, and its benefit remains to be measured.
+
+\paragraph{The learned planner leans on the filter (pilot).} L5 is defined as the policy with the filter in the
+loop, and on its pilot checkpoint it has learned to use it: it asks for near-maximal speed and lets the filter
+regulate speed, keeping the direction. This is not a defect of the method, but it bears on what the method is. The
 learned component contributes routing and direction; the safety-relevant regulation is the filter's. It
-also makes the intervention penalty of \eqref{eq:reward} a weak incentive in practice. Whether a stronger
-incentive, or a policy that observes the field, yields a policy that needs less correction is an open
-question outside the declared design, which forbids changing the reward between pilot and confirmatory
-training.
+also suggests that the intervention penalty of \eqref{eq:reward} is a weak incentive in practice. Whether a stronger
+incentive, or a policy that observes the field, needs less correction is an open question outside the declared
+design, which forbids changing the reward between pilot and confirmatory training.
 
 \paragraph{Wandering and the choice of denominator.} The learned planner's detours over open floor made a
 rate per distance driven flattering to it and unflattering to planners that time out short of the goal.
 Dividing by planned length removes the incentive and is conservative for L5 (0.59 becomes 0.95 per
-100\,m). The detours themselves point to a limitation of the learned local planner without replanning: in
-narrow aisles it sometimes prefers to go around the racks.
+100\,m on the development set). The detours themselves point to a limitation of the learned local planner without
+replanning: in narrow aisles it sometimes prefers to go around the racks.
 
-\paragraph{Weak classical references.} B1 cannot complete routes under the certified fields with any of its
-tuned parameters, and B2 fails most routes in a stop--recovery--restop cycle; both are the status quo of
-route trackers that rely on the scanners, and comparisons against them are easy. The informative
-comparisons are against B3 and, above all, B6. B2's tuned proximity regulation also makes B7 slow, which
-the 200\,s horizon turns into timeouts; that is a property of the tuned RPP, inherited by B7 by design
-(B7 reuses B2's parameters), not of the filter.
+\paragraph{Weak classical references.} B1 ends 149 of 150 episodes in an unrecoverable stop in both test conditions,
+and B2 fails most routes through the stop--recovery--restop cycle; both represent route trackers that rely on the
+scanners, and comparisons against them are easy. The informative comparisons are against B3 and, above all, B6. B2's
+tuned proximity regulation also makes B7 slow, which the 200\,s horizon turns into timeouts; that is inherited by
+design (B7 reuses B2's parameters). A host planner tuned with the filter in place might complete more, but no such
+planner was evaluated.
 
-\paragraph{Limitations.} The evidence is subject to several limitations. (i) Every number is a
-development-set result on 60 scenarios with few events for the strongest arms; parameters and $\alpha$ were
-selected on the same set. (ii) Learned results come from one passing pilot seed and three failing ones;
-seed-to-seed variance is not yet measured, and the power analysis shows that H1 may end inconclusive at
-plausible rates. (iii) The study is simulation-only, on one platform, conditioned on the ODE engine; the
-velocity estimate uses the simulator's ground-truth pose; obstacles below the single scan plane are unseen.
-(iv) The certified layer is an emulation with three speed bands, more conservative than typical
-installations in some respects (worst-case acceleration through the response time, rotation sweep) and
-kinder in one (the automatic receding release); no certification claim is made for the emulator, the
-filter or the sensing. (v) Classical planners receive a recovery behaviour and a route speed cap that
-learned planners do not. (vi) The PFB's trust interval and band speed margin were set on tuning routes to
-remove observed failures, and $\alpha$ lies on the edge of its grid. (vii) Obstacles are static; moving
-people, the main reason protective fields exist, are not modelled.
+\paragraph{Limitations.} (i) The learned planners have not been evaluated on the test set; their results come from one
+passing pilot seed and three failing ones, seed-to-seed variance is not yet measured, H1 and H2 are untested, and the
+power analysis shows that H1 may end inconclusive at plausible rates. (ii) HF-c and the test size were decided after
+development-set rates were seen, as disclosed in Section~\ref{sec:design}; the classical parameters and $\alpha$ were
+tuned on the development set, with B7 inheriting B2's parameters and no tuning with the filter except $\alpha$, which
+lies on the edge of its grid. (iii) The mapped-only half is exploratory and its comparisons with B7 rest on two
+events. The interval is known to be slightly anti-conservative at about four expected events and to lose calibration
+when an arm's count approaches zero, so those intervals are indicative only. (iv) Each classical planner ran once per
+scenario, so the intervals describe scenarios and not repeated runs. (v) The study is simulation-only, on one
+platform, conditioned on the ODE engine; the velocity estimate uses the simulator's ground-truth pose; obstacles below
+the single scan plane are unseen. (vi) The certified layer is an emulation with three speed bands, more conservative
+than typical installations in some respects (worst-case acceleration through the response time, rotation sweep) and
+kinder in one (the automatic receding release); no certification claim is made for the emulator, the filter or the
+sensing. (vii) Classical planners receive a recovery behaviour and a route speed cap that learned planners do not.
+(viii) The PFB's trust interval and band speed margin were set on tuning routes to remove observed failures. (ix)
+Obstacles are static; moving people, the main reason protective fields exist, are not modelled.
 
 %=====================================================================================================
 \section{Conclusion}\label{sec:conclusion}
 
-The Protective-Field Barrier is a control barrier function whose safe set is taken from the certified
-safety function it sits above: the complement of a continuous protective field built from the footprint,
-the speed, the direction and the yaw rate of a holonomic robot. One QP per speed regime minimally corrects
-the command of an arbitrary planner within the base's limits. On the development set it removed almost
-all protective stops of a tuned classical planner without slowing it, and a reinforcement-learning planner
-trained with it in the loop passed its pilot gate where a shaped planner without it did not. These are
-preliminary results. The confirmatory comparisons, the declared exploratory contingency \Hprime\ and the
-learned arms' confirmatory seeds will be evaluated once, on held-out layouts, under the preregistered
-analysis; until then, the claims of this draft are limited to what the development set and the pilots can
-show. Future work includes field-aware planners above the filter, moving obstacles, and the transfer to a
-physical vehicle with certified scanners.
+The Protective-Field Barrier is a control barrier function whose safe set is taken from the certified safety function
+it sits above: the complement of a continuous protective field built from the footprint, the speed, the direction and
+the yaw rate of a holonomic robot. One QP per speed regime minimally corrects the command of an arbitrary planner within
+the base's limits. On a held-out test set it removed nearly all protective stops and every unrecoverable stop from a
+tuned Regulated Pure Pursuit planner (rate ratio 0.0167, 95\,\% CI [0.0090, 0.0311], on routes with an unmapped
+obstacle), while the robot drove further than without it. It did not make that planner complete routes with an unmapped
+obstacle, and it did not beat a field-aware MPPI planner, which completed more routes at an indistinguishable stop count.
+A reinforcement-learning planner trained with the filter in the loop has so far only pilot results; the hypotheses
+concerning it remain untested. Future work includes the confirmatory evaluation of the learned planners, planners that
+can leave the route above the filter, moving obstacles, and the transfer to a physical vehicle with certified scanners.
 
 \section*{Data and code availability}
 \tbd{Repository link for code, scenario sets and run data, or a statement of availability, to be decided

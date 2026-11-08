@@ -1,0 +1,41 @@
+{
+  "note": "HELD-OUT test set, classical planners only, each run once per scenario within one scene load. Values as recorded in docs/decision_log.md, 2026-11-08 ('The sealed classical test (unmapped_static)', 'The sealed classical test (mapped_only)'); half 1's mission times from the host's analysis as relayed 2026-11-08 and paper/codit2026/results_test.json. Success, time and speed are descriptive (A34). No learned arm has run on the test set. No contact and no scan-fault stop in any arm.",
+  "unmapped_static": {
+    "run": "runs/test/HFC_ANALYSIS_20261108T171312Z_seed0",
+    "commit": "6afb838",
+    "scenarios": 150,
+    "planned_m": 1624,
+    "arms": {
+      "B1": {"success": 0.000, "timeout": 1, "unrecoverable": 149, "stops": 1033, "planned": 63.6, "driven": 176.6, "driven_m": 585, "fraction": 0.36, "moving": 0.144, "latched": 0.864, "mission_s": null},
+      "B2": {"success": 0.000, "timeout": 4, "unrecoverable": 146, "stops": 1106, "planned": 68.1, "driven": 158.9, "driven_m": 696, "fraction": 0.43, "moving": 0.058, "latched": 0.597, "mission_s": null},
+      "B3": {"success": 0.013, "timeout": 134, "unrecoverable": 14, "stops": 815, "planned": 50.2, "driven": 92.1, "driven_m": 885, "fraction": 0.54, "moving": 0.033, "latched": 0.100, "mission_s": 131.2},
+      "B6": {"success": 0.553, "timeout": 67, "unrecoverable": 0, "stops": 10, "planned": 0.62, "driven": 0.57, "driven_m": 1769, "fraction": 1.09, "moving": 0.073, "latched": 0.001, "mission_s": 129.6},
+      "B7": {"success": 0.020, "timeout": 147, "unrecoverable": 0, "stops": 18, "planned": 1.11, "driven": 2.04, "driven_m": 880, "fraction": 0.54, "moving": 0.029, "latched": 0.001, "mission_s": 169.0}
+    },
+    "rate_ratios": {
+      "B7_vs_B2": {"ratio": 0.0167, "ci95": [0.0090, 0.0311], "status": "confirmatory (HF-c, A36)"},
+      "B7_vs_B1": {"ratio": 0.0179, "ci95": [0.0096, 0.0333], "status": "exploratory (H1prime)"},
+      "B7_vs_B6": {"ratio": 1.76, "ci95": [0.71, 4.37], "status": "exploratory (H1prime); indistinguishable at 18 vs 10 events"}
+    },
+    "pfb_on_B7": {"median_correction_mps": 0.025, "share_steps_above_0p05": 0.376, "share_steps_infeasible": 0.003}
+  },
+  "mapped_only": {
+    "run": "runs/test/HFC_ANALYSIS_mapped_only_20261108T223147Z_seed0",
+    "commit": "d99fa68",
+    "scenarios": 150,
+    "planned_m": 1606,
+    "arms": {
+      "B1": {"success": 0.000, "timeout": 1, "unrecoverable": 149, "stops": 1117, "planned": 69.5, "driven": 176.9, "driven_m": 631, "fraction": 0.39, "moving": 0.173, "latched": 0.878, "mission_s": null},
+      "B2": {"success": 0.347, "timeout": 28, "unrecoverable": 70, "stops": 907, "planned": 56.5, "driven": 80.4, "driven_m": 1128, "fraction": 0.70, "moving": 0.059, "latched": 0.313, "mission_s": 161.6},
+      "B3": {"success": 0.920, "timeout": 7, "unrecoverable": 5, "stops": 108, "planned": 6.72, "driven": 6.86, "driven_m": 1575, "fraction": 0.98, "moving": 0.098, "latched": 0.054, "mission_s": 105.4},
+      "B6": {"success": 0.833, "timeout": 25, "unrecoverable": 0, "stops": 9, "planned": 0.56, "driven": 0.52, "driven_m": 1741, "fraction": 1.08, "moving": 0.097, "latched": 0.001, "mission_s": 104.3},
+      "B7": {"success": 0.733, "timeout": 40, "unrecoverable": 0, "stops": 2, "planned": 0.12, "driven": 0.13, "driven_m": 1500, "fraction": 0.93, "moving": 0.058, "latched": 0.0002, "mission_s": 161.0}
+    },
+    "rate_ratios": {
+      "B7_vs_B2": {"ratio": 0.0028, "ci95": [0.0006, 0.0133], "status": "exploratory"},
+      "B7_vs_B1": {"ratio": 0.0022, "ci95": [0.0005, 0.0108], "status": "exploratory"},
+      "B7_vs_B6": {"ratio": 0.263, "ci95": [0.047, 1.476], "status": "exploratory; indistinguishable at 2 vs 9 events"}
+    },
+    "pfb_on_B7": {"median_correction_mps": 0.005, "share_steps_above_0p05": 0.004, "share_steps_infeasible": 0.0015}
+  }
+}

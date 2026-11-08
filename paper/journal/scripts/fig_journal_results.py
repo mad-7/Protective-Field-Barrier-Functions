@@ -74,15 +74,13 @@ def main() -> int:
 
     ax = axes[2]
     a = np.array(alpha["values"], dtype=float)
-    ax.plot(a, alpha["stops_driven"], "o-", color=style.GREEN, ms=3, label="stops / 100 m driven")
+    ax.plot(a, alpha["stops_driven"], "o-", color=style.GREEN, ms=3)
     ax.set_xscale("log")
     ax.set_xticks(a, [f"{v:g}" for v in a])
+    ax.minorticks_off()
+    ax.set_ylim(0, 14)
     ax.set_xlabel(r"PFB gain $\alpha$ (1/s)")
-    ax.set_ylabel("stops / 100 m driven", color=style.GREEN)
-    ax2 = ax.twinx()
-    ax2.plot(a, alpha["fallback_steps"], "s--", color=style.VERMILLION, ms=3)
-    ax2.set_yscale("log")
-    ax2.set_ylabel("fallback steps", color=style.VERMILLION)
+    ax.set_ylabel("B7 stops per 100 m driven")
     style.panel_label(ax, "c")
 
     fig.tight_layout(w_pad=0.8)
