@@ -46,13 +46,14 @@ safety function. The barrier is derived from the same configuration as the safet
 continuous, speed- and direction-dependent protective field; a quadratic program minimally modifies the
 command of an arbitrary local planner so that this field remains clear. The approach is evaluated in
 simulation on a holonomic platform in warehouse aisles of three widths, with four tuned classical
-planners as references. On a held-out test set of 150 scenarios with an unmapped obstacle on every route,
-placing the PFB beneath a tuned Regulated Pure Pursuit planner reduces protective stops from 68.1 to 1.11
+planners as references. On the half of a held-out test set with an unmapped obstacle on every route (150 scenarios), placing the PFB beneath a tuned Regulated Pure Pursuit planner reduces protective stops from 68.1 to 1.11
 per 100\,m of planned route (rate ratio 0.0167, 95\,\% CI [0.0090, 0.0311]) and unrecoverable stops from
 146 episodes to none, while the distance driven increases by 26\,\%. The filtered planner nevertheless
 does not complete these missions: it times out in 147 of the 150 episodes, at a speed near 0.03\,m/s. It
 also does not outperform a field-aware MPPI planner, from which it is indistinguishable in terms of stops
-(18 versus 10 events) and which has a far higher success rate (0.553 against 0.020). Consistency between
+(18 versus 10 events) and which has a far higher success rate (0.553 against 0.020). On the other half,
+without unmapped obstacles, the exploratory results show stops falling from 56.5 to 0.12 per 100\,m and
+completion rising from 0.347 to 0.733, although DWA and MPPI still complete more routes. Consistency between
 the barrier and the certified safety function thus removes protective stops without a loss of progress,
 whereas mission completion remains limited by the planner beneath the filter.
 \end{abstract}
@@ -148,7 +149,7 @@ certified safety function, evaluated at the speed and direction that the robot w
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.92\textwidth]{fig_codit_results.pdf}
-\caption{(a, b) Held-out test set: protective stops per 100\,m of planned route (logarithmic scale);
+\caption{(a, b) Held-out test set, half with unmapped obstacles: protective stops per 100\,m of planned route (logarithmic scale);
 fraction of time spent in a latched stop and success rate. (c) Development (tuning) set: protective stops
 of B7 per 100\,m driven and number of fallback steps of the PFB as functions of the gain $\alpha$.}
 \label{fig:results}
@@ -245,8 +246,8 @@ combination is denoted B7.
 The experiments are conducted in CoppeliaSim \cite{rohmer2013vrep} with a model of the KUKA youBot
 in procedurally generated warehouse halls comprising three classes of aisle width (narrow, medium and
 wide). Unmapped obstacles, one or two per scenario, are placed close to the route and are absent from the
-map, so that the global planner neither represents nor avoids them; they are present on every route of the
-held-out population analysed here and on 17 of the 60 routes of the tuning set. All planners receive the
+map, so that the global planner neither represents nor avoids them; they are present on every route of one half of the held-out test set, absent from the other half, and
+present on 17 of the 60 routes of the tuning set. All planners receive the
 same A* route, operate above the same safety function and share the same recovery behaviour after a
 protective stop. Four classical planners serve as references: Pure Pursuit with its own lookahead distance
 (B1), RPP (B2), DWA (B3) and an MPPI controller whose rollout cost penalises scan returns inside the
@@ -261,24 +262,23 @@ as a positive control.
 The primary metric is the number of protective stops per 100\,m of planned route. The rate per 100\,m
 actually driven, the fraction of time spent in a latched stop, the mean speed outside stops, the success
 rate and the mission time are reported descriptively, without inference. Episodes are limited to 200\,s.
-The held-out test set comprises 150 scenarios (50 per class of aisle width) with a total planned length of
-1624\,m; each planner is run once per scenario, within one load of the simulation scene. The single
-confirmatory comparison is B7 against B2 on the primary metric, at a significance level of 0.05, by a rate
+The held-out test set comprises two halves of 150 scenarios each (50 per class of aisle width): one with an
+unmapped obstacle on every route (1624\,m planned) and one without unmapped obstacles (1606\,m planned). Each planner is run once per scenario, within one load of the simulation scene. The single confirmatory comparison is B7 against B2 on the primary metric, on the half with obstacles, at a significance level of 0.05, by a rate
 ratio with a scenario-level 95\,\% confidence interval (Student's $t$ with 149 degrees of freedom,
-continuity correction 0.5), whose calibration at equal rates was checked before the test set was read. The
-comparisons of B7 with B1 and B6 belong to a declared exploratory contingency hypothesis of the study. The
+continuity correction 0.5), whose calibration at equal rates was checked before the test set was read. On that half, the comparisons of B7 with B1 and B6 belong to a declared exploratory contingency hypothesis of
+the study; everything on the half without obstacles is exploratory or descriptive. The
 test size and the choice of B7 against B2 as the confirmatory comparison were fixed before the test set was
 built or read, but after the development-set rates had been seen (52.8 for B2 and 0.47 for B7 per 100\,m
 planned). Results labelled development-set were obtained on the tuning set of 60 scenarios (633\,m planned)
 and are preliminary.
 
 \subsection{Results}
-Table~\ref{tab:main} and Fig.~\ref{fig:results}(a,b) summarise the held-out results. No contact and no
-stop caused by a scan fault occurred in any configuration.
+Table~\ref{tab:main} and Fig.~\ref{fig:results}(a,b) summarise the held-out results on the half with unmapped obstacles. No contact and no stop caused by a scan
+fault occurred in any configuration on either half.
 
 \begin{table}[t]
 \centering
-\caption{Held-out test set (150 scenarios, an unmapped obstacle on every route, 1624\,m planned).}
+\caption{Held-out test set, half with an unmapped obstacle on every route (150 scenarios, 1624\,m planned).}
 \label{tab:main}
 \footnotesize
 \setlength{\tabcolsep}{2.2pt}
@@ -292,6 +292,26 @@ B2 RPP & 0.000 & 4 & 146 & 1106 & 68.1 & 158.9 & 696 & 0.058 & 0.597 \\
 B3 DWA & 0.013 & 134 & 14 & 815 & 50.2 & 92.1 & 885 & 0.033 & 0.100 \\
 B6 MPPI & 0.553 & 67 & 0 & 10 & 0.62 & 0.57 & 1769 & 0.073 & 0.001 \\
 \textbf{B7} & 0.020 & 147 & 0 & 18 & 1.11 & 2.04 & 880 & 0.029 & 0.001 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Held-out test set, half without unmapped obstacles (150 scenarios, 1606\,m planned; exploratory and descriptive).}
+\label{tab:clear}
+\footnotesize
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{lccccccccc}
+\toprule
+ & Suc- & Time- & Unre- & & \multicolumn{2}{c}{Stops/100\,m} & Driven & Speed & Time \\
+Planner & cess & out & cov. & Stops & plan. & driv. & (m) & (m/s) & latched \\
+\midrule
+B1 PP & 0.000 & 1 & 149 & 1117 & 69.5 & 176.9 & 631 & 0.173 & 0.878 \\
+B2 RPP & 0.347 & 28 & 70 & 907 & 56.5 & 80.4 & 1128 & 0.059 & 0.313 \\
+B3 DWA & 0.920 & 7 & 5 & 108 & 6.72 & 6.86 & 1575 & 0.098 & 0.054 \\
+B6 MPPI & 0.833 & 25 & 0 & 9 & 0.56 & 0.52 & 1741 & 0.097 & 0.001 \\
+\textbf{B7} & 0.733 & 40 & 0 & 2 & 0.12 & 0.13 & 1500 & 0.058 & 0.0002 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -337,16 +357,23 @@ reaches the time limit in 134 episodes, with a success rate of 0.013 at 50.2 sto
 mean mission time of the successful episodes is 129.6\,s for B6 (83 episodes), 131.2\,s for B3 (2) and
 169.0\,s for B7 (3).
 
-\emph{Scenarios without unmapped obstacles.} \tbd{Placeholder: descriptive held-out results on the other 150
-scenarios of the test set, which contain no unmapped obstacles. Pending; numbers to be supplied after
-review.}
+\emph{Scenarios without unmapped obstacles.} Table~\ref{tab:clear} gives the results on the other half of the
+test set; all comparisons on this half are exploratory or descriptive. B7 records 2 stops against 907 for B2
+(rate ratio 0.0028, 95\,\% CI [0.0006, 0.0133]), unrecoverable stops fall from 70 episodes to none, and the
+success rate doubles from 0.347 to 0.733. The rate ratio of B7 to B1 is 0.0022, 95\,\% CI [0.0005, 0.0108]. B3 and
+B6 complete more routes than B7 (0.920 and 0.833). B3 does so with 108 stops against 2; this comparison was not
+declared, and only the counts are given. The rate ratio of B7 to B6 is 0.263, 95\,\% CI [0.047, 1.476]: the two are
+indistinguishable at 2 versus 9 events. The 40 timeouts of B7 arise from the tuned speed of RPP rather than from
+the filter: the median correction is 0.005\,m/s, it exceeds 0.05\,m/s on 0.4\,\% of the steps, and B7 moves at
+0.058\,m/s against 0.059\,m/s for B2. Its successful missions take 161.0\,s of the 200\,s horizon on average,
+against 105.4\,s for B3 and 104.3\,s for B6.
 
-\emph{Consistency with the development set.} The low success rates on the test set reflect its population:
-a tracker that does not replan rarely passes an unmapped obstacle near its route. On the development set, the
-17 routes with an unmapped obstacle yield success rates of 0.000 for B1, B2, B3 and B7 and 0.706 for B6, whereas
-the 43 routes without one yield 0.023 for B1, 0.349 for B2, 0.930 for B3, 0.884 for B6 and 0.698 for B7, with
-the stops of RPP falling from 224 to none under the PFB (Table~\ref{tab:strata} gives the whole set by aisle
-width). The loss of speed likewise arises near obstacles: on the routes without one, B2 and B7 both move at
+\emph{Consistency with the development set.} The low success rates on the half with obstacles reflect its population: a tracker that does not replan rarely
+passes an unmapped obstacle near its route. On the development set, the 17 routes with an unmapped obstacle
+already yield success rates of 0.000 for B1, B2, B3 and B7 and 0.706 for B6. The 43 routes without one yield
+0.023 for B1, 0.349 for B2, 0.930 for B3, 0.884 for B6 and 0.698 for B7; these served as a positive control
+declared before the run on the half without obstacles, and the results of Table~\ref{tab:clear} agree with them
+(Table~\ref{tab:strata} gives the whole development set by aisle width). The loss of speed likewise arises near obstacles: on the routes without one, B2 and B7 both move at
 0.058\,m/s, whereas on the obstacle routes they move at 0.063 and 0.026\,m/s. The low speed on clear routes is
 inherited from the tuned speed regulation of RPP, which begins to reduce the speed at a clearance of 1.18\,m
 and therefore operates close to its minimum speed throughout aisles of 0.7--0.9\,m. In an empty synthetic
@@ -382,16 +409,20 @@ took 27.9\,ms at the 95th percentile (median 1.6\,ms, maximum 49.5\,ms), and B7'
 
 \section{Discussion and Conclusion}
 The held-out results exhibit a clear trade-off between protective stops and throughput. Defining the safe set
-of the barrier as the complement of the certified trigger set removes 98\,\% of the protective stops and all
-unrecoverable stops of an existing classical planner, without modifying the planner and without a loss of
-progress: B7 drives further than B2 and spends a negligible fraction of time in a latched stop. It does not,
-however, enable that planner to complete these missions. B7 times out on 147 of 150 scenarios, because the
-filter further reduces the speed of a planner tuned to a low speed, within a horizon of 200\,s, on routes on
-which a tracker that does not replan rarely passes the obstacle. Success and mission time are descriptive
-here; no inference is drawn from them.
+of the barrier as the complement of the certified trigger set removes nearly all protective stops of an existing
+classical planner (from 1106 to 18 with unmapped obstacles, the confirmatory comparison, and from 907 to 2 without)
+and every unrecoverable stop (from 146 to none and from 70 to none), without modifying the planner and without a
+loss of progress: B7 drives further than B2 on both halves and spends a negligible fraction of time in a latched
+stop. Whether this yields completed missions depends on the population. Without an unmapped obstacle, the success
+rate of RPP doubles (0.347 to 0.733), and the remaining timeouts of B7 arise from the tuned speed of RPP. With one,
+it does not: B7 times out on 147 of 150 scenarios, because the filter further reduces the speed of a planner tuned
+to a low speed, within a horizon of 200\,s, on routes on which a tracker that does not replan rarely passes the
+obstacle. Success and mission time are descriptive here; no inference is drawn from them.
 
-The PFB does not outperform the field-aware MPPI controller. The two are indistinguishable in terms of stops at
-18 versus 10 events, and B6 has a far higher success rate. B6 achieves its result by incorporating the field
+The PFB is not shown to outperform the field-aware MPPI controller in either condition. The two are
+indistinguishable in terms of stops, at 18 versus 10 and at 2 versus 9 events, and B6 completes more routes on both
+halves (0.553 against 0.020 and 0.833 against 0.733). Without obstacles, DWA also completes more routes than B7,
+at far more stops (108 against 2). B6 achieves its result by incorporating the field
 into its cost function; the PFB, in contrast, acts as an additional layer beneath a planner that has no
 knowledge of the field. The present evidence is subject to several limitations: few events for the comparison
 with B6, a confirmatory comparison chosen after development-set rates had been seen, a host planner tuned

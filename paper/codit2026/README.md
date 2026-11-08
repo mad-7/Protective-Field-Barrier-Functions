@@ -1,7 +1,7 @@
 # CoDIT regular paper draft: Protective-Field Barriers for classical local planners
 
 `pfb_codit.tex` (IEEE conference class, double column, <= 6 pages; compiles to 6 with four figures),
-`references.bib`, `figures/`, `results_test.json` (held-out values behind Table I and Fig. 3a-b) and
+`references.bib`, `figures/`, `results_test.json` (held-out values behind Tables I-II and Fig. 3a-b) and
 `results_tune.json` (development-set values behind Fig. 3c, each with its run and decision-log source). Written in academic style (researcher, 2026-11-07).
 
 **Figures** (from the project's own geometry, configuration and runs; nothing typed by hand except
@@ -27,15 +27,13 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
    still from the tuning set says development-set; B7 vs B2 is confirmatory; B7 vs B1 and B6 are exploratory; B7
    vs B6 reads "indistinguishable at 18 vs 10 events", never "matches"; the phrase "preregistered but exploratory"
    is not used. Success and time are descriptive. No tuning used a test layout (hard rule 2).
-2. **Red `[...]` placeholder (`	bd`) still open:** descriptive held-out results on the other 150 scenarios (no
-   unmapped obstacles), pending review.
-3. **Some values in the held-out text are not in the decision log** and came only in the handover from the
-   main session: the mean mission times (B3 131.2, B6 129.6, B7 169.0 s) and the step count 1,815 of 598,139.
+2. **Some values in the obstacle half's text are not in the decision log** and came only in the handover from
+   the main session: the mean mission times (B3 131.2, B6 129.6, B7 169.0 s) and the step count 1,815 of 598,139.
    Check them against the analysis run's summary on the host. The handover's p95 correction (0.075 m/s) is NOT
    used: the log gives 0.075 m/s as the p95 of RPP's request, which is what the paper states.
-4. **Provenance not checkable on the laptop:** commit 6afb838 and the A14b/A36 relock are not in this checkout
-   (`runs/test/` is on the host), and `preregistration/AMENDMENTS.md` here has no A36. Check before citing.
-5. **References marked VERIFY** in `references.bib` (Coulter 1992, Macenski 2023, Williams 2017, Macenski 2020,
+3. **Everything on the half without obstacles is exploratory or descriptive;** the confirmatory comparison is the
+   obstacle half's B7 vs B2 only. B7 vs B3 was not declared: counts only.
+4. **References marked VERIFY** in `references.bib` (Coulter 1992, Macenski 2023, Williams 2017, Macenski 2020,
    and the `verify` fields of Raja 2024, IEC 61496-3, Clarabel). The rest are copied verbatim from
    `paper/MDPI_template/references.bib`.
 
@@ -43,11 +41,12 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
 | Claim | Source |
 |---|---|
 | Table I, Fig. 3a-b, rate ratios (B7/B2, B7/B1, B7/B6), 98 %, 26 % further, 146 to 0 unrecoverable, 5.9 m per episode on 10.8 m routes, request p95 0.075, median correction 0.025, 37.6 %, infeasible 0.3 % | 2026-11-08 "The sealed classical test (unmapped_static): HF-c PASS"; `results_test.json`; run `runs/test/HFC_ANALYSIS_20261108T171312Z_seed0` (host) |
-| Mean mission times of successes; 1,815 of 598,139 steps | handover from the main session, 2026-11-08 (same run); see "Before submitting" item 3 |
+| Table II (half without obstacles), its rate ratios, median correction 0.005, 0.4 %, mission times, the declared positive control | 2026-11-08 "The sealed classical test (mapped_only)"; `results_test.json`; run `runs/test/HFC_ANALYSIS_mapped_only_20261108T223147Z_seed0` (host) |
+| Mean mission times of successes; 1,815 of 598,139 steps | handover from the main session, 2026-11-08 (same run); see "Before submitting" item 2 |
 | Disclosures: test size and B7 vs B2 fixed before the test set was built or read, after development rates seen (52.8, 0.47); calibration before the read | 2026-11-07 "DECIDED (the researcher)", `docs/pending/A36_amendment.md`; 2026-11-08 "HF-c calibration PASSED" |
 | Development set by obstacle presence: success on 17 obstacle / 43 clear routes, moving speeds, RPP stops 224 to 0 | 2026-11-08 "The success collapse is the population" |
 | Development-set rates 52.8 and 0.47; 633 m; 17 of 60 routes with obstacles | 2026-11-07 "All arms under the A34 denominators"; `scripts/split_tune_by_obstacles.py` docstring |
-| Table II: B2 and B7 per stratum | B7 alpha tuning console, B2-vs-B7 monitoring (`runs/tuning/B7_alpha_20261102T195759Z_seed0`), 2026-11-03 |
+| Table III: B2 and B7 per stratum (development set) | B7 alpha tuning console, B2-vs-B7 monitoring (`runs/tuning/B7_alpha_20261102T195759Z_seed0`), 2026-11-03 |
 | Table III: alpha sensitivity (success, stops, fallback steps) | 2026-11-03 "alpha 1.0 FROZEN" |
 | 17 blocked = the oracle's 17 failures; 13 horizon timeouts, 68-97 % covered; 30/43 | 2026-11-03 "B7's timeouts classified" |
 | 28 of 30 B7 timeouts without a stop (2000050: 2, 2000053: 1) | same entry, per-timeout table |
