@@ -1,0 +1,1823 @@
+{
+  "split": "test",
+  "requested": 50,
+  "built": 50,
+  "failures": [],
+  "validity_rejections_by_stratum": {
+    "narrow": {
+      "built": 50,
+      "failed_seeds": 0,
+      "goal_invalid": 0,
+      "goal_resamples": 0,
+      "residual": 0,
+      "start_invalid": 0
+    }
+  },
+  "episode_rate_requested": 0.0,
+  "episode_rate_achieved": 0.0,
+  "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+  "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+  "locked": true,
+  "scenarios": [
+    {
+      "seed": 3000000,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.261441122789062,
+        1.553436485911746,
+        2.8074285636178673
+      ],
+      "goal": [
+        8.36099530634205,
+        5.846563514088256
+      ],
+      "layout_sha256": "bd0d51d37f8cc9941de7d50cd4f05a11989f817d41a7f53839bd4a00c4e36c65",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "8a176a3110de28e0d1528467aba9e7da10017dff4dceb56ef5545e204df01b97",
+      "unmapped_count": 0,
+      "clearance_m": 0.23796351408825456,
+      "path_length_m": 12.720922883392724,
+      "path_min_clearance_m": 0.33463441919430237,
+      "aisle_travel_m": 5.3988554419103165,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000001,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        3.8946747682656317,
+        5.0,
+        0.017050796803365714
+      ],
+      "goal": [
+        10.448913496040582,
+        6.678012612398798
+      ],
+      "layout_sha256": "080a5deb91e22e883a9b43131e16199f7848081b0b58a2eeee40a5d4640663b1",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "59ae0f61513252d0ae194d4d2e49dc915e033f8abc815abdd1ee77a344b4d9dc",
+      "unmapped_count": 0,
+      "clearance_m": 0.23040630619939895,
+      "path_length_m": 9.734183644505062,
+      "path_min_clearance_m": 0.31674603222679654,
+      "aisle_travel_m": 7.758254122962843,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000002,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.493914585366176,
+        8.028434019878311,
+        -2.0756190658669924
+      ],
+      "goal": [
+        9.299173304441243,
+        1.9715659801216892
+      ],
+      "layout_sha256": "6d0bdb18404a854d69fb4febcaed557f23ee2c25f8e58b528bd1edbf7c19208c",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "375bfa56d5962c71aa4045939cb388daf82310bdbb791fa7dd060224d881bb71",
+      "unmapped_count": 0,
+      "clearance_m": 0.2482680397566228,
+      "path_length_m": 14.105370557590089,
+      "path_min_clearance_m": 0.33443504766819593,
+      "aisle_travel_m": 6.750955244896559,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000003,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.128099759649743,
+        6.715967279928066,
+        -0.02073696362116738
+      ],
+      "goal": [
+        9.842063135305658,
+        3.2840327200719353
+      ],
+      "layout_sha256": "502a2586aaf1eac4b03e7bafc3d09ae9edcc53c76d99be9c461dd40cfb99094e",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "e8f99b138ecefa1554618a07efd4a3cf77c4bf2bb1239059140d4115fd17a169",
+      "unmapped_count": 0,
+      "clearance_m": 0.24938363996403254,
+      "path_length_m": 13.9019779244345,
+      "path_min_clearance_m": 0.32257191559152254,
+      "aisle_travel_m": 6.809945173281,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000004,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.388128790678191,
+        6.719819360268101,
+        -3.0965520011033396
+      ],
+      "goal": [
+        9.398402269002553,
+        3.2801806397319013
+      ],
+      "layout_sha256": "540c3adfb880354f4fa343d625c064227cd06e45ec44a80750961dccd7587273",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "eb1e7d303a2ecb2bc0aea4678adcfaaa23fd11d991fc26e3fcba64cba37d1f65",
+      "unmapped_count": 0,
+      "clearance_m": 0.2513096801340497,
+      "path_length_m": 13.592961415692258,
+      "path_min_clearance_m": 0.3253470161935679,
+      "aisle_travel_m": 6.150641170380562,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000005,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.332623752117181,
+        4.169815211461995,
+        3.076257044503736
+      ],
+      "goal": [
+        8.787932002084409,
+        5.830184788538006
+      ],
+      "layout_sha256": "bd32ad5fc8fdd939b9c9d98d367ce15ad5629f00bd2868cd1cc5352bf9f53b8a",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "e9c8cfc4bfc3e508c63651841ae2fcf0cf40307378783552083bb204fb04eb94",
+      "unmapped_count": 0,
+      "clearance_m": 0.22158478853800542,
+      "path_length_m": 9.17534582083101,
+      "path_min_clearance_m": 0.3257515762466861,
+      "aisle_travel_m": 7.246481179797947,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000006,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.495177281437041,
+        6.714108509428366,
+        -0.02021702623461555
+      ],
+      "goal": [
+        10.780202995748459,
+        1.114418617928727
+      ],
+      "layout_sha256": "a29ce02bf48bd5f20cabe6a6780e0391c3bc439439d728a5ecd783a3a9ee41a9",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "24e27f090f823bcd09675bdc81b2d36c99a15dbc776ecdf6c56775306e0ee756",
+      "unmapped_count": 0,
+      "clearance_m": 0.24845425471418225,
+      "path_length_m": 13.749418345001914,
+      "path_min_clearance_m": 0.3223253073296126,
+      "aisle_travel_m": 6.448238474460873,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000007,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.319573488979768,
+        4.133614803424629,
+        3.058351360986603
+      ],
+      "goal": [
+        8.607723796004022,
+        8.466385196575372
+      ],
+      "layout_sha256": "04513183fc0292ef8a2df52b1b34efc925a814d5a3a3c299cbf1654f8cbe81e6",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "0918864ec6548e543dd4d290e146c1fde6249c074bb6fcaee3bdfe6d31c6cbd3",
+      "unmapped_count": 0,
+      "clearance_m": 0.2577851965753717,
+      "path_length_m": 13.137696229608055,
+      "path_min_clearance_m": 0.33056240140664306,
+      "aisle_travel_m": 8.000729733932339,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000008,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        5.486277213858034,
+        8.031664915548735,
+        -2.1934978758097006
+      ],
+      "goal": [
+        10.3635661374681,
+        1.9683350844512657
+      ],
+      "layout_sha256": "55b88923d1c6ecc2292c3d7be72b87cec357c94780026809bb33cffe5f4b70af",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "0d2c30a896999ab1652260de9bd3c5767c78de89adbf9608b746893fc6044255",
+      "unmapped_count": 0,
+      "clearance_m": 0.2547298310974695,
+      "path_length_m": 12.595175057662711,
+      "path_min_clearance_m": 0.33080613909964307,
+      "aisle_travel_m": 5.851528053043543,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000009,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.506414424419932,
+        5.0,
+        -0.017557863632928203
+      ],
+      "goal": [
+        11.00012748523222,
+        1.9769524835934895
+      ],
+      "layout_sha256": "c000c02e992aff2f1d2978a33554208fe76b5828f6b07895470cfa2c94c7b024",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "2a3cc83acb4135fece79c28b907bbcf8ab8fa76a159d4bf3854a3cfeba7b8ac4",
+      "unmapped_count": 0,
+      "clearance_m": 0.23749503281302176,
+      "path_length_m": 10.188919464150372,
+      "path_min_clearance_m": 0.32588044436506486,
+      "aisle_travel_m": 6.900120945018463,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000010,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        5.437025283505868,
+        5.821082112210641,
+        0.019649207699126627
+      ],
+      "goal": [
+        10.360300331671986,
+        8.421082112210641
+      ],
+      "layout_sha256": "07624ca9d4e475597b5c910906000230dbe31984b97d76f57da69cc86144fb2b",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "cd311cd87008523895c95c108a8707d0e46836344c4874cd91b02d77e18da27a",
+      "unmapped_count": 0,
+      "clearance_m": 0.2124821122106408,
+      "path_length_m": 8.03342305159391,
+      "path_min_clearance_m": 0.3209848498552143,
+      "aisle_travel_m": 5.099002614668786,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000011,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        5.147776706545916,
+        4.168492712158118,
+        2.9130289099457594
+      ],
+      "goal": [
+        10.115815854355644,
+        5.831507287841882
+      ],
+      "layout_sha256": "b4d6cd876f50fadb111fcb0955d00f5f4310bfa14e1fb93886abaea3bfbf33a6",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "a43ba3c2ee8504fe1e9eb6bf16f3223f0624ac7be569c3fe8700bb1b6b933e34",
+      "unmapped_count": 0,
+      "clearance_m": 0.22290728784188207,
+      "path_length_m": 7.7645927598719275,
+      "path_min_clearance_m": 0.32244718776062925,
+      "aisle_travel_m": 5.339835535825559,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000012,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.247978404030608,
+        3.3476999922458366,
+        -0.009788267004756894
+      ],
+      "goal": [
+        10.672125902419511,
+        1.1607749941843772
+      ],
+      "layout_sha256": "7d26bcaf7479ae0d00e49b7af3a539c083554b9e7338af53d22d0f5f83d3466a",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "8b2cd201f1ad62440cf9d84f2c09adafa1c6dd7b23cd0098e25cc9bee2e6b119",
+      "unmapped_count": 0,
+      "clearance_m": 0.21755000387708212,
+      "path_length_m": 10.244412794269056,
+      "path_min_clearance_m": 0.3256556791478662,
+      "aisle_travel_m": 7.299150868818282,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000013,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.159287248084109,
+        4.13009622390044,
+        2.4101518798390305
+      ],
+      "goal": [
+        9.130118821539133,
+        8.46990377609956
+      ],
+      "layout_sha256": "3f74acec3f2c00193a3d978913b3e86339924db90a2ed0b10dbbc3ded65cd21a",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "2477f7814448708c849888346b7458586d3207005ef44d6a947eb87a1a6ecfc3",
+      "unmapped_count": 0,
+      "clearance_m": 0.2613037760995599,
+      "path_length_m": 11.55108515069731,
+      "path_min_clearance_m": 0.3198092856311313,
+      "aisle_travel_m": 6.183801624684294,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000014,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        3.9230490302420584,
+        8.407447831759294,
+        -2.757017364737187
+      ],
+      "goal": [
+        9.22336830232496,
+        4.1925521682407085
+      ],
+      "layout_sha256": "d3bea8fbed6effb3be3df579bb41f4c2d73229912be66d57a05eea3472249fd7",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "92d42e2ab5a47fcb970ce331041117f5f32426cc5b29ffe195e159df2795efda",
+      "unmapped_count": 0,
+      "clearance_m": 0.19884783175929271,
+      "path_length_m": 13.03029345171686,
+      "path_min_clearance_m": 0.32557927574395656,
+      "aisle_travel_m": 5.599330456964774,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000015,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.169829139259745,
+        5.842551269168027,
+        0.024727826102475464
+      ],
+      "goal": [
+        8.02039058882241,
+        8.442551269168026
+      ],
+      "layout_sha256": "564a9c4406cf1d692210919ea34e8ae685d1d04c651ead20130daa4ef811591a",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "32412b984cf775acf579097c04eaedfae42fbf7e19e376b5e1a2814d4fe513b9",
+      "unmapped_count": 0,
+      "clearance_m": 0.2339512691680261,
+      "path_length_m": 8.727143844146694,
+      "path_min_clearance_m": 0.3157629156945436,
+      "aisle_travel_m": 5.150136262700813,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000016,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        3.7723216671716537,
+        8.906192753830556,
+        -2.3353987247955157
+      ],
+      "goal": [
+        9.862552563071349,
+        5.0
+      ],
+      "layout_sha256": "0b924a20dfea25bd96156e2dadc8d8eb344be49dcdb1458fd464342fb3db3f90",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "0090e895a3b93652dd68ad842578f15e3e82cdf45ada656471d6df52bf157a7b",
+      "unmapped_count": 0,
+      "clearance_m": 0.2621951692203702,
+      "path_length_m": 10.898878718171924,
+      "path_min_clearance_m": 0.3193797305880577,
+      "aisle_travel_m": 6.359493583522587,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000017,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        5.285622308023066,
+        8.01140934711569,
+        -2.4052701951097246
+      ],
+      "goal": [
+        9.675966683020285,
+        1.9885906528843114
+      ],
+      "layout_sha256": "7ff1a0908746a0a7e1491cc80ffa08a6e109847d1484d241f84001c34395d3e3",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "5f642549ff337917ff6ff3ec4751338bf9b3fa37d0073905ae57209c35915bf7",
+      "unmapped_count": 0,
+      "clearance_m": 0.2142186942313783,
+      "path_length_m": 13.443370604297753,
+      "path_min_clearance_m": 0.32696604746705243,
+      "aisle_travel_m": 6.166673840871532,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000018,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.603012158717566,
+        5.000000000000001,
+        -0.022429883260864886
+      ],
+      "goal": [
+        9.572284456154424,
+        1.977469507220651
+      ],
+      "layout_sha256": "25994e0197a7b056324c12b2a2b6081deb09c4734e1395a7bcd1c5b12acdcf62",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "90334988b343c51ec9c889389e748b44bf3c18eedae6f8f3c7d30ebeabf984e2",
+      "unmapped_count": 0,
+      "clearance_m": 0.23646098555869932,
+      "path_length_m": 8.745315271392679,
+      "path_min_clearance_m": 0.3245953131123994,
+      "aisle_travel_m": 5.350134778560287,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000019,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.894096272253495,
+        4.187298403552134,
+        0.011127908601323311
+      ],
+      "goal": [
+        10.571954335180102,
+        8.412701596447867
+      ],
+      "layout_sha256": "8e1451dad69e1bb72e5cb155015a1d6b270be30aa3b9a9e2f0e287fe461d185b",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "95512cabc8d93c996935730854d4e59979cd5bf970793fda93c81e2ab3c027ea",
+      "unmapped_count": 0,
+      "clearance_m": 0.20410159644786646,
+      "path_length_m": 12.98125079241251,
+      "path_min_clearance_m": 0.32754777070063845,
+      "aisle_travel_m": 5.8877327876869545,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000020,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.514128637982765,
+        5.000000000000001,
+        -0.011259312272273154
+      ],
+      "goal": [
+        10.90988688421576,
+        1.9879395310134012
+      ],
+      "layout_sha256": "cf3a463810c79e635e596b3cf4d6125f5f77aeab86a5a2ae3c716ac2aa242b6d",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "613c453064acc2012ccbcf5aca8807ce2297744fdd5c2e3c372188e5fe86df7b",
+      "unmapped_count": 0,
+      "clearance_m": 0.21552093797319855,
+      "path_length_m": 9.699995711781767,
+      "path_min_clearance_m": 0.3339138864736899,
+      "aisle_travel_m": 6.449213902737995,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000021,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.336694804351248,
+        5.8371354268576585,
+        -3.0761747883023793
+      ],
+      "goal": [
+        9.604752329298105,
+        4.162864573142343
+      ],
+      "layout_sha256": "247c3058b55b38e81fe7ef6d23b7daab5d077f4c81599744b5f0bf0ef8a31516",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "f233707445d3a94b8917986846d22a72d210ed2f274cbc7f964c49dd3938bb0a",
+      "unmapped_count": 0,
+      "clearance_m": 0.2285354268576574,
+      "path_length_m": 10.29462201945954,
+      "path_min_clearance_m": 0.33501740079838116,
+      "aisle_travel_m": 8.347574618672567,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000022,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.518101913824045,
+        4.17314953177123,
+        -0.01485452193505597
+      ],
+      "goal": [
+        11.301844655981972,
+        1.57314953177123
+      ],
+      "layout_sha256": "c50ddbf3cbdfd0baa57cd79041ab7d1852bfbf77da113a260b44fc41662894ae",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "b09594455af38fe552c1eb8a03ca5c6fa91824d433e807cec7073041eeecd172",
+      "unmapped_count": 0,
+      "clearance_m": 0.2182504682287703,
+      "path_length_m": 9.161312659830099,
+      "path_min_clearance_m": 0.33175437157204435,
+      "aisle_travel_m": 6.399207683969695,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000023,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        5.567811632543056,
+        6.697572008775806,
+        -0.026312811432684505
+      ],
+      "goal": [
+        9.400571614232451,
+        3.302427991224195
+      ],
+      "layout_sha256": "de7299affc94cad369e2d6a76dc1fe99fa71a00e0d96cad74d3f76a850dae782",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "478283b64e2edcf3ce031dde69ce51de23c41c65189b33ae0ec44159c408a81b",
+      "unmapped_count": 0,
+      "clearance_m": 0.24018600438790288,
+      "path_length_m": 12.686583776235963,
+      "path_min_clearance_m": 0.3249999999999993,
+      "aisle_travel_m": 4.758531905420354,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000024,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.640284795090241,
+        3.377717315611271,
+        2.476489000643152
+      ],
+      "goal": [
+        10.667300707883038,
+        5.000000000000001
+      ],
+      "layout_sha256": "3331a5ccd79af9dfbf3cb51e974558fdd52da5e66db270d0d900a7e3f30a644a",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "5b88706d8ddc33e42d5515f5795a88055e280396ab08be21d0a56fb5322a2328",
+      "unmapped_count": 0,
+      "clearance_m": 0.20254134219436495,
+      "path_length_m": 7.943833700926822,
+      "path_min_clearance_m": 0.3355283554224904,
+      "aisle_travel_m": 6.000208329716562,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000025,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.231487085147371,
+        5.816263803609703,
+        -0.010681827648919033
+      ],
+      "goal": [
+        10.616826750744151,
+        1.5837361963902974
+      ],
+      "layout_sha256": "72d01f80b176f31ca0618521c66a33f8586cde3571f533e1608461c3c282f0f8",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "c5cbfaac533ebfc403f777bcc92b4d494edea1e9f4b20e007221b361353f6def",
+      "unmapped_count": 0,
+      "clearance_m": 0.207663803609703,
+      "path_length_m": 13.595410950871443,
+      "path_min_clearance_m": 0.3273529411764704,
+      "aisle_travel_m": 6.186599572734316,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000026,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        5.036998922879717,
+        8.023944942663265,
+        -2.2096820678845766
+      ],
+      "goal": [
+        10.797624838183685,
+        5.0
+      ],
+      "layout_sha256": "1af2466dd015a0e99bc1eb241e9451b7a3420fae9e7592f0df10e27070173ca9",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "a5d9483b2264e372d615aaaefad1b0b2b104bda4daba5a5a6c594a10066bca91",
+      "unmapped_count": 0,
+      "clearance_m": 0.23928988532652806,
+      "path_length_m": 10.196828725771443,
+      "path_min_clearance_m": 0.3364771546842362,
+      "aisle_travel_m": 6.59980775539505,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000027,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        5.142549723921135,
+        8.037768260591887,
+        -2.2939113475827386
+      ],
+      "goal": [
+        10.577024160791977,
+        5.0
+      ],
+      "layout_sha256": "303f8e9645a2577b3b40cf04f252dd602401522097fb6aa884103df68e023519",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "5356922baa28b9a115bfab243b25d845f5c5633ce4e41c8392d4e7a3abaa45d3",
+      "unmapped_count": 0,
+      "clearance_m": 0.26693652118377476,
+      "path_length_m": 10.208470005387142,
+      "path_min_clearance_m": 0.3262824353532525,
+      "aisle_travel_m": 6.550190836914601,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000028,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.400651489617878,
+        8.899149246394595,
+        -2.6554258077434625
+      ],
+      "goal": [
+        10.160516594466948,
+        6.7321989951927925
+      ],
+      "layout_sha256": "5b28bf1cc495593b0cd41177a55d770ee0df5daeabfc7217cc6a34a19ad32679",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "65d00e7bbfa4b46de8243792c617f3b848befcb724ae0b90555bd98904131ed9",
+      "unmapped_count": 0,
+      "clearance_m": 0.25749949759639584,
+      "path_length_m": 9.78959508210082,
+      "path_min_clearance_m": 0.30899933049737704,
+      "aisle_travel_m": 6.750740700100989,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000029,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        3.5429308151936705,
+        5.000000000000001,
+        -1.5132674657955243
+      ],
+      "goal": [
+        10.570179279306968,
+        3.3489946827403587
+      ],
+      "layout_sha256": "704f36d18cf5d2b20e58aeac6e8562d7523075673637c1a21c35927ab71d99e2",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "cd0612575b6fc9d940edc302a3f3cfd37cc29268e10e5730a96c702ad5f1985e",
+      "unmapped_count": 0,
+      "clearance_m": 0.21690265862982078,
+      "path_length_m": 8.462461179749813,
+      "path_min_clearance_m": 0.32989882084305416,
+      "aisle_travel_m": 6.617705098312485,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000030,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.721567165723107,
+        4.187678258963546,
+        -0.00956389567367544
+      ],
+      "goal": [
+        9.882795330002853,
+        1.5876782589635456
+      ],
+      "layout_sha256": "77e7013a5a77355e2bfbb78ad78feb329c845c8540285f31b5caa20d65529329",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "07346e64dd1261dec0dbb5a9aa15677e6f52ac4e30ca98f7ee0570272f5d5e1d",
+      "unmapped_count": 0,
+      "clearance_m": 0.2037217410364548,
+      "path_length_m": 9.931712404454771,
+      "path_min_clearance_m": 0.3240349583786273,
+      "aisle_travel_m": 6.399032586831956,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000031,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        3.8344401810367246,
+        8.83683708274846,
+        -2.1211056205348933
+      ],
+      "goal": [
+        10.572383044199414,
+        5.0
+      ],
+      "layout_sha256": "8b077e340916b4d75a54d2b931c559d82dea64277cd24a9c82046f771df4ed21",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "1cc578742c3276fc1ab40b82c943918eadc17cefb55afd64e17a1c71bd8511ee",
+      "unmapped_count": 0,
+      "clearance_m": 0.21595805516563973,
+      "path_length_m": 10.195207068341974,
+      "path_min_clearance_m": 0.3268508904816814,
+      "aisle_travel_m": 5.6165709241000945,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000032,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.4286972253495644,
+        5.0,
+        0.018526547425216356
+      ],
+      "goal": [
+        10.421726105913892,
+        6.708554554731656
+      ],
+      "layout_sha256": "2dbeb4269e912cae8a812d12c2c1acd804d2ea0cbf81773a6a0db7ad05d59d6f",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "332a59c5df16d1bca1a9fa145c1e77c227314bcdf8abfca5d6b78c4882c8e1a1",
+      "unmapped_count": 0,
+      "clearance_m": 0.24567727736582715,
+      "path_length_m": 9.126184987929625,
+      "path_min_clearance_m": 0.33226235199269283,
+      "aisle_travel_m": 7.224219395495893,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000033,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.372012280637573,
+        4.136227362629362,
+        3.0032927073358198
+      ],
+      "goal": [
+        10.689277631874468,
+        5.863772637370637
+      ],
+      "layout_sha256": "fb43dd7df5c17ceb5c95ac77310d9cf03bcdd7d5809de8d8989ce47c2c411b85",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "36a34f1f21e143c63c1fc365f67e716ca2a48a4e452f65041851c23455ec5032",
+      "unmapped_count": 0,
+      "clearance_m": 0.25517263737063783,
+      "path_length_m": 9.90338405759043,
+      "path_min_clearance_m": 0.33684420745407145,
+      "aisle_travel_m": 7.95151164731854,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000034,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.820629554166011,
+        8.012872742300521,
+        -2.035201278974189
+      ],
+      "goal": [
+        9.159920887599222,
+        5.000000000000001
+      ],
+      "layout_sha256": "a265ca7e822293952260fb9b6181db6759e8492408b14160d3f8df4f2b1c8f5f",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "8aadc8085afa9a945abeb65ca3ad273e3375be8b911122ecb3e2af7cc70a6ec1",
+      "unmapped_count": 0,
+      "clearance_m": 0.21714548460104022,
+      "path_length_m": 8.27426552702125,
+      "path_min_clearance_m": 0.3370796260484872,
+      "aisle_travel_m": 4.849484536082475,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000035,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        5.2424667458512495,
+        8.028147525304627,
+        -2.084531313456512
+      ],
+      "goal": [
+        9.946860210817634,
+        5.0
+      ],
+      "layout_sha256": "e5e7286338eb26dcd9430d3e14f767c386aaf29643b8ac6550355696f72aa91e",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "844eef9d5b00ac659a80cf03d5f4b3b0c2c1612893d804cb63ee2a142eb0ddfd",
+      "unmapped_count": 0,
+      "clearance_m": 0.24769505060925226,
+      "path_length_m": 8.721229675023995,
+      "path_min_clearance_m": 0.3295547294968247,
+      "aisle_travel_m": 5.299759737496306,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000036,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.9112189774030135,
+        6.658282180035309,
+        -0.014323980175299574
+      ],
+      "goal": [
+        9.511854319073333,
+        1.1562883649735185
+      ],
+      "layout_sha256": "200ab36ee3fc6c93c332e472a3b08980b32243a7c886d9f315032e5613ac7fb1",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "26694c0d5d1f842bd35bdd0260f5862692e8ddf9b5ec5aa8537d5fab7399f8d7",
+      "unmapped_count": 0,
+      "clearance_m": 0.22054109001765457,
+      "path_length_m": 14.02658119029427,
+      "path_min_clearance_m": 0.334090909090909,
+      "aisle_travel_m": 5.599092891695035,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000037,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.422336823038211,
+        8.015872086298607,
+        -2.2787464454369992
+      ],
+      "goal": [
+        10.088978812212964,
+        5.0
+      ],
+      "layout_sha256": "df32f99150726fba45d6ff0237707154581f9d91bd472d536abbced617ef7ad1",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "86f3fb6b3985ce94d7532f37277c347479523addeda3031de4acf8e3eb0c0317",
+      "unmapped_count": 0,
+      "clearance_m": 0.2231441725972123,
+      "path_length_m": 10.4279689645175,
+      "path_min_clearance_m": 0.32684627312007697,
+      "aisle_travel_m": 6.723110722522452,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000038,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.346550872782233,
+        6.687816871965564,
+        -0.01652009213173054
+      ],
+      "goal": [
+        10.38475709051856,
+        5.0
+      ],
+      "layout_sha256": "894e99067e31e2ccaaebe29bc56c4ee5306045f87d615a949855bc45ecafe595",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "adfaeb88a610f71050781f60b803b716efbcb7a70d40cd53c9ec12025dbf7615",
+      "unmapped_count": 0,
+      "clearance_m": 0.2353084359827822,
+      "path_length_m": 9.264464767360122,
+      "path_min_clearance_m": 0.33403274048780585,
+      "aisle_travel_m": 7.272348555110881,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000039,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.697395002515373,
+        5.87628254083142,
+        0.025296993344613786
+      ],
+      "goal": [
+        10.055551063085286,
+        8.47628254083142
+      ],
+      "layout_sha256": "99ab47f3bc7137955a91cb14b1bfc6bc2545cf4845ef8677b72e26e6c0b912e9",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "4c0df7f7499b7b8aee84d7ddf1c706d0b10e774852c6dca98f44cce806777511",
+      "unmapped_count": 0,
+      "clearance_m": 0.26768254083142007,
+      "path_length_m": 8.650381537672573,
+      "path_min_clearance_m": 0.3283262121091472,
+      "aisle_travel_m": 5.70013189141413,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000040,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.479047742643376,
+        5.8291395576430265,
+        -3.085482854230534
+      ],
+      "goal": [
+        10.855411966700977,
+        4.170860442356974
+      ],
+      "layout_sha256": "3aeeac349c24d5fe809035005bfa4c7d54efc848ce3a267704cf13777eabba98",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "f9dd9c92068b7014557d2e3b0ef7e51574f290985267f57d3262aca12b4159eb",
+      "unmapped_count": 0,
+      "clearance_m": 0.2205395576430263,
+      "path_length_m": 11.684814663297958,
+      "path_min_clearance_m": 0.33502299979024697,
+      "aisle_travel_m": 8.589568338034338,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000041,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.541674219267791,
+        4.168457907247915,
+        -0.012743583311737885
+      ],
+      "goal": [
+        11.512990161485197,
+        1.5684579072479146
+      ],
+      "layout_sha256": "a027aa27b48b3613d02f7694a5dfc7e94c87f4711be099915c6d8e0e83363e45",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "266958e5a8fd3c55a88c0ca8660a511fffd2c7d55f2c9464829524548b8f03b7",
+      "unmapped_count": 0,
+      "clearance_m": 0.22294209275208599,
+      "path_length_m": 9.99928165499675,
+      "path_min_clearance_m": 0.3326397690174818,
+      "aisle_travel_m": 7.1492917408874845,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000042,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.849826711477306,
+        8.03712751773658,
+        -2.456968172078733
+      ],
+      "goal": [
+        9.547369671625718,
+        5.000000000000002
+      ],
+      "layout_sha256": "cd16125c7afe08b32202e5747747735dbd3ac403277629074398973d8626fb9a",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "91544ea09d1c8db309e2c7cfac785713d6fc7b9219d56e65f907846f2e54098b",
+      "unmapped_count": 0,
+      "clearance_m": 0.26565503547316044,
+      "path_length_m": 10.334239631568519,
+      "path_min_clearance_m": 0.33131872292274167,
+      "aisle_travel_m": 6.300198409574101,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000043,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.061562405614502,
+        8.032667060241597,
+        -2.44872690598857
+      ],
+      "goal": [
+        8.396755778153976,
+        5.0
+      ],
+      "layout_sha256": "3f369e097b356d1e85fc634ecd5a07c38ddf35840563c3f536d4a940fdcd9cbe",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "5afc6b7fdb9d579e40baadcd4b0d03283faf26feada605c68d36b4b8ea88c417",
+      "unmapped_count": 0,
+      "clearance_m": 0.25673412048319044,
+      "path_length_m": 9.934253082597394,
+      "path_min_clearance_m": 0.32277263260650735,
+      "aisle_travel_m": 5.900211860602977,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000044,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.502109550676681,
+        6.651877392644543,
+        -0.010868875452427915
+      ],
+      "goal": [
+        11.154857947400707,
+        3.3481226073554575
+      ],
+      "layout_sha256": "83d347c51097ae3bf110626ca391132a9de430bb1c07875f3061618bd1feff84",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "8664be5b1a442a34ff664145c30f320cc8486374c6db5f9b4802b38dad74401b",
+      "unmapped_count": 0,
+      "clearance_m": 0.21733869632227132,
+      "path_length_m": 12.334099145614987,
+      "path_min_clearance_m": 0.3345238095238088,
+      "aisle_travel_m": 6.953622558813027,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000045,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.280999826772888,
+        5.000000000000001,
+        -0.02017808060301447
+      ],
+      "goal": [
+        9.509328968063027,
+        1.9720102193649476
+      ],
+      "layout_sha256": "87b968e4cee87df4cbd024025dfb9426af245a302ecd6cf8d6a306c7145608cf",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "caa4da17e7dc92840468f0758f3c82de2efbc28280858e5120b271e708c1a3d1",
+      "unmapped_count": 0,
+      "clearance_m": 0.2473795612701057,
+      "path_length_m": 9.586389648643284,
+      "path_min_clearance_m": 0.335857610050593,
+      "aisle_travel_m": 6.0001292344026025,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000046,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        5.268226874505378,
+        1.9918956328127142,
+        0.2421579156222858
+      ],
+      "goal": [
+        9.74208980923992,
+        5.000000000000001
+      ],
+      "layout_sha256": "28164c6e14bf95a3dd6667c0b632a0c2fef801ce90db22ac994a1832ef19311d",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "ca63fe2e1df77f756cd7f7f25d56dd85866d9a1c4efd4114063d599db344c3b9",
+      "unmapped_count": 0,
+      "clearance_m": 0.20760873437457283,
+      "path_length_m": 9.525050976268918,
+      "path_min_clearance_m": 0.3164281067160969,
+      "aisle_travel_m": 1.5179247641507059,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000047,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        4.6280862432553524,
+        5.0,
+        -0.017736401571247635
+      ],
+      "goal": [
+        11.36319317499751,
+        1.97632103598943
+      ],
+      "layout_sha256": "49947a0a82373a3a710520798ba31ee1c9d5abce11d0ea396a307013a4b0578d",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "4c7db4d9e47eb09b8a611e26f6ae7d1b60087adde1c521c64d36113a0603a9d1",
+      "unmapped_count": 0,
+      "clearance_m": 0.2387579280211403,
+      "path_length_m": 10.038976622190509,
+      "path_min_clearance_m": 0.32709120394820407,
+      "aisle_travel_m": 6.850121405150871,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000048,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        3.172646577502541,
+        1.987107867771541,
+        2.490047680732353
+      ],
+      "goal": [
+        9.671530504584801,
+        5.000000000000002
+      ],
+      "layout_sha256": "c89e9efc68dc83db4b9cde04e080b9d963d5c5616eda0dcc1938a1d8145687cb",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "9f7e995229eede8d35950fde9d9cd57823fce7aada7c862e9c3f2edc2cc1cd85",
+      "unmapped_count": 0,
+      "clearance_m": 0.21718426445691902,
+      "path_length_m": 12.521958218485397,
+      "path_min_clearance_m": 0.334090909090909,
+      "aisle_travel_m": 7.294071740310807,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    },
+    {
+      "seed": 3000049,
+      "split": "test",
+      "stratum": "narrow",
+      "start": [
+        3.698268641217056,
+        5.000000000000001,
+        -0.015286091512513448
+      ],
+      "goal": [
+        10.254004398821388,
+        1.981626954414894
+      ],
+      "layout_sha256": "25da9932d7fac83bb2c9965b5cd3e063fcfea01fdbc32b71cfb13d740e743be9",
+      "generator_sha256": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "scenarios_sha256": "9f2f40b7c27db871debb9fca171ad34eb922fe69caf47f0b1a018d4094a1c5e6",
+      "scenario_sha256": "8fa93e2ee846c30ed6de6e118b9b6d5e8431cc96e40b3a8952899e1dec5e595b",
+      "unmapped_count": 0,
+      "clearance_m": 0.2281460911702132,
+      "path_length_m": 11.872554758803119,
+      "path_min_clearance_m": 0.3158185895063149,
+      "aisle_travel_m": 8.00011117790374,
+      "unmapped_offsets_m": [],
+      "unmapped_arcs_m": [],
+      "unmapped_polygons": [],
+      "placement_attempts": 0,
+      "placement_rejections": {},
+      "bypass_corridor_m": 0.0,
+      "bypass_control_failures": 0,
+      "validity_rejections": {
+        "start_invalid": 0,
+        "goal_invalid": 0,
+        "residual": 0
+      },
+      "goal_resamples": 0
+    }
+  ]
+}

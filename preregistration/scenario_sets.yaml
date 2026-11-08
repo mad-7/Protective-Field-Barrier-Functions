@@ -84,4 +84,5 @@ scenario_sets:
       the seed-CV, stop-rate and inter-comparator-gap measurement the decision tree plans on; the
       0.25 tune rate would dilute the stop rate relative to unmapped_static. Logged as a tune
       regeneration.
-  test: pending_A14
+  test:                             # A14b (2026-11-07, the researcher's decision)
+    per_cell: 50                    # per stratum x condition: 3 x 2 cells, 300 scenarios, locked
