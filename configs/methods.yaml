@@ -65,6 +65,15 @@ methods:
     added: "2026-10-15, A16"
     what: "Regulated Pure Pursuit + the PFB filter, no learning: the attribution analysis (H5,
       exploratory: mission time AND protective stops) and H3's granularity study"
+  B8:
+    status: active
+    role: [HF-exploratory]
+    added: "2026-11-09, the researcher's decision; NOT in any confirmatory list"
+    what: "B6's tuned parameters + the PFB at the frozen alpha 1.0, nothing else, untuned
+      (configs/experiments/B8_mppi_pfb.yaml): the PFB on the strongest classical planner, answering the
+      objection that B7 vs B2 reflects a weak host. Proposed after the sealed classical test was read, so
+      exploratory by construction. Admitted only if its MEASURED decision p95 on the training host meets
+      the 50 ms criterion (gates.yaml realtime_compute; B6 37.1 ms + the PFB's QP 27.9 ms, ~65 ms as a sum)"
   L1:
     status: active
     role: [H1, H1N]

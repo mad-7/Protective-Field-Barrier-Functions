@@ -1,0 +1,7 @@
+# B8: B6 (field-aware MPPI, tuned parameters) + the PFB at the frozen alpha, and nothing else, exactly as B7 is
+# B2 + the PFB (configs/methods.yaml). tests/test_b8_config.py proves the resolved config differs from base only
+# in `experiment` and `filter.enabled`. Untuned. Evaluated with: scripts/evaluate.py --controller field_aware_mppi.
+defaults: ../base.yaml
+experiment: B8_mppi_pfb
+filter:
+  enabled: true

@@ -11407,3 +11407,16 @@ stops, descriptive).
   successful routes take 161 s against the 200 s horizon, against 105 s for B3 and B6.
 - B3 and B6 complete more routes than B7 here; B3 at 54 times B7's stops, B6 indistinguishable.
 Both papers are sent both halves; the journal also the first half (it had neither).
+
+
+## 2026-11-09 - DECIDED (the researcher): prepare B8 = B6 + PFB, the PFB on the strongest classical planner
+
+Answers the objection that B7 vs B2 reflects a weak host. A new ID (rule 20), `configs/experiments/B8_mppi_pfb.yaml`:
+B6's tuned parameters plus the PFB at the frozen alpha, nothing else, untuned (`tests/test_b8_config.py`). Exploratory
+by construction: A36 did not adopt it, and it is proposed AFTER the sealed classical test was read.
+**First step, development only:** B8 on the three tune sets, for the MEASURED decision p95 against the 50 ms criterion
+(B6 37.1 ms + the PFB's QP 27.9 ms = ~65 ms is a sum of p95s, not a measurement) and a monitoring read against B6
+on the same scenarios (another scene load, unpaired). Held-out use waits for that: it needs an amendment, and B6 and B8
+in one scene load per scenario (the pairing rule), so B6 would run again beside the sealed B6, as a consistency check.
+**Expected, stated before any run:** B6 records so few stops (10 and 9 per half) that B8 vs B6 is very likely inconclusive
+on stops, and in the regime where the interval is anti-calibrated if an arm records zero.
