@@ -74,6 +74,15 @@ methods:
       objection that B7 vs B2 reflects a weak host. Proposed after the sealed classical test was read, so
       exploratory by construction. Admitted only if its MEASURED decision p95 on the training host meets
       the 50 ms criterion (gates.yaml realtime_compute; B6 37.1 ms + the PFB's QP 27.9 ms, ~65 ms as a sum)"
+  B9:
+    status: active
+    role: [HF-exploratory]
+    added: "2026-11-09, the researcher's decision; NOT in any confirmatory list"
+    what: "B3's tuned parameters + the PFB at the frozen alpha 1.0, nothing else, untuned
+      (configs/experiments/B9_dwa_pfb.yaml): a host that completes routes (0.920 on the held-out clear
+      routes) and still stops often (108 and 815 stops per half), so the PFB has stops to remove and the
+      weak-host objection is met directly. Proposed after the sealed classical test was read, so exploratory
+      by construction. The same real-time criterion, by measurement"
   L1:
     status: active
     role: [H1, H1N]

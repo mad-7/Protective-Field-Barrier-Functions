@@ -11420,3 +11420,15 @@ on the same scenarios (another scene load, unpaired). Held-out use waits for tha
 in one scene load per scenario (the pairing rule), so B6 would run again beside the sealed B6, as a consistency check.
 **Expected, stated before any run:** B6 records so few stops (10 and 9 per half) that B8 vs B6 is very likely inconclusive
 on stops, and in the regime where the interval is anti-calibrated if an arm records zero.
+
+
+## 2026-11-09 - DECIDED (the researcher): the classical comparison studies the PFB's impact; B9 = B3 + PFB added
+
+The researcher: the aim of the classical comparison is to study the impact of the PFB, not to select the best local
+planner. So the within-planner contrasts (a planner with and without the PFB) lead, and cross-planner comparisons are
+context. H1 keeps B6 as a comparator for L5 unchanged. Any change to the main claim's framing goes through an amendment.
+**B9 = B3's tuned parameters + the PFB, nothing else, untuned** (`configs/experiments/B9_dwa_pfb.yaml`): B3 completes
+0.920 of the held-out clear routes and still stops often (108 and 815 per half), so the PFB has stops to remove and the
+weak-host objection is met; B6 stays the near-floor case (10 and 9 stops). Exploratory by construction, proposed after
+the sealed test was read. First step as B8: the three tune sets for the measured decision p95 and a monitoring read
+against B3. `scripts/evaluate.py` gains `--instance` so the two checks can run side by side.

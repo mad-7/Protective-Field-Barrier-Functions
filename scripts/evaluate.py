@@ -136,6 +136,8 @@ def main() -> int:
     parser.add_argument("--controller", choices=CONTROLLERS, default="sac")
     parser.add_argument("--checkpoint", default=None)
     parser.add_argument("--sets", nargs="+", required=True)
+    parser.add_argument("--instance", type=int, default=0,
+                        help="the simulator instance: port sim.port + sim.port_stride * i")
     parser.add_argument("--workers", type=int, default=4,
                         help="processes for the offline route profiles (2026-10-20)")
     add_display_flag(parser, default="on")    # rendering on unless --display off (2026-11-07)
@@ -193,7 +195,7 @@ def main() -> int:
             print("  SUSPECTED RECOVERY DEFECT: an attempt was not released although recovery "
                   "judged its direction permitted (ruled 2026-10-16: stop and report)")
 
-    client = SimClient(SimConnection.from_config(cfg))
+    client = SimClient(SimConnection.from_config(cfg, instance_id=args.instance))
     client.connect()
     client.load_scene(str(REPO_ROOT / cfg["sim"]["scene"]))
     env = NavEnv(client, cfg, scenarios, training=False, seed=args.seed)
