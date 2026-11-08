@@ -140,10 +140,49 @@ def test_the_paper_outputs_follow_the_wording_rules():
     assert m.wording(tie, "B7", "B6").startswith("B7 and B6 are indistinguishable at 3 vs 3 events")
     recs = [_rec(f"s{i}", 0) for i in range(4)]
     desc = {a: {"pooled": m.describe(recs, 0.05), "per_stratum": {}} for a in ARMS}
-    report = {"checked": {"commit": "c0"}, "HFc": {**fewer, "result": "B7 fewer protective stops than B2"},
-              "H1prime_exploratory": {"comparisons": {"B6": tie}}, "descriptive": desc}
+    report = {"checked": {"commit": "c0", "condition": "unmapped_static", "scenarios": 150},
+              "HFc": {**fewer, "result": "B7 fewer protective stops than B2"},
+              "comparisons_exploratory": {"B6": tie}, "descriptive": desc}
     table = m.paper_table(report)
     assert all(name in table for name in m.NAMES.values()) and r"\bottomrule" in table
+    assert "% HF-c: B7/B2" in table
     nums = m.paper_numbers(report)
-    assert nums["label"].startswith("held-out test set") and "preregistered but exploratory" not in json.dumps(nums)
-    assert "indistinguishable" in nums["H1prime_sentences"]["B6"]
+    assert nums["label"].startswith("held-out test set (unmapped_static, 150")
+    assert "HF-c confirmatory" in nums["label"]
+    assert "preregistered but exploratory" not in json.dumps(nums)
+    assert "indistinguishable" in nums["comparison_sentences"]["B6"]
+    # mapped_only: no HF-c, every comparison labelled exploratory
+    mapped = dict(report, HFc=None, checked={"commit": "c0", "condition": "mapped_only",
+                                             "scenarios": 150})
+    assert "% HF-c" not in m.paper_table(mapped)
+    n2 = m.paper_numbers(mapped)
+    assert n2["HFc_sentence"] is None and "every comparison exploratory" in n2["label"]
+
+
+def test_conditions_name_runs_apart_and_never_mix(tmp_path):
+    """The mapped_only half is its own sealed evaluation: its shard names do not collide with the first
+    (unmapped_static) run's, and the analysis refuses shards of two conditions."""
+    ev = _script("evaluate_test")
+    assert ev.run_prefix("unmapped_static") == "CLASSICAL_"
+    assert ev.run_prefix("mapped_only") == "CLASSICAL_mapped_only_"
+    assert ev.test_sets("mapped_only")[0].name == "test_mapped_only_narrow.json"
+    with pytest.raises(ValueError):
+        ev.test_sets("other")
+    (tmp_path / "CLASSICAL_shard0of4_x_seed0").mkdir()
+    assert len(ev.prior_attempts(0, 4, "unmapped_static", tmp_path)) == 1
+    assert ev.prior_attempts(0, 4, "mapped_only", tmp_path) == []
+    (tmp_path / "CLASSICAL_mapped_only_shard0of4_y_seed0").mkdir()
+    assert [p.name for p in ev.prior_attempts(0, 4, "mapped_only", tmp_path)] == [
+        "CLASSICAL_mapped_only_shard0of4_y_seed0"]
+    assert len(ev.prior_attempts(0, 4, "unmapped_static", tmp_path)) == 1
+
+    an = _script("analyse_hfc")
+    (tmp_path / "m").mkdir()
+    a = _shard(tmp_path / "m", 0, 2, [0, 2], 2)
+    b = _shard(tmp_path / "m", 1, 2, [1, 3], 2)
+    _, checked = an.read_runs([a, b])
+    assert checked["condition"] == "unmapped_static"      # a run without the key is the first run
+    e = json.loads((b / "evaluated.json").read_text(encoding="utf-8"))
+    (b / "evaluated.json").write_text(json.dumps(dict(e, condition="mapped_only")), encoding="utf-8")
+    with pytest.raises(SystemExit):
+        an.read_runs([a, b])

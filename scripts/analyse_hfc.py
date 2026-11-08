@@ -6,6 +6,10 @@ seconds, no simulator. The RESEARCHER runs it once every shard has finished:
         --runs runs/test/CLASSICAL_shard0of4_<stamp>_seed0 runs/test/CLASSICAL_shard1of4_<stamp>_seed0 \
                runs/test/CLASSICAL_shard2of4_<stamp>_seed0 runs/test/CLASSICAL_shard3of4_<stamp>_seed0
 
+**`--condition mapped_only`** (2026-11-08) reads the other half of the test set, run the same way: no
+HF-c verdict there (HF-c's population is unmapped_static), only the B7 comparisons, labelled exploratory,
+and the descriptive table; `--calibration` is then not needed.
+
 **Checks first, verdict after:** the calibration gate passed (A36: otherwise HF-c is not tested); every
 shard's provenance is clean, on one commit and one host, with the same sets, environment and alpha; the
 shards are 0..n-1 of one n, each once (a rerun after a crash replaces its crashed attempt, which is
@@ -53,7 +57,9 @@ def read_runs(dirs: list[Path]) -> tuple[dict[str, list[dict[str, Any]]], dict[s
             raise SystemExit(f"the shards differ in {key}")
     if len({(p.get("host") or {}).get("hostname") for p in provs}) != 1:
         raise SystemExit("the shards ran on different hosts")
-    for key in ("sets", "environment", "alpha", "b2_parameters", "arms", "shards"):
+    for e in evals:
+        e.setdefault("condition", "unmapped_static")     # the first run predates the key
+    for key in ("sets", "environment", "alpha", "b2_parameters", "arms", "shards", "condition"):
         if len({json.dumps(e[key], sort_keys=True) for e in evals}) != 1:
             raise SystemExit(f"the shards differ in {key}")
     n = int(evals[0]["shards"])
@@ -76,7 +82,7 @@ def read_runs(dirs: list[Path]) -> tuple[dict[str, list[dict[str, Any]]], dict[s
                "shards": n, "scenarios": len(positions),
                "reruns_after_crash": [e["rerun_after_crash"] for e in evals if e.get("rerun_after_crash")],
                "sets": evals[0]["sets"], "environment": evals[0]["environment"],
-               "alpha": evals[0]["alpha"]}
+               "alpha": evals[0]["alpha"], "condition": evals[0]["condition"]}
     return records, checked
 
 
@@ -113,16 +119,24 @@ def wording(v: dict[str, Any], a: str = "B7", b: str = "") -> str:
             f"(rate ratio {v['rate_ratio']:.2f}, 95 % CI {v['ci'][0]:.2f}-{v['ci'][1]:.2f})")
 
 
+def label(report: dict[str, Any]) -> str:
+    c = report["checked"]
+    base = (f"held-out test set ({c.get('condition', 'unmapped_static')}, {c.get('scenarios')} "
+            "scenarios, 50 per stratum)")
+    if report.get("HFc"):
+        return base + "; HF-c confirmatory (A36, alpha 0.05); H1prime exploratory"
+    return base + "; every comparison exploratory (HF-c's population is unmapped_static)"
+
+
 def paper_numbers(report: dict[str, Any]) -> dict[str, Any]:
     """What the CoDIT draft cites: HELD-OUT test results, labelled as such."""
     d = report["descriptive"]
     return {
-        "label": ("held-out test set (unmapped_static, 150 scenarios, 50 per stratum); HF-c "
-                  "confirmatory (A36, alpha 0.05); H1prime exploratory"),
+        "label": label(report),
         "commit": report["checked"]["commit"],
-        "HFc_sentence": wording(report["HFc"], "B7", "B2"),
-        "H1prime_sentences": {c: wording(v, "B7", c)
-                              for c, v in report["H1prime_exploratory"]["comparisons"].items()},
+        "HFc_sentence": wording(report["HFc"], "B7", "B2") if report.get("HFc") else None,
+        "comparison_sentences": {c: wording(v, "B7", c)
+                                 for c, v in report["comparisons_exploratory"].items()},
         "arms": {a: {k: d[a]["pooled"][k] for k in (
             "success_rate", "contact_rate", "protective_stops", "stops_per_100m_planned",
             "stops_per_100m", "stops_per_100m_completed", "latched_step_share", "moving_speed_mps",
@@ -132,7 +146,7 @@ def paper_numbers(report: dict[str, Any]) -> dict[str, Any]:
 
 def paper_table(report: dict[str, Any]) -> str:
     """A booktabs body for the CoDIT results table (held-out test)."""
-    rows = [r"% held-out test set, unmapped_static, 150 scenarios; scripts/analyse_hfc.py",
+    rows = [f"% {label(report)}; scripts/analyse_hfc.py",
             r"\begin{tabular}{lrrrrrr}", r"\toprule",
             r"Planner & Success & Stops & Stops/100\,m & Latched & Moving & Mission \\",
             r" & & & (planned) & (\%) & (m/s) & time (s) \\", r"\midrule"]
@@ -142,10 +156,11 @@ def paper_table(report: dict[str, Any]) -> str:
         rows.append(f"{name} & {_f(p['success_rate'])} & {p['protective_stops']} & "
                     f"{_f(p['stops_per_100m_planned'])} & {_f(latched, 1)} & "
                     f"{_f(p['moving_speed_mps'], 3)} & {_f(p['mission_time_success_mean_s'], 1)} \\\\")
-    h = report["HFc"]
-    rows += [r"\bottomrule", r"\end{tabular}",
-             (f"% HF-c: B7/B2 rate ratio {h['rate_ratio']:.4f}, 95 % CI [{h['ci'][0]:.4f}, "
-              f"{h['ci'][1]:.4f}], {h['result']}")]
+    rows += [r"\bottomrule", r"\end{tabular}"]
+    h = report.get("HFc")
+    if h:
+        rows.append(f"% HF-c: B7/B2 rate ratio {h['rate_ratio']:.4f}, 95 % CI [{h['ci'][0]:.4f}, "
+                    f"{h['ci'][1]:.4f}], {h['result']}")
     return "\n".join(rows) + "\n"
 
 
@@ -153,7 +168,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", required=True)
     parser.add_argument("--seed", type=int, required=True)
-    parser.add_argument("--calibration", required=True, help="scripts/calibrate_hfc.py summary.json")
+    parser.add_argument("--calibration", default=None,
+                        help="scripts/calibrate_hfc.py summary.json (required for unmapped_static)")
+    parser.add_argument("--condition", choices=("unmapped_static", "mapped_only"),
+                        default="unmapped_static")
     parser.add_argument("--runs", nargs="+", required=True, help="every CLASSICAL_shard* run dir")
     args = parser.parse_args()
     cfg = load_config(args.config)
@@ -163,11 +181,17 @@ def main() -> int:
     if "HFc" not in endpoints:
         raise SystemExit("HF-c is not preregistered (A36)")
     alpha = float(endpoints["filter_efficacy_family"]["alpha"])
-    cal = json.loads(Path(args.calibration).read_text(encoding="utf-8"))
-    if cal.get("gate_pass") is not True or float(cal.get("level", -1)) != alpha:
-        raise SystemExit("the HF-c calibration gate did not pass at HF-c's level: stop and report; "
-                         "HF-c is not tested (A36)")
+    confirmatory = args.condition == "unmapped_static"
+    if confirmatory:
+        if not args.calibration:
+            raise SystemExit("--calibration is required for HF-c (unmapped_static)")
+        cal = json.loads(Path(args.calibration).read_text(encoding="utf-8"))
+        if cal.get("gate_pass") is not True or float(cal.get("level", -1)) != alpha:
+            raise SystemExit("the HF-c calibration gate did not pass at HF-c's level: stop and report; "
+                             "HF-c is not tested (A36)")
     records, checked = read_runs([Path(d) for d in args.runs])
+    if checked["condition"] != args.condition:
+        raise SystemExit(f"the runs are {checked['condition']}, not {args.condition}")
     table = paired_table(records)
     dt = float(cfg["sim"]["dt"])
 
@@ -176,19 +200,21 @@ def main() -> int:
            for c in H1PRIME}
     strata = sorted({s for s in table["stratum"] if s})
     report = {
-        "checked": checked, "calibration": Path(args.calibration).as_posix(),
-        "HFc": {"comparison": "B7 over B2", "alpha": alpha, **hfc,
-                "result": "B7 fewer protective stops than B2" if hfc["favours_a"]
-                else "B7 more than B2" if hfc["favours_b"] else "inconclusive"},
-        "H1prime_exploratory": {"comparisons": h1p,
-                                "all_reject": all(v["favours_a"] for v in h1p.values())},
+        "checked": checked,
+        "calibration": Path(args.calibration).as_posix() if confirmatory else None,
+        "HFc": ({"comparison": "B7 over B2", "alpha": alpha, **hfc,
+                 "result": "B7 fewer protective stops than B2" if hfc["favours_a"]
+                 else "B7 more than B2" if hfc["favours_b"] else "inconclusive"}
+                if confirmatory else None),
+        "comparisons_exploratory": h1p,
+        "H1prime_all_reject": all(v["favours_a"] for v in h1p.values()) if confirmatory else None,
         "descriptive": {a: {"pooled": describe(r, dt),
                             "per_stratum": {s: describe([x for x in r if x.get("stratum") == s], dt)
                                             for s in strata}}
                         for a, r in records.items()},
     }
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    run_dir = create_run_dir(REPO_ROOT / "runs" / "test", f"HFC_ANALYSIS_{stamp}", args.seed, cfg)
+    run_dir = create_run_dir(REPO_ROOT / "runs" / "test", f"HFC_ANALYSIS_{'' if confirmatory else 'mapped_only_'}{stamp}", args.seed, cfg)
     (run_dir / "report.json").write_text(json.dumps(report, indent=2, default=float),
                                          encoding="utf-8")
     (run_dir / "codit_table.tex").write_text(paper_table(report), encoding="utf-8")
@@ -196,11 +222,13 @@ def main() -> int:
                                                            default=float), encoding="utf-8")
     print(f"checked: {checked['scenarios']} scenarios x {len(ARMS)} arms, {checked['shards']} shards, "
           f"commit {checked['commit'][:7]}, reruns {checked['reruns_after_crash']}")
-    print(f"HF-c (alpha {alpha}): B7 {hfc['stops_a']} stops ({hfc['rate_a_per_100m']:.3f}/100 m planned) "
-          f"vs B2 {hfc['stops_b']} ({hfc['rate_b_per_100m']:.3f}); rate ratio {hfc['rate_ratio']:.4f}, "
-          f"95 % CI [{hfc['ci'][0]:.4f}, {hfc['ci'][1]:.4f}] -> {report['HFc']['result']}")
+    if confirmatory:
+        print(f"HF-c (alpha {alpha}): B7 {hfc['stops_a']} stops "
+              f"({hfc['rate_a_per_100m']:.3f}/100 m planned) vs B2 {hfc['stops_b']} "
+              f"({hfc['rate_b_per_100m']:.3f}); rate ratio {hfc['rate_ratio']:.4f}, 95 % CI "
+              f"[{hfc['ci'][0]:.4f}, {hfc['ci'][1]:.4f}] -> {report['HFc']['result']}")
     for c, v in h1p.items():
-        print(f"H1prime (exploratory) B7 vs {c}: ratio {v['rate_ratio']:.4f} "
+        print(f"(exploratory, {args.condition}) B7 vs {c}: ratio {v['rate_ratio']:.4f} "
               f"[{v['ci'][0]:.4f}, {v['ci'][1]:.4f}] {v['verdict']}")
     for a in ARMS:
         d = report["descriptive"][a]["pooled"]
