@@ -11310,3 +11310,42 @@ tests `tests/test_hfc.py`, `tests/test_apply_A36.py` (on a copy of preregistrati
   `scripts/evaluate_test.py --condition mapped_only` (runs `CLASSICAL_mapped_only_shard*`, sealed apart, each
   shard once) and `scripts/analyse_hfc.py --condition mapped_only`: no HF-c verdict there (its population is
   unmapped_static); the B7 comparisons are exploratory and the table descriptive, labelled with the condition.
+
+
+## 2026-11-08 - The sealed classical test (unmapped_static): HF-c PASS; one check open before it is cited
+
+`runs/test/HFC_ANALYSIS_20261108T171312Z_seed0` from four shards (`CLASSICAL_shard*_20261107T23*`), commit 6afb838,
+clean, environment 6ad7f6af, 150 scenarios x 5 arms, no rerun, calibration gate passed
+(`HFC_CAL_20261107T231644Z_seed0`), 1,624 m planned, no contact and no scan-fault stop in any arm.
+
+**HF-c (confirmatory, alpha 0.05): PASS.** B7 18 stops (1.11 per 100 m planned), B2 1,106 (68.1): rate ratio
+0.0167, 95 % CI [0.0090, 0.0311]. **H1prime (exploratory):** B7 vs B1 0.0179 [0.0096, 0.0333]; B7 vs B6 1.76
+[0.71, 4.37], so B7 and B6 are indistinguishable at 18 vs 10 events; H1prime does not reject as a whole.
+
+| arm | success | outcomes (S / timeout / unrecoverable) | stops | /100 m planned | /100 m driven | driven m (of planned) | moving m/s | latched |
+|---|---|---|---|---|---|---|---|---|
+| B1 | 0.000 | 0 / 1 / 149 | 1,033 | 63.6 | 176.6 | 585 (0.36) | 0.144 | 0.864 |
+| B2 | 0.000 | 0 / 4 / 146 | 1,106 | 68.1 | 158.9 | 696 (0.43) | 0.058 | 0.597 |
+| B3 | 0.013 | 2 / 134 / 14 | 815 | 50.2 | 92.1 | 885 (0.54) | 0.033 | 0.100 |
+| B6 | 0.553 | 83 / 67 / 0 | 10 | 0.62 | 0.57 | 1,769 (1.09) | 0.073 | 0.001 |
+| B7 | 0.020 | 3 / 147 / 0 | 18 | 1.11 | 2.04 | 880 (0.54) | 0.029 | 0.001 |
+
+**Findings.**
+- **The stop removal is not bought by standing still.** B7 drove 26 % FURTHER than B2 (880 vs 696 m) with 98 %
+  fewer stops, so the driven-distance rate favours it too (2.04 vs 158.9). This withdraws the concern raised in
+  review earlier today that B7 might avoid stops by waiting at a blockage: its latched share is 0.1 % and it moves
+  throughout.
+- **The PFB removes the unrecoverable stops:** B2 146 of 150, B7 0 of 150.
+- **It does not complete missions.** B7 times out on 147 of 150: it creeps at 0.029 m/s, 5.9 m per 200 s episode
+  on routes of 10.8 m. B2's tuned request never exceeds 0.075 m/s (p95), and the PFB alters it further (median
+  correction 0.025 m/s, 37.6 % of steps above 0.05 m/s; pfb_infeasible on 0.3 % of steps). The classical host's
+  low tuned speed plus the filter leaves too little margin for the 200 s horizon. B6 is the useful planner here:
+  0.553 success at a stop rate B7 does not improve on.
+- **The claim the data support:** the PFB removes protective stops, and unrecoverable stops, from RPP without
+  costing it progress. Not: the PFB makes RPP complete these missions, nor: it beats B6.
+
+**Open before anything is cited: the success collapse against the tune set** (B3 0.667 -> 0.013, B7 0.50 -> 0.02,
+B6 0.83 -> 0.55). The stop rates agree with the tune set for the arms not moved by obstacles (B1 64.0 -> 63.6; B6
+0.47 -> 0.62), and the test has obstacles on every route where the tune sets have them on 17 of 60, which should
+explain it; B3's moving speed halving (0.070 -> 0.033) is not yet explained. `scripts/split_tune_by_obstacles.py`
+splits the tune runs by obstacle presence, offline. The mapped_only half is held until it reads.
