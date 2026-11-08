@@ -11374,3 +11374,36 @@ monitoring only, 17 obstacle routes against 43 clear):
   means stop and report before anything from that run is read as a result. These comparisons are exploratory.
 - The unmapped_static results are passed to the CoDIT draft as held-out, labelled and with the disclosures of A14b and
   A36; mapped_only is added as descriptive when it finishes.
+
+
+## 2026-11-08 - The sealed classical test (mapped_only): the declared control passes; descriptive results
+
+`runs/test/HFC_ANALYSIS_mapped_only_20261108T223147Z_seed0` from `CLASSICAL_mapped_only_shard*_20261108T17*`, commit
+d99fa68, environment 6ad7f6af, 150 scenarios x 5 arms, no rerun, 1,606 m planned, no contact and no scan-fault stop.
+**Exploratory and descriptive throughout: HF-c's population is unmapped_static.**
+
+**The positive control declared before the run passes** (predicted from the tune clear routes -> measured success): B1
+~0 -> 0.000; B2 ~0.35 -> 0.347; B3 ~0.93 -> 0.920; B6 ~0.88 -> 0.833; B7 ~0.70 -> 0.733; B7's stops far below B2's.
+
+| arm | success | outcomes (S / timeout / unrecoverable) | stops | /100 m planned | /100 m driven | /100 m completed | driven m (of planned) | moving m/s | latched | mission time s |
+|---|---|---|---|---|---|---|---|---|---|---|
+| B1 | 0.000 | 0 / 1 / 149 | 1,117 | 69.5 | 176.9 | -- | 631 (0.39) | 0.173 | 0.878 | -- |
+| B2 | 0.347 | 52 / 28 / 70 | 907 | 56.5 | 80.4 | 35.6 | 1,128 (0.70) | 0.059 | 0.313 | 161.6 |
+| B3 | 0.920 | 138 / 7 / 5 | 108 | 6.72 | 6.86 | 3.05 | 1,575 (0.98) | 0.098 | 0.054 | 105.4 |
+| B6 | 0.833 | 125 / 25 / 0 | 9 | 0.56 | 0.52 | 0.42 | 1,741 (1.08) | 0.097 | 0.001 | 104.3 |
+| B7 | 0.733 | 110 / 40 / 0 | 2 | 0.12 | 0.13 | 0.19 | 1,500 (0.93) | 0.058 | 0.0002 | 161.0 |
+
+Rate ratios per 100 m planned (exploratory): B7 vs B2 0.0028 [0.0006, 0.0133]; B7 vs B1 0.0022 [0.0005, 0.0108]; B7 vs B6
+0.263 [0.047, 1.476], so B7 and B6 are indistinguishable at 2 vs 9 events. B7 vs B3 was not a declared comparison (2 vs 108
+stops, descriptive).
+
+**Findings.**
+- Across both halves the PFB removes nearly all protective stops from RPP (obstacle routes 1,106 -> 18; clear routes
+  907 -> 2) and every unrecoverable stop (146 -> 0; 70 -> 0).
+- On clear routes it also doubles RPP's completion, 0.347 -> 0.733 (no inference, A34), by removing the
+  stop-recovery-restop cycle. On obstacle routes it does not: a non-replanning tracker does not get past the obstacle.
+- **B7's 40 timeouts on clear routes come from RPP's tuned speed, not from the filter:** median correction 0.005 m/s, 0.4 %
+  of steps above 0.05 m/s, pfb_infeasible 0.15 % of steps; requested and executed both 0.075 m/s at the median;
+  successful routes take 161 s against the 200 s horizon, against 105 s for B3 and B6.
+- B3 and B6 complete more routes than B7 here; B3 at 54 times B7's stops, B6 indistinguishable.
+Both papers are sent both halves; the journal also the first half (it had neither).
