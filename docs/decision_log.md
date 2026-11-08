@@ -11349,3 +11349,28 @@ B6 0.83 -> 0.55). The stop rates agree with the tune set for the arms not moved 
 0.47 -> 0.62), and the test has obstacles on every route where the tune sets have them on 17 of 60, which should
 explain it; B3's moving speed halving (0.070 -> 0.033) is not yet explained. `scripts/split_tune_by_obstacles.py`
 splits the tune runs by obstacle presence, offline. The mapped_only half is held until it reads.
+
+
+## 2026-11-08 - The success collapse is the population, not the runner: the test's numbers stand; mapped_only released
+
+Tune runs split by obstacle presence (`scripts/split_tune_by_obstacles.py`; ordinary tuning code, no filter switch;
+monitoring only, 17 obstacle routes against 43 clear):
+
+| arm | tune obstacles: success, moving m/s, driven/planned | test (all obstacles): same | tune clear: success, moving m/s |
+|---|---|---|---|
+| B1 | 0.000, 0.149, 0.39 | 0.000, 0.144, 0.36 | 0.023, 0.162 |
+| B2 | 0.000, 0.063, 0.44 | 0.000, 0.058, 0.43 | 0.349, 0.058 |
+| B3 | 0.000, 0.031, 0.54 | 0.013, 0.033, 0.54 | 0.930, 0.094 |
+| B6 | 0.706, 0.082, 1.23 | 0.553, 0.073, 1.09 | 0.884, 0.096 |
+| B7 | 0.000, 0.026, 0.50 | 0.020, 0.029, 0.54 | 0.698, 0.058 |
+
+- **The open question of the review is closed.** On obstacle routes the tune runs already show the test's success,
+  speed and progress, through the ordinary code. B3's halved speed and B7's timeouts are what these planners do near
+  an unmapped obstacle; no defect in `scripts/evaluate_test.py` is indicated. The test's numbers stand and may be cited.
+- **So the unmapped_static population is the hard half:** a non-replanning tracker gets past almost none of these
+  obstacles. Filter effect on success, tune clear routes only: B2 0.349 -> B7 0.698, with stops 224 -> 0 (monitoring).
+- **Declared before the mapped_only run, as a positive control of the sealed runner:** success should be near the
+  tune clear column (B1 ~0, B2 ~0.35, B3 ~0.93, B6 ~0.88, B7 ~0.70), with B7's stops far below B2's. A large departure
+  means stop and report before anything from that run is read as a result. These comparisons are exploratory.
+- The unmapped_static results are passed to the CoDIT draft as held-out, labelled and with the disclosures of A14b and
+  A36; mapped_only is added as descriptive when it finishes.
