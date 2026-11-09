@@ -76,6 +76,7 @@ exploratory:                       # reported, labelled, outside the Holm family
   H5: L5 versus B7 (RPP + PFB, no learning) — mission time and protective stops (A16, B7 replaces retired B5)
   H1prime: B7 versus B1, B2 and B6 -- exploratory unless the pivot triggers (A27; see H1prime)
   H6: robust versus nominal PFB — ground-truth contacts under measured mismatch (A3)
+  HF_hosts: B9 (B3 + PFB) versus B3 and B8 (B6 + PFB) versus B6, protective stops per 100 m planned on each half of the test set, paired within one scene load; proposed after HF-c was read, so exploratory; low-count comparisons flagged, not read as verdicts (A37)
   L2_sensitivity: L2 at d = 0.05 and d = 0.2 stops per episode (L2-d005, L2-d020) -- protective stops, success and mission time beside L2 at d = 0.1; outside the Holm family; first in the cut order (A28)
   B7_alpha_sensitivity: B7 at alpha 1, 2 and 5 on the test set -- protective stops per 100 m, success and mission time; the frozen alpha 1.0 was selected on the tune set where success was nearly flat (0.50-0.52, the horizon capped it), so stops decided; outside the confirmatory family (A32)
   secondary:
