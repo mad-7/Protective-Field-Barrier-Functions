@@ -41,7 +41,7 @@ function: safety laser scanners monitor speed-dependent protective fields and co
 protective stop whenever an object enters the active field. Local planners do not model these fields
 and therefore trigger such stops frequently, at a considerable cost in productivity. This paper
 introduces the Protective-Field Barrier (PFB), a safety filter built on a candidate discrete-time control
-barrier function defined directly on the laser scan, whose safe set is the complement of the region that triggers the certified
+barrier function defined directly on the laser scan, whose safe set is derived from the complement of the region that triggers the certified
 safety function. The barrier is derived from the same configuration as the safety function and yields a protective field that is continuous in direction and yaw rate and piecewise in speed; a quadratic
 program minimally modifies the command of an arbitrary local planner so as to keep this field clear. Its
 validity as a control barrier function is not shown, and no forward invariance or safety guarantee is claimed. The approach is evaluated in
@@ -113,7 +113,7 @@ a geometric clearance to obstacles \cite{raja2024ogmcbf,zeng2025relvel}. Since t
 explicit relation to the certified protective field, the filter may be unnecessarily conservative or,
 conversely, insufficient to prevent protective stops.
 
-This paper proposes to define the safe set of the barrier as the complement of the trigger set of the
+This paper proposes to derive the safe set of the barrier from the complement of the trigger set of the
 certified safety function itself. The main contributions are as follows:
 \begin{itemize}
 \item the formulation of the Protective-Field Barrier (PFB), a CBF-based safety filter on the laser scan, whose
@@ -144,8 +144,7 @@ set. CBF-based filters \cite{wang2022ensuring,knoedler2025onthefly,garg2024advan
 generally defined by a minimum distance to obstacles observed in a map or a scan \cite{raja2024ogmcbf},
 occasionally adjusted according to the relative velocity of nearby agents \cite{zeng2025relvel}. The
 present work belongs to this family of methods, but differs in the definition of the safe set: rather
-than a clearance selected by the designer, it is the exact region whose violation is penalised by the
-certified safety function, evaluated for the speed band and direction that the robot will attain.
+than a clearance selected by the designer, it is derived from the region that triggers the certified safety function, evaluated for the speed band and direction that the robot will attain.
 
 \section{Problem Formulation and System Design}
 \begin{figure*}[!t]
@@ -189,9 +188,10 @@ the distance travelled during the reach time and the subsequent braking, $s$ is 
 permitted by the acceleration limiter, $K$ is the drift of a body that rotates while translating, $R$ is
 the reach of the robot at rest, and $m$ and $m_\perp$ are the frontal and lateral margins. The reach
 time is the response time of the safety function plus one control period ($T=0.15$\,s). The second term
-of \eqref{eq:field} is the field at rest, which is the infimum of all moving fields. Although \eqref{eq:field} is continuous in $V$, the PFB evaluates it at the top speed of the band of its regime, so that the deployed field is piecewise in speed and
-continuous in direction and yaw rate, and its trigger set coincides with that of the certified function in
-the same state. Fig.~\ref{fig:field} illustrates the resulting fields for
+of \eqref{eq:field} is the field at rest, which is the infimum of all moving fields. Although \eqref{eq:field} is continuous in $V$, the PFB evaluates it at the top speed of the band of its regime, no lower than that of the estimated speed,
+so that the deployed field is piecewise in speed and continuous in direction and yaw rate. For the same
+band, heading and yaw rate, it equals the certified field (checked numerically), although each layer selects
+these separately. Fig.~\ref{fig:field} illustrates the resulting fields for
 several speeds, directions of travel and yaw rates.
 
 \subsection{Barrier condition and filter}
@@ -221,8 +221,8 @@ where $\theta(u)$ is the heading of the field and $W(u)=\max(|\hat\omega|,|\omeg
 estimated and commanded yaw rates. With $\gamma=\alpha\Delta t$ (0.05 at $\alpha=1$\,s$^{-1}$), \eqref{eq:cbf} corresponds to the discrete-time
 condition $h(x_{k+1})\ge(1-\gamma)h(x_k)$, $\gamma\in(0,1]$ \cite{agrawal2017discrete,garg2024advances}. The
 saturation $\max(h_i,0)$ is stricter than that condition: a breached row must clear within one step instead of
-recovering gradually, a deliberate choice that can add to infeasibility. The margins $\delta$ and $\tau_\ell$
-are measured, not derived from a bound of the controller-margin form of \cite{garg2024advances}. For each admissible speed regime (the field at rest while the robot
+recovering gradually, a deliberate choice that can add to infeasibility. The margin $\delta$ is measured and the lag allowance $\tau_\ell$ declared; neither is derived from a bound of the
+controller-margin form of \cite{garg2024advances}. For each admissible speed regime (the field at rest while the robot
 creeps, and otherwise each speed band), the filtered command is the solution of
 \begin{equation}
 \min_u\ (u-u_{\mathrm{nom}})^\top \mathrm{diag}\big(1,1,\rho_{\mathrm{out}}^2\big)\,(u-u_{\mathrm{nom}})
@@ -390,8 +390,8 @@ took 27.9\,ms at the 95th percentile (median 1.6\,ms, maximum 49.5\,ms), and B7'
 28.1\,ms; all values lie within the control period of 50\,ms.
 
 \section{Discussion and Conclusion}
-The held-out results exhibit a clear trade-off between protective stops and throughput. Defining the safe set
-of the barrier as the complement of the certified trigger set removes nearly all protective stops of an existing
+The held-out results exhibit a clear trade-off between protective stops and throughput. Deriving the safe set
+of the barrier from the complement of the certified trigger set removes nearly all protective stops of an existing
 classical planner (from 1106 to 18 with unmapped obstacles, the confirmatory comparison, and from 907 to 2 without)
 and every unrecoverable stop (from 146 to none and from 70 to none), without modifying the planner and without a
 loss of progress: B7 drives further than B2 on both halves and spends a negligible fraction of time in a latched
