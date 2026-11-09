@@ -46,8 +46,7 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
 | Disclosures: test size and B7 vs B2 fixed before the test set was built or read, after development rates seen (52.8, 0.47); calibration before the read | 2026-11-07 "DECIDED (the researcher)", `docs/pending/A36_amendment.md`; 2026-11-08 "HF-c calibration PASSED" |
 | Development set by obstacle presence: success on 17 obstacle / 43 clear routes, moving speeds, RPP stops 224 to 0 | 2026-11-08 "The success collapse is the population" |
 | Development-set rates 52.8 and 0.47; 633 m; 17 of 60 routes with obstacles | 2026-11-07 "All arms under the A34 denominators"; `scripts/split_tune_by_obstacles.py` docstring |
-| Table III: B2 and B7 per stratum (development set) | B7 alpha tuning console, B2-vs-B7 monitoring (`runs/tuning/B7_alpha_20261102T195759Z_seed0`), 2026-11-03 |
-| Table III: alpha sensitivity (success, stops, fallback steps) | 2026-11-03 "alpha 1.0 FROZEN" |
+| Fig. 3c and the gain paragraph: alpha sensitivity (success, stops, fallback steps) | 2026-11-03 "alpha 1.0 FROZEN" |
 | 17 blocked = the oracle's 17 failures; 13 horizon timeouts, 68-97 % covered; 30/43 | 2026-11-03 "B7's timeouts classified" |
 | 28 of 30 B7 timeouts without a stop (2000050: 2, 2000053: 1) | same entry, per-timeout table |
 | tuned B2 slows below 1.18 m clearance; 0.73 m in 10 s vs 4.34 / 4.20 m | 2026-11-06 bracket positions; 2026-11-07 compute entry |
@@ -56,6 +55,7 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
 | B7's three stops in two blocked episodes (2000050, 2000053); retraced: QP infeasible next to the obstacle, maximal braking, field not kept clear | 2026-11-07 "Offline diagnostics, first read (item 3)", 3b; "Diagnostics item 3 COMPLETE" (trace `runs/diag/TRACE2_20261107T190227Z`, training host) |
 | B1: five retraced failures, unrecoverable stop after 6-8 stops, cross-track p95 1-8 cm | same entries, 3e (trace `runs/diag/TRACE2_20261107T191325Z`, training host) |
 | Compute p95 | 2026-11-07 compute entry; 2026-10-29 real-time measurement (B6) |
+| CBF background: safe set, CBF vs candidate, QP, pointwise optimality, sampling | Garg et al. 2024 (checked against the PDF: eqs. 2-4, 8; Def. 2.1; Secs. 1.1, 3.4, 7.2) |
 | Field, barrier row, QP | `pfbnav/safety/pfb_field.py`, `pfbnav/safety/pfb.py` docstrings |
 | T = 0.15 s; box 0.5/0.5/1.5; dt 0.05; two S300 scanners | `configs/base.yaml`; `paper/claims_trace.md`; the researcher (scanner count) |
 

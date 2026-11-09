@@ -100,10 +100,15 @@ loss of throughput. The frequency of protective stops per distance travelled is 
 operationally meaningful measure of the compatibility between a local planner and the safety layer
 beneath it.
 
-Control barrier functions (CBFs) provide a systematic means of rendering a set forward invariant
-\cite{ames2017cbfqp,ames2019cbf}. A CBF defines, for each state, a constraint on the admissible inputs,
-and a quadratic program (QP) selects the admissible input closest to a nominal command. Employed as a
-safety filter, a CBF can be placed beneath an existing planner without modifying it
+Control barrier functions (CBFs) provide a systematic means of rendering forward invariant a safe set, the
+set of states at which a function $h$ is non-negative \cite{ames2017cbfqp,ames2019cbf,garg2024advances}. The
+function $h$ is a CBF if, at every state of that set, some admissible input satisfies $\dot h\ge-\alpha(h)$
+for a class-$\mathcal{K}$ function $\alpha$; a function for which this has not been established is only a
+candidate CBF. A quadratic program (QP) then selects the input closest to a nominal command subject to this
+constraint and the input limits. Its solution is optimal only pointwise, and an unsuitable barrier can render
+it infeasible; enforcing a continuous-time condition only at sampling instants does not in itself guarantee
+safety, whereas discrete-time conditions bound the decrease of $h$ per step \cite{garg2024advances}. Employed
+as a safety filter, a CBF can be placed beneath an existing planner without modifying it
 \cite{wang2022ensuring}. In mobile robotics, however, the safe set of such filters is usually defined by
 a geometric clearance to obstacles \cite{raja2024ogmcbf,zeng2025relvel}. Since this clearance bears no
 explicit relation to the certified protective field, the filter may be unnecessarily conservative or,
@@ -137,8 +142,7 @@ none of them treats the protective field of the safety function as a hard constr
 \subsection{Safety filters}
 Safety filters correct the commands of an upstream controller in order to keep the system within a safe
 set. Shielding \cite{alshiekh2018shielding} restricts the actions of a controller according to a formal
-specification, whereas CBF-based filters \cite{cheng2019endtoend,wang2022ensuring,knoedler2025onthefly,
-guo2025radar} solve an optimisation problem at each control step. For mobile robots, the safe set is
+specification, whereas CBF-based filters \cite{wang2022ensuring,knoedler2025onthefly,garg2024advances} solve an optimisation problem at each control step. For mobile robots, the safe set is
 generally defined by a minimum distance to obstacles observed in a map or a scan \cite{raja2024ogmcbf},
 occasionally adjusted according to the relative velocity of nearby agents \cite{zeng2025relvel}. The
 present work belongs to this family of methods, but differs in the definition of the safe set: rather
@@ -316,23 +320,6 @@ B6 MPPI & 0.833 & 25 & 0 & 9 & 0.56 & 0.52 & 1741 & 0.097 & 0.001 \\
 \end{tabular}
 \end{table}
 
-\begin{table}[t]
-\centering
-\caption{RPP without (B2) and with (B7) the PFB, by aisle width (development set, 20 scenarios each).}
-\label{tab:strata}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{lcccc}
-\toprule
- & \multicolumn{2}{c}{Success rate} & \multicolumn{2}{c}{Stops per 100\,m driven} \\
-Aisle width & B2 & B7 & B2 & B7 \\
-\midrule
-Narrow & 0.30 & 0.40 & 59.4 & 0.0 \\
-Medium & 0.15 & 0.40 & 88.7 & 0.0 \\
-Wide & 0.30 & 0.70 & 118.7 & 1.76 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \emph{Confirmatory comparison.} B7 records 18 protective stops against 1106 for B2, that is, 1.11 against
 68.1 per 100\,m of planned route: a rate ratio of 0.0167, 95\,\% CI [0.0090, 0.0311], a reduction of
 98\,\%. Unrecoverable stops fall from 146 of the 150 episodes to none. The reduction is not obtained by
@@ -352,8 +339,7 @@ field into its rollout cost, is the strongest reference: it succeeds in 83 of th
 0.020 for B7), records 10 stops and drives 1769\,m, 1.09 times the planned length. The exploratory rate ratio
 of B7 to B6 is 1.76, 95\,\% CI [0.71, 4.37]: the two planners are indistinguishable at 18 versus 10 events,
 and the contingency hypothesis is therefore not supported as a whole. The exploratory rate ratio of B7 to B1
-is 0.0179, 95\,\% CI [0.0096, 0.0333]. Pure Pursuit ends 149 of its episodes in an unrecoverable stop. DWA
-reaches the time limit in 134 episodes, with a success rate of 0.013 at 50.2 stops per 100\,m planned. The
+is 0.0179, 95\,\% CI [0.0096, 0.0333]. The
 mean mission time of the successful episodes is 129.6\,s for B6 (83 episodes), 131.2\,s for B3 (2) and
 169.0\,s for B7 (3).
 
@@ -372,8 +358,7 @@ against 105.4\,s for B3 and 104.3\,s for B6.
 passes an unmapped obstacle near its route. On the development set, the 17 routes with an unmapped obstacle
 already yield success rates of 0.000 for B1, B2, B3 and B7 and 0.706 for B6. The 43 routes without one yield
 0.023 for B1, 0.349 for B2, 0.930 for B3, 0.884 for B6 and 0.698 for B7; these served as a positive control
-declared before the run on the half without obstacles, and the results of Table~\ref{tab:clear} agree with them
-(Table~\ref{tab:strata} gives the whole development set by aisle width). The loss of speed likewise arises near obstacles: on the routes without one, B2 and B7 both move at
+declared before the run on the half without obstacles, and the results of Table~\ref{tab:clear} agree with them. The loss of speed likewise arises near obstacles: on the routes without one, B2 and B7 both move at
 0.058\,m/s, whereas on the obstacle routes they move at 0.063 and 0.026\,m/s. The low speed on clear routes is
 inherited from the tuned speed regulation of RPP, which begins to reduce the speed at a clearance of 1.18\,m
 and therefore operates close to its minimum speed throughout aisles of 0.7--0.9\,m. In an empty synthetic
