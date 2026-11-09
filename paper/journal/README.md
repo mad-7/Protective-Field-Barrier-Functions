@@ -84,7 +84,8 @@ Figure 1 (`fig_architecture.pdf`) is a schematic drawing in full scope (classica
 
 ## Open before any submission
 - Every `verify` field in `references.bib` (checked against the publisher's record).
-- Red markers (left until a venue is chosen): data/code availability, funding and acknowledgements, AI-use disclosure.
+- Code availability (researcher, 2026-11-09): the repository will be public; the draft gives its GitHub URL.
+- Red markers (left until a venue is chosen): funding and acknowledgements, AI-use disclosure.
 - The title (2026-11-09): the researcher expressed no preference; the draft keeps "Industrial Mobile Robots".
 - The learned arms: Tables 8 and 9 (H1, H2) and every `[pending]` cell of Table 7 (L2, L4, L5 9000003).
 
