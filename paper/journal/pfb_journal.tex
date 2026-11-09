@@ -282,13 +282,13 @@ entry into a region from which safety can no longer be guaranteed; a poorly chos
 and QP controllers that combine control Lyapunov and barrier constraints can introduce undesirable stable equilibria
 \citep{reis2020undesirable}. Predictive formulations address the first of these effects.
 
-\paragraph{Sampled systems.} A discrete-time condition sufficient for invariance of $\mathcal{S}$, written here in the
-convention $h\ge0$ of \eqref{eq:safeset}, is
+\paragraph{Sampled systems.} A discrete-time condition sufficient for invariance of $\mathcal{S}$
+\citep{agrawal2017discrete}, written here in the convention $h\ge0$ of \eqref{eq:safeset}, is
 \begin{equation}
 h(x_{k+1})-h(x_k)\ge-\gamma\,h(x_k),\qquad\gamma\in(0,1],
 \label{eq:dtcbf}
 \end{equation}
-\citep{agrawal2017discrete}. It is not control-affine in general, although its linear approximation is, which allows it
+It is not control-affine in general, although its linear approximation is, which allows it
 to enter a QP. Under a zero-order hold neither form is sufficient on its own. Enforcing the continuous condition only at
 the sample times does not guarantee safety, and a controller designed with a discrete-time condition need not satisfy the
 continuous condition between samples \citep{garg2024advances}. The review quantifies the price of closing this gap by two
