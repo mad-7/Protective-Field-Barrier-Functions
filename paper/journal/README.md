@@ -20,7 +20,10 @@ learned SAC arms (L1-L5).
    in either condition; on clear routes B3 and B6 complete more than B7. Success and time are descriptive (A34).
 5. Disclosed: the test size (A14b) and HF-c as confirmatory (A36) were fixed before the test set was built or
    read but after the development-set rates were seen, and the size before L5's second pilot seed.
-6. No invented numbers or references. VERIFY notes live in the bib field `verify`, which `plainnat`
+6. Name (researcher, 2026-11-09): the PFB is a candidate discrete-time CBF or a CBF-based safety filter, never simply a
+   CBF; validity is not shown and no safety guarantee is claimed. The deployed field is piecewise in speed (per band);
+   the continuous-in-speed field is PFB-(a), the H3 ablation.
+7. No invented numbers or references. VERIFY notes live in the bib field `verify`, which `plainnat`
    ignores, so they never print. One citation (`iso10218cbf2026`, author unknown) is withheld in the text
    with a red marker until its authors are verified.
 
