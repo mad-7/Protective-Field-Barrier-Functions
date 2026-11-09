@@ -11481,3 +11481,26 @@ Development set, monitoring only; the hosts come from their tuning runs, another
   B6 88 vs 83 successes. B8's 6-route difference from B6 is about the size of B6's own 5-route rerun difference. So a success difference of a few routes between
   two arms on this set must not be read as an effect, and this applies to every single-run classical comparison. Effects of the size of B9 vs B3 and B7 vs B2 are far larger.
 - The sealed results stay the cited ones for B3 and B6; the reruns serve the pairing only.
+
+
+## 2026-11-09 - The PFB reviewed against the CBF theory (Garg et al., Annual Reviews in Control 57, 2024, 100945)
+
+At the researcher's request; definitions sent to both paper sessions. No code, config or preregistration changed.
+
+**Follows the theory:** a CBF-QP filter (the review's eq. 8), closest input to the nominal one under barrier and input constraints; the
+discrete-time form (its eq. 93, Agrawal and Sreenath 2017) with gamma = alpha dt = 0.05 at alpha 1 and 1.0 at the grid's top, inside (0, 1]; a linear
+class-K function; linearisation with the exact rows checked at the solution; input constraints in the QP; a field carrying the braking distance, which is
+the idea of the review's inner safe sets for bounded inputs (Sec. 4); rows held over the realised fraction of the motion and a lag allowance, which addresses the
+sampling problem of its Sec. 7.2.
+
+**Departs from it, not an error in the filter but a limit on what may be claimed:**
+1. **h is a candidate CBF; it is not shown to be a valid one.** Def. 2.1 requires an admissible input everywhere in S. Measured against that: no feasible QP on 0.3 % of B7's
+   steps, 1.0 % of B8's on the tune set, and stops still occur (B7 18). So no forward-invariance claim may be made.
+2. **The saturation max(h, 0) is stricter than eq. 93:** a breached row must clear in one step, where eq. 93 would allow gradual recovery. It is a deliberate ruling (2026-10-23), and it contributes to infeasibility.
+3. **Non-smooth, and hybrid across regimes:** the field is built with max terms, is banded in speed, and the best of several QPs is chosen. No invariance across regime switches is shown.
+4. **Many constraints under input limits:** an intersection of up to 120 rows, which the review calls largely open (Sec. 4.1.5, 5.1).
+5. **Margins are measured, not derived:** delta and the lag allowance are empirical; no bound of the review's controller-margin form exists.
+6. **Myopia:** pointwise optimal, so undesirable equilibria are expected (Sec. 3.4, 6). This is the theoretical reading of B7 and B9 stalling at obstacles, and the review's predictive forms are the route to it.
+
+**A wording error found:** the deployed PFB is option (b), the field of the regime's speed BAND. It is continuous in direction and yaw rate, piecewise in speed. The drafts' "continuous, speed- and
+direction-dependent" field describes PFB-(a), the ablation, and needs correcting, as does the project summary in CLAUDE.md if the researcher agrees.
