@@ -20,9 +20,12 @@ learned SAC arms (L1-L5).
    in either condition; on clear routes B3 and B6 complete more than B7. Success and time are descriptive (A34).
 5. Disclosed: the test size (A14b) and HF-c as confirmatory (A36) were fixed before the test set was built or
    read but after the development-set rates were seen, and the size before L5's second pilot seed.
-6. No invented numbers or references. VERIFY notes live in the bib field `verify`, which `plainnat`
-   ignores, so they never print. One citation (`iso10218cbf2026`, author unknown) is withheld in the text
-   with a red marker until its authors are verified.
+6. Name (researcher, 2026-11-09): the PFB is a candidate discrete-time CBF or a CBF-based safety filter, never simply a
+   CBF; validity is not shown and no safety guarantee is claimed. The deployed field is piecewise in speed (per band);
+   the continuous-in-speed field is PFB-(a), the H3 ablation.
+7. No invented numbers or references. VERIFY notes live in the bib field `verify`, which `plainnat`
+   ignores, so they never print. An unverified citation (arXiv:2606.13203, authors unknown) was removed with
+   its sentence on 2026-11-09; it returns only if the researcher supplies verified details.
 
 ## Build
 From this folder (MiKTeX or TeX Live):
@@ -75,12 +78,15 @@ Figure 1 (`fig_architecture.pdf`) is a schematic drawing in full scope (classica
 | Power: no feasible size reaches 80 % at plausible rates; test-size rule | 2026-11-07 "A14b power grid"; ruling items 2-3 |
 | k_proximity 0.10113 (derived); 2M steps, curriculum, stall truncation; L2 d = 1.0 / 100 m | 2026-11-01 ruling; 2026-10-30 A30 rulings; `configs/base.yaml` |
 | Tune set: 60 scenarios, 633 m, 17 with unmapped obstacles; training set mean 10.67 m | `scenarios/tune/*.json` (read 2026-11-07); 2026-10-30 (L_ref 10.671616 m) |
+| Section 3, general CBF definitions | Garg et al. 2024, Annual Reviews in Control 57, 100945 (eqs. 1-4, 8, 93; Defs. 2.1, 2.2, 3.3, 4.1, 4.2, 6.1, 7.2, 7.4, 7.5; Secs. 1.1, 3.4, 4.1.5, 5.1, 5.2, 7.2, 9), read from the PDF 2026-11-09; eq. 93 restated in the h >= 0 convention |
 | Field, barrier rows, motion fractions, QP, fallback | `pfbnav/safety/pfb_field.py`, `pfbnav/safety/pfb.py`, `configs/base.yaml` `filter:` |
 | Platform, sensing, certified layer, verification findings | `paper/claims_trace.md` (MDPI draft trace), `configs/base.yaml`, CLAUDE.md |
 
 ## Open before any submission
 - Every `verify` field in `references.bib` (checked against the publisher's record).
-- Red markers: data/code availability, acknowledgements and AI-use disclosure, the withheld citation.
+- Code availability (researcher, 2026-11-09): the repository will be public; the draft gives its GitHub URL.
+- Red markers (left until a venue is chosen): funding and acknowledgements, AI-use disclosure.
+- The title (2026-11-09): the researcher expressed no preference; the draft keeps "Industrial Mobile Robots".
 - The learned arms: Tables 8 and 9 (H1, H2) and every `[pending]` cell of Table 7 (L2, L4, L5 9000003).
 
 Commit this folder on its own, never together with code.

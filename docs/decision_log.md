@@ -11458,3 +11458,72 @@ Development set, monitoring only; the hosts come from their tuning runs, another
 - **A37 drafted** (`docs/pending/A37_amendment.md`): B9 vs B3 and B8 vs B6 on both halves, exploratory, each host beside its filtered
   version in one scene load (`scripts/evaluate_test.py --arm-set hosts`, `scripts/analyse_hosts.py`); B3 and B6 therefore run a second
   time on the test set, their sealed results staying the cited ones, with a declared consistency check; a declared low-count flag.
+
+
+## 2026-11-09 - HF_hosts, obstacle half (exploratory, A37): B9 removes DWA's stops; B8 vs B6 is low-count; run-to-run noise measured
+
+`runs/test/HOSTS_ANALYSIS_unmapped_static_20261109T154308Z_seed0`, commit 47ae61a, clean, 150 scenarios x 4 arms, no rerun, no contact.
+
+| arm | success | S / timeout / unrecoverable | stops | /100 m planned | /100 m driven | driven m (derived) | moving m/s | decision p95 | no feasible QP steps |
+|---|---|---|---|---|---|---|---|---|---|
+| B3 (rerun) | 0.013 | 2 / 134 / 14 | 736 | 45.3 | 81.4 | 904 | 0.033 | 2.6 ms | 0 |
+| **B9** | 0.067 | 10 / 140 / 0 | 1 | 0.06 | 0.11 | 932 | 0.032 | 21.2 ms | 588 |
+| B6 (rerun) | 0.587 | 88 / 62 / 0 | 11 | 0.68 | 0.60 | 1,830 | 0.075 | 33.9 ms | 0 |
+| **B8** | 0.547 | 82 / 68 / 0 | 2 | 0.12 | 0.11 | 1,746 | 0.069 | 47.5 ms | 7,899 |
+
+- **B9 vs B3:** rate ratio 0.0020, 95 % CI [0.0005, 0.0077], B9 fewer; unrecoverable stops 14 -> 0; distance driven not reduced. Success stays very low
+  (10 of 150, B3 2 of 150): DWA does not pass these obstacles either way.
+- **B8 vs B6: flagged low-count as declared, so counts only: 2 vs 11 events.** The interval (ratio 0.2174, [0.0592, 0.7982]) excludes 1 but is not read
+  as a verdict. Success 88 -> 82 of 150, not attributable: see below.
+- **Real time:** B8 47.5 ms and B9 21.2 ms at p95, both within 50 ms, on the harder half.
+- **Consistency check (declared):** not flagged. B3 success 0.013 in both; B6 0.587 rerun vs 0.553 sealed (difference 0.034, below 0.05).
+- **Finding: the run-to-run noise is measurable and not small.** The same planner on the same scenarios differs across scene loads: B3 736 vs 815 stops (10 %),
+  B6 88 vs 83 successes. B8's 6-route difference from B6 is about the size of B6's own 5-route rerun difference. So a success difference of a few routes between
+  two arms on this set must not be read as an effect, and this applies to every single-run classical comparison. Effects of the size of B9 vs B3 and B7 vs B2 are far larger.
+- The sealed results stay the cited ones for B3 and B6; the reruns serve the pairing only.
+
+
+## 2026-11-09 - The PFB reviewed against the CBF theory (Garg et al., Annual Reviews in Control 57, 2024, 100945)
+
+At the researcher's request; definitions sent to both paper sessions. No code, config or preregistration changed.
+
+**Follows the theory:** a CBF-QP filter (the review's eq. 8), closest input to the nominal one under barrier and input constraints; the
+discrete-time form (its eq. 93, Agrawal and Sreenath 2017) with gamma = alpha dt = 0.05 at alpha 1 and 1.0 at the grid's top, inside (0, 1]; a linear
+class-K function; linearisation with the exact rows checked at the solution; input constraints in the QP; a field carrying the braking distance, which is
+the idea of the review's inner safe sets for bounded inputs (Sec. 4); rows held over the realised fraction of the motion and a lag allowance, which addresses the
+sampling problem of its Sec. 7.2.
+
+**Departs from it, not an error in the filter but a limit on what may be claimed:**
+1. **h is a candidate CBF; it is not shown to be a valid one.** Def. 2.1 requires an admissible input everywhere in S. Measured against that: no feasible QP on 0.3 % of B7's
+   steps, 1.0 % of B8's on the tune set, and stops still occur (B7 18). So no forward-invariance claim may be made.
+2. **The saturation max(h, 0) is stricter than eq. 93:** a breached row must clear in one step, where eq. 93 would allow gradual recovery. It is a deliberate ruling (2026-10-23), and it contributes to infeasibility.
+3. **Non-smooth, and hybrid across regimes:** the field is built with max terms, is banded in speed, and the best of several QPs is chosen. No invariance across regime switches is shown.
+4. **Many constraints under input limits:** an intersection of up to 120 rows, which the review calls largely open (Sec. 4.1.5, 5.1).
+5. **Margins are measured, not derived:** delta and the lag allowance are empirical; no bound of the review's controller-margin form exists.
+6. **Myopia:** pointwise optimal, so undesirable equilibria are expected (Sec. 3.4, 6). This is the theoretical reading of B7 and B9 stalling at obstacles, and the review's predictive forms are the route to it.
+
+**A wording error found:** the deployed PFB is option (b), the field of the regime's speed BAND. It is continuous in direction and yaw rate, piecewise in speed. The drafts' "continuous, speed- and
+direction-dependent" field describes PFB-(a), the ablation, and needs correcting, as does the project summary in CLAUDE.md if the researcher agrees.
+
+
+## 2026-11-09 - HF_hosts, half without obstacles (exploratory, A37): B9 removes every DWA stop; B8 vs B6 low-count; consistency holds
+
+`runs/test/HOSTS_ANALYSIS_mapped_only_20261109T195925Z_seed0`, commit 47ae61a, clean, 150 scenarios x 4 arms, no rerun, no contact.
+
+| arm | success | S / timeout / unrecoverable | stops | /100 m planned | moving m/s | mission time s | decision p95 | no feasible QP steps |
+|---|---|---|---|---|---|---|---|---|
+| B3 (rerun) | 0.920 | 138 / 5 / 7 | 115 | 7.16 | 0.098 | 107.1 | 3.9 ms | 0 |
+| **B9** | 0.947 | 142 / 8 / 0 | 0 | 0.00 | 0.096 | 107.0 | 12.0 ms | 645 |
+| B6 (rerun) | 0.853 | 128 / 22 / 0 | 10 | 0.62 | 0.098 | 104.6 | 34.4 ms | 0 |
+| **B8** | 0.827 | 124 / 26 / 0 | 1 | 0.06 | 0.092 | 108.3 | 44.6 ms | 3,060 |
+
+- **B9 vs B3:** 0 vs 115 stops, rate ratio 0.0043 [0.0028, 0.0066] (continuity 0.5 on B9's zero; not low-count, B3's 115 is large); unrecoverable 7 -> 0;
+  speed and mission time unchanged. Success 142 vs 138: within the measured rerun noise, so descriptive only.
+- **B8 vs B6: low-count as declared, counts only, 1 vs 10.** Success 124 vs 128: within noise (B6's own rerun differed by 3 routes from the sealed).
+- **Consistency (declared): not flagged.** B3 0.920 vs 0.920, stops 115 vs 108; B6 0.853 vs 0.833, stops 10 vs 9.
+- **Real time:** B8 44.6 ms, B9 12.0 ms at p95, within 50 ms.
+
+**Across both halves and three hosts (B7 confirmatory on the obstacle half; the rest exploratory):** the PFB removes nearly all protective stops from RPP
+(1,106 -> 18; 907 -> 2) and DWA (736 -> 1; 115 -> 0), and every unrecoverable stop where a host had them (RPP 146, 70; DWA 14, 7), with no loss of
+progress or speed. On MPPI, which builds the field into its cost, too few stops remain to judge (11 -> 2; 10 -> 1). Completion is not changed beyond
+noise except on RPP's clear routes (0.347 -> 0.733), where the filter removes the stop-recovery cycle. Sent to both papers and the presentation.

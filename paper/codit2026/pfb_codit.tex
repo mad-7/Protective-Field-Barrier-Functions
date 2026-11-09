@@ -27,7 +27,7 @@
 
 \begin{document}
 
-\title{Protective-Field Barriers: A LiDAR Control Barrier Function Consistent with Industrial Safety Fields for Classical Local Planners}
+\title{Protective-Field Barriers: A LiDAR Barrier-Based Safety Filter Consistent with Industrial Safety Fields for Classical Local Planners}
 
 \author{\IEEEauthorblockN{Mahdi Kahoul and Firas Mohamed Elamine Kiram}
 \IEEEauthorblockA{AMCO Laboratory, Padua, Italy\\
@@ -40,11 +40,11 @@ Autonomous mobile robots operating in industrial environments are supervised by 
 function: safety laser scanners monitor speed-dependent protective fields and command a latched
 protective stop whenever an object enters the active field. Local planners do not model these fields
 and therefore trigger such stops frequently, at a considerable cost in productivity. This paper
-introduces the Protective-Field Barrier (PFB), a discrete-time control barrier function defined
-directly on the laser scan, whose safe set is the complement of the region that triggers the certified
-safety function. The barrier is derived from the same configuration as the safety function and yields a
-continuous, speed- and direction-dependent protective field; a quadratic program minimally modifies the
-command of an arbitrary local planner so that this field remains clear. The approach is evaluated in
+introduces the Protective-Field Barrier (PFB), a safety filter built on a candidate discrete-time control
+barrier function defined directly on the laser scan, whose safe set is derived from the complement of the region that triggers the certified
+safety function. The barrier is derived from the same configuration as the safety function and yields a protective field that is continuous in direction and yaw rate and piecewise in speed; a quadratic
+program minimally modifies the command of an arbitrary local planner so as to keep this field clear. Its
+validity as a control barrier function is not shown, and no forward invariance or safety guarantee is claimed. The approach is evaluated in
 simulation on a holonomic platform in warehouse aisles of three widths, with four tuned classical
 planners as references. On the half of a held-out test set with an unmapped obstacle on every route (150 scenarios), placing the PFB beneath a tuned Regulated Pure Pursuit planner reduces protective stops from 68.1 to 1.11
 per 100\,m of planned route (rate ratio 0.0167, 95\,\% CI [0.0090, 0.0311]) and unrecoverable stops from
@@ -66,7 +66,7 @@ control barrier functions, safety filters, local planning, protective stops, mob
 \centering
 % fig1_architecture.pdf is drawn on an A4 page: the white margins above and below the drawing are
 % cropped here (trim = left bottom right top, in pt); the file itself is left as made.
-\includegraphics[width=0.84\textwidth,trim=0 230 0 215,clip]{fig1_architecture.pdf}
+\includegraphics[width=0.80\textwidth,trim=0 230 0 215,clip]{fig1_architecture.pdf}
 \caption{System architecture. The local planner receives the global route and the scan; the PFB
 filters its command before the certified safety layer, which may impose a latched protective stop,
 and the base applies the actuation limits.}
@@ -75,7 +75,7 @@ and the base applies the actuation limits.}
 
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=0.9\textwidth]{fig2_field_geometry.pdf}
+\includegraphics[width=0.84\textwidth]{fig2_field_geometry.pdf}
 \caption{Protective fields on the measured robot footprint (grey), computed from \eqref{eq:field}.
 (a) The field at rest and the fields of the three speed bands for forward travel. (b) The field of one
 band for forward, diagonal and lateral travel. (c) The same field for increasing yaw rates.}
@@ -100,21 +100,25 @@ loss of throughput. The frequency of protective stops per distance travelled is 
 operationally meaningful measure of the compatibility between a local planner and the safety layer
 beneath it.
 
-Control barrier functions (CBFs) provide a systematic means of rendering a set forward invariant
-\cite{ames2017cbfqp,ames2019cbf}. A CBF defines, for each state, a constraint on the admissible inputs,
-and a quadratic program (QP) selects the admissible input closest to a nominal command. Employed as a
-safety filter, a CBF can be placed beneath an existing planner without modifying it
+Control barrier functions (CBFs) provide a systematic means of rendering forward invariant a safe set, the
+set of states at which a function $h$ is non-negative \cite{ames2017cbfqp,ames2019cbf,garg2024advances}. The
+function $h$ is a CBF if, at every state of that set, some admissible input satisfies $\dot h\ge-\alpha(h)$
+for a class-$\mathcal{K}$ function $\alpha$; a function for which this has not been established is only a
+candidate CBF. A quadratic program (QP) then selects the input closest to a nominal command subject to this
+constraint and the input limits. An unsuitable barrier can render it infeasible; enforcing a continuous-time condition only at sampling instants does not in itself guarantee
+safety, whereas discrete-time conditions bound the decrease of $h$ per step \cite{garg2024advances}. Employed
+as a safety filter, a CBF can be placed beneath an existing planner without modifying it
 \cite{wang2022ensuring}. In mobile robotics, however, the safe set of such filters is usually defined by
 a geometric clearance to obstacles \cite{raja2024ogmcbf,zeng2025relvel}. Since this clearance bears no
 explicit relation to the certified protective field, the filter may be unnecessarily conservative or,
 conversely, insufficient to prevent protective stops.
 
-This paper proposes to define the safe set of the barrier as the complement of the trigger set of the
+This paper proposes to derive the safe set of the barrier from the complement of the trigger set of the
 certified safety function itself. The main contributions are as follows:
 \begin{itemize}
-\item the formulation of the Protective-Field Barrier (PFB), a discrete-time CBF defined on the laser
-scan, whose zero level set is a continuous protective field that depends on the speed, direction and
-yaw rate of the robot and is constructed from the configuration of the safety function;
+\item the formulation of the Protective-Field Barrier (PFB), a CBF-based safety filter on the laser scan, whose
+candidate discrete-time CBF has as its zero level set a protective field, continuous in direction and yaw rate
+and piecewise in speed, constructed from the configuration of the safety function;
 \item a filtering scheme based on one QP per speed regime, which respects the actuation and acceleration
 limits of a holonomic platform;
 \item an evaluation on a held-out test set, with one confirmatory comparison, in which all planners operate
@@ -136,19 +140,16 @@ none of them treats the protective field of the safety function as a hard constr
 
 \subsection{Safety filters}
 Safety filters correct the commands of an upstream controller in order to keep the system within a safe
-set. Shielding \cite{alshiekh2018shielding} restricts the actions of a controller according to a formal
-specification, whereas CBF-based filters \cite{cheng2019endtoend,wang2022ensuring,knoedler2025onthefly,
-guo2025radar} solve an optimisation problem at each control step. For mobile robots, the safe set is
+set. CBF-based filters \cite{wang2022ensuring,knoedler2025onthefly,garg2024advances} solve an optimisation problem at each control step. For mobile robots, the safe set is
 generally defined by a minimum distance to obstacles observed in a map or a scan \cite{raja2024ogmcbf},
 occasionally adjusted according to the relative velocity of nearby agents \cite{zeng2025relvel}. The
 present work belongs to this family of methods, but differs in the definition of the safe set: rather
-than a clearance selected by the designer, it is the exact region whose violation is penalised by the
-certified safety function, evaluated at the speed and direction that the robot will attain.
+than a clearance selected by the designer, it is derived from the region that triggers the certified safety function, evaluated for the speed band and direction that the robot will attain.
 
 \section{Problem Formulation and System Design}
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=0.92\textwidth]{fig_codit_results.pdf}
+\includegraphics[width=0.88\textwidth]{fig_codit_results.pdf}
 \caption{(a, b) Held-out test set, half with unmapped obstacles: protective stops per 100\,m of planned route (logarithmic scale);
 fraction of time spent in a latched stop and success rate. (c) Development (tuning) set: protective stops
 of B7 per 100\,m driven and number of fallback steps of the PFB as functions of the gain $\alpha$.}
@@ -187,15 +188,16 @@ the distance travelled during the reach time and the subsequent braking, $s$ is 
 permitted by the acceleration limiter, $K$ is the drift of a body that rotates while translating, $R$ is
 the reach of the robot at rest, and $m$ and $m_\perp$ are the frontal and lateral margins. The reach
 time is the response time of the safety function plus one control period ($T=0.15$\,s). The second term
-of \eqref{eq:field} is the field at rest, which is the infimum of all moving fields. The PFB employs the
-field of the speed band selected by the attainable speed, so that its trigger set coincides with that of
-the certified function in the same state. Fig.~\ref{fig:field} illustrates the resulting fields for
+of \eqref{eq:field} is the field at rest, which is the infimum of all moving fields. Although \eqref{eq:field} is continuous in $V$, the PFB evaluates it at the top speed of the band of its regime, no lower than that of the estimated speed,
+so that the deployed field is piecewise in speed and continuous in direction and yaw rate. For the same
+band, heading and yaw rate, it equals the certified field (checked numerically), although each layer selects
+these separately. Fig.~\ref{fig:field} illustrates the resulting fields for
 several speeds, directions of travel and yaw rates.
 
 \subsection{Barrier condition and filter}
 \begin{figure}[!t]
 \centering
-\includegraphics[width=\columnwidth]{fig5_pfb_step.pdf}
+\includegraphics[width=0.9\columnwidth]{fig5_pfb_step.pdf}
 \caption{One PFB step in a narrow passage. (a) Scan returns, the field associated with the nominal
 command (dashed) with the returns predicted inside it, and the field of the filtered command (solid)
 with its active constraint. (b) The nominal and filtered commands in the translational plane, with the
@@ -216,8 +218,11 @@ g_i(u)&=r_i(u)-\rho\big(\psi_i(u);\theta(u),W(u)\big)-\delta\\
 \label{eq:cbf}
 \end{equation}
 where $\theta(u)$ is the heading of the field and $W(u)=\max(|\hat\omega|,|\omega|)$ combines the
-estimated and commanded yaw rates. The saturation at zero requires that a field which is currently
-violated be cleared within one step. For each admissible speed regime (the field at rest while the robot
+estimated and commanded yaw rates. With $\gamma=\alpha\Delta t$ (0.05 at $\alpha=1$\,s$^{-1}$), \eqref{eq:cbf} corresponds to the discrete-time
+condition $h(x_{k+1})\ge(1-\gamma)h(x_k)$, $\gamma\in(0,1]$ \cite{agrawal2017discrete,garg2024advances}. The
+saturation $\max(h_i,0)$ is stricter than that condition: a breached row must clear within one step instead of
+recovering gradually, a deliberate choice that can add to infeasibility. The margin $\delta$ is measured and the lag allowance $\tau_\ell$ declared; neither is derived from a bound of the
+controller-margin form of \cite{garg2024advances}. For each admissible speed regime (the field at rest while the robot
 creeps, and otherwise each speed band), the filtered command is the solution of
 \begin{equation}
 \min_u\ (u-u_{\mathrm{nom}})^\top \mathrm{diag}\big(1,1,\rho_{\mathrm{out}}^2\big)\,(u-u_{\mathrm{nom}})
@@ -232,14 +237,15 @@ regime with the lowest cost is selected; if no regime is feasible, the filter co
 and such steps are recorded as fallback steps. While the certified stop is latched, only commands that
 satisfy the restart condition are transmitted. The QP is solved with Clarabel \cite{goulart2024clarabel}.
 
-Fig.~\ref{fig:step} illustrates one filtering step. The nominal command would carry the robot into a
-configuration in which numerous returns lie inside the predicted field; the filter selects the nearest
-admissible command, which preserves most of the forward motion while removing the lateral and rotational
-components that cause the violation.
+Fig.~\ref{fig:step} illustrates one filtering step: the filter selects the nearest admissible command, which
+preserves most of the forward motion while removing the components that cause the violation.
 
-The PFB requires only the nominal command of the planner, the scan and the velocity estimate; the
-planner itself remains unchanged. In the experiments it is placed beneath RPP, and the resulting
-combination is denoted B7.
+The PFB requires only the nominal command of the planner, the scan and the velocity estimate; the planner
+itself remains unchanged. Placed beneath RPP, it is denoted B7. Its $h_i$ is a candidate CBF: validity in the
+sense of \cite[Def.~2.1]{garg2024advances} is not shown, so no forward invariance or safety guarantee is
+claimed. On the held-out test set, the QP has no feasible solution on 0.3\,\% of B7's steps with unmapped
+obstacles and on 0.15\,\% without, and stops still occur (18 and 2). Open points include the non-smooth field,
+the switching between regimes and up to 120 constraints under input limits.
 
 \section{Experimental Evaluation}
 \subsection{Setup}
@@ -316,23 +322,6 @@ B6 MPPI & 0.833 & 25 & 0 & 9 & 0.56 & 0.52 & 1741 & 0.097 & 0.001 \\
 \end{tabular}
 \end{table}
 
-\begin{table}[t]
-\centering
-\caption{RPP without (B2) and with (B7) the PFB, by aisle width (development set, 20 scenarios each).}
-\label{tab:strata}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{lcccc}
-\toprule
- & \multicolumn{2}{c}{Success rate} & \multicolumn{2}{c}{Stops per 100\,m driven} \\
-Aisle width & B2 & B7 & B2 & B7 \\
-\midrule
-Narrow & 0.30 & 0.40 & 59.4 & 0.0 \\
-Medium & 0.15 & 0.40 & 88.7 & 0.0 \\
-Wide & 0.30 & 0.70 & 118.7 & 1.76 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \emph{Confirmatory comparison.} B7 records 18 protective stops against 1106 for B2, that is, 1.11 against
 68.1 per 100\,m of planned route: a rate ratio of 0.0167, 95\,\% CI [0.0090, 0.0311], a reduction of
 98\,\%. Unrecoverable stops fall from 146 of the 150 episodes to none. The reduction is not obtained by
@@ -352,8 +341,7 @@ field into its rollout cost, is the strongest reference: it succeeds in 83 of th
 0.020 for B7), records 10 stops and drives 1769\,m, 1.09 times the planned length. The exploratory rate ratio
 of B7 to B6 is 1.76, 95\,\% CI [0.71, 4.37]: the two planners are indistinguishable at 18 versus 10 events,
 and the contingency hypothesis is therefore not supported as a whole. The exploratory rate ratio of B7 to B1
-is 0.0179, 95\,\% CI [0.0096, 0.0333]. Pure Pursuit ends 149 of its episodes in an unrecoverable stop. DWA
-reaches the time limit in 134 episodes, with a success rate of 0.013 at 50.2 stops per 100\,m planned. The
+is 0.0179, 95\,\% CI [0.0096, 0.0333]. The
 mean mission time of the successful episodes is 129.6\,s for B6 (83 episodes), 131.2\,s for B3 (2) and
 169.0\,s for B7 (3).
 
@@ -372,13 +360,10 @@ against 105.4\,s for B3 and 104.3\,s for B6.
 passes an unmapped obstacle near its route. On the development set, the 17 routes with an unmapped obstacle
 already yield success rates of 0.000 for B1, B2, B3 and B7 and 0.706 for B6. The 43 routes without one yield
 0.023 for B1, 0.349 for B2, 0.930 for B3, 0.884 for B6 and 0.698 for B7; these served as a positive control
-declared before the run on the half without obstacles, and the results of Table~\ref{tab:clear} agree with them
-(Table~\ref{tab:strata} gives the whole development set by aisle width). The loss of speed likewise arises near obstacles: on the routes without one, B2 and B7 both move at
+declared before the run on the half without obstacles, and the results of Table~\ref{tab:clear} agree with them. The loss of speed likewise arises near obstacles: on the routes without one, B2 and B7 both move at
 0.058\,m/s, whereas on the obstacle routes they move at 0.063 and 0.026\,m/s. The low speed on clear routes is
 inherited from the tuned speed regulation of RPP, which begins to reduce the speed at a clearance of 1.18\,m
-and therefore operates close to its minimum speed throughout aisles of 0.7--0.9\,m. In an empty synthetic
-aisle, the tuned RPP covers 0.73\,m in 10\,s, whereas Pure Pursuit and DWA cover 4.3\,m and 4.2\,m,
-respectively.
+and therefore operates close to its minimum speed throughout aisles of 0.7--0.9\,m. 
 
 \emph{Analysis of failures on the development set.} All 30 unsuccessful episodes of B7 on this set end at the
 time limit, 28 of them without any protective stop. In 17 episodes, an unmapped obstacle lies across the route
@@ -388,18 +373,15 @@ stops of B7 occur in two of these episodes; on retracing them, the stops are pre
 admits no feasible command next to the obstacle and the filter applies maximal braking, which does not suffice
 to keep the field clear. The 18 stops of the held-out set have not been retraced in this way. The remaining 13
 failures occur on long routes (11.4--17.0\,m), of which B7 had completed 68--97\,\% when the time limit was
-reached. For Pure Pursuit, the latched fraction lies between 83 and 90\,\% for every one of its 24 parameter
-candidates; five retraced failures each end in an unrecoverable stop after six to eight protective stops at the
-same locations, although the route is tracked to within 1--8\,cm (95th percentile of the cross-track error), so
-that the failure lies in the interaction with the field and its restart condition after stops at shelf corners,
-not in tracking.
+reached. Five retraced failures of Pure Pursuit each end in an unrecoverable stop after six to eight protective stops at
+the same locations, although the route is tracked to within 1--8\,cm (95th percentile of the cross-track error):
+the failure lies in the interaction with the field and its restart condition, not in tracking.
 
 \emph{Influence of the gain (development set).} Fig.~\ref{fig:results}(c) shows that the success rate is nearly
 constant with respect to $\alpha$ (between 0.50 and 0.52), whereas the stop rate increases monotonically from
 0.59 to 12.9 per 100\,m driven. A smaller gain allows the barrier to decrease more slowly at each step and thus
 keeps the robot further from the field. At $\alpha=1$\,s$^{-1}$, the QP is infeasible on 332 steps, at
-which the filter applies maximal braking; an approach towards a wall at 0.3\,m/s with a clearance of
-0.95\,m is an example of such a situation, which is handled without braking at $\alpha=2$\,s$^{-1}$.
+which the filter applies maximal braking.
 
 \emph{Computational cost.} On the evaluation host, the 95th percentile of the planner's decision time
 per control step, measured in synthetic aisles, is 0.02\,ms for B1, 0.03\,ms for B2, 4.4\,ms for B3
@@ -408,8 +390,8 @@ took 27.9\,ms at the 95th percentile (median 1.6\,ms, maximum 49.5\,ms), and B7'
 28.1\,ms; all values lie within the control period of 50\,ms.
 
 \section{Discussion and Conclusion}
-The held-out results exhibit a clear trade-off between protective stops and throughput. Defining the safe set
-of the barrier as the complement of the certified trigger set removes nearly all protective stops of an existing
+The held-out results exhibit a clear trade-off between protective stops and throughput. Deriving the safe set
+of the barrier from the complement of the certified trigger set removes nearly all protective stops of an existing
 classical planner (from 1106 to 18 with unmapped obstacles, the confirmatory comparison, and from 907 to 2 without)
 and every unrecoverable stop (from 146 to none and from 70 to none), without modifying the planner and without a
 loss of progress: B7 drives further than B2 on both halves and spends a negligible fraction of time in a latched
@@ -417,7 +399,10 @@ stop. Whether this yields completed missions depends on the population. Without 
 rate of RPP doubles (0.347 to 0.733), and the remaining timeouts of B7 arise from the tuned speed of RPP. With one,
 it does not: B7 times out on 147 of 150 scenarios, because the filter further reduces the speed of a planner tuned
 to a low speed, within a horizon of 200\,s, on routes on which a tracker that does not replan rarely passes the
-obstacle. Success and mission time are descriptive here; no inference is drawn from them.
+obstacle. Success and mission time are descriptive here; no inference is drawn from them. The filter is optimal only
+step by step, and CBF-QPs can introduce undesirable stable equilibria \cite{reis2020undesirable,garg2024advances};
+this is a possible reading of B7's stalls near obstacles, not an established cause, as the stalls were not
+traced to it.
 
 The PFB is not shown to outperform the field-aware MPPI controller in either condition. The two are
 indistinguishable in terms of stops, at 18 versus 10 and at 2 versus 9 events, and B6 completes more routes on both
@@ -429,6 +414,8 @@ with B6, a confirmatory comparison chosen after development-set rates had been s
 without the filter, a single platform and simulator, and an emulated rather than physical safety function.
 Future work will consider planners tuned in the presence of the filter, the PFB beneath planners that can pass
 unmapped obstacles, and the transfer of the approach to a physical robot equipped with certified scanners.
+
+The code is available at \url{https://github.com/mad-7/Protective-Field-Barrier-Functions}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}

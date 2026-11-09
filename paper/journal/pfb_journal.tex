@@ -40,11 +40,11 @@
 \fancyhead[R]{\small Kahoul and Kiram}
 \fancyfoot[C]{\small\thepage}
 
-\title{\textbf{Protective-Field Barriers: Control Barrier Functions\\ Consistent with Certified Safety Fields for Classical\\ and Learned Local Planners of Industrial Mobile Robots}}
+\title{\textbf{Protective-Field Barriers: A LiDAR Barrier-Based Safety Filter Consistent with Industrial Safety Fields for Classical and Learned Local Planners of Industrial Mobile Robots}}
 \author{Mahdi Kahoul \qquad Firas Mohamed Elamine Kiram\\[2pt]
 \small AMCO Laboratory, Padua, Italy\\
 \small \texttt{mahdi.kahoul@univ-biskra.dz}}
-\date{\small Draft of 8 November 2026. Not submitted; submission is the authors' decision.}
+\date{\small Draft of 9 November 2026. Not submitted; submission is the authors' decision.}
 
 \begin{document}
 \maketitle
@@ -55,11 +55,12 @@
 scanners monitor speed-dependent protective fields and command a latched protective stop whenever an
 object enters the active field. The navigation software above this function does not model these fields,
 so local planners, whether hand-designed or learned, trigger stops frequently, and every stop costs a
-restart and throughput. This article introduces the Protective-Field Barrier (PFB), a discrete-time
-control barrier function defined on the sectors of the laser scan, whose safe set is the complement of
-the certified function's own trigger set. Its zero level set is a continuous protective field that
-depends on the robot's footprint, speed, direction of travel and yaw rate, built from the same
-configuration as the safety function. One quadratic program per speed regime minimally modifies the
+restart and throughput. This article introduces the Protective-Field Barrier (PFB), a safety filter
+based on a candidate discrete-time control barrier function defined on the sectors of the laser scan, whose
+intended safe set is derived from the region that triggers the certified safety function. Its zero level set is a
+protective field built from the robot's footprint and the same configuration as the safety function:
+continuous in the direction of travel and the yaw rate, and piecewise in speed, with one field per speed band.
+Validity of the candidate is not shown, and no safety guarantee is claimed. One quadratic program per speed regime minimally modifies the
 command of an arbitrary planner, within the wheel-speed and acceleration limits of a holonomic base, and
 falls back to maximal braking when no regime is feasible. We describe a study in which an emulated
 certified layer runs beneath every controller and protective stops per 100\,m of planned route are the
@@ -116,7 +117,7 @@ certified vehicle the collision rate, the usual safety metric of the navigation 
 bounded by the certified layer itself; the operational cost that remains is the protective stop.
 
 Control barrier functions (CBFs) render a set forward invariant by constraining the input at every
-state \citep{ames2017cbfqp,ames2019cbf}; used as a safety filter, a small quadratic program (QP) selects
+state \citep{ames2017cbfqp,ames2019cbf,garg2024advances}; used as a safety filter, a small quadratic program (QP) selects
 the admissible input closest to the command of an unmodified upstream controller
 \citep{wang2022ensuring,wabersich2023safety}. In mobile robotics the safe set of such filters is a
 clearance to observed points or obstacles, sometimes inflated with the relative velocity
@@ -124,15 +125,15 @@ clearance to observed points or obstacles, sometimes inflated with the relative 
 relation to the certified field: a filter with too small a clearance still triggers stops, and one with
 too large a clearance stops the robot by itself.
 
-This article proposes to take the safe set of the barrier from the certified safety function: every
-valid scan return must lie outside the protective field of the regime the robot will be in. The barrier
-is then exactly as conservative as the equipment it sits above, no more and no less, and its success can
+This article proposes to derive the safe set of the barrier from the region that triggers the certified safety
+function: every valid scan return must lie outside the protective field of the regime the robot will be in. The barrier
+is then sized by the equipment it sits above rather than by a clearance of the designer's choosing, and its success can
 be measured in the units in which the equipment charges for failure: protective stops. The contributions
 are as follows.
 \begin{itemize}
-\item \textbf{The Protective-Field Barrier.} A discrete-time CBF defined per sector of the laser scan,
-whose zero level set is a continuous protective field built from the measured footprint and the
-certified configuration: the motion reachable within the safety function's reach time followed by
+\item \textbf{The Protective-Field Barrier.} A candidate discrete-time CBF defined per sector of the laser scan,
+whose zero level set is a protective field, continuous in direction and yaw rate and piecewise in speed, built from
+the measured footprint and the certified configuration: the motion reachable within the safety function's reach time followed by
 braking, the lateral swerve an acceleration limiter permits, the rotation swept while stopping, and the
 drift of a body that turns while it translates (Section~\ref{sec:pfb}).
 \item \textbf{A filter for a holonomic base.} One QP per speed regime of the certified layer, with the
@@ -150,7 +151,8 @@ set and reported with what it does not show, together with development-set resul
 planners and the pilot gates and diagnostics of the learned planners (Section~\ref{sec:results}).
 \end{itemize}
 
-Section~\ref{sec:related} reviews related work, Section~\ref{sec:problem} formulates the problem,
+Section~\ref{sec:related} reviews related work, Section~\ref{sec:prelim} states the preliminaries on CBFs,
+Section~\ref{sec:problem} formulates the problem,
 Section~\ref{sec:pfb} derives the barrier and the filter, Section~\ref{sec:design} describes the system
 and the experimental design, Section~\ref{sec:results} reports the held-out, development-set and pilot results,
 Section~\ref{sec:discussion} discusses them with their limitations, and Section~\ref{sec:conclusion}
@@ -169,9 +171,8 @@ the scanner and the controller; it is sized at commissioning from measured stopp
 supplement for measurement error. A protective stop latches, and a restart requires the field to be
 clear, either automatically after a delay or by an operator reset. The standards prescribe the
 behaviour of this layer; they do not prescribe how the navigation software should avoid triggering it.
-Barrier functions derived from standard-mandated stopping requirements have recently been proposed for
-collaborative manipulators~\tbd{citation withheld until its authors are verified: arXiv:2606.13203, bib key iso10218cbf2026}; we are not aware of a comparable construction for
-mobile bases.
+We are not aware of a barrier for mobile bases derived from the protective field of a certified safety
+function.
 
 \subsection{Classical local planners}
 Pure Pursuit \citep{coulter1992purepursuit} steers towards a lookahead point on the route. Regulated
@@ -186,12 +187,9 @@ field-consistent filter. In all four the obstacle model is a clearance or a cost
 none treats the protective field as a hard constraint.
 
 \subsection{Control barrier functions and safety filters}
-For a control-affine system and a safe set $\mathcal{C}=\{x: h(x)\ge 0\}$, the condition
-$\dot h(x,u)\ge-\alpha(h(x))$, with $\alpha$ an extended class-$\mathcal{K}$ function, renders
-$\mathcal{C}$ forward invariant, and because it is affine in $u$ the closest admissible input is the
-solution of a QP \citep{ames2017cbfqp,ames2019cbf}. Its discrete-time counterpart,
-$h(x_{k+1})\ge(1-\gamma)h(x_k)$ with $\gamma\in(0,1]$, is the form used on sampled systems
-\citep{agrawal2017discrete}. Safety filters built on this principle correct the commands of learned
+CBFs constrain the input so that a safe set stays forward invariant, and the closest admissible input follows from a QP
+\citep{ames2017cbfqp,ames2019cbf}; \citet{garg2024advances} review the practical challenges of the method, and
+Section~\ref{sec:prelim} gives the definitions used here. Safety filters built on this principle correct the commands of learned
 motion planners \citep{wang2022ensuring}, are constructed from the policy at run time
 \citep{knoedler2025onthefly}, or are combined with predictive and reachability-based filters
 \citep{wabersich2023safety}. Shielding restricts a controller's actions according to a formal
@@ -199,7 +197,7 @@ specification \citep{alshiekh2018shielding}. On mobile robots, the barrier is us
 points of a scan or an occupancy grid \citep{raja2024ogmcbf}, possibly inflated with the relative
 velocity of nearby agents \citep{zeng2025relvel}; the footprint and the geometry of the stopping manoeuvre
 enter only through margins. The PFB belongs to this family but changes the safe set: rather than a
-clearance of the designer's choosing, it is the region whose violation the certified function punishes,
+clearance of the designer's choosing, it is derived from the region whose violation the certified function punishes,
 evaluated at the speed, direction and yaw rate the robot can reach.
 
 \subsection{Safe and constrained reinforcement learning for navigation}
@@ -220,6 +218,82 @@ widely, and single-seed results remain common despite the variance between seeds
 to exhibit \citep{henderson2018matters,agarwal2021precipice}. The present study trains with the filter in
 the loop and keeps it at deployment, compares against shaped, constrained and post-hoc-filtered
 alternatives, and treats the training seed as a unit of analysis.
+
+%=====================================================================================================
+\section{Preliminaries: Control Barrier Functions}\label{sec:prelim}
+
+This section collects the general definitions on which the article relies, following the tutorial review of
+\citet{garg2024advances}, which states them for time-varying sets; we give the time-invariant form. Here $h$ is a
+generic barrier and $\alpha(\cdot)$ a class-$\mathcal{K}$ function; Section~\ref{sec:pfb} introduces the specific
+quantities of this work.
+
+\paragraph{Safe sets and invariance.} Consider the control-affine system
+\begin{equation}
+\dot x=f(x)+g(x)u,\qquad x\in\mathbb{R}^n,\quad u\in\mathcal{U}\subseteq\mathbb{R}^m,
+\label{eq:affine}
+\end{equation}
+with $f$ and $g$ locally Lipschitz, and a safe set given as the zero-superlevel set of a sufficiently smooth function $h$,
+\begin{equation}
+\mathcal{S}=\{x:h(x)\ge0\},\qquad\partial\mathcal{S}=\{x:h(x)=0\},\qquad\operatorname{Int}\mathcal{S}=\{x:h(x)>0\}.
+\label{eq:safeset}
+\end{equation}
+Several constraints give the intersection of their sets $\mathcal{S}_i$. The set $\mathcal{S}$ is forward invariant if
+every trajectory that starts in it stays in it.
+
+\begin{definition}[Control barrier function]\label{def:cbf}
+A continuously differentiable function $h$ is a control barrier function on $\mathcal{S}$ if there is a class-$\mathcal{K}$
+function $\alpha$ such that
+\begin{equation}
+\sup_{u\in\mathcal{U}}\big[L_fh(x)+L_gh(x)\,u\big]\ge-\alpha(h(x))\qquad\text{for all }x\in\mathcal{S}.
+\label{eq:cbfcond}
+\end{equation}
+\end{definition}
+
+The definition is a property of the function, the dynamics and the input set together, and it must hold throughout
+$\mathcal{S}$ with the inputs actually available. If $h$ is a CBF and a control law, piecewise continuous in time and
+Lipschitz continuous in the state, satisfies the inequality along the closed-loop system, then $\mathcal{S}$ is forward
+invariant \citep{ames2017cbfqp,garg2024advances}. A function not yet shown to meet the condition is only a
+\emph{candidate} CBF, and establishing validity, that is, showing that the condition can be met with the available
+control authority at all times, is a central difficulty of the method.
+
+\paragraph{The CBF quadratic program.} The usual synthesis selects the input closest to a reference input
+$u_{\mathrm{ref}}$, which is often designed with no regard to the constraints:
+\begin{equation}
+u^\star(x)=\arg\min_{u\in\mathcal{U}}\ \|u-u_{\mathrm{ref}}(x)\|_Q^2\quad\text{s.t.}\quad L_fh(x)+L_gh(x)\,u\ge-\alpha(h(x)),
+\label{eq:cbfqp}
+\end{equation}
+with $Q$ positive definite. Under \eqref{eq:affine} and a polytopic $\mathcal{U}$ this is a QP, solved pointwise. The form
+in the review also carries a slack-relaxed control Lyapunov constraint for convergence, which we omit.
+
+\paragraph{Relative degree, bounded inputs and uncertainty.} If $L_gh\equiv0$ the input does not appear in the condition.
+Higher-order CBFs then build a sequence of functions from successive derivatives of $h$, each with its own zero-superlevel
+set, and impose the condition on the last one. Bounded inputs add a further difficulty: there can be regions where the
+condition holds instantaneously and yet the system eventually reaches the boundary and leaves $\mathcal{S}$. Robust and
+input-constrained constructions therefore work on an inner safe set that the available inputs can keep invariant, and
+robust variants add margins for disturbances and for measurement and estimation error. Barriers and inputs that are not
+smooth require their own treatment, for instance with absolutely continuous barriers or discontinuous control laws.
+
+\paragraph{Known limitations.} Three limitations of the method matter for what follows. First, validity: verifying a
+candidate under bounded inputs with several simultaneous constraints is largely open \citep{garg2024advances}. Second,
+parameters: the class-$\mathcal{K}$ function shapes both conservatism and feasibility, and in a case study of the review a
+CBF-QP with fixed parameters becomes infeasible where one with adapted parameters remains feasible. Third, myopia: the input
+of \eqref{eq:cbfqp} is optimal only pointwise. A CBF condition enforced step by step cannot by itself exclude a future
+entry into a region from which safety can no longer be guaranteed; a poorly chosen barrier can make the QP infeasible;
+and QP controllers that combine control Lyapunov and barrier constraints can introduce undesirable stable equilibria
+\citep{reis2020undesirable}. Predictive formulations address the first of these effects.
+
+\paragraph{Sampled systems.} A discrete-time condition sufficient for invariance of $\mathcal{S}$
+\citep{agrawal2017discrete}, written here in the convention $h\ge0$ of \eqref{eq:safeset}, is
+\begin{equation}
+h(x_{k+1})-h(x_k)\ge-\gamma\,h(x_k),\qquad\gamma\in(0,1],
+\label{eq:dtcbf}
+\end{equation}
+It is not control-affine in general, although its linear approximation is, which allows it
+to enter a QP. Under a zero-order hold neither form is sufficient on its own. Enforcing the continuous condition only at
+the sample times does not guarantee safety, and a controller designed with a discrete-time condition need not satisfy the
+continuous condition between samples \citep{garg2024advances}. The review quantifies the price of closing this gap by two
+margins: the \emph{controller margin} is the bound on the discretisation error added to the condition, and the
+\emph{physical margin} is the resulting effective shrinkage of the safe set.
 
 %=====================================================================================================
 \section{Problem Formulation}\label{sec:problem}
@@ -417,9 +491,16 @@ contact, with as few protective stops per 100\,m of planned route as possible.
 %=====================================================================================================
 \section{The Protective-Field Barrier}\label{sec:pfb}
 
-The PFB is a safety filter between the planner and the certified layer. It reads the same scan, velocity
+The PFB is a safety filter between the planner and the certified layer, based on a candidate discrete-time CBF in
+the sense of Section~\ref{sec:prelim}. It reads the same scan, velocity
 estimate and applied command as the certified layer and builds its field from the same configuration
-keys, through its own implementation; the two are cross-checked only in tests. Throughout,
+keys, through its own implementation; the two are cross-checked only in tests. For the same band, heading and yaw rate,
+the field equals the certified one (checked numerically to $10^{-12}$ at random draws and at rest), although each layer
+selects these separately. The certified layer takes the band from the reach of the larger of the estimated and applied
+speeds, the heading from whichever is faster and the yaw rate from the larger of their magnitudes; the filter tries every
+regime from the estimate's band upward, faces the field along the candidate command when that command is at least as
+fast as the estimate, and sweeps it for $W(\mathbf{u})$ below. The two choices agree by construction when the command
+executes as predicted; no check over logged steps exists. Throughout,
 $\mathbf{u}^{\mathrm{nom}}$ is the planner's command and $\mathbf{u}^-$ the command the base applied at
 the previous step.
 
@@ -428,7 +509,9 @@ The certified layer is in one of four regimes $\lambda\in\Lambda=\{\mathrm{rest}
 moving in one of the three bands. Because the band is chosen from the reachable speed and switches
 discretely, the PFB solves one problem per regime and keeps the best feasible answer; its field in
 regime $\lambda$, $\rho_\lambda(\psi;\theta,W)$, is \eqref{eq:extent} built from $h_{\mathrm{rest}}$ or
-from $h_{V_\lambda}$. For a valid sector $k$ with return $\mathbf{p}_k=r_k(\cos\psi_k,\sin\psi_k)$, the
+from $h_{V_\lambda}$. The deployed filter, PFB-(b), therefore uses the field of its regime's speed band: the field is
+continuous in direction and yaw rate and piecewise in speed. A variant whose field is continuous in speed, PFB-(a), is
+the ablation of H3. For a valid sector $k$ with return $\mathbf{p}_k=r_k(\cos\psi_k,\sin\psi_k)$, the
 barrier is the distance of the return outside the field,
 \begin{equation}
 h^\lambda_k=r_k-\rho_\lambda(\psi_k;\theta_0,W_0)-\delta,
@@ -436,8 +519,10 @@ h^\lambda_k=r_k-\rho_\lambda(\psi_k;\theta_0,W_0)-\delta,
 \end{equation}
 evaluated at the present motion ($\theta_0$ the heading of whichever of $\mathbf{u}^-$ and
 $\hat{\mathbf{v}}$ is faster, $W_0=\max(|\hat\omega|,|\omega^-|)$), where $\delta=0.5$\,mm is the
-measured scan residual against a wall face at the upper bound of its bracket. The safe set of regime
-$\lambda$ is $\{h^\lambda_k\ge0\ \forall k\}$: the complement of the certified trigger set in that regime.
+measured scan residual against a wall face at the upper bound of its bracket. The intended safe set of regime
+$\lambda$ is $\{h^\lambda_k\ge0\ \forall k\}$, derived from the certified trigger set in that regime. It is not identical to
+it: the rows carry the margin $\delta$, and, below, a grid margin and a tightening of the linearised rows, and they are
+evaluated at the predicted position rather than the present one.
 
 \subsection{Prediction and the discrete-time barrier condition}
 A candidate command moves each return relative to the body. Over the horizon $\tau=\Delta t+\tau_\ell$,
@@ -464,12 +549,24 @@ in regime $\lambda$ only if, for every valid sector within reach,
 with class-$\mathcal{K}$ gain $\alpha$ and $[\cdot]^+=\max(\cdot,0)$. Requiring the row over the realised
 fractions $M$, with a margin $\epsilon_\mu=0.5$\,mm that bounds the measured gap between the grid minimum
 and the minimum over all $\mu\in[0,1]$, keeps the condition valid along the whole step rather than only at
-its end. The clipped right-hand side departs deliberately from the standard discrete-time condition
-$g\ge(1-\gamma)h$ \citep{agrawal2017discrete}. Within one regime the clearance may decay at most at rate
-$\alpha$, as usual. Across regimes, however, the barrier of a field the robot is not yet in may already be
-negative, and the standard form would then admit entering it as long as the violation shrank; since the
-certified layer acts on the first breach, the clipped form requires a regime whose field is breached now
-to be clear after one step, which in practice rules that regime out.
+its end. 
+\paragraph{Relation to the discrete-time condition.} With $\gamma=\alpha\Delta t$, and the predicted barrier in the place
+of $h(x_{k+1})$, a row with $h^\lambda_k\ge0$ has the form of the discrete-time condition \eqref{eq:dtcbf}
+\citep{agrawal2017discrete,garg2024advances}: $\gamma=0.05$ at the frozen $\alpha=1$\,s$^{-1}$, and $\gamma=1.0$ at the top
+of the tuning grid, $\alpha=20$\,s$^{-1}$. Within one regime the clearance may decay at most at rate $\alpha$, as usual. The
+saturation $\max(h^\lambda_k,0)$ makes the row stricter than \eqref{eq:dtcbf}: a breached row must clear within one step
+instead of recovering gradually. This is a deliberate choice. Across regimes, the barrier of a field the robot is not yet
+in may already be negative, and the unsaturated form would then admit entering it as long as the violation shrank; since
+the certified layer acts on the first breach, the saturated form in practice rules that regime out. The choice can add
+to infeasibility.
+
+\paragraph{Sampling and bounded inputs.} The command is held over a control step, and the rows are held over the realised
+fractions of the predicted motion, with a lag allowance in the horizon. Their margins are not derived from a bound of the
+form of the review's controller margin \citep[Sec.~7.2]{garg2024advances}: the grid margin and the scan residual are
+measured, and the lag allowance is declared. For bounded inputs, the braking distance in the field plays the role of the
+review's inner safe set \citep[Sec.~4]{garg2024advances}, since a return at the field's boundary still leaves the distance
+needed to stop within the limiter; this is a design by construction of the field, not the review's construction of such a
+set.
 
 \subsection{The quadratic program}
 For each admissible regime the filter seeks the admissible command closest to the nominal one:
@@ -528,6 +625,13 @@ obstacles, prediction error from wheel slip and estimation lag, and states in wh
 (for example an unmapped obstacle across a narrow route, where braking alone cannot keep the field clear)
 all remain, and the certified layer beneath stays the safety function. The PFB is not a certified
 component; its role is to make the certified function's interventions rare.
+
+Validity in the sense of Definition~\ref{def:cbf} \citep[Def.~2.1]{garg2024advances} is not shown, so the barrier remains a
+candidate and no forward invariance or safety guarantee is claimed. The evidence is against treating it as valid: on the
+held-out test set the QP has no feasible solution on 0.3\,\% of B7's steps on routes with an unmapped obstacle and on
+0.15\,\% on routes without one, and stops still occur (18 and 2). Three points are open: the field is non-smooth, the
+filter switches between regimes, and there are up to 120 constraints under input limits, a setting in which verification
+is largely open \citep[Secs.~4.1.5 and~5.1]{garg2024advances}.
 
 \begin{figure}[!htbp]
 \centering
@@ -700,8 +804,8 @@ descriptively and without inference.
 \textbf{\Hprime} (contingency): B7 triggers fewer protective stops than B1, B2 and B6. It would have become the
 sole member of the first family had L5 failed G4 on two pilot seeds. L5 passed
 (Section~\ref{sec:res-learned}), so no pivot occurred and \Hprime\ is a declared exploratory contingency. Further
-exploratory analyses include L5 against B7 (H5: learning against filtering alone), the banded against a
-continuous PFB (H3), a unicycle ablation (H4), and the sensitivity of B7 to $\alpha\in\{1,2,5\}$.
+exploratory analyses include L5 against B7 (H5: learning against filtering alone), the banded PFB-(b)
+against PFB-(a), the variant continuous in speed (H3), a unicycle ablation (H4), and the sensitivity of B7 to $\alpha\in\{1,2,5\}$.
 
 \paragraph{Disclosures.} The test size and HF-c as a confirmatory comparison were fixed before the test set was
 built or read, but after the development-set rates had been seen (B2 52.8 and B7 0.47 stops per 100\,m
@@ -1090,8 +1194,8 @@ Unmapped-static & \pending & \pending & \pending\\
 \paragraph{What the held-out evidence supports.} On the test set the PFB removes nearly all protective stops from
 RPP (1{,}106 to 18 with an unmapped obstacle; 907 to 2 without) and every unrecoverable stop (146 to 0; 70 to 0), and
 the robot drives further with it than without it, so the effect is not obtained by standing still. A barrier whose
-safe set is the complement of the certified trigger set need not be tuned against the safety equipment: it is
-as conservative as the equipment by sharing its field. Without an unmapped obstacle, removing the
+safe set is derived from the certified trigger set need not be tuned against the safety equipment: for the same band,
+heading and yaw rate it uses the certified field, plus margins of the order of a millimetre. Without an unmapped obstacle, removing the
 stop--recovery--restop cycle also doubles RPP's completion, although that is a descriptive result without inference.
 
 \paragraph{What it does not support.} The filter does not make RPP complete routes with an unmapped obstacle: 147 of
@@ -1108,6 +1212,14 @@ is a layer beneath a planner that has no knowledge of the field. We make no clai
 this evidence the useful planner on obstacle routes is B6, and the filter's contribution is to a tracker that
 would otherwise be stopped repeatedly. A planner that can leave the route with the PFB beneath it is a natural next
 step, and its benefit remains to be measured.
+
+\paragraph{A step-by-step filter.} The filter is optimal only step by step, and QP controllers of this kind can introduce
+undesirable stable equilibria \citep[Secs.~3.4 and~6]{garg2024advances}\citep{reis2020undesirable}. This offers a possible
+reading of B7's stalls near unmapped obstacles, where a goal-seeking nominal command and the barrier rows may balance. This
+balance was not traced in any episode, and it is not an established cause: the stalls were not traced to such an
+equilibrium, and the cited analysis concerns controllers
+with an explicit control Lyapunov constraint, which the PFB does not have. Predictive forms of the barrier
+\citep[Sec.~6]{garg2024advances} are future work.
 
 \paragraph{The learned planner leans on the filter (pilot).} L5 is defined as the policy with the filter in the
 loop, and on its pilot checkpoint it has learned to use it: it asks for near-maximal speed and lets the filter
@@ -1150,24 +1262,25 @@ Obstacles are static; moving people, the main reason protective fields exist, ar
 %=====================================================================================================
 \section{Conclusion}\label{sec:conclusion}
 
-The Protective-Field Barrier is a control barrier function whose safe set is taken from the certified safety function
-it sits above: the complement of a continuous protective field built from the footprint, the speed, the direction and
-the yaw rate of a holonomic robot. One QP per speed regime minimally corrects the command of an arbitrary planner within
+The Protective-Field Barrier is a safety filter based on a candidate discrete-time control barrier function, whose
+intended safe set is derived from the certified safety function it sits above: the complement of a protective field built
+from the footprint, the speed band, the direction and the yaw rate of a holonomic robot. Its validity as a control barrier
+function is not shown, and no safety guarantee is claimed. One QP per speed regime minimally corrects the command of an arbitrary planner within
 the base's limits. On a held-out test set it removed nearly all protective stops and every unrecoverable stop from a
 tuned Regulated Pure Pursuit planner (rate ratio 0.0167, 95\,\% CI [0.0090, 0.0311], on routes with an unmapped
 obstacle), while the robot drove further than without it. It did not make that planner complete routes with an unmapped
 obstacle, and it did not beat a field-aware MPPI planner, which completed more routes at an indistinguishable stop count.
 A reinforcement-learning planner trained with the filter in the loop has so far only pilot results; the hypotheses
 concerning it remain untested. Future work includes the confirmatory evaluation of the learned planners, planners that
-can leave the route above the filter, moving obstacles, and the transfer to a physical vehicle with certified scanners.
+can leave the route above the filter, predictive forms of the barrier, moving obstacles, and the transfer to a physical vehicle with certified scanners.
 
 \section*{Data and code availability}
-\tbd{Repository link for code, scenario sets and run data, or a statement of availability, to be decided
-by the authors.}
+The code is available at \url{https://github.com/mad-7/Protective-Field-Barrier-Functions}.
 
 \section*{Acknowledgements}
-\tbd{Funding and acknowledgements. Generative-AI disclosure as required by the chosen venue: tool, version
-and purpose of use.}
+\tbd{Funding and acknowledgements: to be supplied by the authors. Generative-AI disclosure, worded by the authors to
+the chosen venue's policy. Fact: the drafts and the analysis code were produced with Claude (Anthropic) under the
+authors' direction.}
 
 \bibliographystyle{plainnat}
 \bibliography{references}
