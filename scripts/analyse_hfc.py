@@ -44,7 +44,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 H1PRIME = ("B1", "B2", "B6")
 
 
-def read_runs(dirs: list[Path]) -> tuple[dict[str, list[dict[str, Any]]], dict[str, Any]]:
+def read_runs(dirs: list[Path], arms: tuple[str, ...] = ARMS
+              ) -> tuple[dict[str, list[dict[str, Any]]], dict[str, Any]]:
     """Every arm's episodes over all shards, after the integrity checks; and what was checked."""
     evals, provs = [], []
     for d in dirs:
@@ -68,9 +69,9 @@ def read_runs(dirs: list[Path]) -> tuple[dict[str, list[dict[str, Any]]], dict[s
     positions = sorted(p for e in evals for p in e["positions"])
     if positions != list(range(len(positions))):
         raise SystemExit("the shards' scenario positions do not cover the sets exactly once")
-    records: dict[str, list[dict[str, Any]]] = {a: [] for a in ARMS}
+    records: dict[str, list[dict[str, Any]]] = {a: [] for a in arms}
     for d in dirs:
-        for a in ARMS:
+        for a in arms:
             path = d / a / "episodes.jsonl"
             if not path.is_file():
                 raise SystemExit(f"{path} is missing")

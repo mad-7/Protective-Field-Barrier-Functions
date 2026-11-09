@@ -11432,3 +11432,29 @@ context. H1 keeps B6 as a comparator for L5 unchanged. Any change to the main cl
 weak-host objection is met; B6 stays the near-floor case (10 and 9 stops). Exploratory by construction, proposed after
 the sealed test was read. First step as B8: the three tune sets for the measured decision p95 and a monitoring read
 against B3. `scripts/evaluate.py` gains `--instance` so the two checks can run side by side.
+
+
+## 2026-11-09 - B8 and B9 on the tune sets: both meet the real-time criterion; B9 removes DWA's stops at no cost; A37 drafted
+
+`runs/eval/B6_field_aware_mppi_20261108T232422Z_seed0` is **B8** and `runs/eval/B3_holonomic_dwa_20261108T232442Z_seed0` is
+**B9**: the folder names come from the controller, and each run's config records `experiment` and `filter.enabled: true`.
+Development set, monitoring only; the hosts come from their tuning runs, another scene load, so nothing here is paired.
+
+| arm | success, all (60) | obstacle routes (17): success, stops, driven/planned, moving | clear routes (43): success, stops, driven/planned, moving | decision p95 / max | no feasible QP |
+|---|---|---|---|---|---|
+| B3 | 0.667 | 0.000, 121, 0.54, 0.031 | 0.930, 9, 0.99, 0.094 | 4.4 ms (synthetic aisles) | -- |
+| **B9 = B3 + PFB** | 0.700 | 0.000, 0, 0.50, 0.026 | 0.977, 1, 1.01, 0.093 | 17.3 / 42.4 ms | 0.16 % |
+| B6 | 0.833 | 0.706, 0, 1.23, 0.082 | 0.884, 3, 1.03, 0.096 | 37.1 ms (synthetic aisles) | -- |
+| **B8 = B6 + PFB** | 0.767 | 0.706, 0, 1.26, 0.086 | 0.791, 0, 1.02, 0.092 | 45.0 / 74.8 ms | 1.0 % |
+
+- **Both meet the 50 ms criterion by measurement.** B8's ~65 ms was a sum of p95s and overstated it. Its margin is 5 ms on a set
+  where 17 of 60 routes have obstacles, so the obstacle half may be harder: A37 reports that as a finding, not a reason to rerun.
+- **B9 is the informative host:** DWA's stops fall from 130 to 1 with no loss of completion on either kind of route.
+- **B9's early stalls are explained, not a filter deadlock near the start:** all 17 obstacle routes time out, and only 1 clear route
+  does, so at least 8 of the 9 stalls at 1.7-3.6 m are on obstacle routes (obstacles are placed from 2 m along the route). B3 fails
+  those 17 routes too. Which obstacle routes they are was not checked episode by episode.
+- **B8's cost is on clear routes:** 34 of 43 against B6's 38 of 43, with stops 3 -> 0; on obstacle routes the two tie at 12 of 17.
+  Four routes, so this may be noise; why they time out was not examined. MPPI is the only host that passes obstacles.
+- **A37 drafted** (`docs/pending/A37_amendment.md`): B9 vs B3 and B8 vs B6 on both halves, exploratory, each host beside its filtered
+  version in one scene load (`scripts/evaluate_test.py --arm-set hosts`, `scripts/analyse_hosts.py`); B3 and B6 therefore run a second
+  time on the test set, their sealed results staying the cited ones, with a declared consistency check; a declared low-count flag.

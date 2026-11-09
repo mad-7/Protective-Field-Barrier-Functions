@@ -83,3 +83,22 @@ def paired_table(records_by_arm: Mapping[str, Sequence[Mapping[str, Any]]],
         raise ValueError("scan-fault stops exceed protective stops in some episode")
     return {"scenarios": keys, "planned_m": planned, "stops": stops,
             "stratum": [keyed[arms[0]][k].get("stratum") for k in keys]}
+
+
+LOW_COUNT_MIN, LOW_COUNT_MAX = 8, 30      # declared in A37
+CONSISTENCY_SUCCESS = 0.05                # declared in A37
+
+
+def low_count(stops_a: int, stops_b: int) -> bool:
+    """A37: the interval is unreliable when an arm records zero or few stops and the other is not large
+    (the refined A14b grid, 2026-11-07). Such a comparison is reported as counts, never as a verdict."""
+    return min(stops_a, stops_b) < LOW_COUNT_MIN and max(stops_a, stops_b) < LOW_COUNT_MAX
+
+
+def consistency(rerun: Mapping[str, Any], sealed: Mapping[str, Any]) -> dict[str, Any]:
+    """A37: a host's rerun against its sealed result (each `outcome_summary`-like), flagged above 0.05 in
+    success. Runs differ across scene loads, so identity is not expected."""
+    diff = float(rerun["success_rate"]) - float(sealed["success_rate"])
+    return {"success_rerun": rerun["success_rate"], "success_sealed": sealed["success_rate"],
+            "stops_rerun": rerun["protective_stops"], "stops_sealed": sealed["protective_stops"],
+            "success_difference": diff, "flagged": abs(diff) > CONSISTENCY_SUCCESS}

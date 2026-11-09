@@ -18,6 +18,10 @@ unlocked, of the wrong size or failing `verify()`; and a SECOND attempt at a sha
 once. After a crash, `--rerun-after-crash <the crashed run dir>` runs it again and records the crashed run
 in `evaluated.json`; the rerun goes into the decision log.
 
+**`--arm-set hosts`** (A37, 2026-11-09): B3, B9, B6, B8 instead of the five, in that order on each scenario, each host
+beside its filtered version in one scene load; runs named `HOSTS_<condition>_shard*`, sealed apart, each shard once. B3 and
+B6 run a second time here for the pairing; their first (sealed) results stay the cited ones.
+
 **`--condition`** (2026-11-08): `unmapped_static` (the default, HF-c's population) or `mapped_only`,
 the other half of the locked test set, run the same way (descriptive and per-condition reporting; HF-c
 and H1 do not use it). The two conditions are separate sealed evaluations, each shard once.
@@ -67,6 +71,10 @@ CONDITIONS = ("unmapped_static", "mapped_only")
 ARMS = {"B1": ("pure_pursuit", False), "B2": ("regulated_pure_pursuit", False),
         "B3": ("dwa", False), "B6": ("field_aware_mppi", False),
         "B7": ("regulated_pure_pursuit", True)}
+# A37: the PFB on two more hosts; each host beside its filtered version, in one scene load.
+ARM_SETS = {"classical": ARMS,
+            "hosts": {"B3": ("dwa", False), "B9": ("dwa", True),
+                      "B6": ("field_aware_mppi", False), "B8": ("field_aware_mppi", True)}}
 
 
 def _module(name: str):
@@ -84,8 +92,10 @@ def test_sets(condition: str = "unmapped_static") -> list[Path]:
     return [TEST_DIR / f"test_{condition}_{s}.json" for s in STRATA]
 
 
-def run_prefix(condition: str) -> str:
+def run_prefix(condition: str, arm_set: str = "classical") -> str:
     """The run-name prefix: unmapped_static keeps the first run's `CLASSICAL_` (2026-11-07)."""
+    if arm_set == "hosts":
+        return f"HOSTS_{condition}_"
     return "CLASSICAL_" if condition == "unmapped_static" else f"CLASSICAL_{condition}_"
 
 
@@ -102,8 +112,10 @@ def set_filter(loop, pfb) -> None:
     loop.filter_enabled = pfb is not None
 
 
-def preregistered_size() -> int:
+def preregistered_size(arm_set: str = "classical") -> int:
     amendments = (PREREG / "AMENDMENTS.md").read_text(encoding="utf-8")
+    if arm_set == "hosts" and "## A37 - " not in amendments:
+        raise SystemExit("A37 is not applied (docs/pending/apply_A37.py, then relock)")
     if "## A36 - " not in amendments or "## A14b - " not in amendments:
         raise SystemExit("A14b/A36 are not applied (docs/pending/apply_A36.py, then relock)")
     test = yaml.safe_load((PREREG / "scenario_sets.yaml").read_text(encoding="utf-8")
@@ -114,9 +126,9 @@ def preregistered_size() -> int:
 
 
 def prior_attempts(shard: int, shards: int, condition: str = "unmapped_static",
-                   root: Path | None = None) -> list[Path]:
+                   root: Path | None = None, arm_set: str = "classical") -> list[Path]:
     root = REPO_ROOT / "runs" / "test" if root is None else root
-    pattern = f"{run_prefix(condition)}shard{shard}of{shards}_*"
+    pattern = f"{run_prefix(condition, arm_set)}shard{shard}of{shards}_*"
     return sorted(root.glob(pattern)) if root.is_dir() else []
 
 
@@ -132,6 +144,8 @@ def main() -> int:
     parser.add_argument("--workers", type=int, default=4, help="processes for the route profiles")
     parser.add_argument("--condition", choices=CONDITIONS, default="unmapped_static",
                         help="which half of the locked test set (2026-11-08)")
+    parser.add_argument("--arm-set", choices=tuple(ARM_SETS), default="classical",
+                        help="classical: the sealed five; hosts: B3, B9, B6, B8 (A37)")
     parser.add_argument("--rerun-after-crash", default=None,
                         help="the crashed run directory of this shard (recorded; decision log)")
     add_display_flag(parser, default="on")
@@ -155,8 +169,9 @@ def main() -> int:
                            capture_output=True, text=True, check=True).stdout.strip()
     if dirty:      # the same test as provenance.json's `dirty`: a sealed run must record False
         raise SystemExit("the working tree is not clean (untracked files count); commit first")
-    per_cell = preregistered_size()
-    prior = prior_attempts(args.shard, args.shards, args.condition)
+    per_cell = preregistered_size(args.arm_set)
+    arms = ARM_SETS[args.arm_set]
+    prior = prior_attempts(args.shard, args.shards, args.condition, arm_set=args.arm_set)
     if prior:
         named = Path(args.rerun_after_crash).resolve() if args.rerun_after_crash else None
         if named is None or named not in [p.resolve() for p in prior]:
@@ -190,11 +205,12 @@ def main() -> int:
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     run_dir = create_run_dir(REPO_ROOT / "runs" / "test",
-                             f"{run_prefix(args.condition)}shard{args.shard}of{args.shards}_{stamp}", args.seed, cfg)
+                             f"{run_prefix(args.condition, args.arm_set)}shard{args.shard}of{args.shards}_{stamp}", args.seed, cfg)
     (run_dir / "evaluated.json").write_text(json.dumps({
-        "amendments": ["A14b", "A36"], "condition": args.condition, "arms": {a: {"controller": c, "filter": f}
-                                                for a, (c, f) in ARMS.items()},
-        "order_within_scenario": list(ARMS), "shard": args.shard, "shards": args.shards,
+        "amendments": ["A14b", "A36", *(["A37"] if args.arm_set == "hosts" else [])],
+        "arm_set": args.arm_set, "condition": args.condition, "arms": {a: {"controller": c, "filter": f}
+                                                                       for a, (c, f) in arms.items()},
+        "order_within_scenario": list(arms), "shard": args.shard, "shards": args.shards,
         "instance": args.instance, "instances": args.instances, "positions": picked,
         "scenario_sha256": [s.get("scenario_sha256") for s in sub],
         "environment": environment_identity(on)["sha256"], "alpha": float(on["filter"]["alpha"]),
@@ -207,9 +223,9 @@ def main() -> int:
 
     evaluate = _module("evaluate")
     controllers = {a: evaluate.make_controller(c, on if f else cfg, None, profiles)
-                   for a, (c, f) in ARMS.items()}
+                   for a, (c, f) in arms.items()}
     rings = {}
-    for a in ARMS:
+    for a in arms:
         (run_dir / a).mkdir()
         rings[a] = StepRing(int(cfg["evaluation"]["ring_steps"]), run_dir / a / "ring")
     client = SimClient(SimConnection.from_config(on, instance_id=args.instance))
@@ -220,10 +236,10 @@ def main() -> int:
     pfb = env.loop.pfb
     if pfb is None or float(pfb.c.alpha) != float(on["filter"]["alpha"]):
         raise RuntimeError("the step loop's PFB is missing or not at the frozen alpha")
-    records: dict[str, list[dict[str, Any]]] = {a: [] for a in ARMS}
+    records: dict[str, list[dict[str, Any]]] = {a: [] for a in arms}
     try:
         for j in range(len(sub)):
-            for a, (_, filtered) in ARMS.items():
+            for a, (_, filtered) in arms.items():
                 set_filter(env.loop, pfb if filtered else None)
 
                 def write(record: dict[str, Any], a=a, j=j) -> None:
@@ -248,8 +264,8 @@ def main() -> int:
     summary["memory"] = memory.report(sum(len(r) for r in records.values()))
     (run_dir / "summary.json").write_text(json.dumps(summary, indent=2, default=float),
                                           encoding="utf-8")
-    defects = [a for a in ARMS if summary[a]["recovery"]["suspected_defects"]]
-    for a in ARMS:
+    defects = [a for a in arms if summary[a]["recovery"]["suspected_defects"]]
+    for a in arms:
         o = summary[a]["overall"]
         print(f"{a}: success {o['success_rate']:.2f}, contact {o['contact_rate']:.2f}, "
               f"stops {o['protective_stops']}, per 100 m planned {o['stops_per_100m_planned']}")
