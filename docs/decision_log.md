@@ -11458,3 +11458,26 @@ Development set, monitoring only; the hosts come from their tuning runs, another
 - **A37 drafted** (`docs/pending/A37_amendment.md`): B9 vs B3 and B8 vs B6 on both halves, exploratory, each host beside its filtered
   version in one scene load (`scripts/evaluate_test.py --arm-set hosts`, `scripts/analyse_hosts.py`); B3 and B6 therefore run a second
   time on the test set, their sealed results staying the cited ones, with a declared consistency check; a declared low-count flag.
+
+
+## 2026-11-09 - HF_hosts, obstacle half (exploratory, A37): B9 removes DWA's stops; B8 vs B6 is low-count; run-to-run noise measured
+
+`runs/test/HOSTS_ANALYSIS_unmapped_static_20261109T154308Z_seed0`, commit 47ae61a, clean, 150 scenarios x 4 arms, no rerun, no contact.
+
+| arm | success | S / timeout / unrecoverable | stops | /100 m planned | /100 m driven | driven m (derived) | moving m/s | decision p95 | no feasible QP steps |
+|---|---|---|---|---|---|---|---|---|---|
+| B3 (rerun) | 0.013 | 2 / 134 / 14 | 736 | 45.3 | 81.4 | 904 | 0.033 | 2.6 ms | 0 |
+| **B9** | 0.067 | 10 / 140 / 0 | 1 | 0.06 | 0.11 | 932 | 0.032 | 21.2 ms | 588 |
+| B6 (rerun) | 0.587 | 88 / 62 / 0 | 11 | 0.68 | 0.60 | 1,830 | 0.075 | 33.9 ms | 0 |
+| **B8** | 0.547 | 82 / 68 / 0 | 2 | 0.12 | 0.11 | 1,746 | 0.069 | 47.5 ms | 7,899 |
+
+- **B9 vs B3:** rate ratio 0.0020, 95 % CI [0.0005, 0.0077], B9 fewer; unrecoverable stops 14 -> 0; distance driven not reduced. Success stays very low
+  (10 of 150, B3 2 of 150): DWA does not pass these obstacles either way.
+- **B8 vs B6: flagged low-count as declared, so counts only: 2 vs 11 events.** The interval (ratio 0.2174, [0.0592, 0.7982]) excludes 1 but is not read
+  as a verdict. Success 88 -> 82 of 150, not attributable: see below.
+- **Real time:** B8 47.5 ms and B9 21.2 ms at p95, both within 50 ms, on the harder half.
+- **Consistency check (declared):** not flagged. B3 success 0.013 in both; B6 0.587 rerun vs 0.553 sealed (difference 0.034, below 0.05).
+- **Finding: the run-to-run noise is measurable and not small.** The same planner on the same scenarios differs across scene loads: B3 736 vs 815 stops (10 %),
+  B6 88 vs 83 successes. B8's 6-route difference from B6 is about the size of B6's own 5-route rerun difference. So a success difference of a few routes between
+  two arms on this set must not be read as an effect, and this applies to every single-run classical comparison. Effects of the size of B9 vs B3 and B7 vs B2 are far larger.
+- The sealed results stay the cited ones for B3 and B6; the reruns serve the pairing only.
