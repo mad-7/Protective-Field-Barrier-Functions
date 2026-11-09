@@ -34,7 +34,7 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
 3. **Everything on the half without obstacles is exploratory or descriptive;** the confirmatory comparison is the
    obstacle half's B7 vs B2 only. B7 vs B3 was not declared: counts only.
 4. **References marked VERIFY** in `references.bib` (Coulter 1992, Macenski 2023, Williams 2017, Macenski 2020,
-   and the `verify` fields of Raja 2024, IEC 61496-3, Clarabel). The rest are copied verbatim from
+   and the `verify` fields of Raja 2024, IEC 61496-3, Clarabel, Agrawal 2017, Reis 2020; the last two are taken from the reference list of Garg et al. 2024). The rest are copied verbatim from
    `paper/MDPI_template/references.bib`.
 
 ## Where each number comes from (docs/decision_log.md, entries of the dates given)
@@ -56,6 +56,8 @@ B3, B6, B7). Learned planners are deliberately left out until their results are 
 | B1: five retraced failures, unrecoverable stop after 6-8 stops, cross-track p95 1-8 cm | same entries, 3e (trace `runs/diag/TRACE2_20261107T191325Z`, training host) |
 | Compute p95 | 2026-11-07 compute entry; 2026-10-29 real-time measurement (B6) |
 | CBF background: safe set, CBF vs candidate, QP, pointwise optimality, sampling | Garg et al. 2024 (checked against the PDF: eqs. 2-4, 8; Def. 2.1; Secs. 1.1, 3.4, 7.2) |
+| Candidate CBF, validity not shown; gamma = alpha dt = 0.05; saturation stricter than the discrete condition; measured margins; non-smooth field, regime switching, up to 120 rows; myopia as a possible reading; deployed field is the band of the regime (band tops) | 2026-11-09 "The PFB reviewed against the CBF theory"; researcher-approved wording 2026-11-09; `pfbnav/safety/pfb.py`, `pfb_field.py` |
+| QP infeasible on 0.15 % of B7's steps, half without obstacles (777 of 514,175) | 2026-11-08 "The sealed classical test (mapped_only)"; `report.json` printout |
 | Field, barrier row, QP | `pfbnav/safety/pfb_field.py`, `pfbnav/safety/pfb.py` docstrings |
 | T = 0.15 s; box 0.5/0.5/1.5; dt 0.05; two S300 scanners | `configs/base.yaml`; `paper/claims_trace.md`; the researcher (scanner count) |
 
