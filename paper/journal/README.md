@@ -75,6 +75,7 @@ Figure 1 (`fig_architecture.pdf`) is a schematic drawing in full scope (classica
 | Power: no feasible size reaches 80 % at plausible rates; test-size rule | 2026-11-07 "A14b power grid"; ruling items 2-3 |
 | k_proximity 0.10113 (derived); 2M steps, curriculum, stall truncation; L2 d = 1.0 / 100 m | 2026-11-01 ruling; 2026-10-30 A30 rulings; `configs/base.yaml` |
 | Tune set: 60 scenarios, 633 m, 17 with unmapped obstacles; training set mean 10.67 m | `scenarios/tune/*.json` (read 2026-11-07); 2026-10-30 (L_ref 10.671616 m) |
+| Section 3, general CBF definitions | Garg et al. 2024, Annual Reviews in Control 57, 100945 (eqs. 1-4, 8, 93; Defs. 2.1, 2.2, 3.3, 4.1, 4.2, 6.1, 7.2, 7.4, 7.5; Secs. 1.1, 3.4, 4.1.5, 5.1, 5.2, 7.2, 9), read from the PDF 2026-11-09; eq. 93 restated in the h >= 0 convention |
 | Field, barrier rows, motion fractions, QP, fallback | `pfbnav/safety/pfb_field.py`, `pfbnav/safety/pfb.py`, `configs/base.yaml` `filter:` |
 | Platform, sensing, certified layer, verification findings | `paper/claims_trace.md` (MDPI draft trace), `configs/base.yaml`, CLAUDE.md |
 
