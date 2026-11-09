@@ -40,7 +40,7 @@
 \fancyhead[R]{\small Kahoul and Kiram}
 \fancyfoot[C]{\small\thepage}
 
-\title{\textbf{Protective-Field Barriers: A LiDAR Barrier-Based Safety Filter Consistent with Industrial Safety Fields for Classical and Learned Local Planners of Mobile Robots}}
+\title{\textbf{Protective-Field Barriers: A LiDAR Barrier-Based Safety Filter Consistent with Industrial Safety Fields for Classical and Learned Local Planners of Industrial Mobile Robots}}
 \author{Mahdi Kahoul \qquad Firas Mohamed Elamine Kiram\\[2pt]
 \small AMCO Laboratory, Padua, Italy\\
 \small \texttt{mahdi.kahoul@univ-biskra.dz}}
@@ -171,9 +171,8 @@ the scanner and the controller; it is sized at commissioning from measured stopp
 supplement for measurement error. A protective stop latches, and a restart requires the field to be
 clear, either automatically after a delay or by an operator reset. The standards prescribe the
 behaviour of this layer; they do not prescribe how the navigation software should avoid triggering it.
-Barrier functions derived from standard-mandated stopping requirements have recently been proposed for
-collaborative manipulators~\tbd{citation withheld until its authors are verified: arXiv:2606.13203, bib key iso10218cbf2026}; we are not aware of a comparable construction for
-mobile bases.
+We are not aware of a barrier for mobile bases derived from the protective field of a certified safety
+function.
 
 \subsection{Classical local planners}
 Pure Pursuit \citep{coulter1992purepursuit} steers towards a lookahead point on the route. Regulated
@@ -1216,8 +1215,9 @@ step, and its benefit remains to be measured.
 
 \paragraph{A step-by-step filter.} The filter is optimal only step by step, and QP controllers of this kind can introduce
 undesirable stable equilibria \citep[Secs.~3.4 and~6]{garg2024advances}\citep{reis2020undesirable}. This offers a possible
-reading of B7's stalls near unmapped obstacles, where a goal-seeking nominal command and the barrier rows may balance. It
-is not an established cause: the stalls were not traced to such an equilibrium, and the cited analysis concerns controllers
+reading of B7's stalls near unmapped obstacles, where a goal-seeking nominal command and the barrier rows may balance. This
+balance was not traced in any episode, and it is not an established cause: the stalls were not traced to such an
+equilibrium, and the cited analysis concerns controllers
 with an explicit control Lyapunov constraint, which the PFB does not have. Predictive forms of the barrier
 \citep[Sec.~6]{garg2024advances} are future work.
 
@@ -1275,12 +1275,14 @@ concerning it remain untested. Future work includes the confirmatory evaluation 
 can leave the route above the filter, predictive forms of the barrier, moving obstacles, and the transfer to a physical vehicle with certified scanners.
 
 \section*{Data and code availability}
-\tbd{Repository link for code, scenario sets and run data, or a statement of availability, to be decided
-by the authors.}
+\tbd{Statement of availability, to be decided by the authors with the venue. Fact: the code is in the GitHub
+repository mad-7/Protective-Field-Barrier-Functions; whether it is public is not confirmed, so no link is given as
+available.}
 
 \section*{Acknowledgements}
-\tbd{Funding and acknowledgements. Generative-AI disclosure as required by the chosen venue: tool, version
-and purpose of use.}
+\tbd{Funding and acknowledgements: to be supplied by the authors. Generative-AI disclosure, worded by the authors to
+the chosen venue's policy. Fact: the drafts and the analysis code were produced with Claude (Anthropic) under the
+authors' direction.}
 
 \bibliographystyle{plainnat}
 \bibliography{references}

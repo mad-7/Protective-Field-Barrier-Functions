@@ -24,8 +24,8 @@ learned SAC arms (L1-L5).
    CBF; validity is not shown and no safety guarantee is claimed. The deployed field is piecewise in speed (per band);
    the continuous-in-speed field is PFB-(a), the H3 ablation.
 7. No invented numbers or references. VERIFY notes live in the bib field `verify`, which `plainnat`
-   ignores, so they never print. One citation (`iso10218cbf2026`, author unknown) is withheld in the text
-   with a red marker until its authors are verified.
+   ignores, so they never print. An unverified citation (arXiv:2606.13203, authors unknown) was removed with
+   its sentence on 2026-11-09; it returns only if the researcher supplies verified details.
 
 ## Build
 From this folder (MiKTeX or TeX Live):
@@ -84,7 +84,8 @@ Figure 1 (`fig_architecture.pdf`) is a schematic drawing in full scope (classica
 
 ## Open before any submission
 - Every `verify` field in `references.bib` (checked against the publisher's record).
-- Red markers: data/code availability, acknowledgements and AI-use disclosure, the withheld citation.
+- Red markers (left until a venue is chosen): data/code availability, funding and acknowledgements, AI-use disclosure.
+- The title (2026-11-09): the researcher's decision is pending; the draft keeps "Industrial Mobile Robots".
 - The learned arms: Tables 8 and 9 (H1, H2) and every `[pending]` cell of Table 7 (L2, L4, L5 9000003).
 
 Commit this folder on its own, never together with code.
