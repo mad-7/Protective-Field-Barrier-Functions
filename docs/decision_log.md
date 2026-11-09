@@ -11504,3 +11504,26 @@ sampling problem of its Sec. 7.2.
 
 **A wording error found:** the deployed PFB is option (b), the field of the regime's speed BAND. It is continuous in direction and yaw rate, piecewise in speed. The drafts' "continuous, speed- and
 direction-dependent" field describes PFB-(a), the ablation, and needs correcting, as does the project summary in CLAUDE.md if the researcher agrees.
+
+
+## 2026-11-09 - HF_hosts, half without obstacles (exploratory, A37): B9 removes every DWA stop; B8 vs B6 low-count; consistency holds
+
+`runs/test/HOSTS_ANALYSIS_mapped_only_20261109T195925Z_seed0`, commit 47ae61a, clean, 150 scenarios x 4 arms, no rerun, no contact.
+
+| arm | success | S / timeout / unrecoverable | stops | /100 m planned | moving m/s | mission time s | decision p95 | no feasible QP steps |
+|---|---|---|---|---|---|---|---|---|
+| B3 (rerun) | 0.920 | 138 / 5 / 7 | 115 | 7.16 | 0.098 | 107.1 | 3.9 ms | 0 |
+| **B9** | 0.947 | 142 / 8 / 0 | 0 | 0.00 | 0.096 | 107.0 | 12.0 ms | 645 |
+| B6 (rerun) | 0.853 | 128 / 22 / 0 | 10 | 0.62 | 0.098 | 104.6 | 34.4 ms | 0 |
+| **B8** | 0.827 | 124 / 26 / 0 | 1 | 0.06 | 0.092 | 108.3 | 44.6 ms | 3,060 |
+
+- **B9 vs B3:** 0 vs 115 stops, rate ratio 0.0043 [0.0028, 0.0066] (continuity 0.5 on B9's zero; not low-count, B3's 115 is large); unrecoverable 7 -> 0;
+  speed and mission time unchanged. Success 142 vs 138: within the measured rerun noise, so descriptive only.
+- **B8 vs B6: low-count as declared, counts only, 1 vs 10.** Success 124 vs 128: within noise (B6's own rerun differed by 3 routes from the sealed).
+- **Consistency (declared): not flagged.** B3 0.920 vs 0.920, stops 115 vs 108; B6 0.853 vs 0.833, stops 10 vs 9.
+- **Real time:** B8 44.6 ms, B9 12.0 ms at p95, within 50 ms.
+
+**Across both halves and three hosts (B7 confirmatory on the obstacle half; the rest exploratory):** the PFB removes nearly all protective stops from RPP
+(1,106 -> 18; 907 -> 2) and DWA (736 -> 1; 115 -> 0), and every unrecoverable stop where a host had them (RPP 146, 70; DWA 14, 7), with no loss of
+progress or speed. On MPPI, which builds the field into its cost, too few stops remain to judge (11 -> 2; 10 -> 1). Completion is not changed beyond
+noise except on RPP's clear routes (0.347 -> 0.733), where the filter removes the stop-recovery cycle. Sent to both papers and the presentation.
