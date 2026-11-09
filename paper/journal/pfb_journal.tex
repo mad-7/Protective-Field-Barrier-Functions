@@ -57,7 +57,7 @@ object enters the active field. The navigation software above this function does
 so local planners, whether hand-designed or learned, trigger stops frequently, and every stop costs a
 restart and throughput. This article introduces the Protective-Field Barrier (PFB), a safety filter
 based on a candidate discrete-time control barrier function defined on the sectors of the laser scan, whose
-intended safe set is the complement of the certified function's own trigger set. Its zero level set is a
+intended safe set is derived from the region that triggers the certified safety function. Its zero level set is a
 protective field built from the robot's footprint and the same configuration as the safety function:
 continuous in the direction of travel and the yaw rate, and piecewise in speed, with one field per speed band.
 Validity of the candidate is not shown, and no safety guarantee is claimed. One quadratic program per speed regime minimally modifies the
@@ -125,9 +125,9 @@ clearance to observed points or obstacles, sometimes inflated with the relative 
 relation to the certified field: a filter with too small a clearance still triggers stops, and one with
 too large a clearance stops the robot by itself.
 
-This article proposes to take the safe set of the barrier from the certified safety function: every
-valid scan return must lie outside the protective field of the regime the robot will be in. The barrier
-is then exactly as conservative as the equipment it sits above, no more and no less, and its success can
+This article proposes to derive the safe set of the barrier from the region that triggers the certified safety
+function: every valid scan return must lie outside the protective field of the regime the robot will be in. The barrier
+is then sized by the equipment it sits above rather than by a clearance of the designer's choosing, and its success can
 be measured in the units in which the equipment charges for failure: protective stops. The contributions
 are as follows.
 \begin{itemize}
@@ -198,7 +198,7 @@ specification \citep{alshiekh2018shielding}. On mobile robots, the barrier is us
 points of a scan or an occupancy grid \citep{raja2024ogmcbf}, possibly inflated with the relative
 velocity of nearby agents \citep{zeng2025relvel}; the footprint and the geometry of the stopping manoeuvre
 enter only through margins. The PFB belongs to this family but changes the safe set: rather than a
-clearance of the designer's choosing, it is the region whose violation the certified function punishes,
+clearance of the designer's choosing, it is derived from the region whose violation the certified function punishes,
 evaluated at the speed, direction and yaw rate the robot can reach.
 
 \subsection{Safe and constrained reinforcement learning for navigation}
@@ -495,7 +495,13 @@ contact, with as few protective stops per 100\,m of planned route as possible.
 The PFB is a safety filter between the planner and the certified layer, based on a candidate discrete-time CBF in
 the sense of Section~\ref{sec:prelim}. It reads the same scan, velocity
 estimate and applied command as the certified layer and builds its field from the same configuration
-keys, through its own implementation; the two are cross-checked only in tests. Throughout,
+keys, through its own implementation; the two are cross-checked only in tests. For the same band, heading and yaw rate,
+the field equals the certified one (checked numerically to $10^{-12}$ at random draws and at rest), although each layer
+selects these separately. The certified layer takes the band from the reach of the larger of the estimated and applied
+speeds, the heading from whichever is faster and the yaw rate from the larger of their magnitudes; the filter tries every
+regime from the estimate's band upward, faces the field along the candidate command when that command is at least as
+fast as the estimate, and sweeps it for $W(\mathbf{u})$ below. The two choices agree by construction when the command
+executes as predicted; no check over logged steps exists. Throughout,
 $\mathbf{u}^{\mathrm{nom}}$ is the planner's command and $\mathbf{u}^-$ the command the base applied at
 the previous step.
 
@@ -514,8 +520,10 @@ h^\lambda_k=r_k-\rho_\lambda(\psi_k;\theta_0,W_0)-\delta,
 \end{equation}
 evaluated at the present motion ($\theta_0$ the heading of whichever of $\mathbf{u}^-$ and
 $\hat{\mathbf{v}}$ is faster, $W_0=\max(|\hat\omega|,|\omega^-|)$), where $\delta=0.5$\,mm is the
-measured scan residual against a wall face at the upper bound of its bracket. The safe set of regime
-$\lambda$ is $\{h^\lambda_k\ge0\ \forall k\}$: the complement of the certified trigger set in that regime.
+measured scan residual against a wall face at the upper bound of its bracket. The intended safe set of regime
+$\lambda$ is $\{h^\lambda_k\ge0\ \forall k\}$, derived from the certified trigger set in that regime. It is not identical to
+it: the rows carry the margin $\delta$, and, below, a grid margin and a tightening of the linearised rows, and they are
+evaluated at the predicted position rather than the present one.
 
 \subsection{Prediction and the discrete-time barrier condition}
 A candidate command moves each return relative to the body. Over the horizon $\tau=\Delta t+\tau_\ell$,
@@ -1187,8 +1195,8 @@ Unmapped-static & \pending & \pending & \pending\\
 \paragraph{What the held-out evidence supports.} On the test set the PFB removes nearly all protective stops from
 RPP (1{,}106 to 18 with an unmapped obstacle; 907 to 2 without) and every unrecoverable stop (146 to 0; 70 to 0), and
 the robot drives further with it than without it, so the effect is not obtained by standing still. A barrier whose
-safe set is the complement of the certified trigger set need not be tuned against the safety equipment: it is
-as conservative as the equipment by sharing its field. Without an unmapped obstacle, removing the
+safe set is derived from the certified trigger set need not be tuned against the safety equipment: for the same band,
+heading and yaw rate it uses the certified field, plus margins of the order of a millimetre. Without an unmapped obstacle, removing the
 stop--recovery--restop cycle also doubles RPP's completion, although that is a descriptive result without inference.
 
 \paragraph{What it does not support.} The filter does not make RPP complete routes with an unmapped obstacle: 147 of
@@ -1255,7 +1263,7 @@ Obstacles are static; moving people, the main reason protective fields exist, ar
 \section{Conclusion}\label{sec:conclusion}
 
 The Protective-Field Barrier is a safety filter based on a candidate discrete-time control barrier function, whose
-intended safe set is taken from the certified safety function it sits above: the complement of a protective field built
+intended safe set is derived from the certified safety function it sits above: the complement of a protective field built
 from the footprint, the speed band, the direction and the yaw rate of a holonomic robot. Its validity as a control barrier
 function is not shown, and no safety guarantee is claimed. One QP per speed regime minimally corrects the command of an arbitrary planner within
 the base's limits. On a held-out test set it removed nearly all protective stops and every unrecoverable stop from a
