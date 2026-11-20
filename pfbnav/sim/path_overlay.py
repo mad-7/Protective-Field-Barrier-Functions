@@ -91,6 +91,9 @@ class PathOverlay:
         self._track = self._new(self.sim.drawing_lines, 3, TRACK_COLOUR)
         self._last_xy = np.asarray(path[0], dtype=float)
         self._remember()
+        print(f"overlay: drew the route ({len(path) - 1} segments, from ({path[0][0]:.2f}, "
+              f"{path[0][1]:.2f}) to ({path[-1][0]:.2f}, {path[-1][1]:.2f}) in world metres), "
+              f"drawing handles {self._objects}", flush=True)
 
     def step(self, env: Any, info: dict[str, Any]) -> None:
         if not self.enabled or self._track is None or self._last_xy is None:
