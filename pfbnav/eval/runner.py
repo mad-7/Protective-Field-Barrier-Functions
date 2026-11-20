@@ -54,8 +54,11 @@ def _given(kind: str, obs, info: dict[str, Any]):
 
 def run_episodes(env, controller, indices: Iterable[int],
                  on_episode: Callable[[dict[str, Any]], None] | None = None,
-                 *, ring) -> list[dict[str, Any]]:
-    """Run `controller` once on each scenario index; return one record per episode. A controller
+                 *, ring, observer=None) -> list[dict[str, Any]]:
+    """Run `controller` once on each scenario index; return one record per episode. `observer`
+    (optional, for watching a run, e.g. `pfbnav.sim.path_overlay.PathOverlay`) gets `begin(env,
+    info)` after each reset, `step(env, info)` after each step and `end()` after the episode; it
+    must not act on the environment. A controller
     with an `episode_report` (the classical recovery) adds its counts to the record. A controller
     with a `begin_episode` (one under the declared route cap, or the privileged oracle tracker,
     ruled 2026-10-20) is handed the episode's IDENTITY after each reset -- the scenario and the
@@ -78,6 +81,8 @@ def run_episodes(env, controller, indices: Iterable[int],
         if begin is not None:
             begin({k: info[k] for k in EPISODE_IDENTITY})
         ring.begin(int(index))
+        if observer is not None:
+            observer.begin(env, info)
         total, steps, done = 0.0, 0, False
         modes: dict[str, int] = {}
         measures = {k: ValueHistogram() for k in FILTER_KEYS}
@@ -100,6 +105,8 @@ def run_episodes(env, controller, indices: Iterable[int],
             steps += 1
             done = bool(terminated or truncated)
             ring.record(steps, info)
+            if observer is not None:
+                observer.step(env, info)
             pfb = info.get("pfb")
             if pfb is not None:                 # the PFB's decision mode, counted per episode
                 modes[pfb["mode"]] = modes.get(pfb["mode"], 0) + 1
@@ -119,6 +126,8 @@ def run_episodes(env, controller, indices: Iterable[int],
         if report is not None:
             record.update(report())
         record["ring_dumps"] = ring.end(record["outcome"])
+        if observer is not None:
+            observer.end()
         records.append(record)
         if on_episode is not None:
             on_episode(record)

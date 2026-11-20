@@ -62,6 +62,7 @@ from pfbnav.eval.ring import StepRing
 from pfbnav.eval.route_profiles import build_profiles, lookup, write_profiles
 from pfbnav.eval.runner import outcome_summary, run_episodes
 from pfbnav.sim.client import SimClient, SimConnection
+from pfbnav.sim.path_overlay import PathOverlay
 from pfbnav.utils.cli import add_display_flag, add_pfb_flag, apply_display, apply_pfb
 from pfbnav.utils.filter_ruling import filter_problem
 from pfbnav.utils.hashing import text_sha256
@@ -142,7 +143,12 @@ def main() -> int:
                         help="processes for the offline route profiles (2026-10-20)")
     add_display_flag(parser, default="on")    # rendering on unless --display off (2026-11-07)
     add_pfb_flag(parser)
+    parser.add_argument("--draw-path", action="store_true",
+                        help="draw the planned route (blue) and the robot's track (red) in the scene; "
+                             "needs --display on; changes nothing in the run")
     args = parser.parse_args()
+    if args.draw_path and args.display == "off":
+        raise SystemExit("--draw-path needs rendering: use --display on (the default)")
     if args.pfb == "on" and args.controller in ("sac", "zero", "oracle_tracker"):
         raise SystemExit("--pfb on wraps a classical baseline (B1, B2, B3, B6); a learned policy is "
                          "evaluated from its own experiment config (hard rule 8)")
@@ -209,8 +215,9 @@ def main() -> int:
         # The per-step ring buffer (ruled 2026-10-23): dumps under ring/ on stationary triggers,
         # contacts and unrecoverable stops.
         ring = StepRing(int(cfg["evaluation"]["ring_steps"]), run_dir / "ring")
+        observer = PathOverlay(client.sim) if args.draw_path else None
         records = run_episodes(env, controller, range(len(scenarios)), on_episode=write,
-                               ring=ring)
+                               ring=ring, observer=observer)
     finally:
         env.close()
         client.stop()
