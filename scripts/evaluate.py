@@ -62,7 +62,7 @@ from pfbnav.eval.ring import StepRing
 from pfbnav.eval.route_profiles import build_profiles, lookup, write_profiles
 from pfbnav.eval.runner import outcome_summary, run_episodes
 from pfbnav.sim.client import SimClient, SimConnection
-from pfbnav.utils.cli import add_display_flag, apply_display
+from pfbnav.utils.cli import add_display_flag, add_pfb_flag, apply_display, apply_pfb
 from pfbnav.utils.filter_ruling import filter_problem
 from pfbnav.utils.hashing import text_sha256
 from pfbnav.utils.memory import MemoryRecord
@@ -141,11 +141,14 @@ def main() -> int:
     parser.add_argument("--workers", type=int, default=4,
                         help="processes for the offline route profiles (2026-10-20)")
     add_display_flag(parser, default="on")    # rendering on unless --display off (2026-11-07)
+    add_pfb_flag(parser)
     args = parser.parse_args()
+    if args.pfb == "on" and args.controller in ("sac", "zero", "oracle_tracker"):
+        raise SystemExit("--pfb on wraps a classical baseline (B1, B2, B3, B6); a learned policy is "
+                         "evaluated from its own experiment config (hard rule 8)")
 
-    # Rendering changes no physics (scripts/regress_display_off.py: bit-identical trajectories)
-    # and is outside the frozen environment's identity; the run records what was in force.
-    cfg = apply_display(load_config(args.config), args.display)
+    # Rendering changes no physics; the run records what was in force.
+    cfg = apply_pfb(apply_display(load_config(args.config), args.display), args.pfb)
     seed_everything(args.seed)
     paths = preflight(cfg, args.sets, args.checkpoint, args.controller)
     scenarios, set_of = [], []
@@ -166,6 +169,8 @@ def main() -> int:
             else None)
     controller = make_controller(args.controller, cfg, args.checkpoint, profiles)
     label = cfg["experiment"] if args.controller == "sac" else controller.name
+    if cfg["filter"]["enabled"] and args.controller != "sac":
+        label += "_pfb"
 
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     run_dir = create_run_dir(REPO_ROOT / "runs" / "eval", f"{label}_{stamp}", args.seed, cfg)

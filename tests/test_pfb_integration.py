@@ -58,3 +58,34 @@ def test_mirror_test_detects_drift():
     mirror = yaml.safe_load((ROOT / "configs" / "baselines" / "B1_pure_pursuit.yaml").read_text(encoding="utf-8"))
     mirror["params"]["cruise_speed"] += 1e-6
     assert mirror["params"] != base["pure_pursuit"]
+
+
+def test_with_pfb_reproduces_every_overlay_file():
+    """The function and the overlay files are the same switch."""
+    from pfbnav.integration import with_pfb
+    base = load_config(ROOT / "configs" / "base.yaml")
+    wrapped = with_pfb(base)
+    for name in ("B7_rpp_pfb", "B8_mppi_pfb", "B9_dwa_pfb", "B10_pp_pfb"):
+        overlay = load_config(ROOT / "configs" / "experiments" / f"{name}.yaml")
+        assert _diff(wrapped, overlay) == ["experiment"], name
+    assert _diff(wrapped, base) == ["filter.enabled"]
+
+
+def test_with_pfb_refuses_another_alpha_and_pair_differs_in_the_switch_only():
+    from pfbnav.integration import pfb_pair, with_pfb
+    base = load_config(ROOT / "configs" / "base.yaml")
+    bad = {**base, "filter": {**base["filter"], "alpha": 2.0}}
+    with pytest.raises(ValueError, match="frozen alpha"):
+        with_pfb(bad)
+    alone, wrapped = pfb_pair(base)
+    assert _diff(alone, wrapped) == ["filter.enabled"]
+
+
+def test_the_pfb_flag_applies_and_leaves_the_input_alone():
+    from pfbnav.utils.cli import apply_pfb
+    base = load_config(ROOT / "configs" / "base.yaml")
+    assert apply_pfb(base, "config") is base
+    assert apply_pfb(base, "on")["filter"]["enabled"] is True
+    assert base["filter"]["enabled"] is False
+    with pytest.raises(ValueError):
+        apply_pfb(base, "maybe")
