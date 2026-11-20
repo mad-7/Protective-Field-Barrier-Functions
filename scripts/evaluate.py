@@ -211,14 +211,16 @@ def main() -> int:
     client.load_scene(str(REPO_ROOT / cfg["sim"]["scene"]))
     env = NavEnv(client, cfg, scenarios, training=False, seed=args.seed)
     memory = MemoryRecord(client.connection.port)     # ruled 2026-10-19: in every run record
+    observer = PathOverlay(client.sim) if args.draw_path else None
     try:
         # The per-step ring buffer (ruled 2026-10-23): dumps under ring/ on stationary triggers,
         # contacts and unrecoverable stops.
         ring = StepRing(int(cfg["evaluation"]["ring_steps"]), run_dir / "ring")
-        observer = PathOverlay(client.sim) if args.draw_path else None
         records = run_episodes(env, controller, range(len(scenarios)), on_episode=write,
                                ring=ring, observer=observer)
     finally:
+        if observer is not None:
+            observer.end()                  # also on an interrupt or a crash
         env.close()
         client.stop()
 

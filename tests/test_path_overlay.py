@@ -11,6 +11,13 @@ class FakeSim:
 
     def __init__(self):
         self.created, self.items, self.removed = [], [], []
+        self.signals, self.unknown = {}, set()
+
+    def setStringSignal(self, name, value):
+        self.signals[name] = value
+
+    def getStringSignal(self, name):
+        return self.signals.get(name)
 
     def addDrawingObject(self, kind, size, tol, parent, count, colour):
         self.created.append((kind, colour))
@@ -20,6 +27,8 @@ class FakeSim:
         self.items.append((handle, list(item)))
 
     def removeDrawingObject(self, handle):
+        if handle in self.unknown:
+            raise RuntimeError("unknown handle")
         self.removed.append(handle)
 
 
@@ -73,3 +82,27 @@ def test_end_removes_every_object_and_a_disabled_overlay_does_nothing():
     off.begin(FakeEnv([]), {})
     off.step(FakeEnv([(0.0, 0.0, 0.0)]), {})
     assert quiet.created == [] and quiet.items == []
+
+
+def test_a_later_run_removes_what_an_interrupted_one_left_and_counts_what_it_cannot():
+    sim = FakeSim()
+    first = PathOverlay(sim)
+    first.begin(FakeEnv([]), {})                  # ... and the process dies without end()
+    leftovers = sorted(h for h in range(1, 5))
+    second_sim_state = sim.signals.copy()
+    second = PathOverlay(sim)
+    sim.unknown = {2}                             # one of them is already gone
+    sim.removed.clear()
+    sim.signals = second_sim_state
+    second.begin(FakeEnv([]), {})
+    assert sorted(h for h in sim.removed if h in leftovers) == [1, 3, 4]
+    assert second.stale_removed == 3 and second.stale_failed == 1
+
+
+def test_the_signal_is_cleared_when_an_episode_ends():
+    sim = FakeSim()
+    overlay = PathOverlay(sim)
+    overlay.begin(FakeEnv([]), {})
+    assert sim.signals["pfb_path_overlay"] != "[]"
+    overlay.end()
+    assert sim.signals["pfb_path_overlay"] == "[]"

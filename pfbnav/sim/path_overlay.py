@@ -14,6 +14,7 @@ Layout coordinates are mapped to the world with the episode's own placement tran
 from __future__ import annotations
 
 import itertools
+import json
 from typing import Any
 
 import numpy as np
@@ -24,6 +25,7 @@ TRACK_COLOUR = (1.0, 0.1, 0.1)
 START_COLOUR = (0.1, 0.8, 0.1)
 GOAL_COLOUR = (1.0, 0.9, 0.0)
 MAX_ITEMS = 100000
+SIGNAL = "pfb_path_overlay"           # string signal holding the handles this overlay owns
 MIN_STEP_M = 0.01                     # m the robot must move before a new track segment is added
 
 
@@ -44,6 +46,29 @@ class PathOverlay:
         self._objects: list[int] = []
         self._last_xy: np.ndarray | None = None
         self._track = None
+        self.stale_removed = 0              # drawings left by an earlier, interrupted run, removed
+        self.stale_failed = 0               # ... and handles the instance no longer knew
+        self._cleared_stale = False
+
+    def _remember(self) -> None:
+        """Record the handles in the instance, so a LATER process can remove what this one leaves
+        behind if it is interrupted (the instance outlives the client)."""
+        self.sim.setStringSignal(SIGNAL, json.dumps(self._objects))
+
+    def clear_stale(self) -> None:
+        """Remove drawings an earlier run of this overlay left in the instance. Each handle is
+        removed on its own; one the instance no longer knows is counted, not hidden."""
+        raw = self.sim.getStringSignal(SIGNAL)
+        if raw:
+            for handle in json.loads(raw):
+                try:
+                    self.sim.removeDrawingObject(int(handle))
+                    self.stale_removed += 1
+                except Exception as exc:       # noqa: BLE001 - remote error type; counted and printed
+                    self.stale_failed += 1
+                    print(f"overlay: stale drawing {handle} not removed ({exc})")
+            self.sim.setStringSignal(SIGNAL, json.dumps([]))
+        self._cleared_stale = True
 
     def _new(self, kind: int, size: float, colour: tuple[float, float, float]) -> int:
         handle = self.sim.addDrawingObject(kind, size, 0.0, -1, MAX_ITEMS, list(colour))
@@ -53,6 +78,8 @@ class PathOverlay:
     def begin(self, env: Any, info: dict[str, Any]) -> None:
         if not self.enabled:
             return
+        if not self._cleared_stale:
+            self.clear_stale()
         self.end()
         path = env.transform.apply(np.asarray(env.plan.path_world, dtype=float))
         plan = self._new(self.sim.drawing_lines, 3, PLAN_COLOUR)
@@ -63,6 +90,7 @@ class PathOverlay:
             self.sim.addDrawingObjectItem(dot, [float(xy[0]), float(xy[1]), HEIGHT_M])
         self._track = self._new(self.sim.drawing_lines, 3, TRACK_COLOUR)
         self._last_xy = np.asarray(path[0], dtype=float)
+        self._remember()
 
     def step(self, env: Any, info: dict[str, Any]) -> None:
         if not self.enabled or self._track is None or self._last_xy is None:
@@ -80,3 +108,5 @@ class PathOverlay:
             self.sim.removeDrawingObject(handle)
         self._objects = []
         self._track = None
+        if self.enabled:
+            self._remember()
