@@ -72,7 +72,7 @@ def test_controls_zero_must_fail_with_all_timeouts_and_the_positive_control_must
 def integrity(**over):
     eps = log(["timeout", "success", "success"])
     base = {"completed": True, "timesteps": 300000, "total_timesteps": 300000,
-            "final_model": True, "environment_sha256": "abc", "frozen_sha256": "abc",
+            "final_model": True, "environment_sha256": "abc", "reference_sha256": "abc",
             "losses": [0.5, 0.2, -1.3], "episodes": eps, "error": None}
     return integrity_criterion(**{**base, **over})
 
@@ -81,7 +81,7 @@ def test_integrity_each_check_fails_on_its_own():
     assert integrity()["passed"]
     assert not integrity(timesteps=299999)["checks"]["reached_total_timesteps"]
     assert not integrity(final_model=False)["checks"]["reached_total_timesteps"]
-    assert not integrity(environment_sha256="abd")["checks"]["frozen_environment"]
+    assert not integrity(environment_sha256="abd")["checks"]["same_environment"]
     assert not integrity(losses=[0.1, float("nan")])["checks"]["finite_losses"]
     assert not integrity(losses=[float("inf")])["checks"]["finite_losses"]
     gap = log(["timeout", "success", "success"])
@@ -171,7 +171,7 @@ def test_gate_end_to_end_pass_broken_and_refusals(tmp_path):
     with _pytest.raises(ValueError, match="G4's sets"):
         gate.assess(G4, "abc", good[0], _eval_dir(tmp_path, "wrong", 30, 30,
                                                    sets=["scenarios/tune/a.json"]), *good[2:])
-    with _pytest.raises(ValueError, match="frozen environment"):
+    with _pytest.raises(ValueError, match="reference environment"):
         gate.assess(G4, "abc", good[0], _eval_dir(tmp_path, "oldenv", 30, 30, env="old"),
                     *good[2:])
 
@@ -228,7 +228,7 @@ def test_controls_only_reads_the_two_controls_with_the_same_checks(tmp_path):
     bad = _eval_dir(tmp_path, "pp_bad", 5, 55)
     (bad / "episodes.jsonl").write_text("", encoding="utf-8")
     assert gate.assess_controls(G4, "abc", zero, bad)["verdict"] == "GATE BROKEN"
-    with _pytest.raises(ValueError, match="frozen environment"):
+    with _pytest.raises(ValueError, match="reference environment"):
         gate.assess_controls(G4, "abc", zero, _eval_dir(tmp_path, "old", 40, 20, env="old"))
     # B1 is RECORDED, never judged (ruled 2026-10-20): a B1 run that would fail the checkpoint
     # leaves the verdict alone, and its recovery statistics are reported.

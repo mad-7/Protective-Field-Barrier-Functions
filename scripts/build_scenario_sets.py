@@ -1,7 +1,7 @@
 """Build the tune, pilot and test scenario sets, and lock the test sets.
 
-Run by the RESEARCHER (hard rule 1: `scenarios/test/` is never written by Claude), after the
-freeze, and only once the set sizes are preregistered:
+Run by the RESEARCHER (`scenarios/test/` is never written by Claude), once the set sizes are
+declared:
 
     python scripts/build_scenario_sets.py --config configs/base.yaml --seed 0 --dry-run
     python scripts/build_scenario_sets.py --config configs/base.yaml --seed 0
@@ -16,9 +16,7 @@ tune and pilot sets are built.
 What it refuses, and why:
   * **No preregistered sizes.** A test set's size fixes the power of H1 and H2; choosing it here
     would decide a design parameter outside the preregistration.
-  * **An unfrozen preregistration, or a generator that is not the one the lock pinned.** Test sets
-    must be made by the frozen generator, or `verify()` would reject every one of them later.
-  * **A dirty tree**, for the same reason as every run.
+  * **A dirty tree**, so a set's provenance names a commit.
   * **A set that fails `verify()`** straight after being built.
   * **A config that disagrees with the preregistered placement rule**: the generator reads the
     config, so a drifted config would build sets nobody ruled.
@@ -27,8 +25,7 @@ What it refuses, and why:
 
 `--dry-run` builds everything and writes the sets under `runs/diag/` instead of `scenarios/`,
 unlocked, so a plan can be inspected -- sizes, yield, and engagement -- before anything is locked.
-A dry run tolerates a scenario module that differs from the lock (recorded in the summary): a
-revision is measured BEFORE its amendment is written, and nothing a dry run builds is ever used.
+Nothing a dry run builds is ever used.
 
 Two options exist for dry runs only (2026-10-02, measuring the bypass rule's cost before A13's
 text records it):
@@ -58,13 +55,12 @@ import yaml
 from pfbnav.config import load_config
 from pfbnav.utils.runio import create_run_dir
 from pfbnav.utils.seeding import seed_everything
-from pfbnav.world.layouts import generate, generator_sha256
+from pfbnav.world.layouts import generate
 from pfbnav.world.scenarios import (
     BYPASS_CONTROL_FAILED,
     NO_PLACEMENT,
     aisle_rectangles,
     build_set,
-    scenarios_sha256,
     verify,
     write_set,
 )
@@ -143,25 +139,12 @@ def sum_centre(polygon: list[list[float]]) -> tuple[float, float]:
     return sum(xs) / len(xs), sum(ys) / len(ys)
 
 
-def check_frozen(dry_run: bool = False) -> bool:
-    """Refuse an unfrozen preregistration, a moved generator or a dirty tree. A dry run may use a
-    scenario module the lock did not pin; returns whether the module matches."""
-    lock = PREREG / "LOCK.json"
-    if not lock.exists():
-        raise SystemExit("The preregistration is not frozen; test sets are made after the freeze.")
-    pinned = json.loads(lock.read_text(encoding="utf-8"))
-    if pinned["generator_sha256"] != generator_sha256():
-        raise SystemExit("The layout generator is not the one the lock pinned.")
-    module_matches = pinned["scenarios_sha256"] == scenarios_sha256()
-    if not module_matches and not dry_run:
-        raise SystemExit("The scenario module is not the one the lock pinned.")
+def check_clean_tree() -> None:
+    """Refuse a dirty tree: the sets' provenance names a commit."""
     dirty = subprocess.run(["git", "status", "--porcelain"], cwd=REPO_ROOT,
                            capture_output=True, text=True, check=True).stdout.strip()
     if dirty:
         raise SystemExit("The working tree is not clean; commit first.")
-    if not module_matches:
-        print("NOTE: the scenario module differs from the lock; allowed for a dry run only.")
-    return module_matches
 
 
 def main() -> int:
@@ -183,7 +166,7 @@ def main() -> int:
 
     cfg = load_config(args.config)
     seed_everything(args.seed)
-    module_matches = check_frozen(args.dry_run)
+    check_clean_tree()
     prereg = preregistration()
     requests = plan(prereg, probe=args.probe)
     placement = prereg.get("unmapped_placement")
@@ -217,7 +200,6 @@ def main() -> int:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     run_dir = create_run_dir(REPO_ROOT / "runs" / "diag", f"SCENARIO_SETS_{stamp}", args.seed, cfg)
     report: dict[str, Any] = {"dry_run": args.dry_run,
-                              "scenario_module_matches_lock": module_matches,
                               "bypass_corridor_half_width_m": float(
                                   bypass_cfg["corridor_half_width"]),
                               "sets": {}}

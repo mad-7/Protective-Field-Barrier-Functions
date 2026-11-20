@@ -82,7 +82,7 @@ from stable_baselines3.common.logger import configure
 from pfbnav.config import load_config
 from pfbnav.control.sac import make_sac
 from pfbnav.control.sac_lagrangian import LagrangianSettings, make_sac_lagrangian
-from pfbnav.envs.freeze import environment_identity, freeze_problem
+from pfbnav.envs.freeze import environment_identity
 from pfbnav.envs.nav_env import NavEnv
 from pfbnav.sim.client import SimClient, SimConnection
 from pfbnav.training.curriculum import Curriculum, stages_from_config
@@ -107,7 +107,7 @@ def preflight(cfg: dict[str, Any]) -> list[Path]:
     """Every refusal that needs no simulator. Returns the training sets' paths."""
     if not cfg.get("experiment"):
         raise SystemExit("the config names no `experiment`; train from configs/experiments/")
-    problem = filter_problem(cfg) or freeze_problem(cfg) or shaping_problem(cfg)
+    problem = filter_problem(cfg) or shaping_problem(cfg)
     if problem:
         raise SystemExit(problem)
     if cfg.get("lagrangian"):

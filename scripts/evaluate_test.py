@@ -47,7 +47,7 @@ from typing import Any
 import yaml
 
 from pfbnav.config import load_config
-from pfbnav.envs.freeze import environment_identity, freeze_problem
+from pfbnav.envs.freeze import environment_identity
 from pfbnav.envs.nav_env import NavEnv
 from pfbnav.eval.g4 import recovery_statistics
 from pfbnav.eval.ring import StepRing
@@ -156,7 +156,7 @@ def main() -> int:
         raise SystemExit("filter.enabled is true in the config; this runner enables it for B7 alone")
     on = copy.deepcopy(cfg)
     on["filter"]["enabled"] = True
-    problem = filter_problem(on) or freeze_problem(on)
+    problem = filter_problem(on)
     tc = _module("tune_classical")
     problem = problem or tc.g2_problem(Path(args.g2), args.instances, platform.node())
     if not problem and not 0 <= args.instance < args.instances:

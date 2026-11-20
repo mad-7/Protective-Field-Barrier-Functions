@@ -1,6 +1,6 @@
-"""If preregistration is frozen, its files must match the recorded hashes."""
+"""Hygiene of the preregistration files and of the text hashes. There is no lock: nothing here fails
+because a file was edited."""
 import hashlib
-import json
 from pathlib import Path
 
 import pytest
@@ -9,33 +9,6 @@ import yaml
 from pfbnav.utils.hashing import normalise_eol, text_sha256
 
 PREREG = Path(__file__).resolve().parents[1] / "preregistration"
-LOCK = PREREG / "LOCK.json"
-
-
-def test_frozen_files_unchanged():
-    if not LOCK.exists():
-        pytest.skip("preregistration not frozen yet")
-    lock = json.loads(LOCK.read_text(encoding="utf-8"))
-    root = PREREG.parent
-    for rel, digest in lock["sha256"].items():
-        # POSIX paths and line-ending-normalised hashes, as scripts/freeze_prereg.py writes
-        # them, so the lock verifies on the training host as well as on this laptop.
-        assert "\\" not in rel, f"{rel}: a Windows path in the lock will not resolve on Linux"
-        assert text_sha256(root / rel) == digest, rel
-
-
-def test_the_generator_is_the_one_the_lock_pinned():
-    """Ruled 2026-09-26 (Q2): the generator's code is part of a layout set's identity. After the
-    freeze, a changed generator fails here until an amendment records why -- which is the
-    point: every locked set was made by the pinned generator, and `verify()` would reject them
-    all against a new one."""
-    if not LOCK.exists():
-        pytest.skip("preregistration not frozen yet")
-    from pfbnav.world.layouts import generator_sha256
-    from pfbnav.world.scenarios import scenarios_sha256
-    lock = json.loads(LOCK.read_text(encoding="utf-8"))
-    assert lock["generator_sha256"] == generator_sha256(), "the layout generator has changed"
-    assert lock["scenarios_sha256"] == scenarios_sha256(), "the scenario module has changed"
 
 
 def test_text_hashes_do_not_depend_on_line_endings(tmp_path):
@@ -100,23 +73,6 @@ def test_the_preregistration_is_utf8_without_stray_nul_bytes():
         raw = path.read_bytes()
         assert b"\x00" not in raw, f"{path.name} contains NUL bytes; it is not UTF-8 text"
         raw.decode("utf-8")
-
-
-# A value that marks a part of the plan still to be copied in. It may be COMMITTED -- a
-# placeholder is honest about a gap -- but it may never be FROZEN: a lock over a placeholder
-# would preregister the fact that something was missing rather than the thing itself.
-PLACEHOLDER = "TO_BE_COPIED_FROM_THE_PLAN"
-
-
-def test_the_preregistration_is_not_frozen_over_a_placeholder():
-    """endpoints.yaml (2026-09-28) was drafted with the Holm family as a placeholder, because
-    the family is not defined anywhere in this repository. Committing it that way is fine;
-    freezing it that way would lock an empty confirmatory family."""
-    if not LOCK.exists():
-        pytest.skip("preregistration not frozen yet")
-    for path in sorted(PREREG.glob("*.yaml")):
-        assert PLACEHOLDER not in path.read_text(encoding="utf-8"), (
-            f"{path.name} is frozen with a placeholder still in it")
 
 
 def test_the_config_builds_what_a13_preregisters():

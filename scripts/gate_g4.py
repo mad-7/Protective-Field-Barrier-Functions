@@ -14,7 +14,7 @@ pre-declared 2026-10-17; amendment A23): B1 deadlocks under the A20-A22 fields. 
 the declared route cap, is read with `--b1-run` and RECORDED as a baseline finding, never judged.
 
 **Consistency, checked before anything is scored:** the three evaluations ran on exactly G4's
-checkpoint sets and on the frozen environment, and the pilot's training seed is one of G4's pilot
+checkpoint sets and on one and the same environment (the training run's code identity), and the pilot's training seed is one of G4's pilot
 seeds (pilot seeds never enter H1 or H2). A mismatch is refused, not scored.
 
 Writes `runs/gates/G4_<timestamp>_seed<seed>/summary.json`.
@@ -76,25 +76,26 @@ def _losses(progress: Path) -> list[float]:
     return out
 
 
-def _check_runs(g4: dict[str, Any], frozen: str, runs: dict[str, Path]) -> None:
-    """Every evaluation ran on exactly G4's checkpoint sets and on the frozen environment."""
+def _check_runs(g4: dict[str, Any], reference: str | None, runs: dict[str, Path]) -> None:
+    """Every evaluation ran on exactly G4's checkpoint sets and on the reference environment (the
+    code identity the training run, or the first control, recorded)."""
     want_sets = {Path(s).as_posix() for s in g4["checkpoint"]["sets"]}
     for name, run in runs.items():
         evaluated = _json(run / "evaluated.json")
         if set(evaluated["sets"]) != want_sets:
             raise ValueError(f"the {name} evaluation ran on {sorted(evaluated['sets'])}, "
                              f"not G4's sets {sorted(want_sets)}")
-        if evaluated["environment"] != frozen:
-            raise ValueError(f"the {name} evaluation did not run on the frozen environment")
+        if evaluated["environment"] != reference:
+            raise ValueError(f"the {name} evaluation did not run on the reference environment")
 
 
-def assess_controls(g4: dict[str, Any], frozen: str, zero: Path, positive: Path,
+def assess_controls(g4: dict[str, Any], reference: str | None, zero: Path, positive: Path,
                     b1: Path | None = None) -> dict[str, Any]:
     """The two controls alone: CONTROLS SOUND or GATE BROKEN, with the recovery statistics; B1's
     run, when given, is checked for consistency and RECORDED, never judged (ruled 2026-10-20).
     Raises ValueError on an inconsistent input."""
     runs = {"zero": zero, "positive_control": positive, **({"b1": b1} if b1 else {})}
-    _check_runs(g4, frozen, runs)
+    _check_runs(g4, reference, runs)
     ckpt = {k: float(g4["checkpoint"][k]) for k in ("min_success", "max_contact_rate")}
     summaries = {name: _json(run / "summary.json") for name, run in runs.items()}
     controls = controls_verdict(summaries["zero"]["overall"],
@@ -120,10 +121,10 @@ def assess_controls(g4: dict[str, Any], frozen: str, zero: Path, positive: Path,
                 for name, sm in summaries.items()}}
 
 
-def assess(g4: dict[str, Any], frozen: str, train: Path, pilot_eval: Path, zero: Path,
+def assess(g4: dict[str, Any], reference: str | None, train: Path, pilot_eval: Path, zero: Path,
            positive: Path) -> dict[str, Any]:
     """The whole gate from four run directories. Raises ValueError on an inconsistent input."""
-    _check_runs(g4, frozen, {"pilot": pilot_eval, "zero": zero, "positive_control": positive})
+    _check_runs(g4, reference, {"pilot": pilot_eval, "zero": zero, "positive_control": positive})
     seed = int(_json(train / "provenance.json")["seed"])
     if seed not in [int(s) for s in g4["pilot_training_seeds"]]:
         raise ValueError(f"training seed {seed} is not a G4 pilot seed {g4['pilot_training_seeds']}"
@@ -144,7 +145,7 @@ def assess(g4: dict[str, Any], frozen: str, train: Path, pilot_eval: Path, zero:
         timesteps=int(train_summary.get("timesteps", 0)),
         total_timesteps=int(train_summary.get("total_timesteps", 0)) or 1,
         final_model=(train / "final_model.zip").is_file(),
-        environment_sha256=environment, frozen_sha256=frozen,
+        environment_sha256=environment, reference_sha256=reference,
         losses=_losses(train / "sb3" / "progress.csv"), episodes=episodes,
         error=train_summary.get("error"))
     learning = learning_criterion(episodes, **{k: (str(v) if k == "stage" else float(v))
@@ -186,7 +187,9 @@ def main() -> int:
     if "G4_learned_pilot" not in gates:
         raise SystemExit("G4 is not preregistered (amendment A15); no verdict without it")
     if args.controls_only:
-        report = assess_controls(gates["G4_learned_pilot"], cfg["env"]["frozen_code_sha256"],
+        # The reference environment is the one the first control recorded: every run must share it.
+        reference = _json(REPO_ROOT / args.zero_run / "evaluated.json")["environment"]
+        report = assess_controls(gates["G4_learned_pilot"], reference,
                                  REPO_ROOT / args.zero_run, REPO_ROOT / args.positive_run,
                                  REPO_ROOT / args.b1_run if args.b1_run else None)
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -218,7 +221,10 @@ def main() -> int:
                       f"{d['heading_deg']}")
         print(f"-> {run_dir.relative_to(REPO_ROOT).as_posix()}")
         return 0
-    report = assess(gates["G4_learned_pilot"], cfg["env"]["frozen_code_sha256"],
+    # The reference environment is the one the training run recorded: every run must share it.
+    train_env = REPO_ROOT / args.train_run / "environment.json"
+    reference = _json(train_env)["environment"]["sha256"] if train_env.is_file() else None
+    report = assess(gates["G4_learned_pilot"], reference,
                     *(REPO_ROOT / p for p in (args.train_run, args.eval_run, args.zero_run,
                                               args.positive_run)))
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")

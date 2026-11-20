@@ -542,10 +542,9 @@ def verify(manifest: dict[str, Any], cfg: dict[str, Any]) -> dict[str, Any]:
     report can say exactly which scenarios moved and why.
     """
     problems = []
-    if manifest.get("scenarios_sha256") != scenarios_sha256():
-        problems.append({"scope": "set", "field": "scenarios_sha256",
-                         "claimed": manifest.get("scenarios_sha256"),
-                         "found": scenarios_sha256()})
+    # The set records scenarios_sha256 and generator_sha256 as provenance. Neither is compared here:
+    # a changed module is allowed to read an old set, and a scenario that its generator no longer
+    # reproduces is caught by the layout and scenario hashes below.
     for entry in manifest.get("scenarios", []):
         try:
             layout = world_of(entry, cfg)

@@ -48,7 +48,7 @@ from typing import Any
 import yaml
 
 from pfbnav.config import load_config
-from pfbnav.envs.freeze import environment_identity, freeze_problem
+from pfbnav.envs.freeze import environment_identity
 from pfbnav.envs.nav_env import NavEnv
 from pfbnav.eval.g4 import recovery_statistics
 from pfbnav.eval.ring import StepRing
@@ -141,9 +141,6 @@ def main() -> int:
     window = float(yaml.safe_load(tc.BUDGET.read_text(encoding="utf-8"))["selection"]
                    ["success_window"])
     on = with_alpha(cfg, grid[0])
-    problem = freeze_problem(on)
-    if problem:
-        raise SystemExit(problem)
     seed_everything(args.seed)
 
     scenarios: list[dict[str, Any]] = []

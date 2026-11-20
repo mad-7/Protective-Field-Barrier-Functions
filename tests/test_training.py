@@ -197,17 +197,6 @@ def test_training_refuses_an_open_or_unbuilt_training_set():
         script.preflight({**cfg, "experiment": None})
 
 
-def test_training_refuses_an_environment_that_is_not_frozen_or_not_the_frozen_one():
-    script = _train_script()
-    cfg = _cfg("L1_sac_shaped")
-    cfg["env"]["frozen_code_sha256"] = None
-    with pytest.raises(SystemExit, match="not frozen"):
-        script.preflight(cfg)
-    cfg["env"]["frozen_code_sha256"] = "0" * 64
-    with pytest.raises(SystemExit, match="not the frozen one"):
-        script.preflight(cfg)
-
-
 def test_the_base_config_carries_every_sac_hyperparameter(monkeypatch):
     from pathlib import Path
 

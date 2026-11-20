@@ -1,8 +1,6 @@
-"""The environment freeze L1 trains under (ruled 2026-10-03). Known answers on a synthetic tree,
-and the pin: the environment in the repository must be the one `configs/base.yaml` froze."""
+"""The environment's code identity (recorded in provenance, never enforced). Known answers on a
+synthetic tree."""
 from pathlib import Path
-
-import pytest
 
 from pfbnav.envs.freeze import environment_identity, import_closure
 
@@ -64,15 +62,3 @@ def test_the_real_environment_includes_the_pfb_and_excludes_the_learner():
             "pfbnav/world/scenarios.py", "pfbnav/safety/pfb.py",
             "pfbnav/safety/pfb_field.py"} <= names
     assert not any(n.startswith(("pfbnav/training/", "pfbnav/control/")) for n in names)
-
-
-def test_the_environment_is_the_frozen_one():
-    """L1's runs are valid only on the pinned environment. If this fails, the environment changed:
-    re-freezing needs the filter-off bit-identity test to pass on the simulator and a decision-log
-    entry, and a filter-off behaviour change invalidates prior L1 runs (ruled 2026-10-03)."""
-    from pfbnav.config import load_config
-    cfg = load_config(REPO / "configs" / "base.yaml")
-    pinned = cfg["env"]["frozen_code_sha256"]
-    if pinned is None:
-        pytest.fail("the environment is not frozen (env.frozen_code_sha256 is null)")
-    assert environment_identity(cfg)["sha256"] == pinned, "the environment changed since its freeze"

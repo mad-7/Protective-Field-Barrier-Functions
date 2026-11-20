@@ -326,12 +326,11 @@ def test_verification_catches_a_world_that_moved_under_a_claimed_identity(tmp_pa
     assert any(p["field"] == "layout_sha256" for p in report["problems"])
 
 
-def test_verification_catches_a_changed_generator():
+def test_verification_does_not_pin_the_scenario_module():
+    """A set records the module's hash as provenance; a different hash is not a problem."""
     manifest = _shared_set()
     manifest["scenarios_sha256"] = "f" * 64
-    report = verify(manifest, CFG)
-    assert not report["ok"]
-    assert any(p.get("field") == "scenarios_sha256" for p in report["problems"])
+    assert verify(manifest, CFG)["ok"]
 
 
 def test_a_set_round_trips_through_json(tmp_path):

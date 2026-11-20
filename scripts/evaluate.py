@@ -55,7 +55,7 @@ from pfbnav.control.pure_pursuit import PurePursuit, ZeroAction
 from pfbnav.control.recovery import Recovery
 from pfbnav.control.regulated_pure_pursuit import RegulatedPurePursuit
 from pfbnav.control.route_cap import OracleTracker, RouteCapped
-from pfbnav.envs.freeze import environment_identity, freeze_problem
+from pfbnav.envs.freeze import environment_identity
 from pfbnav.envs.nav_env import NavEnv
 from pfbnav.eval.g4 import recovery_statistics
 from pfbnav.eval.ring import StepRing
@@ -90,7 +90,7 @@ def preflight(cfg: dict[str, Any], sets: list[str], checkpoint: str | None,
         raise SystemExit(f"unknown controller {controller!r}; one of {CONTROLLERS}")
     if controller == "sac" and not cfg.get("experiment"):
         raise SystemExit("the config names no `experiment`; evaluate SAC from configs/experiments/")
-    problem = filter_problem(cfg) or freeze_problem(cfg)
+    problem = filter_problem(cfg)
     if problem:
         raise SystemExit(problem)
     paths = [(REPO_ROOT / s).resolve() for s in sets]

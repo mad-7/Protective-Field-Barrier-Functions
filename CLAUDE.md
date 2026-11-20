@@ -3,6 +3,14 @@
 @SESSION_HANDOFF.md
 <!-- Imported so a new session knows the state, next steps and working preferences. It is a dated handoff: when it is stale, update or remove it and this line. -->
 
+## No preregistration lock (restructure, 2026-11-20)
+The preregistration lock is removed: no `LOCK.json`, no `scripts/freeze_prereg.py`, no environment
+freeze (`env.frozen_code_sha256`), no refusal because a hash moved. Code, configs and scenario
+modules may change freely; `environment_identity` and the scenario hashes are recorded in
+provenance only. Anything below that says "frozen", "relock" or "re-freeze" is history, not a rule.
+Still enforced and unrelated to the lock: the scene SHA-256 pin, the filter's alpha ruling
+(`filter_problem`), and test sets under `scenarios/test/` being write-protected once locked.
+
 ## Project in one paragraph
 PhD research code. A KUKA youBot (mecanum, holonomic) in CoppeliaSim navigates warehouse
 layouts with A* global planning and a learned (SAC) local planner. The contribution is the

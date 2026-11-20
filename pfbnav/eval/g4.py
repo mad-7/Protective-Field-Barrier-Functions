@@ -67,7 +67,7 @@ def checkpoint_criterion(summary: dict[str, Any], *, min_success: float,
 
 
 def integrity_criterion(*, completed: bool, timesteps: int, total_timesteps: int,
-                        final_model: bool, environment_sha256: str | None, frozen_sha256: str,
+                        final_model: bool, environment_sha256: str | None, reference_sha256: str | None,
                         losses: Sequence[float], episodes: Sequence[dict[str, Any]],
                         error: str | None) -> dict[str, Any]:
     """The five integrity checks, each named, all required."""
@@ -75,8 +75,8 @@ def integrity_criterion(*, completed: bool, timesteps: int, total_timesteps: int
     checks = {
         "reached_total_timesteps": bool(completed) and timesteps >= total_timesteps
                                    and bool(final_model),
-        "frozen_environment": environment_sha256 is not None
-                              and environment_sha256 == frozen_sha256,
+        "same_environment": environment_sha256 is not None
+                            and environment_sha256 == reference_sha256,
         "finite_losses": all(math.isfinite(float(v)) for v in losses),
         "episode_log_complete": (
             [e.get("episode") for e in episodes] == list(range(1, len(episodes) + 1))

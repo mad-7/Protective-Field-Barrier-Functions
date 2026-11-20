@@ -61,7 +61,7 @@ from pfbnav.control.dwa import DWAParams, HolonomicDWA
 from pfbnav.control.mppi import FieldAwareMPPI, MPPIParams
 from pfbnav.control.pure_pursuit import PPParams, PurePursuit
 from pfbnav.control.regulated_pure_pursuit import RegulatedPurePursuit, RPPParams
-from pfbnav.envs.freeze import environment_identity, freeze_problem
+from pfbnav.envs.freeze import environment_identity
 from pfbnav.envs.nav_env import NavEnv
 from pfbnav.eval.g4 import recovery_statistics
 from pfbnav.eval.ring import StepRing
@@ -219,7 +219,7 @@ def preflight(cfg: dict[str, Any], space_doc: dict[str, Any], sets: list[str], b
         raise SystemExit("--budget must be at least 1")
     if cfg["filter"]["enabled"]:
         raise SystemExit("filter.enabled is true: a classical baseline is tuned without the PFB")
-    problem = freeze_problem(cfg) or measurement_problem(controller, cfg)
+    problem = measurement_problem(controller, cfg)
     if problem:
         raise SystemExit(problem)
     paths = [(REPO_ROOT / s).resolve() for s in sets]
