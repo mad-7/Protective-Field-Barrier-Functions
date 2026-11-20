@@ -14,6 +14,29 @@ Each baseline's parameters live in `configs/baselines/<id>.yaml` (the only place
 | B3 holonomic DWA | `dwa` | `configs/baselines/B3_dwa.yaml` |
 | B6 field-aware MPPI | `field_aware_mppi` | `configs/baselines/B6_field_aware_mppi.yaml` |
 
+## Stage 0: the baseline ladder (is each baseline working at all?)
+
+Run every baseline alone, in this order, and stop at the first rung where one fails:
+
+1. **Empty hall** (perimeter walls only). Build once, then evaluate with the empty-hall config, which is
+   what rebuilds the same world:
+   ```powershell
+   python scripts/build_empty_hall_set.py --config configs/worlds/empty_hall.yaml --seed 0
+   python scripts/evaluate.py --config configs/worlds/empty_hall.yaml --seed 0 --controller <ctrl> --sets scenarios/free/empty_hall.json --draw-path
+   ```
+2. **Mapped obstacles only** (shelves the planner knows; no unmapped obstacle):
+   ```powershell
+   python scripts/make_subset.py scenarios/tune/tune_wide.json --mapped-only --out runs/scratch/wide_mapped.json
+   python scripts/evaluate.py --config configs/base.yaml --seed 0 --controller <ctrl> --sets runs/scratch/wide_mapped.json --draw-path
+   ```
+   (repeat with `tune_medium.json` and `tune_narrow.json`).
+3. **Unmapped obstacles** (every route has one): `scenarios/tune/tune_unmapped_narrow.json`,
+   `tune_unmapped_medium.json`, `tune_unmapped_wide.json`.
+
+A baseline that cannot cross the empty hall is broken before any obstacle is to blame. Run these on the
+training host: on a loaded laptop the scan render fails under load and the robot is frozen by the fail-safe
+(see `docs/manual_tuning.md`).
+
 ## Stage 1: each baseline alone
 
 ```powershell

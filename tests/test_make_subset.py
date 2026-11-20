@@ -22,3 +22,9 @@ def test_subset_keeps_the_chosen_scenarios_in_order():
 def test_a_bad_index_is_refused():
     with pytest.raises(ValueError, match="outside"):
         mod.subset({"scenarios": [{"seed": 1}], "built": 1, "requested": 1}, [1])
+
+
+def test_mapped_only_keeps_the_scenarios_without_unmapped_obstacles():
+    manifest = {"scenarios": [{"unmapped_count": 0}, {"unmapped_count": 2}, {"unmapped_count": 0}],
+                "built": 3, "requested": 3}
+    assert mod.mapped_only_indices(manifest) == [0, 2]

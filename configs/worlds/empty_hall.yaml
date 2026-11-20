@@ -1,0 +1,19 @@
+# The empty hall: the perimeter walls and nothing else (no shelf rows). The first rung of the baseline
+# ladder -- free space, then mapped obstacles, then unmapped ones -- so a baseline that cannot cross an
+# empty hall is broken before any obstacle is to blame.
+#
+# Evaluate with THIS config, not base.yaml: the world is rebuilt from the config and checked against the
+# set's hashes, so a set built here refuses to run under a config with shelf rows.
+#   python scripts/build_empty_hall_set.py --config configs/worlds/empty_hall.yaml --seed 0
+#   python scripts/evaluate.py --config configs/worlds/empty_hall.yaml --seed 0 --controller dwa \
+#       --sets scenarios/free/empty_hall.json
+defaults: ../base.yaml
+experiment: EMPTY_HALL
+world:
+  layout:
+    rows: [0, 0]  # no shelf rows: the perimeter only
+  free_hall:      # how the builder places a start and a goal in the open floor
+    wall_margin_m: 1.0  # m kept between an endpoint and the walls
+    min_route_m: 6.0  # m, the shortest route kept, so a scenario has distance to cover
+    end_fraction: 0.25  # start in the left and goal in the right quarter of the free floor, as in the shelf halls
+    attempts: 40  # endpoint pairs tried per seed before it is given up
