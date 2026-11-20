@@ -11527,3 +11527,12 @@ direction-dependent" field describes PFB-(a), the ablation, and needs correcting
 (1,106 -> 18; 907 -> 2) and DWA (736 -> 1; 115 -> 0), and every unrecoverable stop where a host had them (RPP 146, 70; DWA 14, 7), with no loss of
 progress or speed. On MPPI, which builds the field into its cost, too few stops remain to judge (11 -> 2; 10 -> 1). Completion is not changed beyond
 noise except on RPP's clear routes (0.347 -> 0.733), where the filter removes the stop-recovery cycle. Sent to both papers and the presentation.
+
+
+## 2026-11-20 - Correction: B9's obstacle-half success change is not shown to be within noise
+
+The entry of 2026-11-09 (half without obstacles) said completion is not changed beyond noise except on RPP's clear routes. That is wrong for B9 on
+the obstacle half: 10 of 150 against B3's 2, an 8-route gap, larger than the only measured rerun difference (B6, 5 routes; B3's rerun matched its
+sealed success exactly). It is also not shown to be an effect: no inference on success was declared (A34). Reported as counts, descriptive. The noise
+allowance holds for the clear-route differences (B9 142 vs B3 138; B8 124 vs B6 128) and for B8 vs B6 on the obstacle half (82 vs 88). Found by the
+journal session; both papers told.
