@@ -1,0 +1,429 @@
+{
+  "overall": {
+    "episodes": 20,
+    "counts": {
+      "success": 20,
+      "collision": 0,
+      "timeout": 0,
+      "unrecoverable_stop": 0
+    },
+    "shares": {
+      "success": 1.0,
+      "collision": 0.0,
+      "timeout": 0.0,
+      "unrecoverable_stop": 0.0
+    },
+    "success_rate": 1.0,
+    "contact_rate": 0.0,
+    "largest_outcome_share": 1.0,
+    "protective_stops": 0,
+    "scan_faults": 0,
+    "scan_fault_stops": 0,
+    "scan_rerenders": 0,
+    "scan_fault_step_share": 0.0,
+    "scan_fault_flag": false,
+    "over_budget_steps": 1,
+    "at_rest_triggers": 0,
+    "stationary_triggers": 0,
+    "creep_stops_ending_unrecoverable": 0,
+    "distance_m": 180.35474542995482,
+    "stops_per_100m": 0.0,
+    "recovery_distance_m": 0.0,
+    "stops_per_100m_excluding_recovery": 0.0,
+    "planned_length_m": 185.30437857776076,
+    "stops_per_100m_planned": 0.0,
+    "stops_per_100m_completed": 0.0,
+    "completed_distance_m": 180.35474542995482,
+    "latched_step_share": 0.0,
+    "moving_speed_mps": 0.3461039060256281,
+    "mean_return": 239.8512080662053,
+    "pfb_infeasible": 0,
+    "dwa_blocked_steps": 0,
+    "mppi_all_rejected": 0,
+    "invalid_bin_steps": 0,
+    "compute": {
+      "controller": {
+        "steps": 10422,
+        "p50_ms": 0.4,
+        "p95_ms": 0.5,
+        "max_ms": 1.3000000000000003
+      },
+      "decision": {
+        "steps": 10422,
+        "p50_ms": 0.4,
+        "p95_ms": 0.5,
+        "max_ms": 1.3000000000000003
+      }
+    },
+    "pfb_measures": null
+  },
+  "per_set": {
+    "empty_hall": {
+      "episodes": 20,
+      "counts": {
+        "success": 20,
+        "collision": 0,
+        "timeout": 0,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 1.0,
+        "collision": 0.0,
+        "timeout": 0.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 1.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 1,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 180.35474542995482,
+      "stops_per_100m": 0.0,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 0.0,
+      "planned_length_m": 185.30437857776076,
+      "stops_per_100m_planned": 0.0,
+      "stops_per_100m_completed": 0.0,
+      "completed_distance_m": 180.35474542995482,
+      "latched_step_share": 0.0,
+      "moving_speed_mps": 0.3461039060256281,
+      "mean_return": 239.8512080662053,
+      "pfb_infeasible": 0,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 10422,
+          "p50_ms": 0.4,
+          "p95_ms": 0.5,
+          "max_ms": 1.3000000000000003
+        },
+        "decision": {
+          "steps": 10422,
+          "p50_ms": 0.4,
+          "p95_ms": 0.5,
+          "max_ms": 1.3000000000000003
+        }
+      },
+      "pfb_measures": null
+    }
+  },
+  "per_stratum": {
+    "wide": {
+      "episodes": 20,
+      "counts": {
+        "success": 20,
+        "collision": 0,
+        "timeout": 0,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 1.0,
+        "collision": 0.0,
+        "timeout": 0.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 1.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 0,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 1,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 180.35474542995482,
+      "stops_per_100m": 0.0,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 0.0,
+      "planned_length_m": 185.30437857776076,
+      "stops_per_100m_planned": 0.0,
+      "stops_per_100m_completed": 0.0,
+      "completed_distance_m": 180.35474542995482,
+      "latched_step_share": 0.0,
+      "moving_speed_mps": 0.3461039060256281,
+      "mean_return": 239.8512080662053,
+      "pfb_infeasible": 0,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 10422,
+          "p50_ms": 0.4,
+          "p95_ms": 0.5,
+          "max_ms": 1.3000000000000003
+        },
+        "decision": {
+          "steps": 10422,
+          "p50_ms": 0.4,
+          "p95_ms": 0.5,
+          "max_ms": 1.3000000000000003
+        }
+      },
+      "pfb_measures": null
+    }
+  },
+  "recovery": {
+    "episodes": 20,
+    "episodes_with_recovery": 0,
+    "attempts": 0,
+    "endings": {},
+    "deadlocks": {},
+    "distance_m": 0.0,
+    "time_s": 0.0,
+    "attempt_times_s": [],
+    "attempts_cut_short": 0,
+    "suspected_defects": [],
+    "per_episode": [
+      {
+        "scenario_seed": 2900000,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900001,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900002,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900003,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900004,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900005,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900006,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900007,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900008,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900009,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900010,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900011,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900012,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900013,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900014,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900015,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900016,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900017,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900018,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2900019,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      }
+    ]
+  },
+  "memory": {
+    "episodes": 20,
+    "status": {},
+    "reference": "A20 check: CoppeliaSim +1.7 MB/100 episodes, Python flat (runs/diag/MEMORY_20261018T203246Z_seed0)",
+    "python": {
+      "private_start_mb": 2432.9765625,
+      "private_end_mb": 2444.26953125,
+      "growth_mb_per_100_episodes": 56.46484375
+    },
+    "sim": {
+      "private_start_mb": 262.12890625,
+      "private_end_mb": 235.390625,
+      "growth_mb_per_100_episodes": -133.69140625
+    }
+  }
+}

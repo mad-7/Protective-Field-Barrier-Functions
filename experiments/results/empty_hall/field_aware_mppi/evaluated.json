@@ -1,0 +1,9 @@
+{
+  "controller": "B6_field_aware_mppi",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "environment": "dc7f132bdd884cb6e5b49a918ace6ad1316434c730c9cb45d776085135b39f3c",
+  "sets": {
+    "scenarios/free/empty_hall.json": "24ad7773afe4372ff2797dac1aae3ab4d490cebecd5beab05e35f98544ab495d"
+  }
+}
