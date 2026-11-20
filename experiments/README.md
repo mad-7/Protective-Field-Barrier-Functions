@@ -1,39 +1,50 @@
 # Experiments
 
-Two independent stages. Both run on the **training host** against CoppeliaSim and are started by the
-researcher (CLAUDE.md, "Long-duration operations"). Both use the tune set only (hard rule 2).
+Two stages, one question: does putting the PFB between a baseline and the certified layer remove protective
+stops? Both run on the training host against CoppeliaSim and are started by the researcher. Both use the
+tune set only (`scenarios/tune/`); the test sets are never evaluated during development.
 
-## Stage 1: each baseline alone (PFB off)
+Each baseline's parameters live in `configs/baselines/<id>.yaml` (the only place they are written;
+`configs/base.yaml` lists the files under `baseline_files`).
 
-| Baseline | Config | `--controller` |
+| Baseline | `--controller` | Parameters |
 |---|---|---|
-| B1 Pure Pursuit | `configs/base.yaml` | `pure_pursuit` |
-| B2 Regulated Pure Pursuit | `configs/base.yaml` | `regulated_pure_pursuit` |
-| B3 holonomic DWA | `configs/base.yaml` | `dwa` |
-| B6 field-aware MPPI | `configs/base.yaml` | `field_aware_mppi` |
+| B1 Pure Pursuit | `pure_pursuit` | `configs/baselines/B1_pure_pursuit.yaml` |
+| B2 Regulated Pure Pursuit | `regulated_pure_pursuit` | `configs/baselines/B2_regulated_pure_pursuit.yaml` |
+| B3 holonomic DWA | `dwa` | `configs/baselines/B3_dwa.yaml` |
+| B6 field-aware MPPI | `field_aware_mppi` | `configs/baselines/B6_field_aware_mppi.yaml` |
 
-Parameters: `configs/baselines/<id>.yaml`, the only place they are written; `configs/base.yaml` lists the files
-under `baseline_files` and `load_config` merges them.
-
-## Stage 2: the same baselines with the PFB beneath them
-
-| Method | Config | `--controller` |
-|---|---|---|
-| B10 = B1 + PFB | `configs/experiments/B10_pp_pfb.yaml` | `pure_pursuit` |
-| B7 = B2 + PFB | `configs/experiments/B7_rpp_pfb.yaml` | `regulated_pure_pursuit` |
-| B9 = B3 + PFB | `configs/experiments/B9_dwa_pfb.yaml` | `dwa` |
-| B8 = B6 + PFB | `configs/experiments/B8_mppi_pfb.yaml` | `field_aware_mppi` |
-
-Each overlay differs from base in exactly `experiment` and `filter.enabled` (`tests/test_pfb_integration.py`).
-The pairs share a scene load, the same scenarios and the same seed, so stage 1 vs stage 2 is a paired
-comparison on stops per 100 m, success and mission time.
-
-## Commands
-
-One run per line (`<cfg>` and `<ctrl>` from the tables; seed 0). Outputs go to `runs/eval/...` with
-provenance. After each run, `python scripts/evaluate.py` writes the summary; copy it with
-`Copy-Item runs/eval/<run> experiments/results/<id>_<alone|pfb> -Recurse`.
+## Stage 1: each baseline alone
 
 ```powershell
-python scripts/evaluate.py --config <cfg> --seed 0 --controller <ctrl> --sets scenarios/tune/tune_narrow.json scenarios/tune/tune_medium.json scenarios/tune/tune_wide.json
+python scripts/evaluate.py --config configs/base.yaml --seed 0 --controller <ctrl> --sets scenarios/tune/tune_narrow.json scenarios/tune/tune_medium.json scenarios/tune/tune_wide.json
 ```
+
+## Stage 2: the same baseline with the PFB beneath it
+
+The same command with `--pfb on`. It changes `filter.enabled` and nothing else (`pfbnav/integration.py`,
+`tests/test_pfb_integration.py`); the PFB runs at the frozen alpha, and the run directory is named
+`<controller>_pfb_...`. `configs/experiments/B7_rpp_pfb.yaml`, `B8_mppi_pfb.yaml`, `B9_dwa_pfb.yaml` and
+`B10_pp_pfb.yaml` are the same switch as config files (B2, B6, B3 and B1 respectively).
+
+```powershell
+python scripts/evaluate.py --config configs/base.yaml --seed 0 --controller <ctrl> --pfb on --sets scenarios/tune/tune_narrow.json scenarios/tune/tune_medium.json scenarios/tune/tune_wide.json
+```
+
+## Pairing
+
+Run a baseline's two members back to back on the same host with the same seed and sets; determinism holds
+within one scene load, so the pair is a comparison on the same scenarios (stops per 100 m, success, mission
+time, contacts). Eight runs in all: four controllers x {alone, `--pfb on`}.
+
+## Results
+
+Copy each finished run's `summary.json` and `provenance.json` into `experiments/results/<id>_<alone|pfb>/`
+and fill the table below. Nothing here has been run yet.
+
+| Baseline | Success alone | Success + PFB | Stops/100 m alone | Stops/100 m + PFB | Contacts alone / + PFB |
+|---|---|---|---|---|---|
+| B1 | | | | | |
+| B2 | | | | | |
+| B3 | | | | | |
+| B6 | | | | | |
