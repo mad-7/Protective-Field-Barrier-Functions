@@ -1,0 +1,18 @@
+# B2 Regulated Pure Pursuit: tuned parameters (equal-budget random search, N = 24, tune set only).
+# MIRROR of configs/base.yaml `baselines.regulated_pure_pursuit`, which stays the single source of truth
+# (the tuner writes there). tests/test_baseline_params_mirror.py fails if the two differ.
+# Evaluate: python scripts/evaluate.py --config configs/base.yaml --seed <n> --controller regulated_pure_pursuit
+controller: regulated_pure_pursuit
+base_key: regulated_pure_pursuit
+params:
+  desired_speed: 0.27684500642836773
+  lookahead_time: 0.5695202744151207
+  min_lookahead: 0.20715656835879012
+  max_lookahead: 1.1219731625076852
+  min_radius: 0.4311006518242212
+  proximity_distance: 1.1755329784268205
+  approach_distance: 0.7068799094943975
+  min_speed: 0.0713057736192248
+  min_approach_speed: 0.03858491802284248
+  k_omega: 1.9125606140831566
+  proximity_gain: 0.3306079212896105

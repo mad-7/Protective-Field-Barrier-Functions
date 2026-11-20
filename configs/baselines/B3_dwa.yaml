@@ -1,0 +1,21 @@
+# B3 holonomic DWA: tuned parameters (equal-budget random search, N = 24, tune set only).
+# MIRROR of configs/base.yaml `baselines.dwa`, which stays the single source of truth
+# (the tuner writes there). tests/test_baseline_params_mirror.py fails if the two differ.
+# Evaluate: python scripts/evaluate.py --config configs/base.yaml --seed <n> --controller dwa
+controller: dwa
+base_key: dwa
+params:
+  max_speed: 0.42731865359248744
+  window_time: 0.14066545649284481
+  sim_time: 1.610392418667043
+  sim_granularity: 0.025
+  angular_sim_granularity: 0.1
+  vx_samples: 5
+  vy_samples: 5
+  wz_samples: 7
+  safety_margin: 0.07857857007138075
+  clearance_cap: 0.30732792467783543
+  w_path: 2.1271296751068705
+  w_progress: 1.0
+  w_heading: 0.6890703408239016
+  w_clearance: 3.4360004233171026

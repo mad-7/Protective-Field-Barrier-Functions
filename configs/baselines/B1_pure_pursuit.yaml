@@ -1,0 +1,11 @@
+# B1 holonomic Pure Pursuit: tuned parameters (equal-budget random search, N = 24, tune set only).
+# MIRROR of configs/base.yaml `baselines.pure_pursuit`, which stays the single source of truth
+# (the tuner writes there). tests/test_baseline_params_mirror.py fails if the two differ.
+# Evaluate: python scripts/evaluate.py --config configs/base.yaml --seed <n> --controller pure_pursuit
+controller: pure_pursuit
+base_key: pure_pursuit
+params:
+  cruise_speed: 0.4414254516786892
+  k_omega: 2.048573434083108
+  goal_slowdown: 0.4774009708433046
+  lookahead: 0.343435717305025

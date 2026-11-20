@@ -1,0 +1,15 @@
+# Shared by every classical baseline (B1, B2, B3, B6) and their PFB-wrapped forms.
+# MIRROR of configs/base.yaml baselines.recovery and baselines.route_cap.
+recovery:
+  wait: 1.0
+  speed: 0.018
+  max_distance: 0.3
+  max_attempts: 5
+  directions: 72
+  tie_tolerance: 0.001
+route_cap:
+  sample_spacing_m: 0.02
+  inside_offset_m: 0.05
+  lead_m: 0.1
+  decel: 0.5
+  creep_fraction: 0.9

@@ -1,0 +1,24 @@
+# B6 field-aware MPPI: tuned parameters (equal-budget random search, N = 24, tune set only).
+# MIRROR of configs/base.yaml `baselines.mppi`, which stays the single source of truth
+# (the tuner writes there). tests/test_baseline_params_mirror.py fails if the two differ.
+# Evaluate: python scripts/evaluate.py --config configs/base.yaml --seed <n> --controller field_aware_mppi
+controller: field_aware_mppi
+base_key: mppi
+params:
+  model: holonomic
+  horizon_steps: 20
+  samples: 1024
+  temperature: 0.032768585178131346
+  noise_std:
+  - 0.09430700444632568
+  - 0.10149237487460293
+  - 0.18319219038226955
+  iterations: 1
+  compute_measurement: runs/realtime/REALTIME_20261029T095844Z_seed0
+  scan: filter
+  weights:
+    route_tracking: 0.6750123188717693
+    goal_progress: 29.441988828637964
+    field_breach: 26.44147974840966
+    smoothness: 0.07313400771209624
+  hard_rejection: footprint

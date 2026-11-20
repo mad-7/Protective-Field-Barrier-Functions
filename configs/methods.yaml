@@ -83,6 +83,13 @@ methods:
       routes) and still stops often (108 and 815 stops per half), so the PFB has stops to remove and the
       weak-host objection is met directly. Proposed after the sealed classical test was read, so exploratory
       by construction. The same real-time criterion, by measurement"
+  B10:
+    status: active
+    role: [HF-exploratory]
+    added: "2026-11-20, restructure; NOT in any confirmatory list"
+    what: "B1's tuned parameters + the PFB at the frozen alpha 1.0, nothing else, untuned
+      (configs/experiments/B10_pp_pfb.yaml): completes the set so every classical baseline (B1, B2, B3,
+      B6) has a PFB-wrapped form (B10, B7, B9, B8). Exploratory by construction"
   L1:
     status: active
     role: [H1, H1N]

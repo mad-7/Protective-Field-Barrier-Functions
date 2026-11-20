@@ -1,0 +1,8 @@
+# B10: B1 (holonomic Pure Pursuit, tuned parameters) + the PFB at the frozen alpha, and nothing else, exactly as
+# B7 is B2 + the PFB, B8 is B6 + the PFB and B9 is B3 + the PFB. tests/test_pfb_integration.py proves the resolved
+# config differs from base only in `experiment` and `filter.enabled`. Untuned. Exploratory: not in any
+# confirmatory list. Evaluated with: scripts/evaluate.py --controller pure_pursuit.
+defaults: ../base.yaml
+experiment: B10_pp_pfb
+filter:
+  enabled: true
