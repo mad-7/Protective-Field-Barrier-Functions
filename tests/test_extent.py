@@ -120,12 +120,17 @@ def test_there_are_sets_to_guard():
 
 @pytest.mark.parametrize("path", SETS, ids=lambda p: p.relative_to(REPO).as_posix())
 def test_every_world_in_the_set_fits_on_the_floor(path):
-    h = float(CFG["sim"]["floor_half_extent_m"])
-    spawn = float(CFG["sim"]["robot_spawn_radius_m"])
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    # A set that names its world is rebuilt under that world's own config: an empty-hall set rebuilds
+    # to a different layout under the base config's shelf rows.
+    cfg = (load_config(REPO / "configs" / "worlds" / "empty_hall.yaml")
+           if manifest.get("kind") == "empty_hall" else CFG)
+    h = float(cfg["sim"]["floor_half_extent_m"])
+    spawn = float(cfg["sim"]["robot_spawn_radius_m"])
     worst, outside = 0.0, []
-    for record in json.loads(path.read_text(encoding="utf-8"))["scenarios"]:
+    for record in manifest["scenarios"]:
         scenario = Scenario(**record)
-        reach = world_reach(world_of(scenario, CFG), scenario.start)
+        reach = world_reach(world_of(scenario, cfg), scenario.start)
         worst = max(worst, reach)
         if not fits_on_floor(reach, spawn, h):
             outside.append(scenario.seed)
