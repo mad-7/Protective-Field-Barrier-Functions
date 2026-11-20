@@ -1,4 +1,4 @@
-"""docs/pending/apply_A36.py on a COPY of preregistration/ (never the real one; hard rule 1)."""
+"""docs/archive/pending/apply_A36.py on a COPY of preregistration/ (never the real one; hard rule 1)."""
 import importlib.util
 import shutil
 from pathlib import Path
@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def _module():
-    spec = importlib.util.spec_from_file_location("apply_A36", ROOT / "docs" / "pending" / "apply_A36.py")
+    spec = importlib.util.spec_from_file_location("apply_A36", ROOT / "docs" / "archive" / "pending" / "apply_A36.py")
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     return m

@@ -146,7 +146,7 @@ def test_g2_uses_the_ruled_over_budget_share_and_refuses_a_disagreeing_overlay(t
     then the two must agree (hard rule 16: the overlay never quietly states another number)."""
     mod = _script()
     assert mod.criteria()["max_over_budget_share"] == 0.001          # the committed overlay
-    gates = yaml.safe_load((REPO / "docs" / "pending" / "gates_A28.yaml").read_text(
+    gates = yaml.safe_load((REPO / "docs" / "archive" / "pending" / "gates_A28.yaml").read_text(
         encoding="utf-8"))
     assert gates["G2_compute_budget"]["max_over_budget_share"] == 0.001
     gate = tmp_path / "g2.yaml"

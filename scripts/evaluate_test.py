@@ -115,9 +115,9 @@ def set_filter(loop, pfb) -> None:
 def preregistered_size(arm_set: str = "classical") -> int:
     amendments = (PREREG / "AMENDMENTS.md").read_text(encoding="utf-8")
     if arm_set == "hosts" and "## A37 - " not in amendments:
-        raise SystemExit("A37 is not applied (docs/pending/apply_A37.py, then relock)")
+        raise SystemExit("A37 is not applied (docs/archive/pending/apply_A37.py, then relock)")
     if "## A36 - " not in amendments or "## A14b - " not in amendments:
-        raise SystemExit("A14b/A36 are not applied (docs/pending/apply_A36.py, then relock)")
+        raise SystemExit("A14b/A36 are not applied (docs/archive/pending/apply_A36.py, then relock)")
     test = yaml.safe_load((PREREG / "scenario_sets.yaml").read_text(encoding="utf-8")
                           )["scenario_sets"]["test"]
     if not isinstance(test, dict) or "per_cell" not in test:

@@ -2,7 +2,7 @@
 
 One wrapper, applied identically to every classical baseline -- B1, B2, B3, B6 and B7 -- and to the
 zero-action control. Learned policies get no scripted recovery; the methods state the asymmetry.
-Specification: `docs/pending/recovery_spec.md`; numbers in `configs/base.yaml`,
+Specification: `docs/archive/pending/recovery_spec.md`; numbers in `configs/base.yaml`,
 `baselines.recovery`.
 
 **Where it sits.** Between the base controller and the environment: controller -> recovery ->

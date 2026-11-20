@@ -301,7 +301,7 @@ def test_the_a30_draft_states_the_amended_criterion():
     from pathlib import Path
 
     import yaml
-    draft = yaml.safe_load((Path(__file__).resolve().parents[1] / "docs" / "pending"
+    draft = yaml.safe_load((Path(__file__).resolve().parents[1] / "docs" / "archive" / "pending"
                             / "gates_A30.yaml").read_text(encoding="utf-8"))["G4_learned_pilot"]
     assert draft["learning"] == LEARN_A30
     assert draft["pilot_training_seeds"] == [9000000, 9000001, 9000002]

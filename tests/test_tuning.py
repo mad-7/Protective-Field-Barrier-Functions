@@ -310,7 +310,7 @@ def test_tuning_waits_for_the_contingency_hypothesis():
     assert "A27" in mod.contingency_problem({"H1": {}, "confirmatory_family": {}})
     assert "A27" in mod.contingency_problem({"H1prime": {"comparators": ["B1"]},
                                              "confirmatory_family": {}})
-    pending = yaml.safe_load((REPO / "docs" / "pending" / "endpoints_A27.yaml").read_text(
+    pending = yaml.safe_load((REPO / "docs" / "archive" / "pending" / "endpoints_A27.yaml").read_text(
         encoding="utf-8"))
     assert mod.contingency_problem(pending) is None
 

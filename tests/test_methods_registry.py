@@ -35,8 +35,8 @@ def test_the_a28_cut_order_names_only_active_methods_or_declared_analyses():
     """A28 (ruled 2026-10-27): the cut order puts the L2 sensitivity first; every entry is an active
     method ID or one of the two declared analyses (the PFB-(a) ablation of H3, the stop_active
     ablation), and no confirmatory arm is cut."""
-    for path in (REPO / "docs" / "pending" / "gates_A28.yaml",
-                 REPO / "docs" / "pending" / "gates_A28a.yaml",
+    for path in (REPO / "docs" / "archive" / "pending" / "gates_A28.yaml",
+                 REPO / "docs" / "archive" / "pending" / "gates_A28a.yaml",
                  REPO / "preregistration" / "gates.yaml"):
         g2 = yaml.safe_load(path.read_text(encoding="utf-8"))["G2_compute_budget"]
         order = g2["reduction_order"]

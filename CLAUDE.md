@@ -8,6 +8,10 @@ The preregistration lock is removed: no `LOCK.json`, no `scripts/freeze_prereg.p
 freeze (`env.frozen_code_sha256`), no refusal because a hash moved. Code, configs and scenario
 modules may change freely; `environment_identity` and the scenario hashes are recorded in
 provenance only. Anything below that says "frozen", "relock" or "re-freeze" is history, not a rule.
+Layout changes of the same restructure: amendment drafts moved from `docs/pending/` to
+`docs/archive/pending/`; baseline parameters live only in `configs/baselines/` (loaded through
+`baseline_files` in `configs/base.yaml`); the PFB goes beneath a baseline with
+`scripts/evaluate.py --pfb on` (`pfbnav/integration.py`).
 Still enforced and unrelated to the lock: the scene SHA-256 pin, the filter's alpha ruling
 (`filter_problem`), and test sets under `scenarios/test/` being write-protected once locked.
 
