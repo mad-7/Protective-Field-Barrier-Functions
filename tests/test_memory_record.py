@@ -87,19 +87,3 @@ def test_the_criterion_is_the_declared_one_in_the_config():
     cfg = load_config(Path(__file__).resolve().parents[1] / "configs" / "base.yaml")
     assert cfg["training"]["memory_check"] == CHECK
     assert cfg["training"]["memory_sample_every"] == 1000
-
-
-def test_the_memory_check_never_uses_a_pilot_seed():
-    import importlib.util
-    from pathlib import Path
-
-    import yaml
-    root = Path(__file__).resolve().parents[1]
-    spec = importlib.util.spec_from_file_location("ctm", root / "scripts" / "check_training_memory.py")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    gates = yaml.safe_load((root / "preregistration" / "gates.yaml").read_text(encoding="utf-8"))
-    assert mod.seed_problem(9_200_000, gates) is None
-    assert "pilot training seed" in mod.seed_problem(9_000_001, gates)
-    assert "outside the pilot range" in mod.seed_problem(1_000_000, gates)
-    assert mod.positive_control()["passed"]

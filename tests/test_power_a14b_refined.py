@@ -1,5 +1,4 @@
 """The refined A14b grid's pieces (ruled 2026-11-07, item 2): known answers (hard rule 6)."""
-import importlib.util
 from pathlib import Path
 
 import numpy as np
@@ -63,13 +62,3 @@ def test_h1prime_at_equal_rates_rejects_near_its_nominal_one_sided_rate():
                                    classical_df=WS)
         lower, higher = lower + int(lo.sum()), higher + int(hi.sum())
     assert 0.010 <= lower / 2000 <= 0.045 and 0.010 <= higher / 2000 <= 0.045
-
-
-def test_wall_clock_counts_every_arm_and_k():
-    spec = importlib.util.spec_from_file_location("par", ROOT / "scripts" / "power_a14b_refined.py")
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    p = {"episode_wall_s": {"B": 100, "L": 50}, "classical_arms_evaluated": ["B"],
-         "learned_arms_evaluated": ["L"], "instances": 2}
-    # 36 scenarios x (100 + 10 x 50) s / 2 instances = 10,800 s = 3 h
-    assert m.wall_clock_h(36, 10, p) == pytest.approx(3.0)

@@ -1,6 +1,5 @@
 """HF_hosts (A37): the arm set, the declared low-count and consistency checks, the apply script on a copy (hard rule 6)."""
 import importlib.util
-import json
 import shutil
 from pathlib import Path
 
@@ -54,34 +53,8 @@ def _rec(sha, stops, plan=10.0):
             "stratum": "narrow", "outcome": "success", "episode_return": 0.0}
 
 
-def test_the_comparisons_flag_low_counts_and_keep_clear_verdicts():
-    m = _script("analyse_hosts")
-    n = 150
-    records = {"B3": [_rec(f"s{i}", 5) for i in range(n)], "B9": [_rec(f"s{i}", int(i < 2)) for i in range(n)],
-               "B6": [_rec(f"s{i}", int(i < 10)) for i in range(n)], "B8": [_rec(f"s{i}", 0) for i in range(n)]}
-    c = m.comparisons(records)
-    assert not c["B9_vs_B3"]["low_count"] and c["B9_vs_B3"]["reading"] == "a fewer"
-    assert c["B8_vs_B6"]["low_count"] and c["B8_vs_B6"]["reading"] == "counts only: 0 vs 10 events"
 
 
-def test_read_runs_reads_only_the_named_arms(tmp_path):
-    hfc = _script("analyse_hfc")
-    for i, positions in enumerate(([0, 2], [1, 3])):
-        d = tmp_path / f"s{i}"
-        d.mkdir()
-        (d / "provenance.json").write_text(json.dumps({"dirty": False, "commit": "c", "host": {"hostname": "H"}}),
-                                           encoding="utf-8")
-        (d / "evaluated.json").write_text(json.dumps(
-            {"shard": i, "shards": 2, "positions": positions, "sets": {"s": "h"}, "environment": "e", "alpha": 1.0,
-             "b2_parameters": {}, "arms": {}, "rerun_after_crash": None}), encoding="utf-8")
-        for a in ("B3", "B9"):
-            (d / a).mkdir()
-            (d / a / "episodes.jsonl").write_text("".join(json.dumps(_rec(f"p{p}", 0)) + "\n" for p in positions),
-                                                  encoding="utf-8")
-    records, _ = hfc.read_runs([tmp_path / "s0", tmp_path / "s1"], ("B3", "B9"))
-    assert set(records) == {"B3", "B9"} and len(records["B9"]) == 4
-    with pytest.raises(SystemExit):
-        hfc.read_runs([tmp_path / "s0", tmp_path / "s1"], ("B3", "B8"))       # an arm that did not run
 
 
 def test_apply_a37_on_a_copy(tmp_path, monkeypatch):

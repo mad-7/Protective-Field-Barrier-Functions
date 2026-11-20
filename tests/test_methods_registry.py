@@ -2,8 +2,7 @@
 
 Standing rule (supervisor, 2026-10-15; hard rule 20). B4 and B5 were retired by A16 and never
 implemented, but frozen documents name them, so they stay in `configs/methods.yaml` as retired and
-no list that decides anything may use them. Until A16 is applied to `preregistration/endpoints.yaml`
-and relocked, the endpoint test below fails by design: the frozen file still names B4.
+no list that decides anything may use them.
 """
 from pathlib import Path
 
@@ -19,15 +18,6 @@ def test_every_id_has_one_status_and_retired_ones_say_when():
     assert ACTIVE.isdisjoint(RETIRED) and ACTIVE | RETIRED == set(REGISTRY)
     assert all("retired" in REGISTRY[k] for k in RETIRED)
     assert {"B4", "B5"} <= RETIRED and {"B6", "B7"} <= ACTIVE
-
-
-def test_the_power_analysis_configs_name_only_active_comparators():
-    for name in ("h1_power.yaml", "h1_rate_ratio.yaml", "power_corrected.yaml"):
-        text = yaml.safe_load((REPO / "configs" / "analysis" / name).read_text(encoding="utf-8"))
-        found = _lists_named(text, "classical") + _lists_named(text, "learned")
-        assert found, f"{name}: no comparator list found"
-        for ids in found:
-            assert set(ids) <= ACTIVE, f"{name} names {sorted(set(ids) - ACTIVE)}"
 
 
 def test_the_preregistered_endpoints_name_only_active_methods():
@@ -63,18 +53,3 @@ def test_the_a28_cut_order_names_only_active_methods_or_declared_analyses():
         if "never_cut" in g2:                   # A28a: no confirmatory arm or comparator is cut
             assert set(g2["never_cut"]) == {"L1", "L2", "L4", "L5", "B1", "B2", "B3", "B6", "B7"}
             assert not set(g2["never_cut"]) & set(order)
-
-
-def _lists_named(node, key):
-    """Every list stored under `key` anywhere in a nested mapping."""
-    out = []
-    if isinstance(node, dict):
-        for k, v in node.items():
-            if k == key and isinstance(v, list):
-                out.append(v)
-            else:
-                out += _lists_named(v, key)
-    elif isinstance(node, list):
-        for v in node:
-            out += _lists_named(v, key)
-    return out

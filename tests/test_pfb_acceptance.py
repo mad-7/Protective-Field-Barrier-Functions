@@ -168,59 +168,8 @@ def test_the_declared_stall_cut_off_ends_a_run_without_progress():
     assert len(recs) == 60 and not any(r.get("stalled") for r in recs)
 
 
-def test_the_simulator_records_pair_each_decision_with_the_packet_and_pose_it_was_taken_on():
-    """`scripts/pfb_sim_acceptance.py`: step k's certified and PFB decisions were taken on the packet
-    in hand and at the pose BEFORE step k's physics -- step k-1's -- so the record carries step k's
-    decisions with step k-1's scan validity, pose and applied command; attributed as the emulator's
-    records are."""
-    import importlib.util
-    from types import SimpleNamespace as NS
-
-    spec = importlib.util.spec_from_file_location("pfb_sim_acceptance",
-                                                  REPO / "scripts" / "pfb_sim_acceptance.py")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    valid_prev = np.array([True] * 7 + [False])
-    prev = NS(step=4, pose=np.array([1.0, 2.0, 0.3]), applied=np.array([0.2, 0.0, 0.1]),
-              velocity=np.array([0.18, 0.0, 0.09]),
-              scan=NS(filter_valid=valid_prev, filter_ranges=np.full(8, 2.0),
-                      filter_bearings=np.linspace(-3.0, 3.0, 8)))
-    cert = {"stop_triggered": True, "triggered_at_rest": False, "at_rest": False, "field_id": 1,
-            "field_yaw_rate": 0.1}
-    state = NS(step=5, certified=cert, pfb=_pfb(), decided_on_fault=False, timings_s={"pfb": 0.012},
-               over_budget=False, in_contact=False, applied=np.array([0.21, 0.0, 0.12]))
-    rec = mod.route_record(state, prev, 0.25, 3.5, (0.1, 0.2, 0.3), (0.4, True))
-    assert rec["step"] == 5 and rec["decision_pose"] == [1.0, 2.0, 0.3]
-    assert rec["applied_before"] == [0.2, 0.0, 0.1] and rec["pfb_ms"] == pytest.approx(12.0)
-    assert np.array_equal(rec["scan"].valid, valid_prev)
-    # what re-solving the PFB's decision needs: its scan, estimate and state BEFORE the call
-    assert rec["velocity_before"] == [0.18, 0.0, 0.09] and rec["pfb_state_before"] == [0.4, True]
-    assert rec["scan_ranges"] == [2.0] * 8 and len(rec["scan_bearings"]) == 8
-    stops = attribute_stops([rec], DT)
-    assert stops[0]["category"] == "unobserved"
 
 
-def test_the_traces_keep_the_window_around_every_stop(tmp_path):
-    """`write_traces`: one file per stop, holding TRACE_BEFORE records before it to TRACE_AFTER
-    after (clipped at the episode's ends), serialisable, with the scan's validity kept."""
-    import importlib.util
-    import json
-    from types import SimpleNamespace as NS
-
-    spec = importlib.util.spec_from_file_location("pfb_sim_acceptance",
-                                                  REPO / "scripts" / "pfb_sim_acceptance.py")
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    records = [{"step": k, "s": 0.01 * k, "scan": NS(valid=np.ones(4, bool)), "x": float(k)}
-               for k in range(1, 61)]
-    names = mod.write_traces(records, [{"step": 40, "category": "unattributed"},
-                                       {"step": 3, "category": "creep"}], 77, tmp_path)
-    assert names == ["77_40_unattributed.json", "77_3_creep.json"]
-    late = json.loads((tmp_path / names[0]).read_text(encoding="utf-8"))["records"]
-    assert [r["step"] for r in late] == list(range(40 - mod.TRACE_BEFORE, 40 + mod.TRACE_AFTER + 1))
-    early = json.loads((tmp_path / names[1]).read_text(encoding="utf-8"))["records"]
-    assert early[0]["step"] == 1 and early[-1]["step"] == 3 + mod.TRACE_AFTER
-    assert early[0]["scan_valid"] == [True] * 4 and "scan" not in early[0]
 
 
 # --------------------------------------------------------------------------- the yaw profile

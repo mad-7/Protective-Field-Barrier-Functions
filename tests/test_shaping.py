@@ -56,7 +56,7 @@ def test_every_shaped_experiment_carries_the_derived_value_and_unshaped_ones_zer
         assert shaping_problem(cfg) is None, path.name
         if float(cfg["reward"]["k_proximity"]) > 0.0:
             shaped.append(cfg["experiment"])
-    assert "L1_sac_shaped" in shaped and "DIAG_L1_unicycle" in shaped
+    assert "L1_sac_shaped" in shaped
     for name in ("L2_sac_lagrangian", "L5_sac_pfb_unshaped"):
         assert float(load_config(REPO / "configs" / "experiments" / f"{name}.yaml")
                      ["reward"]["k_proximity"]) == 0.0

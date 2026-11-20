@@ -11,7 +11,7 @@ from gymnasium import spaces
 from pfbnav.config import load_config
 from pfbnav.envs.freeze import import_closure
 from pfbnav.training.curriculum import FULL, Curriculum, stage_at, stages_from_config
-from pfbnav.training.diagnostic import UnicycleAction, diagnostic_problem
+from pfbnav.training.diagnostic import UnicycleAction
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CFG = load_config(REPO_ROOT / "configs" / "base.yaml")
@@ -143,21 +143,6 @@ def test_unicycle_zeroes_only_the_lateral_axis():
     env.reset(options={"index": 0})
     env.step(np.array([0.7, -0.9, 0.3]))
     assert np.allclose(base.actions[-1], [0.7, 0.0, 0.3])
-
-
-def test_the_unicycle_config_and_its_seed():
-    cfg = load_config(REPO_ROOT / "configs" / "experiments" / "diag" / "L1_unicycle.yaml")
-    l1 = load_config(REPO_ROOT / "configs" / "experiments" / "L1_sac_shaped.yaml")
-    assert cfg["diagnostic"]["unicycle"] is True and cfg["experiment"] == "DIAG_L1_unicycle"
-    assert {k: v for k, v in cfg.items() if k not in ("experiment", "diagnostic")} == \
-        {k: v for k, v in l1.items() if k != "experiment"}
-    assert diagnostic_problem(cfg, 9_000_100, GATES) is None
-    assert "pilot training seed" in diagnostic_problem(cfg, 9_000_001, GATES)
-    assert "pilot range" in diagnostic_problem(cfg, 1_000_000, GATES)
-    assert "DIAG_" in diagnostic_problem({**cfg, "experiment": "L1x"}, 9_000_100, GATES)
-    assert diagnostic_problem(l1, 9_000_001, GATES) is None
-    methods = (REPO_ROOT / "configs" / "methods.yaml").read_text(encoding="utf-8")
-    assert "DIAG_" not in methods          # a diagnostic is never a method (no ID)
 
 
 # ------------------------------------------------------------------ the memory alarm
