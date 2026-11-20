@@ -27,6 +27,10 @@ learned SAC arms (L1-L5).
    ignores, so they never print. An unverified citation (arXiv:2606.13203, authors unknown) was removed with
    its sentence on 2026-11-09; it returns only if the researcher supplies verified details.
 
+8. Host planners (researcher, 2026-11-09): B9 = B3 + PFB and B8 = B6 + PFB are EXPLORATORY held-out results (amendment A37), proposed
+   after the test was read; B3 and B6 reran for the pairing, the sealed results stay the cited ones. B8 vs B6 is low-count by the declared
+   rule: counts only, no ratio, no verdict. Run-to-run noise is a stated limitation of every single-run comparison.
+
 ## Build
 From this folder (MiKTeX or TeX Live):
 ```
@@ -54,13 +58,14 @@ Figure 1 (`fig_architecture.pdf`) is a schematic drawing in full scope (classica
 | Claim | Source |
 |---|---|
 | Tables 2-4, Fig. 5 (HELD-OUT, both halves; rate ratios; PFB corrections; declared control) | 2026-11-08 "The sealed classical test (unmapped_static)" and "(mapped_only)"; `runs/test/HFC_ANALYSIS_20261108T171312Z_seed0`, `runs/test/HFC_ANALYSIS_mapped_only_20261108T223147Z_seed0` (training host). Checked 2026-11-08 by the host session against the researcher's printouts of both `report.json` files: every printed value matches; the run files themselves were not read from the laptop. Driven and planned metres and the fractions are derived as stops / rate (half 2's B6 driven +-2 m) |
+| Table 5, Section "Exploratory: the filter on two further host planners" (B3 rerun, B9, B6 rerun, B8, both halves; rate ratios B9 vs B3; consistency check; noise; p95) | 2026-11-09 "HF_hosts, obstacle half (exploratory, A37)" and "HF_hosts, half without obstacles"; `runs/test/HOSTS_ANALYSIS_unmapped_static_20261109T154308Z_seed0`, `runs/test/HOSTS_ANALYSIS_mapped_only_20261109T195925Z_seed0` (commit 47ae61a, training host); the B8 vs B6 ratio (0.2174 [0.0592, 0.7982], obstacle half) is in the log but deliberately NOT reported; `docs/pending/A37_amendment.md` (the low-count rule and consistency check) |
 | Half 1 mission times (B3 131.2, B6 129.6, B7 169.0 s) | relayed 2026-11-08; `paper/codit2026/results_test.json` (not in the log's table) |
 | Tune split, 17 obstacle / 43 clear routes | 2026-11-08 "The success collapse is the population" |
 | Calibration gate (0.0297; highest 0.0274; ungated cells) | 2026-11-08 "HF-c calibration PASSED" |
 | HF-c, A14b, disclosures | 2026-11-07 "DECIDED"; `docs/pending/A36_amendment.md`; applied in `da0952f`, relocked `1d1ebf0`, test sets built `6afb838` (on origin/main) |
 | Power and test size (H1 max 0.48; H2 at +20 pp, SD <= 0.3) | 2026-11-07 "A14b refined grid" |
-| Table 5 (DEVELOPMENT-SET, all arms: success, stops per 100 m planned / driven / completed, latched, moving speed) | 2026-11-07 "Offline diagnostics, first read (item 3)", table 3c/3d; "All arms under the A34 denominators" |
-| Table 6 (B2 vs B7 by stratum, development set) | as the CoDIT draft: B7 alpha tuning, `runs/tuning/B7_alpha_20261102T195759Z_seed0` (2026-11-03) |
+| Table 6 (DEVELOPMENT-SET, all arms: success, stops per 100 m planned / driven / completed, latched, moving speed) | 2026-11-07 "Offline diagnostics, first read (item 3)", table 3c/3d; "All arms under the A34 denominators" |
+| Table 7 (B2 vs B7 by stratum, development set) | as the CoDIT draft: B7 alpha tuning, `runs/tuning/B7_alpha_20261102T195759Z_seed0` (2026-11-03) |
 | Fig. 6c and text, alpha grid (success, stops driven, fallback steps) | 2026-11-03 "alpha 1.0 FROZEN"; `results_tune.json` |
 | B7 = B2 moving speed 0.057 m/s on 13 routes; B2 27 % latched, 69 stops | 2026-11-06 "REVIEWED: B2 vs B7 speed" |
 | RPP regulation from 1.18 m; 0.73 m vs 4.34 / 4.20 m in 10 s | 2026-11-06 ruling (4); 2026-11-07 compute entry |
@@ -69,7 +74,7 @@ Figure 1 (`fig_architecture.pdf`) is a schematic drawing in full scope (classica
 | B1: 24 candidates, latched 83-90 %; 5 traces, 6-8 stops, cross-track 1-8 cm | 2026-11-06 "B3 and B1 tuning finished"; 2026-11-07 moving-speed table; diagnostics 3e |
 | B2 fails >= 75 % of routes by the restop cycle | 2026-11-01 (CLAUDE.md, plan of record) |
 | B3/B6 share the sampler seed; 93 % positions | 2026-11-07 "B6 TUNED"; ruling 2026-11-07 item 1 |
-| Table 7 (G4, pilot) | 2026-10-30 (L1 9000000); 2026-11-04 (L1 9000001/9000002); 2026-11-03 (L5 9000001 crash, A32); 2026-11-06 (L5 9000002 PASS) |
+| Table 8 (G4, pilot) | 2026-10-30 (L1 9000000); 2026-11-04 (L1 9000001/9000002); 2026-11-03 (L5 9000001 crash, A32); 2026-11-06 (L5 9000002 PASS) |
 | L5 training 924/1,754, 0 unrecoverable; checkpoint per stratum 6/11/14; 29 timeouts | 2026-11-06 "L5 pilot seed 9000002" |
 | L5 requests 0.43-0.63 m/s, 45-99 % >= 0.45; filter alters ~100 % of steps; B7 50/89 %; wandering 1.6x (1.73/1.45/1.61), 4-6 m detours | 2026-11-07 diagnostics 3a; "L5's checkpoint and the oracle under the A34 denominators" |
 | Compute p95 (PFB 27.9 / 28.0 ms, B6 34.5 / 37.1 ms) | 2026-11-07 diagnostics 3d; 2026-10-29 real-time measurement |
@@ -87,6 +92,6 @@ Figure 1 (`fig_architecture.pdf`) is a schematic drawing in full scope (classica
 - Code availability (researcher, 2026-11-09): the repository will be public; the draft gives its GitHub URL.
 - Red markers (left until a venue is chosen): funding and acknowledgements, AI-use disclosure.
 - The title (2026-11-09): the researcher expressed no preference; the draft keeps "Industrial Mobile Robots".
-- The learned arms: Tables 8 and 9 (H1, H2) and every `[pending]` cell of Table 7 (L2, L4, L5 9000003).
+- The learned arms: Tables 9 and 10 (H1, H2) and every `[pending]` cell of Table 8 (L2, L4, L5 9000003).
 
 Commit this folder on its own, never together with code.
