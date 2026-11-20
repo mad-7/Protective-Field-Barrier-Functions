@@ -1,5 +1,5 @@
-"""Every classical baseline has a PFB-wrapped form that differs from it ONLY in the filter switch, and the
-per-baseline parameter files mirror configs/base.yaml exactly (restructure, 2026-11-20)."""
+"""Every classical baseline has a PFB-wrapped form that differs from it ONLY in the filter switch, and
+each baseline's parameters live only in configs/baselines/ (restructure, 2026-11-20)."""
 from pathlib import Path
 
 import pytest
@@ -39,25 +39,36 @@ def test_b10_is_registered_and_never_confirmatory():
 
 
 @pytest.mark.parametrize("name", sorted(MIRRORS))
-def test_baseline_param_file_mirrors_base_exactly(name):
-    base = yaml.safe_load((ROOT / "configs" / "base.yaml").read_text(encoding="utf-8"))["baselines"]
-    mirror = yaml.safe_load((ROOT / "configs" / "baselines" / f"{name}.yaml").read_text(encoding="utf-8"))
-    assert mirror["base_key"] == MIRRORS[name]
-    assert mirror["params"] == base[MIRRORS[name]]
+def test_the_loaded_config_takes_each_baseline_from_its_file(name):
+    """configs/baselines/ is the only home of a baseline's parameters: base.yaml names the files, the
+    loader puts each file's params under cfg['baselines'][key]."""
+    raw = yaml.safe_load((ROOT / "configs" / "base.yaml").read_text(encoding="utf-8"))
+    key = MIRRORS[name]
+    assert key not in raw["baselines"], f"{key} is also written in base.yaml"
+    file = yaml.safe_load((ROOT / "configs" / "baselines" / f"{name}.yaml").read_text(encoding="utf-8"))
+    assert file["base_key"] == key and f"baselines/{name}.yaml" in raw["baseline_files"]
+    assert load_config(ROOT / "configs" / "base.yaml")["baselines"][key] == file["params"]
 
 
-def test_shared_recovery_and_route_cap_mirror_base():
-    base = yaml.safe_load((ROOT / "configs" / "base.yaml").read_text(encoding="utf-8"))["baselines"]
+def test_the_shared_recovery_and_route_cap_come_from_their_file():
+    raw = yaml.safe_load((ROOT / "configs" / "base.yaml").read_text(encoding="utf-8"))
+    assert "recovery" not in raw["baselines"] and "route_cap" not in raw["baselines"]
     shared = yaml.safe_load((ROOT / "configs" / "baselines" / "shared.yaml").read_text(encoding="utf-8"))
-    assert shared["recovery"] == base["recovery"] and shared["route_cap"] == base["route_cap"]
+    cfg = load_config(ROOT / "configs" / "base.yaml")
+    assert cfg["baselines"]["recovery"] == shared["recovery"]
+    assert cfg["baselines"]["route_cap"] == shared["route_cap"]
+    assert "baseline_files" not in cfg
 
 
-def test_mirror_test_detects_drift():
-    """Positive control: a perturbed copy must not equal base."""
-    base = yaml.safe_load((ROOT / "configs" / "base.yaml").read_text(encoding="utf-8"))["baselines"]
-    mirror = yaml.safe_load((ROOT / "configs" / "baselines" / "B1_pure_pursuit.yaml").read_text(encoding="utf-8"))
-    mirror["params"]["cruise_speed"] += 1e-6
-    assert mirror["params"] != base["pure_pursuit"]
+def test_a_parameter_written_in_two_places_is_refused(tmp_path):
+    """Positive control: a second home for a baseline raises instead of silently picking one."""
+    (tmp_path / "baselines").mkdir()
+    (tmp_path / "baselines" / "x.yaml").write_text(
+        "controller: c\nbase_key: pure_pursuit\nparams:\n  a: 1\n", encoding="utf-8")
+    (tmp_path / "dup.yaml").write_text(
+        "baseline_files: [baselines/x.yaml]\nbaselines:\n  pure_pursuit: {a: 2}\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="defined twice"):
+        load_config(tmp_path / "dup.yaml")
 
 
 def test_with_pfb_reproduces_every_overlay_file():

@@ -9,7 +9,7 @@ this (hard rule 11), after B2's tuning:
   * the grid: `grid_per_s`, read from the preregistration, never restated;
   * B7 = B2's TUNED parameters plus the PFB, nothing else: `baselines.regulated_pure_pursuit` in the
     config must equal the B2 tuning run's selected parameters (they are written into
-    configs/base.yaml by hand after B2's review, with a decision-log entry), and the controller is
+    configs/baselines/B2_regulated_pure_pursuit.yaml by hand after B2's review, with a decision-log entry), and the controller is
     built exactly as B2's is (`scripts/evaluate.py`: route cap and classical recovery);
   * the set: the three tune sets at the training unmapped rate, each scenario once per grid value,
     every grid value in ONE scene load (the PFB is rebuilt with each alpha between candidates; the

@@ -1,21 +1,21 @@
-# B3 holonomic DWA: tuned parameters (equal-budget random search, N = 24, tune set only).
-# MIRROR of configs/base.yaml `baselines.dwa`, which stays the single source of truth
-# (the tuner writes there). tests/test_baseline_params_mirror.py fails if the two differ.
-# Evaluate: python scripts/evaluate.py --config configs/base.yaml --seed <n> --controller dwa
+# B3 holonomic DWA: parameters, the single source (loaded into cfg['baselines']['dwa'] by
+# load_config through `baseline_files` in configs/base.yaml). Tuned values were written here by
+# hand after the tuning run's review. Evaluate: python scripts/evaluate.py --config
+# configs/base.yaml --seed <n> --controller dwa [--pfb on]
 controller: dwa
 base_key: dwa
 params:
-  max_speed: 0.42731865359248744
-  window_time: 0.14066545649284481
-  sim_time: 1.610392418667043
-  sim_granularity: 0.025
-  angular_sim_granularity: 0.1
-  vx_samples: 5
-  vy_samples: 5
-  wz_samples: 7
-  safety_margin: 0.07857857007138075
-  clearance_cap: 0.30732792467783543
-  w_path: 2.1271296751068705
-  w_progress: 1.0
-  w_heading: 0.6890703408239016
-  w_clearance: 3.4360004233171026
+  max_speed: 0.42731865359248744  # TUNED (0.20-0.50).
+  window_time: 0.14066545649284481  # TUNED (0.05-0.40, log).
+  sim_time: 1.610392418667043  # TUNED (0.8-3.0, log).
+  sim_granularity: 0.025  # m, most translation between rollout states
+  angular_sim_granularity: 0.1  # rad, most yaw between rollout states
+  vx_samples: 5  # grid points over the window's vx extent (odd, so the estimate itself is a sample).
+  vy_samples: 5  # likewise for vy (DWB 5)
+  wz_samples: 7  # likewise for wz (DWB vtheta_samples 20)
+  safety_margin: 0.07857857007138075  # TUNED (0.0-0.10).
+  clearance_cap: 0.30732792467783543  # TUNED (0.10-0.60).
+  w_path: 2.1271296751068705  # TUNED (0.2-5.0, log).
+  w_progress: 1.0  # 1/m, the route arc reached by the end state (a reward)
+  w_heading: 0.6890703408239016  # TUNED (0.05-2.0, log).
+  w_clearance: 3.4360004233171026  # TUNED (0.02-5.0, log).

@@ -1,15 +1,15 @@
-# Shared by every classical baseline (B1, B2, B3, B6) and their PFB-wrapped forms.
-# MIRROR of configs/base.yaml baselines.recovery and baselines.route_cap.
+# Shared by every classical baseline (B1, B2, B3, B6): the declared recovery and the route cap.
+# Loaded into cfg['baselines'] by load_config through `baseline_files` in configs/base.yaml.
 recovery:
-  wait: 1.0
-  speed: 0.018
-  max_distance: 0.3
-  max_attempts: 5
-  directions: 72
-  tie_tolerance: 0.001
+  wait: 1.0  # s, after the certified layer's restart_delay, still blocked
+  speed: 0.018  # m/s, translation only (no yaw).
+  max_distance: 0.30  # m per attempt, integrated from the velocity estimate
+  max_attempts: 5  # per episode
+  directions: 72  # candidate body-frame directions, evenly spaced (every 5 deg)
+  tie_tolerance: 0.001  # m of clearance within which directions tie
 route_cap:
-  sample_spacing_m: 0.02
-  inside_offset_m: 0.05
-  lead_m: 0.1
-  decel: 0.5
-  creep_fraction: 0.9
+  sample_spacing_m: 0.02  # m between route samples (the oracle's own spacing)
+  inside_offset_m: 0.05  # m, each band also checked this far toward the inside of bends: the committed tracking bound (gates.yaml D2 max cross-track)
+  lead_m: 0.10  # m, each cap is the minimum over the next lead_m: one reach time (0.15 s) at the top band's speed limit, rounded up VERIFY
+  decel: 0.5  # m/s^2, the backward pass: half the limiter's a_decel_max 1.0, so the cap leaves room for the velocity estimate's lag VERIFY
+  creep_fraction: 0.9  # nothing clear: speed and yaw rate at 0.9 x the standstill exits (the creep regime, as the recovery's 0.018 m/s)

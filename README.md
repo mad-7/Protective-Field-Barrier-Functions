@@ -26,7 +26,7 @@ pfbnav/            the package
   utils/ config.py   run directories and provenance; config loading
 configs/
   base.yaml          every physical and tuned parameter (single source of truth)
-  baselines/         per-baseline parameter files (mirror base.yaml) and shared recovery/route cap
+  baselines/         the only home of B1, B2, B3, B6 parameters, plus the shared recovery and route cap
   experiments/       one overlay per method (B7-B10 = baseline + PFB; L1-L5 learned)
   tuning/ gates/     tuning search spaces; gate overlays
   methods.yaml       every method ID, active or retired

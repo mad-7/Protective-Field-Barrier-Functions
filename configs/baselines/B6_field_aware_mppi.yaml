@@ -1,24 +1,22 @@
-# B6 field-aware MPPI: tuned parameters (equal-budget random search, N = 24, tune set only).
-# MIRROR of configs/base.yaml `baselines.mppi`, which stays the single source of truth
-# (the tuner writes there). tests/test_baseline_params_mirror.py fails if the two differ.
-# Evaluate: python scripts/evaluate.py --config configs/base.yaml --seed <n> --controller field_aware_mppi
+# B6 field-aware MPPI: parameters, the single source (loaded into cfg['baselines']['mppi'] by
+# load_config through `baseline_files` in configs/base.yaml). Tuned values were written here by
+# hand after the tuning run's review. Evaluate: python scripts/evaluate.py --config
+# configs/base.yaml --seed <n> --controller field_aware_mppi [--pfb on]
 controller: field_aware_mppi
 base_key: mppi
 params:
-  model: holonomic
-  horizon_steps: 20
-  samples: 1024
-  temperature: 0.032768585178131346
-  noise_std:
-  - 0.09430700444632568
-  - 0.10149237487460293
-  - 0.18319219038226955
-  iterations: 1
-  compute_measurement: runs/realtime/REALTIME_20261029T095844Z_seed0
-  scan: filter
-  weights:
-    route_tracking: 0.6750123188717693
-    goal_progress: 29.441988828637964
-    field_breach: 26.44147974840966
-    smoothness: 0.07313400771209624
-  hard_rejection: footprint
+  model: holonomic  # kinematic (vx, vy, wz) at sim.dt, box, wheel budget AND the acceleration limiter, as the base applies a command (ruled 2026-10-27)
+  horizon_steps: 20  # rollout length in steps of sim.dt (1.0 s).
+  samples: 1024  # rollouts per control step
+  temperature: 0.032768585178131346  # TUNED (0.001-0.1, log).
+  noise_std: [0.09430700444632568, 0.10149237487460293, 0.18319219038226955]  # TUNED (each 0.03-0.3, log).
+  iterations: 1  # optimisation passes per control step, warm-started from the previous step's sequence shifted by one.
+  compute_measurement: runs/realtime/REALTIME_20261029T095844Z_seed0  # the run directory of the declared real-time measurement that fixed horizon_steps and samples
+  scan: filter  # the 120-bin filter stream with its bearings and validity
+  weights:  # the cost terms are DECLARED
+    route_tracking: 0.6750123188717693  # TUNED (0.1-10, log).
+    goal_progress: 29.441988828637964  # TUNED (1-100, log).
+    field_breach: 26.44147974840966  # TUNED (1-100, log).
+    smoothness: 0.07313400771209624  # TUNED (0.001-0.1, log).
+
+  hard_rejection: footprint  # a rollout whose footprint (robot.footprint_table) contains any scan point at any state costs +inf: rejected, not weighed

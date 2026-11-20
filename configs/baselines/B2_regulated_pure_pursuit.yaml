@@ -1,18 +1,18 @@
-# B2 Regulated Pure Pursuit: tuned parameters (equal-budget random search, N = 24, tune set only).
-# MIRROR of configs/base.yaml `baselines.regulated_pure_pursuit`, which stays the single source of truth
-# (the tuner writes there). tests/test_baseline_params_mirror.py fails if the two differ.
-# Evaluate: python scripts/evaluate.py --config configs/base.yaml --seed <n> --controller regulated_pure_pursuit
+# B2 Regulated Pure Pursuit: parameters, the single source (loaded into cfg['baselines']['regulated_pure_pursuit'] by
+# load_config through `baseline_files` in configs/base.yaml). Tuned values were written here by
+# hand after the tuning run's review. Evaluate: python scripts/evaluate.py --config
+# configs/base.yaml --seed <n> --controller regulated_pure_pursuit [--pfb on]
 controller: regulated_pure_pursuit
 base_key: regulated_pure_pursuit
 params:
-  desired_speed: 0.27684500642836773
-  lookahead_time: 0.5695202744151207
-  min_lookahead: 0.20715656835879012
-  max_lookahead: 1.1219731625076852
-  min_radius: 0.4311006518242212
-  proximity_distance: 1.1755329784268205
-  approach_distance: 0.7068799094943975
-  min_speed: 0.0713057736192248
-  min_approach_speed: 0.03858491802284248
-  k_omega: 1.9125606140831566
-  proximity_gain: 0.3306079212896105
+  desired_speed: 0.27684500642836773  # m/s (range 0.20-0.50)
+  lookahead_time: 0.5695202744151207  # s, lookahead = |v_hat| x this, clipped (0.5-3.0, log)
+  min_lookahead: 0.20715656835879012  # m (0.20-0.60; 1.8 % of the range from its low end)
+  max_lookahead: 1.1219731625076852  # m (0.60-1.50)
+  min_radius: 0.4311006518242212  # m, curvature regulation below this radius (0.3-2.0)
+  proximity_distance: 1.1755329784268205  # m of clearance to the footprint below which it slows (0.2-1.2; 2.4 % of the range from its high end)
+  approach_distance: 0.7068799094943975  # m of route remaining at which the goal slow-down starts (0.3-1.2)
+  min_speed: 0.0713057736192248  # m/s, floor of the curvature and proximity regulation
+  min_approach_speed: 0.03858491802284248  # m/s, floor of the goal slow-down (0.02-0.10)
+  k_omega: 1.9125606140831566  # 1/s, yaw rate per radian of the lookahead bearing
+  proximity_gain: 0.3306079212896105  # 1, Nav2's cost_scaling_gain (<= 1): speed x gain x d/D below proximity_distance (0.25-1.0)

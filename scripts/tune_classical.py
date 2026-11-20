@@ -38,7 +38,7 @@ Writes `runs/tuning/<name>_<stamp>_seed<seed>/`:
     candidate_<i>/episodes.jsonl   one line per episode, written as it finishes
     route_profiles.json            the route cap per scenario
     summary.json                   every candidate's score, the selection and the selected
-                                   parameters (to be written into configs/base.yaml BY HAND, with a
+                                   parameters (to be written into configs/baselines/<id>.yaml BY HAND, with a
                                    decision-log entry, after review)
 """
 from __future__ import annotations

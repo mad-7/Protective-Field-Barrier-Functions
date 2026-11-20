@@ -12,7 +12,8 @@ researcher (CLAUDE.md, "Long-duration operations"). Both use the tune set only (
 | B3 holonomic DWA | `configs/base.yaml` | `dwa` |
 | B6 field-aware MPPI | `configs/base.yaml` | `field_aware_mppi` |
 
-Parameters: `configs/baselines/<id>.yaml` (mirrors `configs/base.yaml`, which is the single source).
+Parameters: `configs/baselines/<id>.yaml`, the only place they are written; `configs/base.yaml` lists the files
+under `baseline_files` and `load_config` merges them.
 
 ## Stage 2: the same baselines with the PFB beneath them
 

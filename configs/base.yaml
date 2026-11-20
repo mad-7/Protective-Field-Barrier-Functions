@@ -187,81 +187,25 @@ world:
 evaluation:  # RULED 2026-10-23
   ring_steps: 200  # steps (10 s) of per-step trace every evaluation keeps, dumped on stationary triggers, contacts and unrecoverable stops
 
-baselines:  # the classical comparators (WP3).
-  pure_pursuit:  # B1, holonomic Pure Pursuit (pfbnav/control/pure_pursuit.py), with its own fixed lookahead (A33).
-    cruise_speed: 0.4414254516786892  # m/s, translation toward the lookahead point (0.15-0.50)
-    k_omega: 2.048573434083108  # 1/s, yaw rate per radian of lookahead bearing (0.5-3.0, log)
-    goal_slowdown: 0.4774009708433046  # m, within this distance of the goal the speed falls linearly (0.25-1.2)
-    lookahead: 0.343435717305025  # m of route arc, B1's OWN fixed lookahead
-  regulated_pure_pursuit:  # B2, holonomic Regulated Pure Pursuit
-    desired_speed: 0.27684500642836773  # m/s (range 0.20-0.50)
-    lookahead_time: 0.5695202744151207  # s, lookahead = |v_hat| x this, clipped (0.5-3.0, log)
-    min_lookahead: 0.20715656835879012  # m (0.20-0.60; 1.8 % of the range from its low end)
-    max_lookahead: 1.1219731625076852  # m (0.60-1.50)
-    min_radius: 0.4311006518242212  # m, curvature regulation below this radius (0.3-2.0)
-    proximity_distance: 1.1755329784268205  # m of clearance to the footprint below which it slows (0.2-1.2; 2.4 % of the range from its high end)
-    approach_distance: 0.7068799094943975  # m of route remaining at which the goal slow-down starts (0.3-1.2)
-    min_speed: 0.0713057736192248  # m/s, floor of the curvature and proximity regulation
-    min_approach_speed: 0.03858491802284248  # m/s, floor of the goal slow-down (0.02-0.10)
-    k_omega: 1.9125606140831566  # 1/s, yaw rate per radian of the lookahead bearing
-    proximity_gain: 0.3306079212896105  # 1, Nav2's cost_scaling_gain (<= 1): speed x gain x d/D below proximity_distance (0.25-1.0)
-  dwa:  # B3, holonomic DWA over (vx, vy, wz)
-    max_speed: 0.42731865359248744  # TUNED (0.20-0.50).
-    window_time: 0.14066545649284481  # TUNED (0.05-0.40, log).
-    sim_time: 1.610392418667043  # TUNED (0.8-3.0, log).
-    sim_granularity: 0.025  # m, most translation between rollout states
-    angular_sim_granularity: 0.1  # rad, most yaw between rollout states
-    vx_samples: 5  # grid points over the window's vx extent (odd, so the estimate itself is a sample).
-    vy_samples: 5  # likewise for vy (DWB 5)
-    wz_samples: 7  # likewise for wz (DWB vtheta_samples 20)
-    safety_margin: 0.07857857007138075  # TUNED (0.0-0.10).
-    clearance_cap: 0.30732792467783543  # TUNED (0.10-0.60).
-    w_path: 2.1271296751068705  # TUNED (0.2-5.0, log).
-    w_progress: 1.0  # 1/m, the route arc reached by the end state (a reward)
-    w_heading: 0.6890703408239016  # TUNED (0.05-2.0, log).
-    w_clearance: 3.4360004233171026  # TUNED (0.02-5.0, log).
+baseline_files:       # parameters of B1, B2, B3, B6 and the shared recovery / route cap
+  - baselines/B1_pure_pursuit.yaml
+  - baselines/B2_regulated_pure_pursuit.yaml
+  - baselines/B3_dwa.yaml
+  - baselines/B6_field_aware_mppi.yaml
+  - baselines/shared.yaml
 
-  recovery:  # the declared classical recovery (RULED 2026-10-16; docs/pending/ recovery_spec.md), identical for B1, B2, B3, B6 and B7
-    wait: 1.0  # s, after the certified layer's restart_delay, still blocked
-    speed: 0.018  # m/s, translation only (no yaw).
-    max_distance: 0.30  # m per attempt, integrated from the velocity estimate
-    max_attempts: 5  # per episode
-    directions: 72  # candidate body-frame directions, evenly spaced (every 5 deg)
-    tie_tolerance: 0.001  # m of clearance within which directions tie
+baselines:  # the classical comparators (WP3).
   ideal_tracker:  # WP2 (2026-10-23): the PFB acceptance step's nominal controller -- tangent tracking of the planned route, blind to the scan
     cruise_speed: 0.5  # m/s, about the top speed, so every slow-down is the PFB's
     k_cross: 1.0  # 1/s, lateral velocity toward the route per metre of cross-track
     k_yaw: 1.5  # 1/s, yaw rate per radian of heading error to the tangent
     goal_slowdown: 0.5  # m, linear slow-down to the goal
-  route_cap:  # RULED 2026-10-20: the declared, map-based speed and yaw-rate cap EVERY classical baseline (B1, B2, B3, B6, B7) carries along its
-    sample_spacing_m: 0.02  # m between route samples (the oracle's own spacing)
-    inside_offset_m: 0.05  # m, each band also checked this far toward the inside of bends: the committed tracking bound (gates.yaml D2 max cross-track)
-    lead_m: 0.10  # m, each cap is the minimum over the next lead_m: one reach time (0.15 s) at the top band's speed limit, rounded up VERIFY
-    decel: 0.5  # m/s^2, the backward pass: half the limiter's a_decel_max 1.0, so the cap leaves room for the velocity estimate's lag VERIFY
-    creep_fraction: 0.9  # nothing clear: speed and yaw rate at 0.9 x the standstill exits (the creep regime, as the recovery's 0.018 m/s)
   oracle_tracker:  # RULED 2026-10-20 (pre-declared 2026-10-17): G4's PRIVILEGED positive control.
     k_cross: 1.0  # 1/s, lateral velocity toward the route per metre of cross-track
     k_yaw: 2.0  # 1/s, yaw rate per radian of yaw error to the schedule
     yaw_rate_ladder: [0.20, 0.15, 0.10, 0.05]  # rad/s.
     yaw_tolerance_rad: 0.05  # rad: where the schedule's speed is below min_speed, rotate in place until the yaw is within this
     min_speed: 0.018  # m/s, the creep speed (0.9 x the standstill exit): where the schedule's speed tends to zero the tracker creeps, at rest's field
-  mppi:  # B6 (A16, 2026-10-15): holonomic MPPI, field-aware, an H1 comparator.
-    model: holonomic  # kinematic (vx, vy, wz) at sim.dt, box, wheel budget AND the acceleration limiter, as the base applies a command (ruled 2026-10-27)
-    horizon_steps: 20  # rollout length in steps of sim.dt (1.0 s).
-    samples: 1024  # rollouts per control step
-    temperature: 0.032768585178131346  # TUNED (0.001-0.1, log).
-    noise_std: [0.09430700444632568, 0.10149237487460293, 0.18319219038226955]  # TUNED (each 0.03-0.3, log).
-    iterations: 1  # optimisation passes per control step, warm-started from the previous step's sequence shifted by one.
-    compute_measurement: runs/realtime/REALTIME_20261029T095844Z_seed0  # the run directory of the declared real-time measurement that fixed horizon_steps and samples
-    scan: filter  # the 120-bin filter stream with its bearings and validity
-    weights:  # the cost terms are DECLARED
-      route_tracking: 0.6750123188717693  # TUNED (0.1-10, log).
-      goal_progress: 29.441988828637964  # TUNED (1-100, log).
-      field_breach: 26.44147974840966  # TUNED (1-100, log).
-      smoothness: 0.07313400771209624  # TUNED (0.001-0.1, log).
-
-    hard_rejection: footprint  # a rollout whose footprint (robot.footprint_table) contains any scan point at any state costs +inf: rejected, not weighed
-
 planner:
   resolution: 0.05  # m/cell
   # Two-tier inflation (D1, supervisor review 2026-09-17).
