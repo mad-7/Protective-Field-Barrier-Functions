@@ -23,11 +23,14 @@ learned SAC arms (L1-L5).
 6. Name (researcher, 2026-11-09): the PFB is a candidate discrete-time CBF or a CBF-based safety filter, never simply a
    CBF; validity is not shown and no safety guarantee is claimed. The deployed field is piecewise in speed (per band);
    the continuous-in-speed field is PFB-(a), the H3 ablation.
-7. No invented numbers or references. VERIFY notes live in the bib field `verify`, which `plainnat`
+7. Prose pass (researcher, 2026-11-20): the text was revised for clarity and voice (no em-dashes, long sentences split, claims
+   matched to their evidence). Numbers, cite keys, labels, status labels and the PFB wording were checked unchanged. The
+   drafts remain AI-assisted; the AI-use disclosure marker in the acknowledgements is unchanged.
+8. No invented numbers or references. VERIFY notes live in the bib field `verify`, which `plainnat`
    ignores, so they never print. An unverified citation (arXiv:2606.13203, authors unknown) was removed with
    its sentence on 2026-11-09; it returns only if the researcher supplies verified details.
 
-8. Host planners (researcher, 2026-11-09): B9 = B3 + PFB and B8 = B6 + PFB are EXPLORATORY held-out results (amendment A37), proposed
+9. Host planners (researcher, 2026-11-09): B9 = B3 + PFB and B8 = B6 + PFB are EXPLORATORY held-out results (amendment A37), proposed
    after the test was read; B3 and B6 reran for the pairing, the sealed results stay the cited ones. B8 vs B6 is low-count by the declared
    rule: counts only, no ratio, no verdict. Run-to-run noise is a stated limitation of every single-run comparison.
 
