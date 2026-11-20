@@ -1,0 +1,11 @@
+{
+  "controller": "B1_pure_pursuit",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "environment": "dc7f132bdd884cb6e5b49a918ace6ad1316434c730c9cb45d776085135b39f3c",
+  "sets": {
+    "runs/scratch/narrow_mapped.json": "e5a3aaf53999a2e6bc0b64dc3b3f374b74df24bc28e3440d3bfe5ff7e2423aa2",
+    "runs/scratch/medium_mapped.json": "7415c3b3676ba2a3f788fd887d83314b3da6c6c3bc5ea09e47974a50f34d5f73",
+    "runs/scratch/wide_mapped.json": "a49cf2fef0f0e4d9f27aadc30d733a2535861b743b9e7167be4169de5397006b"
+  }
+}
