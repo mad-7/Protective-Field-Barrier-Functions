@@ -1,0 +1,51 @@
+{
+  "environment": {
+    "sha256": "dc7f132bdd884cb6e5b49a918ace6ad1316434c730c9cb45d776085135b39f3c",
+    "files": {
+      "configs/footprint/youbot_envelope_1deg.csv": "24873ab56dd3ff362a0fb056e92589d1d78c61b53c70bc1db0b61c01aacbf33d",
+      "lua/scanner_v2.lua": "e065cf70bd6b7279cf70f8f4f40fd61b79bb5080a2040b965e21d7b14ce49c1e",
+      "pfbnav/envs/controller_input.py": "d3a1739be5fef6e6360cc440530c2890fcb1881bc4c7a35ae1d2b53580906a32",
+      "pfbnav/envs/freeze.py": "ccc75eba3e734489dffeb47ba3e4fe2f51e517ddb884a7ddbc0dfbd79251dbf8",
+      "pfbnav/envs/nav_env.py": "1fd5e954a4b6387febb5d45f44e70976c80e61c5d43a0431e369d7c1e55827c6",
+      "pfbnav/envs/observation.py": "0f170d4e54101dd8c01e6015d9b7af7a6d6b933ae1aa95412b81aa084b17c3da",
+      "pfbnav/envs/reward.py": "2ddd9b83f7970a270d11489fa1be96b6af21824d3af324f5922869fc146af731",
+      "pfbnav/envs/route_view.py": "086bdf225ab34099c3d85dcd993a80fee4740483a2b9de6fe34e93ffc8debf26",
+      "pfbnav/envs/step_loop.py": "faf4815ee3a5f0e9bbea30566a0903266d711d7724fefc437bdadc2bd5496b27",
+      "pfbnav/eval/step_budget.py": "1b51f921bd6147d81f0c83c658b6acd75b8494d089e63e026cf7d94538746145",
+      "pfbnav/planning/astar.py": "0c7a6fcf5534593b198741211ca28a8a615e4bcaa8cf33e798ec43909e3cdfb2",
+      "pfbnav/planning/lookahead.py": "a18e7d134426146a9c19f6d609bca7b356f57a1465d6fcd475dd37fc6b5122a7",
+      "pfbnav/safety/__init__.py": "1f7294a366093b3267101348f78c6dbc9eb11ab43032b1f5628962b488495af6",
+      "pfbnav/safety/certified.py": "723502e125f26350f1bdf212215e6d045611da1c66658e8a23688a9d64cbe38d",
+      "pfbnav/safety/footprint_table.py": "31dd166b016d4c539450adad28d74f00979b95932dd78f336e721d8616732330",
+      "pfbnav/safety/pfb.py": "b492b7bb8745a7572fdd46986780b47a4703caae97a9733cbb39d95b4b49b826",
+      "pfbnav/safety/pfb_field.py": "14981f15bbfacfd0b52467adfca5c1a909bc84aefdf73d048dbfa5b42a491a57",
+      "pfbnav/safety/unobserved.py": "43cc5bc25e9165798deb5e080dc77716c479c5ffe8df2ba3b48d4165dd67ba2e",
+      "pfbnav/sim/client.py": "ed37465d7da78c6e9b96b6d8248cc4312893648e384b1ce37af429157af2c831",
+      "pfbnav/sim/contact.py": "0eac456b92a1e4807bfa5f5843b18a6a01589610be31c7aaac0cf8f1959aea13",
+      "pfbnav/sim/coverage.py": "651880bbf8b9461c80b2688d9b9f0c2684a249a2fe3b226b3bb633a13220e323",
+      "pfbnav/sim/layout_shapes.py": "8638e88a8ae7eceb10c3f1f09f55f62a3d671f5917af5f88b9f5847ea2a4fa34",
+      "pfbnav/sim/robot.py": "7b0f22c575455db14a61b05994a291a7a9d22f7344c3d77aa2f318476fa111af",
+      "pfbnav/sim/scan_guard.py": "2f66ca042b94f153aa5c73a8c62cd25c5125330a01678468bee0f3b923f9dcf2",
+      "pfbnav/sim/scan_packet.py": "726527988962ea93a9a96b091fa46367417bea6314928d5b948db440ddd172ca",
+      "pfbnav/sim/scanner.py": "42333c18dc342dfa0193638e326283ad81f488c4674afce04e8d94428283805a",
+      "pfbnav/sim/scanning.py": "1f44ba426602e2521196f6c9ace11ed543411dcb0dfc156074f01ef25fb2ce9d",
+      "pfbnav/sim/velocity_estimate.py": "3522700d1ebef9941b2cb7b7358e5ab22834e489a61e22112521868c25f948ee",
+      "pfbnav/utils/hashing.py": "a075305542eb1d9b7eb440cb7896952707daf731f039f58cc31c1d2ab3462779",
+      "pfbnav/world/baking.py": "5b51e81105fb650548ac59dcc4fe484a77a4d707f4c3d4a1a322d400e1e5d342",
+      "pfbnav/world/bypass.py": "65aaa3ac6df270fef3da69918db7cf397204818c8a22b02abe541776f5027171",
+      "pfbnav/world/layouts.py": "940c4b5e819a7dbdf058b4643d5bd75d9a21c66f0abb8d851d169cd295167c93",
+      "pfbnav/world/oracle.py": "9ceb8e6959b0224bec820d475f58adc3eff267498c17d12f01fb6e3b09e6d387",
+      "pfbnav/world/placement.py": "5abc3c90c0cae7e8a34d0bbc13caf516b9b80666a34f29b298b16cc2e901666b",
+      "pfbnav/world/route_check.py": "6202baa57ef919e8c337b28bd7856f50e1d79ccde8a27faac4ee2701ac32388e",
+      "pfbnav/world/scenarios.py": "3c92bc9fe3ed24e1caf5fe33579bf90f49c9fddb0519d39e083f0f268d5a6d5b",
+      "pfbnav/world/strata.py": "69f27e52cd72201f25f0fce5a68eadf425a1d5a691f723691b5d2e2cf46ca1f9"
+    }
+  },
+  "scenario_order_sha256": "8629337fb795da375f73a34c0cbdbef6065334f77f096725a4e158b867d24821",
+  "scenarios": 2001,
+  "training_sets": {
+    "scenarios/train/train_narrow.json": "22ddb667b4e8956332a14caf243b9b1e497a8d0c9425392f2187e60e9f84454c",
+    "scenarios/train/train_medium.json": "1af73ee2a378c6d7baa817862a17b4c0647a94099edb11400e94da1c586e1011",
+    "scenarios/train/train_wide.json": "2e3d62fc876b78cb4d352bd6bc0cf974463487923aeb95ce1b9c071d0164e799"
+  }
+}
