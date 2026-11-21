@@ -57,4 +57,16 @@ Islam et al. 2017 [Reproducibility of Benchmarked Deep RL Tasks for Continuous C
 Patterson et al. 2023 [Empirical Design in Reinforcement Learning](https://consensus.app/papers/details/w:f02b30ff-33e5-4b5d-9de9-01cb532b721f/?utm_source=claude_desktop);
 Lynnerup et al. 2019 [A Survey on Reproducibility by Evaluating DRL Algorithms on Real-World Robots](https://consensus.app/papers/details/w:b50325c6-f145-4ad7-aa5f-488b35be678e/?utm_source=claude_desktop).
 
+Training environments (random layouts, curricula, domain randomisation, evaluation outside the training
+environments; found 2026-11-21, abstract level): Wang et al. 2025 [Enhancing DRL-based Robot Navigation Generalization through Scenario Augmentation](https://consensus.app/papers/details/w:db1067de-3f62-4343-a847-6f31a7408331/?utm_source=claude_desktop) (limited training scenarios named as the primary cause of poor behaviour in unseen environments);
+Morad et al. 2021 [Embodied Visual Navigation With Automatic Curriculum Learning in Real Environments](https://consensus.app/papers/details/w:3837e6fa-a9ee-43f2-bf5c-b88c423f3ed1/?utm_source=claude_desktop);
+Xu et al. 2023 [Benchmarking Reinforcement Learning Techniques for Autonomous Navigation](https://consensus.app/papers/details/w:0f29abaf-2b55-47b9-b280-413e59239423/?utm_source=claude_desktop);
+Sigal et al. 2023 [Improving Generalization in RL Training Regimes for Social Robot Navigation](https://consensus.app/papers/details/w:f5c847c7-3658-410b-ae0a-0173a1cd965e/?utm_source=claude_desktop) (many works never evaluate outside their training environments);
+He et al. 2023 [Generalization Ability of DRL-based Navigation Based on Curriculum Learning](https://consensus.app/papers/details/w:26302b06-142c-4da0-ba78-57def847973a/?utm_source=claude_desktop);
+Wang et al. 2023 [Curriculum RL From Avoiding Collisions to Navigating Among Movable Obstacles in Diverse Environments](https://consensus.app/papers/details/w:18dca7ae-8ea4-4bc9-bc27-6b7e568ce403/?utm_source=claude_desktop);
+Wang et al. 2025 [Environment as Policy: Learning to Race in Unseen Tracks](https://consensus.app/papers/details/w:0e92b69d-af8e-40dc-b596-d764374022a1/?utm_source=claude_desktop) (training directly on diverse layouts can overburden the agent);
+Chiang et al. 2019 [Learning Navigation Behaviors End-to-End With AutoRL](https://consensus.app/papers/details/w:8971ff65-16a9-4d25-9259-8ec9250c00e0/?utm_source=claude_desktop);
+Ajani et al. 2023 [Evaluating Domain Randomization in DRL Locomotion Tasks](https://consensus.app/papers/details/w:1aa9f6e5-7e52-4d0d-a40a-ee103041813f/?utm_source=claude_desktop);
+Sen et al. 2024 [Domain Randomization for Learning to Navigate in Human Environments](https://consensus.app/papers/details/w:a057ae45-9d5c-4b5c-a67e-9b552f828fcd/?utm_source=claude_desktop).
+
 Not verified: DOIs and page numbers for the abstract-level papers (the search service returned none).
