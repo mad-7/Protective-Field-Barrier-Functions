@@ -94,6 +94,7 @@ from pfbnav.training.record import STOP_FILE, EpisodeLog, EpisodeRecorder, Memor
 from pfbnav.training.seeds import training_seed_problem
 from pfbnav.training.shaping import shaping_problem
 from pfbnav.training.stall import StallRule, StallTruncation
+from pfbnav.training.tb_stats import EpisodeStats
 from pfbnav.utils.cli import add_display_flag, add_set_flag, apply_display, apply_set
 from pfbnav.utils.filter_ruling import filter_problem
 from pfbnav.utils.hashing import text_sha256
@@ -199,6 +200,7 @@ def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, set
     log = EpisodeLog(run_dir / "episodes.jsonl")
     checkpoints = CheckpointCallback(save_freq=int(t["checkpoint_every"]),
                                      save_path=str(run_dir / "checkpoints"), name_prefix="sac")
+    stats = EpisodeStats(int(t["episode_stats_window"]), [st.name for st in stages_from_config(cfg)])
     stop = StopFile(run_dir)
     started = time.perf_counter()
     error: str | None = None
@@ -209,7 +211,7 @@ def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, set
         stamp_learner_device(run_dir, str(model.device))
         model.set_logger(configure(str(run_dir / "sb3"), ["csv", "tensorboard"]))
         model.learn(total_timesteps=int(total_timesteps),
-                    callback=CallbackList([log, checkpoints, trend, stop]))
+                    callback=CallbackList([log, checkpoints, trend, stop, stats]))
         if model.num_timesteps >= int(total_timesteps):
             model.save(run_dir / "final_model.zip")
         else:                                         # the STOP file ended it

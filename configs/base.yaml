@@ -243,6 +243,7 @@ training:
   stall_truncation:  # RULED 2026-10-30 (A30): TRAINING only (pfbnav/training/stall.py)
     window_s: 30.0  # s
     min_progress_m: 0.05  # m of route arc length
+  episode_stats_window: 50  # episodes in the rolling window of the TensorBoard episode statistics (pfbnav/training/tb_stats.py); reads only, changes nothing learned
   memory_sample_every: 1000  # steps between in-run memory samples (memory_trend.jsonl), ruled 2026-10-30: the trend is in every training run, GPU memory
   memory_alarm_mb: 1024.0  # MB
   memory_check:  # the declared criterion for the ~100k-step check (ruled 2026-10-30)

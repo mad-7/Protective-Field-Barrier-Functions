@@ -58,6 +58,19 @@ TensorBoard events (`tensorboard --logdir runs/train`), `checkpoints/` every 25,
 `summary.json`, and `final_model.zip` at the end. Create a file named `STOP` in the run directory to end a run
 cleanly at the next check; the model is saved as `stopped_model.zip`, which is not a complete run.
 
+## TensorBoard
+
+```powershell
+python -m tensorboard.main --logdir runs/train
+```
+
+(`python -m` avoids the blocked `tensorboard.exe` launcher on some Windows hosts.) Besides SB3's losses and mean
+return, `pfbnav/training/tb_stats.py` writes rolling statistics of the last `training.episode_stats_window`
+episodes: `episodes/success_rate`, `episodes/outcome_share/<outcome>`, `episodes/stops_per_100m_driven` and
+`..._planned`, `episodes/mean_return`, `episodes/mean_length`, `episodes/pfb_modified_share` and
+`episodes/pfb_infeasible_share` (filtered arms), and `curriculum/stage`. It only reads the episode records;
+`episodes.jsonl` remains the full record.
+
 ## Evaluating a trained policy
 
 ```powershell
