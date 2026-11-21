@@ -63,7 +63,14 @@ from pfbnav.eval.route_profiles import build_profiles, lookup, write_profiles
 from pfbnav.eval.runner import outcome_summary, run_episodes
 from pfbnav.sim.client import SimClient, SimConnection
 from pfbnav.sim.path_overlay import PathOverlay
-from pfbnav.utils.cli import add_display_flag, add_pfb_flag, apply_display, apply_pfb
+from pfbnav.utils.cli import (
+    add_display_flag,
+    add_pfb_flag,
+    add_set_flag,
+    apply_display,
+    apply_pfb,
+    apply_set,
+)
 from pfbnav.utils.filter_ruling import filter_problem
 from pfbnav.utils.hashing import text_sha256
 from pfbnav.utils.memory import MemoryRecord
@@ -143,6 +150,7 @@ def main() -> int:
                         help="processes for the offline route profiles (2026-10-20)")
     add_display_flag(parser, default="on")    # rendering on unless --display off (2026-11-07)
     add_pfb_flag(parser)
+    add_set_flag(parser)
     parser.add_argument("--draw-path", action="store_true",
                         help="draw the planned route (blue) and the robot's track (red) in the scene; "
                              "needs --display on; changes nothing in the run")
@@ -154,7 +162,8 @@ def main() -> int:
                          "evaluated from its own experiment config (hard rule 8)")
 
     # Rendering changes no physics; the run records what was in force.
-    cfg = apply_pfb(apply_display(load_config(args.config), args.display), args.pfb)
+    cfg = apply_set(apply_pfb(apply_display(load_config(args.config), args.display), args.pfb),
+                    args.overrides)
     seed_everything(args.seed)
     paths = preflight(cfg, args.sets, args.checkpoint, args.controller)
     scenarios, set_of = [], []

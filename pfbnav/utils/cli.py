@@ -27,6 +27,23 @@ def add_display_flag(parser, default: str = "config") -> None:
              "wall clock and changes no physics; the run records what was in force.")
 
 
+def add_set_flag(parser) -> None:
+    """Add `--set KEY=VALUE` (repeatable): override one config key for this run (`pfbnav.utils.overrides`)."""
+    parser.add_argument(
+        "--set", dest="overrides", action="append", default=[], metavar="KEY=VALUE",
+        help="override a config key for this run, e.g. --set training.total_timesteps=100000 "
+             "(the key must exist; the override is recorded in the run's config.yaml)")
+
+
+def apply_set(cfg: dict[str, Any], items: list[str]) -> dict[str, Any]:
+    """A copy of `cfg` with the `--set` overrides applied; `cfg` itself when there are none."""
+    from pfbnav.utils.overrides import apply_overrides
+    try:
+        return apply_overrides(cfg, items)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
+
+
 PFB_CHOICES = ("config", "on", "off")
 
 

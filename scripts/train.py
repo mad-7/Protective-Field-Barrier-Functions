@@ -92,7 +92,7 @@ from pfbnav.training.record import STOP_FILE, EpisodeLog, EpisodeRecorder, Memor
 from pfbnav.training.seeds import training_seed_problem
 from pfbnav.training.shaping import shaping_problem
 from pfbnav.training.stall import StallRule, StallTruncation
-from pfbnav.utils.cli import add_display_flag, apply_display
+from pfbnav.utils.cli import add_display_flag, add_set_flag, apply_display, apply_set
 from pfbnav.utils.filter_ruling import filter_problem
 from pfbnav.utils.hashing import text_sha256
 from pfbnav.utils.memory import MemoryRecord
@@ -277,14 +277,15 @@ def main() -> int:
     parser.add_argument("--instance", type=int, default=0,
                         help="simulator instance i: port sim.port + sim.port_stride * i")
     add_display_flag(parser, default="on")    # rendering on unless --display off (2026-11-07)
+    add_set_flag(parser)
     args = parser.parse_args()
     if args.instance < 0:
         raise SystemExit("--instance must be >= 0")
 
     # Rendering changes no physics (scripts/regress_display_off.py: bit-identical trajectories)
     # and is outside the frozen environment's identity; it costs ~7 ms a step, and the run
-    # records what was in force.
-    cfg = apply_display(load_config(args.config), args.display)
+    # records what was in force. `--set` overrides are recorded in the run's config.yaml.
+    cfg = apply_set(apply_display(load_config(args.config), args.display), args.overrides)
     seed_everything(args.seed)
     sets = load_training_sets(cfg, args.seed)        # every refusal before the run directory
     run_dir = create_run_dir(REPO_ROOT / "runs" / "train", str(cfg["experiment"]), args.seed, cfg)
