@@ -85,9 +85,11 @@ from pfbnav.control.sac_lagrangian import LagrangianSettings, make_sac_lagrangia
 from pfbnav.envs.freeze import environment_identity
 from pfbnav.envs.nav_env import NavEnv
 from pfbnav.sim.client import SimClient, SimConnection
+from pfbnav.sim.path_overlay import PathOverlay
 from pfbnav.training.curriculum import Curriculum, stages_from_config
 from pfbnav.training.diagnostic import UnicycleAction, diagnostic_problem
 from pfbnav.training.order import order_sha256, scenario_order
+from pfbnav.training.overlay import PathOverlayWrapper
 from pfbnav.training.record import STOP_FILE, EpisodeLog, EpisodeRecorder, MemoryTrend, StopFile
 from pfbnav.training.seeds import training_seed_problem
 from pfbnav.training.shaping import shaping_problem
@@ -164,7 +166,7 @@ def load_training_sets(cfg: dict[str, Any], seed: int) -> tuple[list[Path], list
 
 
 def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, sets: tuple,
-        instance: int = 0) -> dict[str, Any]:
+        instance: int = 0, draw_path: bool = False) -> dict[str, Any]:
     """Train into `run_dir` (made by `create_run_dir`) for `total_timesteps` on `sets` (from
     `load_training_sets`, verified BEFORE the run directory exists, so a refused set never leaves a
     directory that blocks the seed); returns the summary, also written to `run_dir/summary.json`.
@@ -187,6 +189,9 @@ def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, set
     learner_env = curriculum
     if (cfg.get("diagnostic") or {}).get("unicycle"):
         learner_env = UnicycleAction(curriculum)       # DIAGNOSTIC only (A30 ruling 6)
+    overlay = PathOverlay(client.sim) if draw_path else None
+    if overlay is not None:                            # watching only: draws, changes nothing learned
+        learner_env = PathOverlayWrapper(learner_env, env, overlay)
     memory = MemoryRecord(client.connection.port)     # ruled 2026-10-19: in every run record
     trend = MemoryTrend(run_dir / "memory_trend.jsonl", memory, int(t["memory_sample_every"]),
                         alarm_mb=float(t["memory_alarm_mb"]),
@@ -228,6 +233,8 @@ def run(cfg: dict[str, Any], seed: int, run_dir: Path, total_timesteps: int, set
         raise
     finally:
         wall = time.perf_counter() - started
+        if overlay is not None:
+            overlay.end()                             # also on an interrupt or a crash
         env.close()
         client.stop()
         summary = {"experiment": cfg["experiment"], "seed": seed, "instance": instance,
@@ -278,9 +285,15 @@ def main() -> int:
                         help="simulator instance i: port sim.port + sim.port_stride * i")
     add_display_flag(parser, default="on")    # rendering on unless --display off (2026-11-07)
     add_set_flag(parser)
+    parser.add_argument("--draw-path", action="store_true",
+                        help="draw the planned route (blue) and the robot's track (red) in the scene while "
+                             "training; for watching a short run (a few remote calls per step); needs "
+                             "--display on; changes nothing the policy learns")
     args = parser.parse_args()
     if args.instance < 0:
         raise SystemExit("--instance must be >= 0")
+    if args.draw_path and args.display == "off":
+        raise SystemExit("--draw-path needs rendering: use --display on (the default)")
 
     # Rendering changes no physics (scripts/regress_display_off.py: bit-identical trajectories)
     # and is outside the frozen environment's identity; it costs ~7 ms a step, and the run
@@ -289,7 +302,8 @@ def main() -> int:
     seed_everything(args.seed)
     sets = load_training_sets(cfg, args.seed)        # every refusal before the run directory
     run_dir = create_run_dir(REPO_ROOT / "runs" / "train", str(cfg["experiment"]), args.seed, cfg)
-    run(cfg, args.seed, run_dir, int(cfg["training"]["total_timesteps"]), sets, args.instance)
+    run(cfg, args.seed, run_dir, int(cfg["training"]["total_timesteps"]), sets, args.instance,
+        draw_path=args.draw_path)
     print(f"-> {run_dir.relative_to(REPO_ROOT).as_posix()}")
     return 0
 

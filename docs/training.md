@@ -35,6 +35,10 @@ python scripts/train.py --config configs/experiments/L1_sac_shaped.yaml --seed <
 - `--set KEY=VALUE` (repeatable) overrides one existing key for the run. It refuses a missing key (typo) or a
   value of another kind, warns on a ruled section (reward, observation, filter, certified layer, actuation),
   and is recorded in the run's `config.yaml` under `cli_overrides`. `scripts/evaluate.py` takes the same flag.
+- `--draw-path` draws the planned route (blue), start (green), goal (yellow) and the robot's track (red) in the
+  scene while it trains, so you can see whether the policy follows the route. It needs `--display on`, adds a few
+  remote calls per step, and changes nothing the policy learns: use it for a short watched run, not a full one.
+  `scripts/evaluate.py` has the same flag.
 - `--instance i` uses the simulator on port `sim.port + sim.port_stride * i`, so several runs can share a host.
 - A run directory is `runs/train/<experiment>_seed<seed>/` and is never overwritten (hard rule 10). A short
   diagnostic run therefore needs its own label: `--set experiment=DIAG_<name>`.
