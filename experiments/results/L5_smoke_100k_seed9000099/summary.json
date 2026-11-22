@@ -1,0 +1,94 @@
+{
+  "experiment": "L5_smoke_100k",
+  "seed": 9000099,
+  "instance": 0,
+  "port": 23000,
+  "timesteps": 100000,
+  "episodes": 78,
+  "outcomes": {
+    "stall_truncated": 51,
+    "success": 26,
+    "timeout": 1
+  },
+  "at_rest_triggers": 0,
+  "stationary_triggers": 0,
+  "stall_truncation": {
+    "window_s": 30.0,
+    "min_progress_m": 0.05,
+    "truncations": 51
+  },
+  "wall_seconds": 7386.294368700008,
+  "steps_per_second": 13.538588500311835,
+  "environment_sha256": "dc7f132bdd884cb6e5b49a918ace6ad1316434c730c9cb45d776085135b39f3c",
+  "scenario_order_sha256": "8629337fb795da375f73a34c0cbdbef6065334f77f096725a4e158b867d24821",
+  "total_timesteps": 100000,
+  "error": null,
+  "completed": true,
+  "stopped": null,
+  "memory": {
+    "episodes": 78,
+    "status": {},
+    "reference": "A20 check: CoppeliaSim +1.7 MB/100 episodes, Python flat (runs/diag/MEMORY_20261018T203246Z_seed0)",
+    "python": {
+      "private_start_mb": 2486.08984375,
+      "private_end_mb": 3814.640625,
+      "growth_mb_per_100_episodes": 1703.270232371795
+    },
+    "sim": {
+      "private_start_mb": 209.578125,
+      "private_end_mb": 287.79296875,
+      "growth_mb_per_100_episodes": 100.2754407051282
+    }
+  },
+  "memory_trend": {
+    "samples": 101,
+    "baseline": {
+      "timestep": 3000,
+      "python_mb": 3803.9453125
+    },
+    "alarm": null,
+    "alarm_mb": 1024.0,
+    "gpu_reserved_max_mb": 28.0,
+    "gpu_reserved_last_mb": 28.0
+  },
+  "curriculum": {
+    "stages": [
+      {
+        "name": "wide_medium_mapped",
+        "from_fraction": 0.0,
+        "strata": [
+          "wide",
+          "medium"
+        ],
+        "unmapped": false,
+        "pool": 1009,
+        "episodes": 13
+      },
+      {
+        "name": "all_strata_mapped",
+        "from_fraction": 0.2,
+        "strata": [
+          "narrow",
+          "medium",
+          "wide"
+        ],
+        "unmapped": false,
+        "pool": 1511,
+        "episodes": 16
+      },
+      {
+        "name": "full",
+        "from_fraction": 0.4,
+        "strata": [
+          "narrow",
+          "medium",
+          "wide"
+        ],
+        "unmapped": true,
+        "pool": 2001,
+        "episodes": 50
+      }
+    ]
+  },
+  "diagnostic": null
+}
