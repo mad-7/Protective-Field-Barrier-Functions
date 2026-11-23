@@ -17,12 +17,12 @@ long-duration operation). Everything configurable is a YAML key; nothing is hard
 
 | Setting | Key | Notes |
 |---|---|---|
-| SAC hyperparameters | `training.*` (`learning_rate`, `buffer_size`, `batch_size`, `gamma`, `tau`, `net_arch`, `ent_coef`, `device`) | shared by every learned arm |
+| SAC hyperparameters | `training.*` (`learning_rate`, `buffer_size`, `batch_size`, `gamma`, `tau`, `net_arch`, `ent_coef`, `target_entropy`, `device`) | shared by every learned arm; `target_entropy` -3.0 = SB3 auto |
 | Budget | `training.total_timesteps` | 2,000,000 |
 | Curriculum | `training.curriculum` | three stages by fraction of the run |
 | Stall cut-off | `training.stall_truncation` | training only |
 | Reward | `reward.*` | `k_progress`, `time_cost`, `k_stop`, `k_intervention`, `k_proximity`, `goal_bonus`, `contact_penalty` |
-| Observation | `env.observation.*`, `scanners.policy_bins`, `scanners.range_max` | 82 channels (`pfbnav/envs/observation.py`) |
+| Observation | `env.observation.*` (`scan_exponent` 1.0 = linear), `scanners.policy_bins`, `scanners.range_max` | 82 channels (`pfbnav/envs/observation.py`) |
 | The PFB | `filter.*` | `filter.enabled` is the switch; alpha is frozen |
 | Training scenarios | `training.scenarios` | `scenarios/train/*.json` |
 

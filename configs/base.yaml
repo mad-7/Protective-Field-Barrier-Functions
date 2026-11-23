@@ -222,6 +222,7 @@ env:  # the Gymnasium environment (WP1)
   # Per-step wall-clock budget.
   observation:  # the 82-D layout ruled 2026-09-23 (docs/decision_log.md).
     goal_scale: 18.0  # m, what the goal-distance channel divides by, clipped at 1. The hall's diagonal is hypot(14, 10) = 17.2 m, so a goal anywhere VERIFY
+    scan_exponent: 1.0  # scan channel = (range / range_max) ** this. 1.0 = linear (the ruled scaling); 0.5 spreads the near range. In (0, 1].
     proximity_threshold: 0.5  # m, where the (currently unused) proximity term reaches 0. reward.k_proximity is 0 except in the shaped variants.
     # Sensor dropout, the declared augmentation, TRAINING only and never applied to the filter's 120-bin stream: the certified layer
     dropout:
@@ -260,6 +261,7 @@ training:
   train_freq: 1  # environment steps between updates
   gradient_steps: 1  # one update per step, the 7.5M updates docs/requirements.md budgets
   ent_coef: auto  # SAC's learned temperature (SB3 default) VERIFY
+  target_entropy: -3.0  # nats; the learned temperature's target. -3.0 = -dim(action) = SB3's "auto" (unchanged behaviour). Higher keeps the policy more random.
   net_arch: [256, 256]  # hidden layers of actor and critics (SB3 default) VERIFY
   device: cuda  # RULED 2026-10-29: every learned arm and seed on the GPU, no mixing
   checkpoint_every: 25000  # steps between checkpoints

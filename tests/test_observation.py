@@ -65,6 +65,28 @@ def test_ranges_are_scaled_by_range_max_and_clipped():
     assert o[3] == pytest.approx(1.0), "a range beyond range_max clips, never exceeds 1"
 
 
+def test_the_scan_exponent_defaults_to_the_ruled_linear_scaling():
+    assert SPEC.scan_exponent == 1.0
+    r = np.linspace(0.0, 5.0, 36)
+    assert np.array_equal(obs(ranges=r)[:36], np.clip(r / 5.0, 0.0, 1.0).astype(np.float32))
+
+
+def test_a_scan_exponent_below_one_spreads_the_near_range_and_keeps_the_ends():
+    import dataclasses
+
+    spec = dataclasses.replace(SPEC, scan_exponent=0.5)
+    base = {"valid": np.ones(36, dtype=bool), "velocity": [0.0, 0.0, 0.0],
+            "lookahead_body": (0.8, 0.0, 1.0), "goal_body": (9.0, 0.0, 1.0), "stop_active": False}
+    o = assemble(spec, ranges=np.array([0.0, 0.5, 2.5, 5.0, 7.0] + [1.0] * 31), **base)
+    assert o[0] == pytest.approx(0.0)
+    assert o[1] == pytest.approx(0.1 ** 0.5)       # 0.5 m reads 0.316, not 0.1
+    assert o[2] == pytest.approx(0.5 ** 0.5)
+    assert o[3] == pytest.approx(1.0) and o[4] == pytest.approx(1.0)
+    for bad in (0.0, -1.0, 1.5):
+        with pytest.raises(ValueError, match="scan_exponent"):
+            assemble(dataclasses.replace(SPEC, scan_exponent=bad), ranges=np.full(36, 2.5), **base)
+
+
 def test_validity_is_its_own_block_not_a_sentinel_range():
     """Hard rule 5: 'unobserved' and 'an obstacle at that range' must not be one input."""
     valid = np.ones(36, dtype=bool)

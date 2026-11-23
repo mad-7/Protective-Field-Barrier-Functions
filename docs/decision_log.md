@@ -11536,3 +11536,17 @@ the obstacle half: 10 of 150 against B3's 2, an 8-route gap, larger than the onl
 sealed success exactly). It is also not shown to be an effect: no inference on success was declared (A34). Reported as counts, descriptive. The noise
 allowance holds for the clear-route differences (B9 142 vs B3 138; B8 124 vs B6 128) and for B8 vs B6 on the obstacle half (82 vs 88). Found by the
 journal session; both papers told.
+
+
+## 2026-11-23 - Two optional setup keys for the learned arms: `training.target_entropy` and `env.observation.scan_exponent` (defaults unchanged)
+
+Reason: both 100k smoke runs (seed 9000099, exploratory, never cited) show SAC's learned temperature falling from 0.14-0.69 to 0.002-0.01 within
+about 25k steps, in L1 and in L5, while the policy is still far from the goal; and the scan channel is range / 5 m, so an obstacle at 0.5 m reads 0.1.
+
+- `training.target_entropy: -3.0` (base). This is SB3's "auto" (-dim(action) = -3.0 for the 3-D action), so behaviour is unchanged. It is a number
+  so that `--set training.target_entropy=-1.0` is accepted. `sac_kwargs` passes it to SB3; absent, "auto".
+- `env.observation.scan_exponent: 1.0` (base). Scan channel = (range / range_max) ** exponent. 1.0 is the ruled linear scaling and the output is
+  bit-identical (tested); 0.5 spreads the near range. Validity, dropout (dropped bins read 0.0) and the 82-channel layout are untouched. Rule 7:
+  this entry accompanies the change; it is a new option, not a change to the ruled default.
+- Nothing is adopted. A paired smoke test (L1 and L5, same seed, one variant at a time, declared in its Run Request before it runs) decides
+  whether a variant is worth carrying; whatever is adopted applies identically to every learned arm and before any confirmatory seed trains (rule 17).

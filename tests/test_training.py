@@ -57,6 +57,19 @@ def test_every_hyperparameter_is_required_and_mapped():
         sac_kwargs({**TRAINING, "algo": "ppo"})
 
 
+def test_the_target_entropy_is_optional_and_the_base_value_is_sbs_auto():
+    from pathlib import Path
+
+    from pfbnav.config import load_config
+
+    assert sac_kwargs(TRAINING)["target_entropy"] == "auto"
+    assert sac_kwargs({**TRAINING, "target_entropy": -1})["target_entropy"] == -1.0
+    cfg = load_config(Path(__file__).resolve().parents[1] / "configs" / "base.yaml")
+    # SB3's "auto" is -prod(action_space.shape); the action is 3-D (vx, vy, wz).
+    assert cfg["training"]["target_entropy"] == -3.0
+    assert sac_kwargs({**cfg["training"], "device": "cpu"})["target_entropy"] == -3.0
+
+
 def test_the_device_is_cuda_or_cpu_and_never_falls_back(monkeypatch):
     """Ruled 2026-10-29: one device for every learned arm and seed. `auto` is refused (it would
     let a host without CUDA train on the CPU silently), and so is `cuda` where CUDA is absent."""

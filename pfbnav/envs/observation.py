@@ -64,6 +64,10 @@ class ObservationSpec:
     lookahead: float
     goal_scale: float
     include_lookahead: bool = True
+    #: Scan channel = (range / range_max) ** scan_exponent. 1.0 is the ruled linear scaling (bit-identical to
+    #: the original); below 1.0 spreads the near range (0.5 m reads 0.32 at 0.5, 0.10 at 1.0), which is where
+    #: the policy must act. Zero stays zero and one stays one, so validity and no-return bins are unchanged.
+    scan_exponent: float = 1.0
 
     @property
     def dim(self) -> int:
@@ -92,7 +96,8 @@ class ObservationSpec:
                    w_max=float(cfg["actuation"]["w_max"]),
                    lookahead=float(cfg["planner"]["lookahead"]),
                    goal_scale=float(obs["goal_scale"]),
-                   include_lookahead=include_lookahead)
+                   include_lookahead=include_lookahead,
+                   scan_exponent=float(obs.get("scan_exponent", 1.0)))
 
 
 def assemble(spec: ObservationSpec, *, ranges: ArrayLike, valid: ArrayLike,
@@ -108,7 +113,12 @@ def assemble(spec: ObservationSpec, *, ranges: ArrayLike, valid: ArrayLike,
     if vel.size != 3:
         raise ValueError(f"velocity is (vx, vy, wz), got {vel.size} values")
 
-    parts = [np.clip(r / spec.range_max, 0.0, 1.0), v.astype(float),
+    if not 0.0 < spec.scan_exponent <= 1.0:
+        raise ValueError(f"env.observation.scan_exponent is {spec.scan_exponent}; it must be in (0, 1]")
+    scan = np.clip(r / spec.range_max, 0.0, 1.0)
+    if spec.scan_exponent != 1.0:
+        scan = scan ** spec.scan_exponent
+    parts = [scan, v.astype(float),
              np.clip(vel / np.array([spec.v_max, spec.vy_max, spec.w_max]), -1.0, 1.0)]
     if spec.include_lookahead:
         parts.append(_point_block(lookahead_body, spec.lookahead))

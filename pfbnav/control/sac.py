@@ -56,6 +56,10 @@ def sac_kwargs(training: dict[str, Any]) -> dict[str, Any]:
     kwargs = {k: cast(training[k]) for k, cast in _KEYS.items()}
     ent = training["ent_coef"]
     kwargs["ent_coef"] = ent if isinstance(ent, str) else float(ent)
+    # Target entropy of the learned temperature. SB3's "auto" is -dim(action) = -3.0 here, which the base
+    # config states as a number so that `--set training.target_entropy=-1.0` is a valid override.
+    target = training.get("target_entropy", "auto")
+    kwargs["target_entropy"] = target if isinstance(target, str) else float(target)
     kwargs["policy_kwargs"] = {"net_arch": [int(n) for n in training["net_arch"]]}
     kwargs["device"] = learner_device(str(training["device"]))
     return kwargs
