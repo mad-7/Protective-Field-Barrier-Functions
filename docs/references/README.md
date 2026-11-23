@@ -32,6 +32,50 @@ abstract.
     SAC, gamma 0.9, buffer 3000. A Gaussian-CBF controller applies the minimal-deviation action; its correction
     rate (SCR) is reported as a metric, not observed. 200 trials per scenario, mean and standard deviation.
 
+Read in full on 2026-11-23 (PDFs in `paper/related works papers/`; text read, figures not examined):
+
+- **Olayemi, K., Van, M., McLoone, S., Thomas, R. K.** Perception-Aware Control Barrier Function for Safe Navigation
+  Under Uncertain LiDAR Observation. *IEEE ICMA* (2026). doi:10.1109/ICMA69663.2026.11647403.
+  - Closest prior art to the PFB filter. Discrete-time, beam-wise LiDAR CBF, constant margin h = rho - d_safe (0.3 m),
+    target h_{k+1} >= (1 - gamma dt) h_k, QP with slack, unicycle, 32 forward beams, range-rate estimate and a constant-input
+    predictive extension. SAC policy with the filter on top (Fig. 1); the text does not say whether the filter was in the
+    training loop. One table, 100 episodes: collisions 12.0 / 10.0 / 9.0 / 1.0 % (no filter, CBF, instantaneous, predictive).
+    No certified layer, no stops, no seeds or intervals. Code: github.com/kabirat/pa_cbf.
+- **Thumm, J., Pelat, G., Althoff, M.** Reducing Safety Interventions in Provably Safe Reinforcement Learning.
+  *IROS* (2023). arXiv:2303.03339v2.
+  - Counts failsafe interventions (a switch to an invariably safe, stopped state, with long recovery) per episode.
+    Proactive replacement and projection against a PID-Lagrangian and a reward penalty on interventions. The penalty was
+    fragile (no effect at -0.01, agent avoids the shield at -0.1). Safety Gym (10 seeds, 2M steps, 95% bootstrap intervals)
+    and a manipulator task; the shield uses exact obstacle positions, not LiDAR.
+- **Mestres, P., Chen, Y., Dall'Anese, E., Cortes, J.** Control Barrier Function-Based Safety Filters: Characterization of
+  Undesired Equilibria, Unbounded Trajectories, and Limit Cycles. *J. Nonlinear Science* (2026); arXiv:2501.09289v1.
+  - Continuous-time CBF filters can have undesired equilibria, locally stable even for convex safe sets, and limit cycles
+    in dimension above two that parameters cannot always remove. Our B3 + PFB stalls are explained by analogy only (ours is
+    discrete and latched).
+- **Oh, D. D., Nguyen, D. P., Hu, H., Fisac, J. F.** Provably Optimal Reinforcement Learning under Safety Filtering.
+  *IASEAI'26 Proceedings*, pp. 488 ff. (2026).
+  - A perfect (least-restrictive) filter that is time-invariant, with training episodes starting safe, leaves asymptotic
+    return unchanged; recipe: train and deploy with the most permissive filter available. Our filter is conservative, finds
+    no feasible command on about 3% of steps, and sits above a stateful latch, so the theorem is motivation, not a guarantee.
+- **Muhammad, N., Hedenberg, K., Astrand, B.** Adaptive warning fields for warehouse AGVs. *IEEE ETFA* (2021).
+  doi:10.1109/ETFA45728.2021.9613565.
+  - Performance levels of AGV safety systems; level 0 is a static protection field with a discretised warning field,
+    efficiency read as fewer slowdowns and stops. Cites ISO 3691-4 and the stopping-distance formula. Qualitative evidence
+    (one 510 m trajectory); adapts the warning field itself.
+- **Liu, S. B., Roehm, H., Heinzemann, C., Lutkebohle, I., Oehlerking, J., Althoff, M.** Provably safe motion of mobile
+  robots in human environments. *IROS* (2017), pp. 1351-1357.
+  - Production robots still rely on certified laser scanners because software safety is hard to demonstrate to a safety
+    body; conservative circular fields cause frequent stopping. Reachability-based, pedestrians; efficiency is average
+    speed (1.4 to 3.5 times the ROS navigation stack).
+
+- **Song, L., Ferderer, L., Wu, S.** Safe Reinforcement Learning for LiDAR-based Navigation via Control Barrier Function.
+  *IEEE ICMLA* (2022), pp. 264-269. doi:10.1109/ICMLA55696.2022.00045. (Read in full 2026-11-23.)
+  - SAC with a CBF filter in the loop, map-less, LiDAR only. The CBF is a linear function of the 1081-dim reciprocal-range
+    state, fitted online by regression on collision labels, with learned dynamics; no geometric field. Forward-only 2-D
+    action (steering, speed), reward = speed, episode ends at collision. Gazebo, two corridor environments, 4,000 steps, 5
+    seeds, 80% intervals; comparators SAC, Lagrangian SAC, a hand-crafted offline CBF. Metric: reward and collisions; no
+    stops, no certified layer. Observation uses 1/d ("sensitive to short distances"), inf mapped to 0.
+
 ## Abstract level
 
 LiDAR observation and reward design: Botteghi et al. 2020 [On Reward Shaping for Mobile Robot Navigation](https://consensus.app/papers/details/w:4c6d7c66-6b78-420f-a463-f919de243294/?utm_source=claude_desktop);
