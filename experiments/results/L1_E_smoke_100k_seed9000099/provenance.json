@@ -1,0 +1,44 @@
+{
+  "seed": 9000099,
+  "experiment": "L1_E_smoke_100k",
+  "created_utc": "2026-11-23T08:31:37.338763+00:00",
+  "commit": "a82ed427b8b5f2981a50ce2e0f55da508ae440d2",
+  "dirty": true,
+  "scene": "scenes/warehouse_v2.ttt",
+  "scene_sha256": "537f1bbbb7d674a395107398b46b7b6a765428b2942acefd529bf0c24dc35eb4",
+  "display_enabled": true,
+  "host": {
+    "hostname": "DESKTOP-9EL975R",
+    "os": "Windows-10-10.0.26200-SP0",
+    "python": "3.10.22",
+    "cpu_model": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "logical_cores": 32,
+    "physical_cores": 24,
+    "ram_total_gb": 63.8,
+    "gpu": "NVIDIA GeForce RTX 4070",
+    "shared": false,
+    "gpu_driver": "610.88",
+    "cuda": "12.8",
+    "cudnn": 91900,
+    "torch": "2.11.0+cu128"
+  },
+  "concurrent_instances": {
+    "coppelia_processes": 4,
+    "listening_instance_ports": [
+      23000,
+      23002,
+      23004,
+      23006
+    ]
+  },
+  "learner_device": "cuda",
+  "concurrent_instances_end": {
+    "coppelia_processes": 4,
+    "listening_instance_ports": [
+      23000,
+      23002,
+      23004,
+      23006
+    ]
+  }
+}
