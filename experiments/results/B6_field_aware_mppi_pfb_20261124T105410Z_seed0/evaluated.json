@@ -1,0 +1,9 @@
+{
+  "controller": "B6_field_aware_mppi",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "environment": "d9c86eff19a6ca10fcd2475136411170efd831a0cf01c05343a9ab9daa4e9e93",
+  "sets": {
+    "scenarios/validation/validation_mapped_only_wide.json": "d8c58f956c59fe952b25c11d22f88fa79c39807f06f2aa317655ced1545defaa"
+  }
+}
