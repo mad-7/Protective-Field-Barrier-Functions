@@ -62,12 +62,37 @@ time, contacts). Eight runs in all: four controllers x {alone, `--pfb on`}.
 
 ## Results
 
-Copy each finished run's `summary.json` and `provenance.json` into `experiments/results/<id>_<alone|pfb>/`
-and fill the table below. Nothing here has been run yet.
+Validation sets (`scenarios/validation/`, 30 routes per cell, 90 mapped-only and 90 with an unmapped obstacle per row), seed 0,
+commit `195519c` (the route-30 rerun of B6 + PFB at `c9e6909`, a results-only commit), host DESKTOP-9EL975R, exploratory.
+Run folders are under `experiments/results/`. Contacts and scan faults: zero in every row. "Stops/100 m" is per 100 m of planned route.
+Success and timeouts are reported beside stops: a baseline can have no stops because it never moves.
 
-| Baseline | Success alone | Success + PFB | Stops/100 m alone | Stops/100 m + PFB | Contacts alone / + PFB |
-|---|---|---|---|---|---|
-| B1 | | | | | |
-| B2 | | | | | |
-| B3 | | | | | |
-| B6 | | | | | |
+**Mapped obstacles only (90 routes)**
+
+| Baseline | Success alone | Success + PFB | Timeouts alone / + PFB | Unrecoverable alone / + PFB | Stops/100 m alone | Stops/100 m + PFB |
+|---|---|---|---|---|---|---|
+| B1 | 0 | 90 | 0 / 0 | 90 / 0 | 68.3 | 0.0 |
+| B2 | 34 | 68 | 10 / 22 | 46 / 0 | 63.3 | 0.43 |
+| B3 | 85 | 90 | 0 / 0 | 5 / 0 | 8.35 | 0.0 |
+| B6 | 78 | 76 | 12 / 14 | 0 / 0 | 0.96 | 0.86 |
+
+**With an unmapped obstacle on every route (90 routes)**
+
+| Baseline | Success alone | Success + PFB | Timeouts alone / + PFB | Unrecoverable alone / + PFB | Stops/100 m alone | Stops/100 m + PFB |
+|---|---|---|---|---|---|---|
+| B1 | 0 | 38 | 0 / 52 | 90 / 0 | 62.5 | 1.2 |
+| B2 | 0 | 2 | 4 / 88 | 86 / 0 | 64.0 | 1.6 |
+| B3 | 1 | 6 | 75 / 84 | 14 / 0 | 45.7 | 0.0 |
+| B6 | 49 | 44 | 41 / 46 | 0 / 0 | 0.60 | 0.70 |
+
+Reading: the PFB removes the protective stops and every unrecoverable stop for B1, B2 and B3. On mapped routes success rises
+with it (B1 0 to 90, B2 34 to 68, B3 85 to 90). On unmapped routes the stops go but the routes mostly end in timeouts: the
+filter does not make a baseline route around an obstacle it cannot see. B6 builds the certified field into its own cost, has
+almost no stops to remove, and shows no difference beyond noise (12 of 90 mapped routes change outcome, 7 one way and 5 the other).
+
+Provenance notes: B6 + PFB has no single complete run. Its mapped set comes from four folders (29 routes of mapped narrow from
+`B6_field_aware_mppi_pfb_20261123T224259Z_seed0`, which crashed on route 30; route 30 from
+`..._20261124T143103Z_seed0_route30`; mapped medium `..._20261124T105359Z_seed0`; mapped wide `..._20261124T105410Z_seed0`).
+Its unmapped row is the 90 complete episodes of the crashed first folder. `..._20261124T105346Z_seed0` crashed at route 25 and
+repeats the first 25 episodes exactly; it is not counted. All runs read `dirty: true` (deleted files under `paper/`). Different
+scene loads are not bit-identical to each other; routes repeated across loads matched exactly.
