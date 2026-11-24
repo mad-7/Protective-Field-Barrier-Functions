@@ -1,0 +1,7 @@
+\section{Conclusion}
+
+This paper studied a Protective-Field Barrier filter placed between a local controller and an emulated certified safety layer, beneath three field-blind classical planners. The filter turns the controller's command into the closest one that keeps every valid scan return outside the speed-banded protective field the robot will be in, and it leaves the certified layer active and independent.
+
+In exploratory validation runs, the filter removed nearly all protective stops and every unrecoverable stop of pure pursuit, regulated pure pursuit and the holonomic dynamic window planner. For the dynamic window planner, the strongest of the three, the stops per 100 m of planned route fell from 8.35 to 0.0 on routes without an unmapped obstacle and from 45.7 to 0.0 on routes with one. On routes with an unmapped obstacle, most routes ended in timeouts, so the filter removes the stop without making the controller route around an obstacle missing from its map. The confirmatory comparison HF-c on the sealed test set supports the stop removal for regulated pure pursuit, with 18 stops against 1,106 and a rate ratio of 0.0167 [0.0090, 0.0311], although 147 of 150 of its routes still end in a timeout. The constant-margin comparator is pending \tbd{results of the comparator}.
+
+Future work will train a SAC local planner with the filter in the loop and compare it with the same filter added after training (Section 8).

@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\usepackage{PRIMEarxiv}
+
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsmath}        % equations
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{amssymb}        % extra math symbols
+\usepackage{bm}             % bold math
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{fancyhdr}       % header
+\usepackage{graphicx}       % graphics
+\usepackage{xcolor}         % placeholders in red
+\usepackage{algorithm}      % Algorithm 1
+\usepackage{algpseudocode}
+\graphicspath{{figures/}}   % figures live in figures/
+
+% Placeholders: [TBD: ...] marks a result or text that does not exist yet, [CITE? ...] a reference not yet saved.
+\newcommand{\tbd}[1]{\textcolor{red}{[TBD: #1]}}
+\newcommand{\citeq}[1]{\textcolor{red}{[CITE? #1]}}
+
+% Header
+\pagestyle{fancy}
+\thispagestyle{empty}
+\rhead{ \textit{ }}
+\fancyhead[LO]{Protective-Field Barrier Filtering of Field-Blind Local Planners (draft)}
+
+%% Title
+\title{Protective-Field Barrier Filtering of Field-Blind Local Planners under a Certified Safety Layer
+\thanks{\textit{\underline{Status}}: draft, not submitted. Placeholders in red mark results and references that do not exist yet.}
+}
+
+\author{
+  Author One, Author Two \\
+  Affiliation \\
+  City, Country \\
+  \texttt{\{author1, author2\}@example.org} \\
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Autonomous mobile robots in warehouses share aisles with people, and an independent certified laser scanner protects them with a speed-banded field whose breach latches a stop. Navigation software that does not account for this field triggers such stops repeatedly, and each one costs a restart delay or a deadlock. This paper proposes the Protective-Field Barrier, a discrete-time barrier filter on the sectors of the laser scan, whose field mirrors the certified layer and which returns the command closest to the controller's request that keeps every valid return outside the field. The filter sits between a local controller and an emulated certified layer, which stays active, and is the identity when switched off. It is evaluated beneath three field-blind classical planners, pure pursuit, regulated pure pursuit and a holonomic dynamic window planner, on warehouse routes with and without an unmapped obstacle. In exploratory validation runs the filter removes nearly all protective stops and every unrecoverable stop. For the dynamic window planner, the strongest of the three, stops per 100 m of planned route fall from 8.35 to 0.0 on routes without an unmapped obstacle and from 45.7 to 0.0 on routes with one. With an unmapped obstacle on every route, however, most routes end in timeouts, because the stack does not replan. These results indicate that the filter removes the avoidable stops of controllers that ignore the protective field, while stop removal alone does not complete such routes. A sealed test set confirms the stop reduction for regulated pure pursuit.
+\end{abstract}
+
+\keywords{Protective field \and Control barrier function \and Certified safety layer \and Mobile robot \and LiDAR}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_preliminaries}
+\input{sections/04_method}
+\input{sections/05_experimental_design}
+\input{sections/06_results}
+\input{sections/07_discussion}
+\input{sections/08_future_work}
+\input{sections/09_conclusion}
+
+\section*{Acknowledgments}
+\tbd{funding and acknowledgements; AI-assistance disclosure as the venue requires}
+
+% Bibliography
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,204 @@
+\section{Results}
+
+Subsection 6.1 reports the three field-blind controllers on the validation sets, with one run per controller and condition, and its results are exploratory. Subsection 6.2 reports the confirmatory comparison HF-c on the sealed test set. The remaining subsections are templates, and every result in them is a placeholder until the corresponding run exists. Results carry one of two labels: development set (the tuning scenarios) and held-out (the sealed test set).
+
+\subsection{Field-blind controllers with and without the filter}
+
+\emph{Setting.} Each of B3, B1 and B2 was run alone and with the PFB beneath it on the validation sets: 90 routes without an unmapped obstacle (mapped-only) and 90 routes with an unmapped obstacle on every route, with 30 routes in each of the three aisle strata for each condition. Each cell is a single run with seed 0 on the training host, and the controllers were tuned beforehand on the tuning scenarios. These are exploratory results. They are not the confirmatory comparison HF-c, which uses the sealed test set and is reported in Section 6.2. Contacts and scan-fault stops were zero in every run. The provenance records an unclean working tree, caused by deleted draft files unrelated to the code. Tables~\ref{tab:classical-mapped} and~\ref{tab:classical-unmapped} give the outcomes. Stops are per 100~m of planned route. An episode that ends at an unrecoverable stop has a short driven distance, so the rate per planned length is the comparable quantity. Success and timeouts are reported beside the stops, because a controller can have no stops because it never moves.
+
+\begin{table}[t]
+\caption{Field-blind controllers alone and with the PFB on routes without an unmapped obstacle (validation sets, 90 routes, seed 0, one run each; exploratory). Stops are per 100~m of planned route. The columns give the value alone and with the PFB.}
+\label{tab:classical-mapped}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccc}
+\toprule
+ & \multicolumn{2}{c}{Stops per 100~m} & \multicolumn{2}{c}{Success} & \multicolumn{2}{c}{Timeouts} & \multicolumn{2}{c}{Unrecoverable stops} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+Controller & alone & +PFB & alone & +PFB & alone & +PFB & alone & +PFB \\
+\midrule
+B3 & 8.35 & 0.0  & 85 & 90 & 0  & 0  & 5  & 0 \\
+B1 & 68.3 & 0.0  & 0  & 90 & 0  & 0  & 90 & 0 \\
+B2 & 63.3 & 0.43 & 34 & 68 & 10 & 22 & 46 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{As Table~\ref{tab:classical-mapped}, on routes with an unmapped obstacle on every route (validation sets, 90 routes, seed 0, one run each; exploratory). Stops are per 100~m of planned route.}
+\label{tab:classical-unmapped}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccccc}
+\toprule
+ & \multicolumn{2}{c}{Stops per 100~m} & \multicolumn{2}{c}{Success} & \multicolumn{2}{c}{Timeouts} & \multicolumn{2}{c}{Unrecoverable stops} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+Controller & alone & +PFB & alone & +PFB & alone & +PFB & alone & +PFB \\
+\midrule
+B3 & 45.7 & 0.0  & 1  & 6  & 75 & 84 & 14 & 0 \\
+B1 & 62.5 & 1.2  & 0  & 38 & 0  & 52 & 90 & 0 \\
+B2 & 64.0 & 1.6  & 0  & 2  & 4  & 88 & 86 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\emph{Routes without an unmapped obstacle.} B3 is the strongest of the three: alone it completes 85 of 90 routes. Its stops still fall from 8.35 to 0.0 per 100~m with the filter, and its five unrecoverable stops disappear. Its success changes from 85 to 90 of 90, a difference of five routes that one run does not separate from run-to-run variation, so we read it as no loss of success and not as a gain. For B1 and B2 the stops fall from 68.3 and 63.3 to 0.0 and 0.43 per 100~m, and every unrecoverable stop disappears (90 and 46 episodes alone). Success rises from 0 to 90 of 90 for B1 and from 34 to 68 for B2. For B2 the timeouts also rise from 10 to 22.
+
+\emph{Routes with an unmapped obstacle.} The stops fall again: B3, B1 and B2 go from 45.7, 62.5 and 64.0 to 0.0, 1.2 and 1.6 per 100~m, and no unrecoverable stop remains. The routes, however, mostly end in timeouts. With the filter, 84 of 90 routes of B3, 52 of B1 and 88 of B2 time out, against 75, 0 and 4 alone, and the success counts are 6, 38 and 2 of 90 (alone: 1, 0 and 0). The filter removes the stop but does not make a controller route around an obstacle that is missing from its map.
+
+\emph{Time, motion and filter activity.} Table~\ref{tab:classical-time} gives the latched share, the moving speed and the mission time. The latched share falls for the controllers that stop: for B3 from 0.079 to 0.000 of the steps on mapped-only routes and from 0.121 to 0.000 on unmapped routes, for B1 from 0.876 to 0.000 and from 0.865 to 0.002, and for B2 from 0.344 to 0.001 and from 0.596 to 0.002. The moving speed does not rise with it. B3 moves at 0.098 m/s alone and 0.100 m/s with the filter on mapped-only routes, so its stops fall without a loss of speed. B1 moves at 0.180 m/s alone and 0.128 m/s with the filter on mapped-only routes, and at 0.149 and 0.053 m/s on unmapped routes, and B2 at 0.058 and 0.032 m/s on unmapped routes. On the routes that both versions complete, the mission times of B3 and B2 are not longer with the filter (107.2 and 105.1~s for B3 over 85 routes, 158.9 and 147.2~s for B2 over 34 routes). We do not interpret differences of this size from one run. Table~\ref{tab:classical-ratio} gives the share of steps on which the filter changed the command, which ranges from 0.19 to 0.89, the share of steps with no feasible regime, at most 0.004, and the exploratory rate ratio of the stops. For B3 the ratio is 0.0064 [0.0038, 0.0107] on mapped-only routes and 0.0011 [0.0009, 0.0014] on unmapped routes. For B2 it is 0.0076 [0.0032, 0.0181] and 0.0258 [0.0145, 0.0461], and for B1 0.0008 [0.0007, 0.0008] and 0.0200 [0.0110, 0.0366]. These ratios are exploratory, and the intervals for B1 and B3 are narrow because the filtered arm has no or few stops.
+
+\begin{table}[t]
+\caption{Latched share, moving speed and mission time beside the stops (validation sets, 90 routes per row, seed 0, one run each; exploratory). The latched share is the share of steps with a latched stop, the moving speed is the distance driven divided by the time not latched, and the mission time is the mean time to the goal over the routes that both versions complete ($n$).}
+\label{tab:classical-time}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llcccccc}
+\toprule
+ & & \multicolumn{2}{c}{Latched share} & \multicolumn{2}{c}{Moving speed (m/s)} & \multicolumn{2}{c}{Mission time (s), $n$} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+Condition & Controller & alone & +PFB & alone & +PFB & alone & +PFB \\
+\midrule
+mapped-only & B3 & 0.079 & 0.000 & 0.098 & 0.100 & 107.2 & 105.1, 85 \\
+ & B1 & 0.876 & 0.000 & 0.180 & 0.128 & \multicolumn{2}{c}{no common completions} \\
+ & B2 & 0.344 & 0.001 & 0.059 & 0.058 & 158.9 & 147.2, 34 \\
+\midrule
+unmapped & B3 & 0.121 & 0.000 & 0.036 & 0.034 & 156.3 & 144.2, 1 \\
+ & B1 & 0.865 & 0.002 & 0.149 & 0.053 & \multicolumn{2}{c}{no common completions} \\
+ & B2 & 0.596 & 0.002 & 0.058 & 0.032 & \multicolumn{2}{c}{no common completions} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\caption{Filter activity and the exploratory rate ratio of protective stops (with the PFB over alone) on the same routes (validation sets, 90 routes per row, seed 0, one run each; exploratory). The ratio uses stops per planned length with 0.5 added to each total, and its interval is a bootstrap over routes with a $t$ quantile on 89 degrees of freedom. When one total is zero, the interval reflects the variation of the route lengths and the other arm's stops across routes only.}
+\label{tab:classical-ratio}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llccc}
+\toprule
+Condition & Controller & Steps changed by the filter & Steps with no feasible regime & Rate ratio [95\% interval] \\
+\midrule
+mapped-only & B3 & 0.301 & 0.002 & 0.0064 [0.0038, 0.0107] \\
+ & B1 & 0.730 & 0.004 & 0.0008 [0.0007, 0.0008] \\
+ & B2 & 0.195 & 0.002 & 0.0076 [0.0032, 0.0181] \\
+\midrule
+unmapped & B3 & 0.258 & 0.001 & 0.0011 [0.0009, 0.0014] \\
+ & B1 & 0.894 & 0.004 & 0.0200 [0.0110, 0.0366] \\
+ & B2 & 0.587 & 0.003 & 0.0258 [0.0145, 0.0461] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\emph{Interpretation and limits.} B1 alone completes none of its 90 mapped routes, because every route ends in an unrecoverable stop, and B2 alone completes 34. They are weak baselines, and the gain of B1 from 0 to 90 is not evidence about strong planners. B3 is the stronger controller, and its stops fall to zero on both conditions without a loss of success or moving speed on mapped-only routes. The results are exploratory: one run per cell, the validation sets only, seed 0, and controllers tuned on the tuning sets. The mission times are read on routes that both versions complete, so they exclude the routes that only one version completes.
+
+\subsection{Confirmatory comparison HF-c}
+
+HF-c was evaluated once on the sealed test set, on the 150 routes with an unmapped obstacle on every route (1,624~m planned), with B2 and B2 + PFB run on each scenario within one scene load. B2 + PFB triggered 18 protective stops (1.11 per 100~m of planned route) and B2 alone 1,106 (68.1). The rate ratio is 0.0167 with a 95\% interval of [0.0090, 0.0311], which lies wholly below one, so HF-c holds at the declared level of 0.05. No contact and no scan-fault stop occurred in either arm.
+
+Table~\ref{tab:hfc} gives the measures beside the stops. The reduction is not bought by standing still: with the filter B2 drove 880~m against 696~m alone, and its latched share fell from 0.597 to 0.001. It also completes almost none of these routes, with 147 of 150 ending in a timeout, at a moving speed of 0.029 against 0.058~m/s. The claim that HF-c supports is stop removal, and no more.
+
+The other half of the sealed test set, 150 routes without an unmapped obstacle (1,606~m planned), was evaluated the same way and is descriptive, since HF-c does not use it. B2 alone triggered 907 stops (56.5 per 100~m) and B2 + PFB 2 (0.12), a rate ratio of 0.0028 [0.0006, 0.0133], and its success rose from 52 to 110 of 150 routes.
+
+\begin{table}[t]
+\caption{HF-c on the sealed test set, B2 alone and with the PFB (150 routes per condition, each arm once per scenario). HF-c is confirmatory on the unmapped condition; the mapped-only rows are descriptive.}
+\label{tab:hfc}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llcccccc}
+\toprule
+ & & \multicolumn{2}{c}{Stops per 100~m} & \multicolumn{2}{c}{Success} & \multicolumn{2}{c}{Unrecoverable stops} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+Condition & Controller & alone & +PFB & alone & +PFB & alone & +PFB \\
+\midrule
+unmapped & B2 & 68.1 & 1.11 & 0 & 3 & 146 & 0 \\
+mapped-only & B2 & 56.5 & 0.12 & 52 & 110 & 70 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Sensitivity to the barrier gain}
+
+The stops of B2 with the filter were measured for $\alpha \in \{1, 2, 5, 10, 20\}$~s$^{-1}$ on the 60 tuning scenarios, each scenario once per grid value, with all values in one scene load, seed 0, on the earlier training host. This is a development-set result from a single run. Table~\ref{tab:alpha} gives it. No contact occurred at any gain.
+
+\begin{table}[t]
+\caption{Sensitivity of B2 + PFB to the barrier gain on the tuning scenarios (60 scenarios, seed 0, one run per gain; development set). Fallback steps are the steps on which no regime was feasible.}
+\label{tab:alpha}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{ccccc}
+\toprule
+Gain $\alpha$ (s$^{-1}$) & Success & Stops per 100~m & Mission time (s) & Fallback steps \\
+\midrule
+1 & 0.500 & 0.59 & 155.8 & 332 \\
+2 & 0.500 & 2.94 & 155.4 & 125 \\
+5 & 0.517 & 9.63 & 157.1 & 74 \\
+10 & 0.500 & 11.98 & 156.7 & 2,807 \\
+20 & 0.517 & 12.93 & 158.1 & 8,142 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The stops rise with the gain, from 0.59 per 100~m at 1~s$^{-1}$ to 12.93 at 20~s$^{-1}$, while the success stays between 0.500 and 0.517 and the mission time between 155.4 and 158.1~s. The fallback steps do not follow the gain monotonically, with 332 at 1~s$^{-1}$, 74 at 5 and 8,142 at 20. The declared rule, the fewest stops among the gains within five percentage points of the best success, admits every gain and selects 1.0~s$^{-1}$, which is the lowest of the grid. It is reported as a selection at the edge of the grid, the grid was not extended, and we do not claim that 1.0~s$^{-1}$ is optimal.
+
+\subsection{Constant-margin comparator}
+
+\tbd{not yet run: the comparison of the PFB with a constant-margin beam-wise filter on the same hosts}
+
+\subsection{Remaining stops and timeouts}
+
+The stops and timeouts that remain with the filter are classified from the episode records of the filtered validation runs of Section~6.1, with no further run. A timeout is assigned to a progress class by the share of the planned route that the robot drove by the horizon: under 10\,\%, 10 to 50\,\%, 50 to 90\,\%, or 90\,\% and more. The edges were fixed before any run was read. A stop is attributed to its episode, and the table counts those episodes in which the filter fell back to maximum braking at least once. These are descriptions of the records, exploratory like the runs they come from.
+
+Table~\ref{tab:remaining} gives the classes. The 32 stops that remain are those of B1 (12, all on unmapped routes) and B2 (20, of which 16 are on unmapped routes), and B3 has none. Of these 32, 31 fall in episodes with at least one fallback step. Among the 246 timeouts, none ends below 10\,\% of the route, 86 end between 10 and 50\,\%, 149 between 50 and 90\,\% and 11 beyond 90\,\%. All 84 timeouts of B3 and all 52 of B1 are on unmapped routes, and the 22 timeouts of B2 on mapped-only routes end at 50\,\% of the route or more.
+
+\begin{table}[t]
+\caption{Stops and timeouts that remain with the filter, by class (validation sets, 180 routes per row, seed 0, one run each; exploratory). Timeouts are by share of the planned route driven. The braking share is the mean share of steps on which the filter commanded maximum braking, for the timeouts of the class.}
+\label{tab:remaining}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lcccccc}
+\toprule
+ & & \multicolumn{3}{c}{Timeouts by share of route driven} & & \\
+\cmidrule(lr){3-5}
+Controller & Stops (with fallback) & 10--50\,\% & 50--90\,\% & 90\,\% and more & Braking share, 10--50\,\% & Braking share, 50--90\,\% \\
+\midrule
+B3 + PFB & 0 (0) & 31 & 49 & 4 & 0.255 & 0.086 \\
+B1 + PFB & 12 (12) & 22 & 30 & 0 & 0.345 & 0.338 \\
+B2 + PFB & 20 (19) & 33 & 70 & 7 & 0.187 & 0.037 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The timeouts that end early in the route carry the larger braking share for B3 and B2, 0.255 and 0.187 of the steps against 0.086 and 0.037 for those that end later, while for B1 the two classes are close (0.345 and 0.338).
+
+\subsection{Computational cost}
+
+The decision time per control step was recorded in the filtered and unfiltered validation runs of Section~6.1, with the simulator rendering, on one host (an Intel 24-core CPU, 64~GB of memory and an NVIDIA GeForce RTX 4070). The times are pooled over all steps of a run, and the percentiles are upper bin edges of a histogram of 1~ms bins. Table~\ref{tab:compute} gives them.
+
+\begin{table}[t]
+\caption{Decision time per control step in the validation runs (180 routes per run, seed 0; exploratory), in ms. The filtered runs report the filter's own time and the total decision time of controller and filter.}
+\label{tab:compute}
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccccc}
+\toprule
+ & \multicolumn{2}{c}{Controller alone} & \multicolumn{3}{c}{Controller with the PFB} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-6}
+Controller & median & 95th percentile & filter 95th percentile & decision median & decision 95th percentile \\
+\midrule
+B1 & 3.2 & 5.3 & 48.2 & 18.6 & 48.4 \\
+B2 & 0.4 & 5.1 & 47.1 & 4.0 & 47.4 \\
+B3 & 1.4 & 6.4 & 48.4 & 5.2 & 49.8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+With the filter, the 95th percentile of the total decision time was 48.4, 47.4 and 49.8~ms for B1, B2 and B3, inside the 50~ms control period, and the filter accounts for nearly all of it. The margin is narrow, and the maximum for a single step reached 80 to 93~ms. In the filtered runs one step, of B3, exceeded the evaluation's own per-step budget of 160~ms. The timings are those of the evaluation runs and not of an isolated measurement of the filter on an otherwise idle host.

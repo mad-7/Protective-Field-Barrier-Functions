@@ -1,0 +1,25 @@
+\section{Related Work}
+
+This section reviews work on the safety fields of industrial robots (2.1), classical local planners (2.2), barrier filters for LiDAR navigation (2.3), and the stalls that barrier filters can cause (2.4). Subsection 2.5 states how this paper relates to that work.
+
+\subsection{Industrial safety fields}
+
+Driverless industrial vehicles are governed by safety standards, and their personnel and obstacle detection is provided by certified safety laser scanners \cite{iso3691-4,iec61496-3} \cite{tiusanen2020}. At the lowest performance level, a vehicle has a static protection field with a discretised warning field, and the efficiency of the arrangement is read as fewer slowdowns and stops. Muhammad et al.~\cite{muhammad2021} adapt the warning field itself and evaluate it on one 510 m trajectory. Liu et al.~\cite{liu2017} observe that production robots still rely on certified laser scanners because software safety is hard to demonstrate to a safety body, and that conservative circular fields cause frequent stopping. They propose reachability-based safe motion among pedestrians and read efficiency as average speed. In both works the protective field is given or reshaped, and neither couples it to a barrier filter on the navigation command. Neither counts protective stops with numbers.
+
+\subsection{Classical local planners}
+
+Local planners that track a global route include pure pursuit, regulated pure pursuit and the dynamic window approach \cite{coulter1992purepursuit,macenski2023rpp,fox1997dwa}. They represent obstacles by an inflation radius, a clearance term or a cost, chosen by the designer. Barrier constraints have also been built into planners themselves, in which a barrier filter acts on each sampled rollout and on the executed command~\cite{coker2026}. Our approach keeps the planner unchanged and wraps it, so that the same filter applies to any planner.
+
+\subsection{Barrier filters on LiDAR returns}
+
+Control barrier functions (CBFs) constrain a command so that a safe set stays forward invariant, and a quadratic program (QP) selects the admissible command closest to the requested one \cite{ames2017cbfqp}. For discrete-time systems the condition is imposed on one step, $h_{k+1} \ge (1 - \gamma \Delta t)\,h_k$~\cite{yang2026cbfrl}.
+
+The closest prior art to our filter applies this condition beam by beam to LiDAR returns. Olayemi et al.~\cite{olayemi2026} define a perception-aware CBF with a constant safety margin of 0.3 m, a QP with slack, a unicycle model, 32 forward beams, a range-rate estimate and a constant-input predictive extension. They report collisions over 100 episodes in one table, for no filter, the CBF, an instantaneous version and a predictive version. Their margin does not depend on speed or direction, and they have no certified layer, no stop metric, and no seeds or intervals. The Protective-Field Barrier (PFB) uses a row of the same discrete-time form as this filter. It differs in the field: it is continuous in direction and yaw rate and piecewise in speed, it is built from the certified layer's own configuration, and it acts on a holonomic base with wheel-speed and acceleration limits. Its field mirrors the layer, and the evaluation counts the layer's stops.
+
+\subsection{Stalls caused by barrier filters}
+
+Mestres et al.~\cite{mestres2026} show that continuous-time CBF filters can have undesired equilibria, locally stable even for convex safe sets, and limit cycles in dimension above two that tuning the parameters cannot always remove. Our filter is discrete and sits above a latch, so their analysis explains stalls only by analogy. We report timeouts beside stops for this reason.
+
+\subsection{Position}
+
+Filters on LiDAR returns are published. We do not claim them. Among the works we reviewed, none protects a latching, speed-banded certified layer with a restart condition, none uses that layer's protective stops as its metric, and none evaluates one filter beneath several classical planners. This paper contributes that application and its evaluation for classical planners, together with a sensitivity analysis of the barrier gain and a report of the stalls that the filter can cause. Learned planners are left to future work.

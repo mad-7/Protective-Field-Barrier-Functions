@@ -1,0 +1,70 @@
+\section{Preliminaries and Problem Statement}
+
+We first fix the interface of a controller, then describe the certified safety layer that runs beneath every controller, then state the discrete-time barrier condition that a safety filter enforces. The last subsection states the problem.
+
+\subsection{Controllers}
+
+The robot is commanded by a planar body-frame velocity $u = (v_x, v_y, \omega)$ of a holonomic base, with forward speed $v_x$ and lateral speed $v_y$ in m/s and yaw rate $\omega$ in rad/s. The control period is $\Delta t = 0.05$ s. A \emph{controller} maps its inputs, the scan, a lookahead point on the route and the goal, to a nominal command $u_{\mathrm{nom}}$. The controllers in this paper are classical: each computes $u_{\mathrm{nom}}$ from the route and the scan by a fixed rule (Section 4.3). An episode ends when the robot reaches the goal within 0.25 m, when the simulator reports a contact, or when 4,000 steps (200 s) have elapsed. Collisions are defined only by the simulator's contact check and never by a LiDAR threshold. The method does not depend on the form of the controller, because the filter acts on the command alone.
+
+\subsection{The certified safety layer}
+
+Industrial mobile robots are protected by a safety function that is certified independently of navigation \cite{iso3691-4,iec61496-3}. We emulate such a layer in simulation. It has three properties. First, it is independent: it uses its own sensing channel, a safety laser scanner, and shares no logic or tuning with the controller it supervises. Second, its protective fields are fixed and declared in advance. The trigger set is a finite family of regions, selected by a discrete speed band and by the direction of travel, and it is not computed from the controller's intent. Third, its only action is to stop. The emulation does not claim functional-safety compliance. In this paper a protective stop is an event of this emulated layer, a modeled protective stop, and not a measurement of a physical certified device.
+
+Let $P_k$ denote the valid scan points in the body frame, $\hat v_k$ the velocity estimate, $b_k$ the speed band selected by the speed the robot can reach within one response time, and $\mathcal{F}(b, \vartheta)$ the closed region protected in band $b$ for travel direction $\vartheta$: the footprint swept along the braking segment, plus margins. The layer is a latched state machine,
+
+\begin{equation*}
+\begin{aligned}
+\mathrm{trig}_k &= \mathbf{1}\big[\exists\, p \in P_k:\ p \in \mathcal{F}(b_k, \vartheta_k)\ \text{or an invalid scan bin exists}\big],\\
+\mathrm{lat}_k &= \mathrm{trig}_k \ \vee\ \big(\mathrm{lat}_{k-1} \wedge \neg\,\mathrm{rst}_k\big),
+\end{aligned}
+\tag{1}
+\end{equation*}
+
+whose output is a braking command (limited by the deceleration $a_{\mathrm{brake}}$) while $\mathrm{lat}_k$ holds and the commanded velocity otherwise. The restart condition $\mathrm{rst}_k$ holds when the field has been clear for the restart delay and no breaching point approaches the robot, that is $\hat v \cdot p \le 0$ for every breaching point $p$. An invalid scan bin is treated as an obstacle at the footprint boundary on its bearing, so unobserved space is never read as free. A \emph{protective stop} is one entry into the latched state of the emulated layer: a step at which the field in force is breached while no stop is triggered or latched. A breach that persists, and the latch that follows it, count as one stop. A breach after a restart counts as a new stop. Stops decided on a corrupted scan packet that was replaced by the fail-safe are excluded from the count and reported separately.
+
+In our configuration the response time is 0.10 s, $a_{\mathrm{brake}} = 1.0$ m/s$^2$, the restart delay is 2.0 s, and the three bands have top speeds of 0.10, 0.30 and 0.51 m/s. The ahead margin is 0.10 m and the lateral margin 0.05 m. These values are configured, and the band speeds are not measured quantities. The layer runs beneath every controller. Because its fields are discrete and sized for the worst case of each band, it can stop a robot whose command a continuous analysis would show to be safe. Each such stop costs at least the restart delay.
+
+\subsection{Barrier functions and the discrete-time condition}
+
+Let $h$ be a continuously differentiable function of a reduced state $q$, and let $\mathcal{S} = \{q : h(q) \ge 0\}$ be the safe set. For a control-affine system $\dot q = f(q) + g(q)u$, the function $h$ is a control barrier function (CBF) on $\mathcal{S}$ if there is an extended class-$\mathcal{K}$ function $\alpha$ with $\sup_u [L_f h(q) + L_g h(q)\,u] > -\alpha(h(q))$ on $\mathcal{S}$. A controller that keeps the input in the set $\{u : L_f h + L_g h\, u \ge -\alpha(h)\}$ renders $\mathcal{S}$ forward invariant \cite{ames2017cbfqp}.
+
+A controller acts at a fixed period, so we use the discrete-time condition. For $q_{k+1} = F(q_k) + G(q_k)u_k$, the function $h$ is a discrete-time CBF on $\mathcal{S}$ if for every $q \in \mathcal{S}$ some admissible $u$ satisfies
+
+\begin{equation*}
+h\big(F(q) + G(q)\,u\big) \ \ge\ \rho\, h(q), \qquad \rho \in [0, 1].
+\tag{2}
+\end{equation*}
+
+Repeated use of (2) keeps $h$ above the geometrically decaying curve $\rho^{k} h(q_0)$~\cite{yang2026cbfrl}, following the discrete-time CBF literature. We write $\rho = 1 - \alpha \Delta t$ with $0 < \alpha \Delta t \le 1$. With $\alpha = 1.0$ s$^{-1}$ and $\Delta t = 0.05$ s, as in our experiments, $\rho = 0.95$.
+
+A safety filter turns (2) into a quadratic program (QP) that changes the controller's nominal command as little as possible:
+
+\begin{equation*}
+u^{\ast} = \arg\min_{u \in \mathcal{U}_{\mathrm{adm}}}\ (u - u_{\mathrm{nom}})^{\top} W\,(u - u_{\mathrm{nom}})
+\quad \text{s.t.}\quad h\big(q_{k+1}(u)\big) \ \ge\ (1 - \alpha \Delta t)\, h(q_k).
+\tag{3}
+\end{equation*}
+
+When the constraint is inactive, $u^{\ast} = u_{\mathrm{nom}}$. CBF-RL~\cite{yang2026cbfrl} shows that for a single-integrator model the nonlinear discrete condition can be replaced by the continuous-time first-order condition, up to a bound that vanishes with the step, which yields a closed-form filter. We do not use that result. In our setting the predicted state depends on $u$ through a reach horizon, and the filter solves one QP per speed regime (Section 4).
+
+Two limits apply. First, satisfying the constraint establishes compatibility with the modeled field at the predicted state. It does not establish continuous-time exclusion from the field over the whole subsequent trajectory, and it holds relative to the model: a kinematic prediction, a bounded estimation lag and the declared actuation limits. How well the approximation works depends on the accuracy of the motion model and of the sensing, on the control interval and on the representation of the speed-band switching, and it says nothing about the real world. For the candidate barrier studied here we do not show that it is a valid CBF, and we claim no safety guarantee. The independent certified layer therefore remains necessary and active. Second, when the QP is infeasible, no invariance claim holds for that step. The filter then brakes at the maximum rate, and the event is counted and reported (Section 4.2).
+
+\subsection{Problem statement}
+
+The robot receives a global route from an A$^{*}$ planner on a map that may omit obstacles. A controller receives the LiDAR scan with validity flags, a lookahead point on the route and the goal, and outputs $u_{\mathrm{nom}}$. The command that reaches the actuators is
+
+\begin{equation*}
+u = \mathcal{C}\big(\mathcal{P}(u_{\mathrm{nom}})\big),
+\tag{4}
+\end{equation*}
+
+where $\mathcal{P}$ is the protective-field filter, the identity when it is disabled, and $\mathcal{C}$ is the certified layer (1). Let $N_{\mathrm{stop}}$ be the number of protective stops in an episode and $L_{\mathrm{plan}}$ the length of its planned route. The primary quantity is the rate
+
+\begin{equation*}
+\sigma = 100\, \frac{N_{\mathrm{stop}}}{L_{\mathrm{plan}}} \quad \text{(stops per 100 m of planned route)},
+\tag{5}
+\end{equation*}
+
+computed over a set of scenarios. It normalises the number of modeled protective stops by the spatial extent of the task and gives an operational measure of how often the field intervenes. We divide by the planned length rather than the distance driven so that a controller cannot lower its rate by wandering, and the planned length is the same for every controller. A controller can also lower $\sigma$ by not moving, and a filter can stall a robot (Section 2.4). Success, timeouts and mission time are therefore reported beside $\sigma$.
+
+The aim is not to eliminate protective stops, which are essential safety responses, but to reduce avoidable interruptions while the certified layer stays independent and active. The problem is to determine, for each controller, how much the filter $\mathcal{P}$ reduces $\sigma$ without reducing success. The next section describes the filter and the controllers it sits beneath.
