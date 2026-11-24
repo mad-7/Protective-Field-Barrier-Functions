@@ -1,0 +1,14 @@
+{
+  "controller": "B6_field_aware_mppi",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "environment": "d9c86eff19a6ca10fcd2475136411170efd831a0cf01c05343a9ab9daa4e9e93",
+  "sets": {
+    "scenarios/validation/validation_unmapped_narrow.json": "04ed982850d19d409e6b53f964be0d32fc1b8747b13c0bdbd05aa3f3c957eebe",
+    "scenarios/validation/validation_unmapped_medium.json": "2d293d1978bb9a5190e6d1d46cbcd23de4c17dd6d0906d5afcf7834f988f5e83",
+    "scenarios/validation/validation_unmapped_wide.json": "de016f8c1e518a1c8cca5fd5adb7b9252e417a51ccb9944995611ba099902a7c",
+    "scenarios/validation/validation_mapped_only_narrow.json": "b22bd539872a7c32ac4174743e0ea7f17b162cb16939f79148e880f8e3d28ea9",
+    "scenarios/validation/validation_mapped_only_medium.json": "8f5002e29b80f9245a94015fc21493951a08d57b23e810c7f227c72c47938d7e",
+    "scenarios/validation/validation_mapped_only_wide.json": "d8c58f956c59fe952b25c11d22f88fa79c39807f06f2aa317655ced1545defaa"
+  }
+}
