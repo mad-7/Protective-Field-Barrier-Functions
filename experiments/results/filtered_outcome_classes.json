@@ -1,0 +1,130 @@
+{
+  "B1_pure_pursuit_pfb_20261123T201721Z_seed0": {
+    "episodes": 180,
+    "timeouts": {
+      "timeouts": 52,
+      "by_progress": {
+        "under_10": {
+          "mapped_only": 0,
+          "unmapped": 0,
+          "mean_brake_share": null
+        },
+        "10_to_50": {
+          "mapped_only": 0,
+          "unmapped": 22,
+          "mean_brake_share": 0.34543181818181823
+        },
+        "50_to_90": {
+          "mapped_only": 0,
+          "unmapped": 30,
+          "mean_brake_share": 0.3384083333333333
+        },
+        "over_90": {
+          "mapped_only": 0,
+          "unmapped": 0,
+          "mean_brake_share": null
+        }
+      },
+      "with_recovery_attempts": 0
+    },
+    "stops": {
+      "stops": 12,
+      "episodes_with_stops": 10,
+      "in_episodes_with_fallback": 12,
+      "in_episodes_without_fallback": 0,
+      "by_route_condition": {
+        "unmapped": 12
+      },
+      "by_outcome": {
+        "success": 4,
+        "timeout": 8
+      },
+      "stationary_triggers": 0,
+      "at_rest_triggers": 0
+    }
+  },
+  "B2_regulated_pure_pursuit_pfb_20261123T194128Z_seed0": {
+    "episodes": 180,
+    "timeouts": {
+      "timeouts": 110,
+      "by_progress": {
+        "under_10": {
+          "mapped_only": 0,
+          "unmapped": 0,
+          "mean_brake_share": null
+        },
+        "10_to_50": {
+          "mapped_only": 0,
+          "unmapped": 33,
+          "mean_brake_share": 0.18721969696969692
+        },
+        "50_to_90": {
+          "mapped_only": 15,
+          "unmapped": 55,
+          "mean_brake_share": 0.036950000000000004
+        },
+        "over_90": {
+          "mapped_only": 7,
+          "unmapped": 0,
+          "mean_brake_share": 0.00025
+        }
+      },
+      "with_recovery_attempts": 0
+    },
+    "stops": {
+      "stops": 20,
+      "episodes_with_stops": 15,
+      "in_episodes_with_fallback": 19,
+      "in_episodes_without_fallback": 1,
+      "by_route_condition": {
+        "unmapped": 16,
+        "mapped_only": 4
+      },
+      "by_outcome": {
+        "timeout": 16,
+        "success": 4
+      },
+      "stationary_triggers": 0,
+      "at_rest_triggers": 0
+    }
+  },
+  "B3_holonomic_dwa_pfb_20261123T180353Z_seed0": {
+    "episodes": 180,
+    "timeouts": {
+      "timeouts": 84,
+      "by_progress": {
+        "under_10": {
+          "mapped_only": 0,
+          "unmapped": 0,
+          "mean_brake_share": null
+        },
+        "10_to_50": {
+          "mapped_only": 0,
+          "unmapped": 31,
+          "mean_brake_share": 0.2545
+        },
+        "50_to_90": {
+          "mapped_only": 0,
+          "unmapped": 49,
+          "mean_brake_share": 0.08583163265306122
+        },
+        "over_90": {
+          "mapped_only": 0,
+          "unmapped": 4,
+          "mean_brake_share": 0.0015
+        }
+      },
+      "with_recovery_attempts": 0
+    },
+    "stops": {
+      "stops": 0,
+      "episodes_with_stops": 0,
+      "in_episodes_with_fallback": 0,
+      "in_episodes_without_fallback": 0,
+      "by_route_condition": {},
+      "by_outcome": {},
+      "stationary_triggers": 0,
+      "at_rest_triggers": 0
+    }
+  }
+}

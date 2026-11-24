@@ -61,6 +61,7 @@ from pfbnav.safety.unobserved import resolve_unobserved
 
 REST = -1             # the regime index of the at-rest (creep) field
 _RING = 16            # sides of the inscribed polygons for the speed and envelope discs
+_EXTENT_STEP = 1e-4   # rad, the central-difference step of the constant-margin field's slope
 
 
 @dataclass(frozen=True)
@@ -91,10 +92,24 @@ class PFBConfig:
     yaw_trust: float         # rad/s, the yaw rate's trust interval half-width per linearisation
     band_margin: float       # m/s, kept below each band's speed limit (the estimate's excursions)
     qp_solver: str = "clarabel"   # "clarabel" (interior point) or "osqp" (ADMM), same QP
+    constant_margin: float | None = None   # m: None = the PFB's speed- and direction-dependent
+                             #   field; a value = the CONSTANT-MARGIN comparator (footprint + this
+                             #   margin, independent of speed, heading and yaw rate; 2026-11-24)
 
     @classmethod
     def from_config(cls, cfg: dict[str, Any], field: PFBField) -> PFBConfig:
         f, act = cfg["filter"], cfg["actuation"]
+        model = str(f.get("field_model", "pfb"))
+        if model not in ("pfb", "constant_margin"):
+            raise ValueError(f"filter.field_model must be 'pfb' or 'constant_margin', got {model!r}")
+        margin = None
+        if model == "constant_margin":
+            if f.get("constant_margin_m") is None:
+                raise ValueError("filter.field_model is 'constant_margin' but filter.constant_margin_m "
+                                 "is not set: the margin must be declared before the comparator runs")
+            margin = float(f["constant_margin_m"])
+            if margin < 0.0:
+                raise ValueError(f"filter.constant_margin_m must be >= 0, got {margin}")
         return cls(
             dt=float(cfg["sim"]["dt"]), lag=float(f["lag_allowance_s"]),
             motion_fractions=tuple(float(x) for x in f["motion_fractions"]),
@@ -112,7 +127,7 @@ class PFBConfig:
             lin_margin=float(f["linearisation_margin_m"]),
             yaw_trust=float(f["yaw_trust_rad_s"]),
             band_margin=float(f["band_speed_margin_m_s"]),
-            qp_solver=str(f["qp_solver"]))
+            qp_solver=str(f["qp_solver"]), constant_margin=margin)
 
 
 @dataclass
@@ -188,9 +203,25 @@ class PFB:
         return out
 
     def _field(self, regime: int, bearings, heading: float, w: float):
+        if self.c.constant_margin is not None:
+            return self._constant_field(bearings)
         if regime == REST:
             return self.field.extent_and_partials(bearings, 0.0, heading, w, at_rest=True)
         return self.field.extent_and_partials(bearings, self.p.band_tops[regime], heading, w)
+
+    def _constant_field(self, bearings) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+        """The CONSTANT-MARGIN comparator's field (2026-11-24): rho(psi) = e(psi) + m, the footprint's
+        own extent plus one margin, the same in every regime and for every heading and yaw rate, so
+        d rho / d heading = d rho / d |w| = 0 and d rho / d psi is the extent's slope (central
+        difference over `_EXTENT_STEP`). Everything else in the filter is unchanged: the rows, the
+        QP, the regimes' speed ranges, the limiter's envelope and the latch rule."""
+        b = np.asarray(bearings, dtype=float)
+        ext = self.field.footprint.extent
+        rho = np.asarray(ext(b), dtype=float) + float(self.c.constant_margin)
+        d_psi = (np.asarray(ext(b + _EXTENT_STEP), dtype=float)
+                 - np.asarray(ext(b - _EXTENT_STEP), dtype=float)) / (2.0 * _EXTENT_STEP)
+        zeros = np.zeros_like(rho)
+        return rho, d_psi, zeros, zeros
 
     # ------------------------------------------------------------------ the rows
     def _rows(self, u: np.ndarray, pts: np.ndarray, regime: int, speed_hat: float,

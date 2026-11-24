@@ -1,0 +1,13 @@
+# The CONSTANT-MARGIN comparator (2026-11-24): the PFB's filter with its field replaced by the footprint's own
+# extent plus ONE margin, independent of speed, heading and yaw rate (pfbnav/safety/pfb.py, `_constant_field`).
+# Same rows, QP, regimes' speed ranges, limiter envelope, latch rule and frozen alpha as the PFB.
+# `constant_margin_m` 0.10 m was declared by the researcher on 2026-11-24 (decision log) BEFORE the comparator runs; the filter
+# refuses to build without a value. Not tuned on any set used to evaluate it.
+# Evaluated with: scripts/evaluate.py --config configs/experiments/CM_constant_margin.yaml --controller <ctrl>
+# (the controller's own tuned parameters, unchanged).
+defaults: ../base.yaml
+experiment: CM_constant_margin
+filter:
+  enabled: true
+  field_model: constant_margin
+  constant_margin_m: 0.10  # m, DECLARED by the researcher 2026-11-24 (0.15 lowered: it left 48.7 mm of slack in the narrowest aisle, under the 50 mm tracking bound); before the comparator is run; not tuned on any set it is evaluated on

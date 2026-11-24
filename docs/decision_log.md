@@ -11550,3 +11550,40 @@ about 25k steps, in L1 and in L5, while the policy is still far from the goal; a
   this entry accompanies the change; it is a new option, not a change to the ruled default.
 - Nothing is adopted. A paired smoke test (L1 and L5, same seed, one variant at a time, declared in its Run Request before it runs) decides
   whether a variant is worth carrying; whatever is adopted applies identically to every learned arm and before any confirmatory seed trains (rule 17).
+
+
+## 2026-11-24 - Constant-margin comparator and offline outcome classes implemented (code only; nothing run)
+
+For the classical-controller paper (field-blind B1, B2, B3), whose open items are the comparator ("is the speed- and direction-dependent field what
+removes the stops?") and the diagnosis of the stops and timeouts that remain with the filter.
+
+- **Constant-margin comparator** (`pfbnav/safety/pfb.py`, rule 7: a new field option, the PFB's own equations and its default untouched).
+  `filter.field_model: constant_margin` with `filter.constant_margin_m` replaces rho(psi; theta, W) in the rows (eq. 6) by the footprint's own extent plus
+  one margin, e(psi) + m, in every regime and for every heading and yaw rate (d rho / d heading = d rho / d |w| = 0; d rho / d psi by a central
+  difference of the extent). Everything else is the PFB: the rows' form, the QP, the regimes' speed ranges, the limiter's envelope, the latch rule,
+  the frozen alpha. Absent the key, `field_model` is "pfb" and behaviour is unchanged. **The margin is not set**: the config
+  `configs/experiments/CM_constant_margin.yaml` carries `constant_margin_m: null` and the filter refuses to build without a value, so the margin must be
+  declared and recorded here before the comparator runs, and is not tuned on any set used to evaluate it. Tests: `tests/test_pfb_constant_margin.py`
+  (known-answer field, finite-difference row gradients, refusals, monotone effect of the margin on a wall ahead).
+- **Offline outcome classes** (`pfbnav/eval/outcome_classes.py`, `scripts/classify_filtered_outcomes.py`): timeouts by progress class (edges 0.10, 0.50,
+  0.90 of the planned length, declared before any run is read) split by unmapped obstacle, with the filter's braking share; stops by the conditions of
+  their episode (filter fallback, route condition, outcome). Descriptive; states no cause. Reads `episodes.jsonl` only. Tests:
+  `tests/test_outcome_classes.py`.
+- **Not done:** the comparator has not been run; its margin is open (a supervisor/researcher ruling). Prior art uses 0.3 m for a point robot; the footprint
+  here is not a point, and 0.15 m is the largest margin tested feasible at a wall 0.95 m ahead from 0.3 m/s (test case), so the declared value needs a
+  traversability check against the narrow floor before it is chosen.
+
+
+## 2026-11-24 - DECIDED (the researcher): the constant margin is 0.15 m
+
+`filter.constant_margin_m: 0.15` in `configs/experiments/CM_constant_margin.yaml`, declared before the comparator is run and not tuned on any set it is
+evaluated on. 0.15 m is the largest margin that stayed feasible at a wall 0.95 m ahead from 0.3 m/s in `tests/test_pfb_constant_margin.py`; it is below the 0.3 m of
+the prior-art filter, whose robot is a point. The narrow-floor traversability check named in the entry above is not done; the comparator is not run.
+
+
+## 2026-11-24 - DECIDED (the researcher): the constant margin is lowered from 0.15 m to 0.10 m
+
+`filter.constant_margin_m: 0.10` (supersedes the 0.15 m of the entry above; the comparator has not been run). Reason: the comparator's field abeam at 0.15 m is
+0.2095 + 0.15 = 0.3595 m against a wall 0.2095 + 0.1987 = 0.4082 m from the centreline in the narrowest aisle, a slack of 48.7 mm, under the 50 mm tracking
+bound. At 0.10 m the field abeam is 0.3095 m and the slack 98.7 mm, about twice the bound. Declared before the run, not tuned on any set it is evaluated on.
+The arithmetic is from `configs/base.yaml` and the footprint table (lateral extent 0.2095 m); the traversability probe has not been rerun with it.
