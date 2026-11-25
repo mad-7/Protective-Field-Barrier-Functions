@@ -1,0 +1,321 @@
+{
+  "overall": {
+    "episodes": 2,
+    "counts": {
+      "success": 0,
+      "collision": 0,
+      "timeout": 2,
+      "unrecoverable_stop": 0
+    },
+    "shares": {
+      "success": 0.0,
+      "collision": 0.0,
+      "timeout": 1.0,
+      "unrecoverable_stop": 0.0
+    },
+    "success_rate": 0.0,
+    "contact_rate": 0.0,
+    "largest_outcome_share": 1.0,
+    "protective_stops": 8,
+    "scan_faults": 0,
+    "scan_fault_stops": 0,
+    "scan_rerenders": 0,
+    "scan_fault_step_share": 0.0,
+    "scan_fault_flag": false,
+    "over_budget_steps": 0,
+    "at_rest_triggers": 0,
+    "stationary_triggers": 0,
+    "creep_stops_ending_unrecoverable": 0,
+    "distance_m": 5.817438361349902,
+    "stops_per_100m": 137.51757222131783,
+    "recovery_distance_m": 0.0,
+    "stops_per_100m_excluding_recovery": 137.51757222131783,
+    "planned_length_m": 26.92957354572417,
+    "stops_per_100m_planned": 29.707117293991555,
+    "stops_per_100m_completed": null,
+    "completed_distance_m": 0.0,
+    "latched_step_share": 0.042625,
+    "moving_speed_mps": 0.015191117277320542,
+    "mean_return": -283.1843283294728,
+    "pfb_infeasible": 0,
+    "dwa_blocked_steps": 0,
+    "mppi_all_rejected": 0,
+    "invalid_bin_steps": 0,
+    "compute": {
+      "controller": {
+        "steps": 8000,
+        "p50_ms": 0.1,
+        "p95_ms": 0.2,
+        "max_ms": 3.8
+      },
+      "pfb": {
+        "steps": 8000,
+        "p50_ms": 15.700000000000003,
+        "p95_ms": 29.1,
+        "max_ms": 38.7
+      },
+      "decision": {
+        "steps": 8000,
+        "p50_ms": 15.700000000000003,
+        "p95_ms": 29.1,
+        "max_ms": 38.800000000000004
+      }
+    },
+    "pfb_measures": {
+      "steps": 8000,
+      "bin": 0.005,
+      "correction_mps": {
+        "median": 0.445,
+        "p95": 0.445
+      },
+      "correction_yaw_rps": {
+        "median": 0.01,
+        "p95": 0.055
+      },
+      "requested_mps": {
+        "median": 0.445,
+        "p95": 0.445
+      },
+      "executed_mps": {
+        "median": 0.005,
+        "p95": 0.07
+      },
+      "correction_share_above_mps": {
+        "0.05": 0.835625,
+        "0.1": 0.823,
+        "0.2": 0.81725
+      }
+    }
+  },
+  "per_set": {
+    "cm_pp_unmapped_wide_final": {
+      "episodes": 2,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 2,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 8,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 0,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 5.817438361349902,
+      "stops_per_100m": 137.51757222131783,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 137.51757222131783,
+      "planned_length_m": 26.92957354572417,
+      "stops_per_100m_planned": 29.707117293991555,
+      "stops_per_100m_completed": null,
+      "completed_distance_m": 0.0,
+      "latched_step_share": 0.042625,
+      "moving_speed_mps": 0.015191117277320542,
+      "mean_return": -283.1843283294728,
+      "pfb_infeasible": 0,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 8000,
+          "p50_ms": 0.1,
+          "p95_ms": 0.2,
+          "max_ms": 3.8
+        },
+        "pfb": {
+          "steps": 8000,
+          "p50_ms": 15.700000000000003,
+          "p95_ms": 29.1,
+          "max_ms": 38.7
+        },
+        "decision": {
+          "steps": 8000,
+          "p50_ms": 15.700000000000003,
+          "p95_ms": 29.1,
+          "max_ms": 38.800000000000004
+        }
+      },
+      "pfb_measures": {
+        "steps": 8000,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.445,
+          "p95": 0.445
+        },
+        "correction_yaw_rps": {
+          "median": 0.01,
+          "p95": 0.055
+        },
+        "requested_mps": {
+          "median": 0.445,
+          "p95": 0.445
+        },
+        "executed_mps": {
+          "median": 0.005,
+          "p95": 0.07
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.835625,
+          "0.1": 0.823,
+          "0.2": 0.81725
+        }
+      }
+    }
+  },
+  "per_stratum": {
+    "wide": {
+      "episodes": 2,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 2,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 8,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 0,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 5.817438361349902,
+      "stops_per_100m": 137.51757222131783,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 137.51757222131783,
+      "planned_length_m": 26.92957354572417,
+      "stops_per_100m_planned": 29.707117293991555,
+      "stops_per_100m_completed": null,
+      "completed_distance_m": 0.0,
+      "latched_step_share": 0.042625,
+      "moving_speed_mps": 0.015191117277320542,
+      "mean_return": -283.1843283294728,
+      "pfb_infeasible": 0,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 8000,
+          "p50_ms": 0.1,
+          "p95_ms": 0.2,
+          "max_ms": 3.8
+        },
+        "pfb": {
+          "steps": 8000,
+          "p50_ms": 15.700000000000003,
+          "p95_ms": 29.1,
+          "max_ms": 38.7
+        },
+        "decision": {
+          "steps": 8000,
+          "p50_ms": 15.700000000000003,
+          "p95_ms": 29.1,
+          "max_ms": 38.800000000000004
+        }
+      },
+      "pfb_measures": {
+        "steps": 8000,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.445,
+          "p95": 0.445
+        },
+        "correction_yaw_rps": {
+          "median": 0.01,
+          "p95": 0.055
+        },
+        "requested_mps": {
+          "median": 0.445,
+          "p95": 0.445
+        },
+        "executed_mps": {
+          "median": 0.005,
+          "p95": 0.07
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.835625,
+          "0.1": 0.823,
+          "0.2": 0.81725
+        }
+      }
+    }
+  },
+  "recovery": {
+    "episodes": 2,
+    "episodes_with_recovery": 0,
+    "attempts": 0,
+    "endings": {},
+    "deadlocks": {},
+    "distance_m": 0.0,
+    "time_s": 0.0,
+    "attempt_times_s": [],
+    "attempts_cut_short": 0,
+    "suspected_defects": [],
+    "per_episode": [
+      {
+        "scenario_seed": 2505028,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505029,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      }
+    ]
+  },
+  "memory": {
+    "episodes": 2,
+    "status": {},
+    "reference": "A20 check: CoppeliaSim +1.7 MB/100 episodes, Python flat (runs/diag/MEMORY_20261018T203246Z_seed0)",
+    "python": {
+      "private_start_mb": 2431.89453125,
+      "private_end_mb": 2451.25390625,
+      "growth_mb_per_100_episodes": 967.96875
+    },
+    "sim": {
+      "private_start_mb": 206.96484375,
+      "private_end_mb": 216.2734375,
+      "growth_mb_per_100_episodes": 465.4296875
+    }
+  }
+}
