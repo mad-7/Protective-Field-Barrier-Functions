@@ -1,0 +1,2895 @@
+{
+  "overall": {
+    "episodes": 180,
+    "counts": {
+      "success": 33,
+      "collision": 0,
+      "timeout": 147,
+      "unrecoverable_stop": 0
+    },
+    "shares": {
+      "success": 0.18333333333333332,
+      "collision": 0.0,
+      "timeout": 0.8166666666666667,
+      "unrecoverable_stop": 0.0
+    },
+    "success_rate": 0.18333333333333332,
+    "contact_rate": 0.0,
+    "largest_outcome_share": 0.8166666666666667,
+    "protective_stops": 1142,
+    "scan_faults": 0,
+    "scan_fault_stops": 0,
+    "scan_rerenders": 0,
+    "scan_fault_step_share": 0.0,
+    "scan_fault_flag": false,
+    "over_budget_steps": 8,
+    "at_rest_triggers": 0,
+    "stationary_triggers": 0,
+    "creep_stops_ending_unrecoverable": 0,
+    "distance_m": 1202.3733054523934,
+    "stops_per_100m": 94.97882187016137,
+    "recovery_distance_m": 0.0,
+    "stops_per_100m_excluding_recovery": 94.97882187016137,
+    "planned_length_m": 1931.3726579082706,
+    "stops_per_100m_planned": 59.12893067652812,
+    "stops_per_100m_completed": 26.29262295720725,
+    "completed_distance_m": 300.46450720636363,
+    "latched_step_share": 0.06906294805238108,
+    "moving_speed_mps": 0.0374482460679837,
+    "mean_return": -3.231658104926661,
+    "pfb_infeasible": 17,
+    "dwa_blocked_steps": 0,
+    "mppi_all_rejected": 0,
+    "invalid_bin_steps": 0,
+    "compute": {
+      "controller": {
+        "steps": 689791,
+        "p50_ms": 0.2,
+        "p95_ms": 2.6000000000000005,
+        "max_ms": 21.3
+      },
+      "pfb": {
+        "steps": 689791,
+        "p50_ms": 2.0,
+        "p95_ms": 38.6,
+        "max_ms": 139.4
+      },
+      "decision": {
+        "steps": 689791,
+        "p50_ms": 3.1000000000000005,
+        "p95_ms": 38.800000000000004,
+        "max_ms": 139.5
+      }
+    },
+    "pfb_measures": {
+      "steps": 689791,
+      "bin": 0.005,
+      "correction_mps": {
+        "median": 0.005,
+        "p95": 0.075
+      },
+      "correction_yaw_rps": {
+        "median": 0.005,
+        "p95": 0.255
+      },
+      "requested_mps": {
+        "median": 0.075,
+        "p95": 0.075
+      },
+      "executed_mps": {
+        "median": 0.03,
+        "p95": 0.075
+      },
+      "correction_share_above_mps": {
+        "0.05": 0.32557977706290747,
+        "0.1": 0.0006436732285576356,
+        "0.2": 0.00020875888493761155
+      }
+    }
+  },
+  "per_set": {
+    "validation_mapped_only_narrow": {
+      "episodes": 30,
+      "counts": {
+        "success": 13,
+        "collision": 0,
+        "timeout": 17,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.43333333333333335,
+        "collision": 0.0,
+        "timeout": 0.5666666666666667,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.43333333333333335,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 0.5666666666666667,
+      "protective_stops": 97,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 0,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 255.65045672578327,
+      "stops_per_100m": 37.94243172584843,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 37.94243172584843,
+      "planned_length_m": 321.4117864396089,
+      "stops_per_100m_planned": 30.179353742593896,
+      "stops_per_100m_completed": 20.737226590146914,
+      "completed_distance_m": 120.5561403851299,
+      "latched_step_share": 0.037514168025875656,
+      "moving_speed_mps": 0.04895267630319072,
+      "mean_return": 75.11356558776922,
+      "pfb_infeasible": 1,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 108519,
+          "p50_ms": 0.2,
+          "p95_ms": 0.4,
+          "max_ms": 8.700000000000001
+        },
+        "pfb": {
+          "steps": 108519,
+          "p50_ms": 1.1,
+          "p95_ms": 41.9,
+          "max_ms": 57.800000000000004
+        },
+        "decision": {
+          "steps": 108519,
+          "p50_ms": 1.4,
+          "p95_ms": 42.2,
+          "max_ms": 58.2
+        }
+      },
+      "pfb_measures": {
+        "steps": 108519,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.005,
+          "p95": 0.075
+        },
+        "correction_yaw_rps": {
+          "median": 0.005,
+          "p95": 0.255
+        },
+        "requested_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "executed_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.14762391839217096,
+          "0.1": 0.0007371980943429262,
+          "0.2": 0.00022115942830287783
+        }
+      }
+    },
+    "validation_mapped_only_medium": {
+      "episodes": 30,
+      "counts": {
+        "success": 11,
+        "collision": 0,
+        "timeout": 19,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.36666666666666664,
+        "collision": 0.0,
+        "timeout": 0.6333333333333333,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.36666666666666664,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 0.6333333333333333,
+      "protective_stops": 148,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 0,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 213.01080961925717,
+      "stops_per_100m": 69.48004200563355,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 69.48004200563355,
+      "planned_length_m": 294.43640133972804,
+      "stops_per_100m_planned": 50.265524006739206,
+      "stops_per_100m_completed": 35.15629539791495,
+      "completed_distance_m": 93.86654545506283,
+      "latched_step_share": 0.05649073801822993,
+      "moving_speed_mps": 0.0414886076933616,
+      "mean_return": 44.454529714387654,
+      "pfb_infeasible": 6,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 108832,
+          "p50_ms": 0.2,
+          "p95_ms": 2.3,
+          "max_ms": 5.4
+        },
+        "pfb": {
+          "steps": 108832,
+          "p50_ms": 0.6000000000000001,
+          "p95_ms": 19.599999999999998,
+          "max_ms": 75.4
+        },
+        "decision": {
+          "steps": 108832,
+          "p50_ms": 2.0,
+          "p95_ms": 19.8,
+          "max_ms": 75.5
+        }
+      },
+      "pfb_measures": {
+        "steps": 108832,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.005,
+          "p95": 0.075
+        },
+        "correction_yaw_rps": {
+          "median": 0.005,
+          "p95": 0.255
+        },
+        "requested_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "executed_mps": {
+          "median": 0.03,
+          "p95": 0.075
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.27771243751837693,
+          "0.1": 0.0002756542193472508,
+          "0.2": 8.269626580417524e-05
+        }
+      }
+    },
+    "validation_mapped_only_wide": {
+      "episodes": 30,
+      "counts": {
+        "success": 9,
+        "collision": 0,
+        "timeout": 21,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.3,
+        "collision": 0.0,
+        "timeout": 0.7,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.3,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 0.7,
+      "protective_stops": 91,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 1,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 226.39598134872946,
+      "stops_per_100m": 40.195059761165986,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 40.195059761165986,
+      "planned_length_m": 317.83370917273544,
+      "stops_per_100m_planned": 28.631324297494057,
+      "stops_per_100m_completed": 24.406735778673973,
+      "completed_distance_m": 86.04182136617098,
+      "latched_step_share": 0.03319103521878335,
+      "moving_speed_mps": 0.04165212888632473,
+      "mean_return": 41.724981579181225,
+      "pfb_infeasible": 5,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 112440,
+          "p50_ms": 0.2,
+          "p95_ms": 0.4,
+          "max_ms": 15.2
+        },
+        "pfb": {
+          "steps": 112440,
+          "p50_ms": 1.1,
+          "p95_ms": 32.9,
+          "max_ms": 59.7
+        },
+        "decision": {
+          "steps": 112440,
+          "p50_ms": 2.0,
+          "p95_ms": 33.1,
+          "max_ms": 59.9
+        }
+      },
+      "pfb_measures": {
+        "steps": 112440,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.005,
+          "p95": 0.075
+        },
+        "correction_yaw_rps": {
+          "median": 0.005,
+          "p95": 0.255
+        },
+        "requested_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "executed_mps": {
+          "median": 0.03,
+          "p95": 0.075
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.27307897545357523,
+          "0.1": 0.0008537886872998933,
+          "0.2": 0.00029348986125933834
+        }
+      }
+    },
+    "validation_unmapped_narrow": {
+      "episodes": 30,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 30,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 217,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 2,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 180.90820965823136,
+      "stops_per_100m": 119.950333050088,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 119.950333050088,
+      "planned_length_m": 353.0547096715575,
+      "stops_per_100m_planned": 61.46356189437962,
+      "stops_per_100m_completed": null,
+      "completed_distance_m": 0.0,
+      "latched_step_share": 0.075975,
+      "moving_speed_mps": 0.032630468089469324,
+      "mean_return": -48.8645322875318,
+      "pfb_infeasible": 2,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 120000,
+          "p50_ms": 0.30000000000000004,
+          "p95_ms": 3.6000000000000005,
+          "max_ms": 9.1
+        },
+        "pfb": {
+          "steps": 120000,
+          "p50_ms": 3.8,
+          "p95_ms": 42.0,
+          "max_ms": 111.5
+        },
+        "decision": {
+          "steps": 120000,
+          "p50_ms": 5.0,
+          "p95_ms": 42.2,
+          "max_ms": 111.7
+        }
+      },
+      "pfb_measures": {
+        "steps": 120000,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.025,
+          "p95": 0.075
+        },
+        "correction_yaw_rps": {
+          "median": 0.005,
+          "p95": 0.195
+        },
+        "requested_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "executed_mps": {
+          "median": 0.025,
+          "p95": 0.075
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.334875,
+          "0.1": 0.0003333333333333333,
+          "0.2": 0.0001
+        }
+      }
+    },
+    "validation_unmapped_medium": {
+      "episodes": 30,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 30,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 325,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 5,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 153.58027017831182,
+      "stops_per_100m": 211.61572357091453,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 211.61572357091453,
+      "planned_length_m": 322.25653925225026,
+      "stops_per_100m_planned": 100.85132818533816,
+      "stops_per_100m_completed": null,
+      "completed_distance_m": 0.0,
+      "latched_step_share": 0.11255,
+      "moving_speed_mps": 0.02884299024889887,
+      "mean_return": -71.75141550545908,
+      "pfb_infeasible": 1,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 120000,
+          "p50_ms": 0.30000000000000004,
+          "p95_ms": 3.9000000000000004,
+          "max_ms": 17.0
+        },
+        "pfb": {
+          "steps": 120000,
+          "p50_ms": 5.800000000000001,
+          "p95_ms": 39.5,
+          "max_ms": 139.4
+        },
+        "decision": {
+          "steps": 120000,
+          "p50_ms": 6.200000000000001,
+          "p95_ms": 39.699999999999996,
+          "max_ms": 139.5
+        }
+      },
+      "pfb_measures": {
+        "steps": 120000,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.03,
+          "p95": 0.075
+        },
+        "correction_yaw_rps": {
+          "median": 0.005,
+          "p95": 0.08
+        },
+        "requested_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "executed_mps": {
+          "median": 0.005,
+          "p95": 0.075
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.378525,
+          "0.1": 0.0005,
+          "0.2": 0.00015
+        }
+      }
+    },
+    "validation_unmapped_wide": {
+      "episodes": 30,
+      "counts": {
+        "success": 0,
+        "collision": 0,
+        "timeout": 30,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.0,
+        "collision": 0.0,
+        "timeout": 1.0,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.0,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 1.0,
+      "protective_stops": 264,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 0,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 172.82757792207963,
+      "stops_per_100m": 152.75339918205995,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 152.75339918205995,
+      "planned_length_m": 322.3795120323907,
+      "stops_per_100m_planned": 81.89106011596509,
+      "stops_per_100m_completed": null,
+      "completed_distance_m": 0.0,
+      "latched_step_share": 0.09220833333333334,
+      "moving_speed_mps": 0.0317304039880809,
+      "mean_return": -60.067077717907196,
+      "pfb_infeasible": 2,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 120000,
+          "p50_ms": 0.2,
+          "p95_ms": 3.9000000000000004,
+          "max_ms": 21.3
+        },
+        "pfb": {
+          "steps": 120000,
+          "p50_ms": 4.8999999999999995,
+          "p95_ms": 42.10000000000001,
+          "max_ms": 106.30000000000001
+        },
+        "decision": {
+          "steps": 120000,
+          "p50_ms": 6.3,
+          "p95_ms": 42.4,
+          "max_ms": 106.4
+        }
+      },
+      "pfb_measures": {
+        "steps": 120000,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.065,
+          "p95": 0.075
+        },
+        "correction_yaw_rps": {
+          "median": 0.005,
+          "p95": 0.255
+        },
+        "requested_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "executed_mps": {
+          "median": 0.02,
+          "p95": 0.075
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.516875,
+          "0.1": 0.00115,
+          "0.2": 0.0004
+        }
+      }
+    }
+  },
+  "per_stratum": {
+    "medium": {
+      "episodes": 60,
+      "counts": {
+        "success": 11,
+        "collision": 0,
+        "timeout": 49,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.18333333333333332,
+        "collision": 0.0,
+        "timeout": 0.8166666666666667,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.18333333333333332,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 0.8166666666666667,
+      "protective_stops": 473,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 5,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 366.5910797975689,
+      "stops_per_100m": 129.02659831799235,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 129.02659831799235,
+      "planned_length_m": 616.6929405919783,
+      "stops_per_100m_planned": 76.69943481855914,
+      "stops_per_100m_completed": 35.15629539791495,
+      "completed_distance_m": 93.86654545506283,
+      "latched_step_share": 0.08588833729548315,
+      "moving_speed_mps": 0.03505063436858263,
+      "mean_return": -13.648442895535707,
+      "pfb_infeasible": 7,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 228832,
+          "p50_ms": 0.2,
+          "p95_ms": 3.5,
+          "max_ms": 17.0
+        },
+        "pfb": {
+          "steps": 228832,
+          "p50_ms": 2.0,
+          "p95_ms": 36.8,
+          "max_ms": 139.4
+        },
+        "decision": {
+          "steps": 228832,
+          "p50_ms": 3.7,
+          "p95_ms": 37.00000000000001,
+          "max_ms": 139.5
+        }
+      },
+      "pfb_measures": {
+        "steps": 228832,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.005,
+          "p95": 0.075
+        },
+        "correction_yaw_rps": {
+          "median": 0.005,
+          "p95": 0.255
+        },
+        "requested_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "executed_mps": {
+          "median": 0.03,
+          "p95": 0.075
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.33057876520766327,
+          "0.1": 0.0003933016361348063,
+          "0.2": 0.0001179904908404419
+        }
+      }
+    },
+    "narrow": {
+      "episodes": 60,
+      "counts": {
+        "success": 13,
+        "collision": 0,
+        "timeout": 47,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.21666666666666667,
+        "collision": 0.0,
+        "timeout": 0.7833333333333333,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.21666666666666667,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 0.7833333333333333,
+      "protective_stops": 314,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 2,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 436.55866638401466,
+      "stops_per_100m": 71.92618637051473,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 71.92618637051473,
+      "planned_length_m": 674.4664961111664,
+      "stops_per_100m_planned": 46.55531472807897,
+      "stops_per_100m_completed": 20.737226590146914,
+      "completed_distance_m": 120.5561403851299,
+      "latched_step_share": 0.05771073740039121,
+      "moving_speed_mps": 0.0405476839269789,
+      "mean_return": 13.124516650118712,
+      "pfb_infeasible": 3,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 228519,
+          "p50_ms": 0.2,
+          "p95_ms": 2.4000000000000004,
+          "max_ms": 9.1
+        },
+        "pfb": {
+          "steps": 228519,
+          "p50_ms": 1.2000000000000002,
+          "p95_ms": 42.0,
+          "max_ms": 111.5
+        },
+        "decision": {
+          "steps": 228519,
+          "p50_ms": 2.2,
+          "p95_ms": 42.2,
+          "max_ms": 111.7
+        }
+      },
+      "pfb_measures": {
+        "steps": 228519,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.005,
+          "p95": 0.075
+        },
+        "correction_yaw_rps": {
+          "median": 0.005,
+          "p95": 0.255
+        },
+        "requested_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "executed_mps": {
+          "median": 0.03,
+          "p95": 0.075
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.2459532905360167,
+          "0.1": 0.0005251204495031048,
+          "0.2": 0.00015753613485093142
+        }
+      }
+    },
+    "wide": {
+      "episodes": 60,
+      "counts": {
+        "success": 9,
+        "collision": 0,
+        "timeout": 51,
+        "unrecoverable_stop": 0
+      },
+      "shares": {
+        "success": 0.15,
+        "collision": 0.0,
+        "timeout": 0.85,
+        "unrecoverable_stop": 0.0
+      },
+      "success_rate": 0.15,
+      "contact_rate": 0.0,
+      "largest_outcome_share": 0.85,
+      "protective_stops": 355,
+      "scan_faults": 0,
+      "scan_fault_stops": 0,
+      "scan_rerenders": 0,
+      "scan_fault_step_share": 0.0,
+      "scan_fault_flag": false,
+      "over_budget_steps": 1,
+      "at_rest_triggers": 0,
+      "stationary_triggers": 0,
+      "creep_stops_ending_unrecoverable": 0,
+      "distance_m": 399.2235592708091,
+      "stops_per_100m": 88.92260783617469,
+      "recovery_distance_m": 0.0,
+      "stops_per_100m_excluding_recovery": 88.92260783617469,
+      "planned_length_m": 640.213221205126,
+      "stops_per_100m_planned": 55.45027628947654,
+      "stops_per_100m_completed": 24.406735778673973,
+      "completed_distance_m": 86.04182136617098,
+      "latched_step_share": 0.06365943899500946,
+      "moving_speed_mps": 0.03668609229525499,
+      "mean_return": -9.171048069362989,
+      "pfb_infeasible": 7,
+      "dwa_blocked_steps": 0,
+      "mppi_all_rejected": 0,
+      "invalid_bin_steps": 0,
+      "compute": {
+        "controller": {
+          "steps": 232440,
+          "p50_ms": 0.2,
+          "p95_ms": 2.5,
+          "max_ms": 21.3
+        },
+        "pfb": {
+          "steps": 232440,
+          "p50_ms": 2.3,
+          "p95_ms": 38.900000000000006,
+          "max_ms": 106.30000000000001
+        },
+        "decision": {
+          "steps": 232440,
+          "p50_ms": 3.6000000000000005,
+          "p95_ms": 39.1,
+          "max_ms": 106.4
+        }
+      },
+      "pfb_measures": {
+        "steps": 232440,
+        "bin": 0.005,
+        "correction_mps": {
+          "median": 0.005,
+          "p95": 0.075
+        },
+        "correction_yaw_rps": {
+          "median": 0.005,
+          "p95": 0.255
+        },
+        "requested_mps": {
+          "median": 0.075,
+          "p95": 0.075
+        },
+        "executed_mps": {
+          "median": 0.03,
+          "p95": 0.075
+        },
+        "correction_share_above_mps": {
+          "0.05": 0.39894166236448114,
+          "0.1": 0.0010067114093959733,
+          "0.2": 0.00034847702632937534
+        }
+      }
+    }
+  },
+  "recovery": {
+    "episodes": 180,
+    "episodes_with_recovery": 0,
+    "attempts": 0,
+    "endings": {},
+    "deadlocks": {},
+    "distance_m": 0.0,
+    "time_s": 0.0,
+    "attempt_times_s": [],
+    "attempts_cut_short": 0,
+    "suspected_defects": [],
+    "per_episode": [
+      {
+        "scenario_seed": 2500000,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500001,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500002,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500003,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500004,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500005,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500006,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500007,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500008,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500009,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500010,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500011,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500012,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500013,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500014,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500015,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500016,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500017,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500018,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500019,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500020,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500021,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500022,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500023,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500024,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500025,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500026,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500027,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500028,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2500029,
+        "stratum": "narrow",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501000,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501001,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501002,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501003,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501004,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501005,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501006,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501007,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501008,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501009,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501010,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501011,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501012,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501013,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501014,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501015,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501016,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501017,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501018,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501019,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501020,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501021,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501022,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501023,
+        "stratum": "medium",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501024,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501025,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501026,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501027,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501028,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2501029,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502000,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502001,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502002,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502003,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502004,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502005,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502006,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502007,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502008,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502009,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502010,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502011,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502012,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502013,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502014,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502015,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502016,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502017,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502018,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502019,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502020,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502021,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502022,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502023,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502024,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502025,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502026,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502027,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502028,
+        "stratum": "wide",
+        "outcome": "success",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2502029,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503000,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503001,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503002,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503003,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503004,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503005,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503006,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503007,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503008,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503009,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503010,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503011,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503012,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503013,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503014,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503015,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503016,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503017,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503018,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503019,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503020,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503021,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503022,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503023,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503024,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503025,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503026,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503027,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503028,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2503029,
+        "stratum": "narrow",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504000,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504001,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504002,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504003,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504004,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504005,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504006,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504007,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504008,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504009,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504010,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504011,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504012,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504013,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504014,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504015,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504016,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504017,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504018,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504019,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504020,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504021,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504022,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504023,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504024,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504025,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504026,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504027,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504028,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2504029,
+        "stratum": "medium",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505000,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505001,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505002,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505003,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505004,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505005,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505006,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505007,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505008,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505009,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505010,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505011,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505012,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505013,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505014,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505015,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505016,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505017,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505018,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505019,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505020,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505021,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505022,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505023,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505024,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505025,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505026,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505027,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505028,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      },
+      {
+        "scenario_seed": 2505029,
+        "stratum": "wide",
+        "outcome": "timeout",
+        "attempts": 0,
+        "endings": [],
+        "attempt_times_s": [],
+        "deadlock": null,
+        "distance_m": 0.0,
+        "time_s": 0.0
+      }
+    ]
+  },
+  "memory": {
+    "episodes": 180,
+    "status": {},
+    "reference": "A20 check: CoppeliaSim +1.7 MB/100 episodes, Python flat (runs/diag/MEMORY_20261018T203246Z_seed0)",
+    "python": {
+      "private_start_mb": 2450.234375,
+      "private_end_mb": 2479.24609375,
+      "growth_mb_per_100_episodes": 16.11762152777778
+    },
+    "sim": {
+      "private_start_mb": 218.0234375,
+      "private_end_mb": 281.41796875,
+      "growth_mb_per_100_episodes": 35.21918402777778
+    }
+  }
+}

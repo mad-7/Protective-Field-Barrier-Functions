@@ -1,0 +1,10 @@
+{
+  "controller": "B1_pure_pursuit",
+  "checkpoint": null,
+  "checkpoint_sha256": null,
+  "environment": "ac32c64af745ef11891f484f9c073d4958123d3fc65941c72b72ff26ca158656",
+  "sets": {
+    "runs/scratch/cm_pp_unmapped_medium_rest.json": "bb4c237bef038a452bff2161d152279059e2e29d0c5d01e1047801e08afd74b8",
+    "scenarios/validation/validation_unmapped_wide.json": "de016f8c1e518a1c8cca5fd5adb7b9252e417a51ccb9944995611ba099902a7c"
+  }
+}
